@@ -1,0 +1,1339 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaneLine — Swim Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1F3A;--pool:#1A6B8A;--lane:#2DBBDA;
+  --foam:#E8F7FB;--chalk:#F5F7F9;--ink:#0B1F3A;--muted:#5A7089;
+  --border:rgba(11,31,58,0.12);
+  --green:#0E8A5F;--green-bg:#E6F5EF;
+  --red:#C0392B;--red-bg:#FBEAEA;
+  --blue-bg:#E8F4FC;--blue-txt:#1A6B8A;
+  --amber:#B45309;--amber-bg:#FEF3C7;
+  --radius:10px;--radius-lg:16px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--chalk);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6}
+
+/* NAV */
+nav{background:var(--navy);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.nav-logo{font-family:'DM Mono',monospace;font-weight:500;font-size:18px;color:#fff;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-logo span{color:var(--lane)}
+.nav-logo svg{width:22px;height:22px;flex-shrink:0}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-account-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.15);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 12px;border-radius:8px;cursor:pointer;transition:background 0.15s}
+.nav-account-btn:hover{background:rgba(255,255,255,0.18)}
+.nav-account-btn svg{width:14px;height:14px;flex-shrink:0}
+.nav-avatar{width:28px;height:28px;border-radius:50%;background:var(--lane);color:var(--navy);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* HERO */
+.hero{background:var(--navy);padding:4.5rem 2rem 4.5rem;text-align:center;position:relative;overflow:hidden}
+.lanes{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:0.07}
+.lane-line{position:absolute;top:0;bottom:0;width:1px;background:var(--lane);animation:swimfade 8s linear infinite}
+.lane-line:nth-child(1){left:12%;animation-delay:0s}.lane-line:nth-child(2){left:24%;animation-delay:1.5s}.lane-line:nth-child(3){left:38%;animation-delay:3s}.lane-line:nth-child(4){left:52%;animation-delay:.8s}.lane-line:nth-child(5){left:66%;animation-delay:2.2s}.lane-line:nth-child(6){left:80%;animation-delay:4s}.lane-line:nth-child(7){left:92%;animation-delay:1s}
+@keyframes swimfade{0%,100%{opacity:.5}50%{opacity:1}}
+.hero-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem;position:relative}
+.hero-logo-icon{width:52px;height:52px;background:rgba(255,255,255,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;border:0.5px solid rgba(255,255,255,0.12)}
+.hero-logo-icon svg{width:30px;height:30px}
+.hero-wordmark{font-family:'DM Mono',monospace;font-weight:500;font-size:26px;color:#fff;letter-spacing:-0.02em}
+.hero-wordmark span{color:var(--lane)}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:#fff;line-height:1.15;letter-spacing:-0.03em;margin-bottom:0.5rem;position:relative}
+.hero h1 strong{font-weight:500;color:#fff}
+.hero h1 .hl{font-weight:500;color:var(--lane)}
+.hero-sub{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:1.25rem;position:relative}
+.hero p{font-size:16px;color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto;position:relative}
+
+/* PAGE TABS */
+.page-tabs-wrap{background:var(--navy);border-bottom:0.5px solid rgba(255,255,255,0.08);position:sticky;top:56px;z-index:100}
+.page-tabs{max-width:940px;margin:0 auto;display:flex;padding:0 1.5rem}
+.page-tab{flex:1;max-width:200px;padding:14px 12px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:color .15s}
+.page-tab svg{width:15px;height:15px}
+.page-tab.active{color:#fff;border-bottom-color:var(--lane)}
+.page-tab:not(.active):hover{color:rgba(255,255,255,0.75)}
+
+/* MAIN */
+.main{max-width:780px;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+
+/* CARD */
+.card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem}
+.card-section{padding:1.5rem 1.75rem;border-bottom:0.5px solid var(--border)}
+.card-section:last-child{border-bottom:none}
+.section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+
+/* FORM */
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.fields-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+input[type="text"],input[type="password"],input[type="email"],select,textarea{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--chalk);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;transition:border-color .15s,background .15s;width:100%;appearance:none}
+input[type="text"]:focus,input[type="password"]:focus,input[type="email"]:focus,select:focus,textarea:focus{border-color:var(--pool);background:#fff}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A7089' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+/* BUTTONS */
+.btn-primary{width:100%;padding:13px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;background:var(--navy);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover:not(:disabled){background:var(--pool)}
+.btn-primary:active:not(:disabled){transform:scale(.99)}
+.btn-primary:disabled{opacity:.45;cursor:default}
+.btn-primary svg{width:17px;height:17px}
+.btn-secondary{padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:none;color:var(--pool);border:0.5px solid var(--pool);border-radius:8px;cursor:pointer;transition:background .15s}
+.btn-secondary:hover{background:var(--foam)}
+.btn-ghost{padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer}
+.btn-ghost:hover{color:var(--ink)}
+
+/* SWIMMER PICKER */
+.swimmer-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem}
+.swimmer-chip{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--chalk);border:0.5px solid var(--border);border-radius:99px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink);transition:border-color .15s,background .15s}
+.swimmer-chip:hover{border-color:var(--pool);background:var(--foam)}
+.swimmer-chip.selected{background:var(--navy);color:#fff;border-color:var(--navy)}
+.swimmer-chip .chip-avatar{width:22px;height:22px;border-radius:50%;background:var(--lane);color:var(--navy);font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.swimmer-chip.selected .chip-avatar{background:rgba(255,255,255,.2);color:#fff}
+.add-swimmer-chip{display:flex;align-items:center;gap:6px;padding:8px 14px;background:none;border:0.5px dashed rgba(26,107,138,.35);border-radius:99px;cursor:pointer;font-size:13px;color:var(--pool);font-family:'DM Sans',sans-serif;transition:background .15s}
+.add-swimmer-chip:hover{background:var(--foam)}
+.add-swimmer-chip svg{width:13px;height:13px}
+
+/* LOADING */
+#loading-view{display:none}
+.loading-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:4rem 2rem;text-align:center}
+.pool-anim{width:80px;height:16px;margin:0 auto 1.5rem;position:relative;overflow:hidden;border-radius:99px;background:var(--foam)}
+.swimmer-dot{position:absolute;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--navy);animation:lap 1.8s ease-in-out infinite}
+@keyframes lap{0%{left:0}50%{left:calc(100% - 14px)}100%{left:0}}
+.loading-card h3{font-size:17px;font-weight:500;margin-bottom:6px}
+.loading-card p{font-size:14px;color:var(--muted)}
+
+/* MEET FINDER */
+.times-table{width:100%;border-collapse:collapse;font-size:14px}
+.times-table th{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px;text-align:left;border-bottom:0.5px solid var(--border)}
+.times-table td{padding:10px 10px;border-bottom:0.5px solid var(--border);color:var(--ink);vertical-align:top}
+.times-table tr:last-child td{border-bottom:none}
+.times-table .time-val{font-family:'DM Mono',monospace;font-weight:500;color:var(--navy)}
+.std-badge{font-size:11px;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:99px;font-family:'DM Mono',monospace}
+.source-note{font-size:12px;color:var(--muted);margin-top:10px;font-style:italic}
+.meet-disclaimer{background:var(--amber-bg);border:0.5px solid rgba(180,83,9,.2);border-radius:var(--radius);padding:10px 14px;margin-bottom:1.25rem}
+.meet-disclaimer p{font-size:12px;color:var(--amber);line-height:1.5}
+.meet-empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:14px}
+.search-btn{width:100%;padding:13px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;background:var(--navy);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s}
+.search-btn:hover:not(:disabled){background:var(--pool)}
+.search-btn:disabled{opacity:.45;cursor:default}
+.search-btn svg{width:17px;height:17px}
+.standard-pill{display:inline-flex;align-items:center;justify-content:center;min-width:38px;padding:3px 8px;border-radius:99px;background:var(--blue-bg);color:var(--blue-txt);font-family:'DM Mono',monospace;font-size:11px;font-weight:500}
+.standard-pill.top{background:var(--green-bg);color:var(--green)}
+.standards-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.standards-course-title{font-size:15px;font-weight:500;color:var(--navy);margin:1.25rem 0 .5rem}
+.standards-course-title:first-child{margin-top:0}
+.standards-table td,.standards-table th{text-align:right}
+.standards-table td:first-child,.standards-table th:first-child{text-align:left}
+.wide-page{width:min(1500px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}
+.wide-page .card-section{padding:1rem}
+.dashboard-frame{width:100%;min-height:820px;border:0;border-radius:var(--radius);background:var(--chalk)}
+.qual-list{display:flex;flex-wrap:wrap;gap:6px}
+.qual-chip{font-size:11px;background:var(--foam);color:var(--pool);border:0.5px solid rgba(26,107,138,.2);padding:3px 8px;border-radius:99px}
+.best-tools{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+.best-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem}
+.best-summary-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}
+.best-summary-card .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.best-summary-card .value{font-size:26px;font-weight:300;color:var(--navy)}
+@media(max-width:900px){.wide-page{width:calc(100vw - 24px)}}
+@media(max-width:620px){.best-tools,.best-summary,.standards-toolbar{grid-template-columns:1fr}.times-table{font-size:13px}}
+
+/* ERROR */
+.error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
+.error-box p{font-size:13px;color:var(--red)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,31,58,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--radius-lg);padding:2rem;max-width:440px;width:100%;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:18px;font-weight:500;margin-bottom:0.5rem}
+.modal p.sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px}
+.modal-actions{display:flex;gap:10px;margin-top:1.5rem}
+.modal-actions .btn-primary{flex:1}
+.divider{text-align:center;font-size:12px;color:var(--muted);margin:1rem 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:calc(50% - 20px);height:0.5px;background:var(--border)}
+.divider::before{left:0}.divider::after{right:0}
+
+/* PROFILES PAGE */
+.profiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.profile-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:border-color .15s,box-shadow .15s;text-align:center}
+.profile-card:hover{border-color:var(--pool);box-shadow:0 2px 12px rgba(26,107,138,.12)}
+.profile-avatar{width:52px;height:52px;border-radius:50%;background:var(--navy);color:var(--lane);font-size:20px;font-weight:500;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.profile-name{font-size:15px;font-weight:500;margin-bottom:2px}
+.profile-meta{font-size:12px;color:var(--muted)}
+.profile-tag{display:inline-block;font-size:11px;background:var(--foam);color:var(--pool);padding:2px 8px;border-radius:99px;margin-top:6px;font-family:'DM Mono',monospace}
+.add-profile-card{background:none;border:1.5px dashed rgba(26,107,138,.35);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:background .15s;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--pool);font-size:14px;font-weight:500;min-height:140px}
+.add-profile-card:hover{background:var(--foam)}
+.add-profile-card svg{width:24px;height:24px}
+
+/* ACCOUNT PAGE */
+.account-section{margin-bottom:2rem}
+.account-section h3{font-size:15px;font-weight:500;margin-bottom:1rem}
+
+/* FOOTER */
+footer{background:var(--navy);padding:2rem;text-align:center}
+footer p{font-size:12px;color:rgba(255,255,255,.35)}
+footer span{color:var(--lane)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('meet')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#2DBBDA" aria-hidden="true">
+      <path d="M2 12c2-4 4-6 6-6s4 4 6 4 4-6 6-6"/>
+      <path d="M2 18c2-4 4-6 6-6s4 4 6 4 4-6 6-6" stroke-opacity="0.4"/>
+    </svg>
+    Lane<span>Line</span>
+  </div>
+  <div class="nav-right">
+    <button class="nav-account-btn" onclick="openAccountModal()" id="nav-account-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="nav-account-label">Sign in</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="lanes"><div class="lane-line"></div><div class="lane-line"></div><div class="lane-line"></div><div class="lane-line"></div><div class="lane-line"></div><div class="lane-line"></div><div class="lane-line"></div></div>
+  <div class="hero-logo">
+    <div class="hero-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2DBBDA" stroke-width="1.5" aria-hidden="true">
+        <path d="M2 12c2-4 4-6 6-6s4 4 6 4 4-6 6-6"/>
+        <path d="M2 18c2-4 4-6 6-6s4 4 6 4 4-6 6-6" stroke-opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="hero-wordmark">Lane<span>Line</span></div>
+  </div>
+  <h1>The lane between<br><span class="hl">good</span> and <span class="hl">great.</span></h1>
+  <p>Track meet results, organize swimmer profiles, and keep race details easy to find.</p>
+</div>
+
+<!-- PAGE TABS -->
+<div class="page-tabs-wrap">
+  <div class="page-tabs">
+    <button class="page-tab active" id="ptab-meet" onclick="showPage('meet')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Find meet
+    </button>
+    <button class="page-tab" id="ptab-best" onclick="showPage('best')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 21h8m-7-4h6m-8-4h10l1-9H6l1 9zm-3-7H2a4 4 0 004 4m12-4h2a4 4 0 01-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Best times
+    </button>
+    <button class="page-tab" id="ptab-standards" onclick="showPage('standards')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      PNS standards
+    </button>
+    <button class="page-tab" id="ptab-zone" onclick="showPage('zone')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M8 16l3-4 3 2 4-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Western Zone
+    </button>
+    <button class="page-tab" id="ptab-profiles" onclick="showPage('profiles')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Swimmers
+    </button>
+  </div>
+</div>
+
+<div class="main">
+<!-- ══ MEET PAGE ══ -->
+<div id="meet-page">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Find swimmer times</div>
+      <div class="meet-disclaimer"><p>LaneLine searches publicly posted meet results from USA Swimming, Swimcloud, Meet Mobile, and team sites. Results depend on what's publicly available.</p></div>
+      <div class="fields-grid" style="margin-bottom:14px">
+        <div class="field">
+          <label for="meet-swimmer">Swimmer full name</label>
+          <input type="text" id="meet-swimmer" placeholder="e.g. Katie Ledecky"/>
+        </div>
+        <div class="field">
+          <label for="meet-team">Team / club (optional)</label>
+          <input type="text" id="meet-team" placeholder="e.g. Nation's Capital"/>
+        </div>
+        <div class="field">
+          <label for="meet-name">Meet name (optional)</label>
+          <input type="text" id="meet-name" placeholder="e.g. Raleigh Rumble 2025"/>
+        </div>
+        <div class="field">
+          <label for="meet-event">Event (optional)</label>
+          <input type="text" id="meet-event" placeholder="e.g. 100 freestyle SCY"/>
+        </div>
+      </div>
+      <button class="search-btn" id="meet-search-btn" onclick="searchMeet()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Search meet results
+      </button>
+      <div class="error-box" id="meet-error-box"><p id="meet-error-text"></p></div>
+    </div>
+    <div class="card-section" id="meet-results-section" style="display:none">
+      <div class="section-label">Results</div>
+      <div id="meet-results-content"></div>
+    </div>
+  </div>
+  <div id="meet-loading" style="display:none;margin-top:1.5rem">
+    <div class="loading-card">
+      <div class="pool-anim"><div class="swimmer-dot"></div></div>
+      <h3>Searching meet results</h3>
+      <p id="meet-loading-msg">Searching public databases…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BEST TIMES PAGE ══ -->
+<div id="best-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Best times</div>
+      <div class="meet-disclaimer"><p>Best times are read from swimmer profiles saved in this browser. PNS meet labels are local planning cuts and should be checked against the official PNS meet packet before entry decisions.</p></div>
+      <div class="best-tools">
+        <div class="field">
+          <label for="best-swimmer">Swimmer</label>
+          <select id="best-swimmer"></select>
+        </div>
+        <button class="btn-secondary" onclick="renderBestTimes()">Load bests</button>
+      </div>
+    </div>
+    <div class="card-section" id="best-results-section">
+      <div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TIME STANDARDS PAGE ══ -->
+<div id="standards-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">PNS time standards</div>
+      <div class="meet-disclaimer"><p>Pacific Northwest Swimming meet standards are shown for PNS Champs and Northwest Regional tiers from the cuts currently loaded in LaneLine.</p></div>
+      <div class="standards-toolbar">
+        <div class="field">
+          <label for="standards-division">Division</label>
+          <select id="standards-division" onchange="renderStandardsPage()">
+            <option value="boys">Boys</option>
+            <option value="girls">Girls</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="standards-age">Age group</label>
+          <select id="standards-age" onchange="renderStandardsPage()">
+            <option value="11-12">11-12</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-section" id="standards-results">
+      <div class="meet-empty">Open this tab to view standards.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WESTERN ZONE PAGE ══ -->
+<div id="zone-page" class="wide-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Western Zone dashboard</div>
+      <div class="meet-disclaimer"><p>This tab embeds the Western Zone dashboard so you can view it inside LaneLine.</p></div>
+      <iframe class="dashboard-frame" src="https://jialiu103.github.io/western-zone-dashboard/" title="Western Zone Dashboard" loading="lazy"></iframe>
+      <p class="source-note">If the dashboard does not load inside the tab, open it directly: <a href="https://jialiu103.github.io/western-zone-dashboard/" target="_blank" rel="noreferrer">Western Zone Dashboard</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROFILES PAGE ══ -->
+<div id="profiles-page" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+    <div>
+      <h2 style="font-size:20px;font-weight:500">Swimmers</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:2px">Profiles keep each swimmer's key details handy.</p>
+    </div>
+    <button class="btn-secondary" onclick="openAddSwimmerModal()">+ Add swimmer</button>
+  </div>
+  <div class="profiles-grid" id="profiles-grid"></div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ══ MODALS ══ -->
+
+<!-- Auth modal -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('auth-modal')" aria-label="Close">×</button>
+    <div id="auth-signin-view">
+      <h2>Sign in</h2>
+      <p class="sub">Access your swimmer profiles and saved history.</p>
+      <div class="field" style="margin-bottom:12px"><label>Email</label><input type="email" id="auth-email" placeholder="you@example.com"/></div>
+      <div class="field"><label>Password</label><input type="password" id="auth-password" placeholder="••••••••"/></div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="signIn()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="17" height="17" aria-hidden="true"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sign in
+        </button>
+      </div>
+      <div class="divider">or</div>
+      <button class="btn-primary" style="background:var(--chalk);color:var(--ink);border:0.5px solid var(--border)" onclick="showAuthView('signup')">Create account</button>
+      <div class="error-box" id="auth-error" style="margin-top:1rem"><p id="auth-error-text"></p></div>
+    </div>
+    <div id="auth-signup-view" style="display:none">
+      <h2>Create account</h2>
+      <p class="sub">Free — just to save your swimmer profiles.</p>
+      <div class="field" style="margin-bottom:12px"><label>Name</label><input type="text" id="signup-name" placeholder="Your name"/></div>
+      <div class="field" style="margin-bottom:12px"><label>Email</label><input type="email" id="signup-email" placeholder="you@example.com"/></div>
+      <div class="field"><label>Password</label><input type="password" id="signup-password" placeholder="At least 8 characters"/></div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="createAccount()">Create account</button>
+      </div>
+      <div class="divider">or</div>
+      <button class="btn-primary" style="background:var(--chalk);color:var(--ink);border:0.5px solid var(--border)" onclick="showAuthView('signin')">Sign in instead</button>
+      <div class="error-box" id="signup-error" style="margin-top:1rem"><p id="signup-error-text"></p></div>
+    </div>
+    <div id="auth-account-view" style="display:none">
+      <h2 id="account-greeting">Your account</h2>
+      <p class="sub" id="account-email-display"></p>
+<div class="account-section">
+        <h3>Swimmer profiles</h3>
+        <div id="modal-profiles-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+        <button class="btn-secondary" onclick="closeModal('auth-modal');openAddSwimmerModal()">+ Add swimmer</button>
+      </div>
+      <button class="btn-primary" style="background:var(--red-bg);color:var(--red);border:0.5px solid rgba(192,57,43,.2)" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add swimmer modal -->
+<div class="modal-overlay" id="add-swimmer-modal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('add-swimmer-modal')" aria-label="Close">×</button>
+    <h2 id="swimmer-modal-title">Add swimmer</h2>
+    <p class="sub">Save key swimmer details for quick reference.</p>
+    <div class="fields-grid">
+      <div class="field full"><label>Full name</label><input type="text" id="sw-name" placeholder="e.g. Jamie Chen"/></div>
+      <div class="field">
+        <label>Age group</label>
+        <select id="sw-age-group">
+          <option value="">Not specified</option>
+          <option>10 &amp; under</option>
+          <option>11–12</option>
+          <option>13–14</option>
+          <option>15–16</option>
+          <option>17–18</option>
+          <option>15 &amp; over</option>
+          <option>Senior / Open</option>
+          <option>College</option>
+          <option>Masters</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Division</label>
+        <select id="sw-division">
+          <option value="girls">Girls / Women</option>
+          <option value="boys">Boys / Men</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Primary stroke</label>
+        <select id="sw-stroke">
+          <option value="">Not specified</option>
+          <option>Freestyle</option><option>Backstroke</option>
+          <option>Breaststroke</option><option>Butterfly</option>
+          <option>Individual medley</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team / club</label>
+        <input type="text" id="sw-team" placeholder="e.g. Lakeside Swim Club"/>
+      </div>
+      <div class="field">
+        <label>Best event</label>
+        <input type="text" id="sw-best-event" placeholder="e.g. 100 Free SCY"/>
+      </div>
+      <div class="field">
+        <label>Best time</label>
+        <input type="text" id="sw-best-time" placeholder="e.g. 54.32"/>
+      </div>
+      <div class="field full">
+        <label>All best times</label>
+        <textarea id="sw-best-times" rows="5" placeholder="100 Free SCY | 54.32 | Winter Classic | Jan 2026 | USA Swimming&#10;50 Free SCY | 24.88 | Districts | Feb 2026 | Meet Mobile"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveSwimmer()">Save swimmer</button>
+    </div>
+    <div class="error-box" id="swimmer-error" style="margin-top:1rem"><p id="swimmer-error-text"></p></div>
+  </div>
+</div>
+
+<script>
+// ─── LOCAL STORAGE STATE ─────────────────────────────────
+let appState = {
+  user: null, // { name, email }
+  swimmers: [], // [{id, name, ageGroup, stroke, team, bestEvent, bestTime}]
+  selectedSwimmerId: null,
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('laneline_state');
+    if (saved) appState = { ...appState, ...JSON.parse(saved) };
+  } catch(e) {}
+}
+function saveState() {
+  try { localStorage.setItem('laneline_state', JSON.stringify(appState)); } catch(e) {}
+}
+
+const ethanWangUsaSwimmingProfile = {
+  id: 'usas_9DCE8A4B52EF4A',
+  name: 'Ethan Wang',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Pacific Dragons Swim Team',
+  bestEvent: '50 Free SCY',
+  bestTime: '30.14',
+  usaSwimmingMemberId: '9DCE8A4B52EF4A',
+  bestTimes: [
+    { event: '50 Free SCY', time: '30.14', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 22, 2025', source: 'USA Swimming' },
+    { event: '100 Free SCY', time: '1:03.23r', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
+    { event: '200 Free SCY', time: '2:16.06', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
+    { event: '500 Free SCY', time: '5:58.95', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 13, 2025', source: 'USA Swimming' },
+    { event: '50 Back SCY', time: '33.56', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
+    { event: '100 Back SCY', time: '1:11.17', meet: '2026 PN PDST Winter Invitational', date: 'Jan 24, 2026', source: 'USA Swimming' },
+    { event: '200 Back SCY', time: '2:29.00', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
+    { event: '50 Breast SCY', time: '33.75', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
+    { event: '100 Breast SCY', time: '1:12.80', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 20, 2026', source: 'USA Swimming' },
+    { event: '200 Breast SCY', time: '2:32.90', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 21, 2026', source: 'USA Swimming' },
+    { event: '50 Fly SCY', time: '32.48', meet: '2026 PN PDST Winter Invitational', date: 'Jan 24, 2026', source: 'USA Swimming' },
+    { event: '100 Fly SCY', time: '1:14.10', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 22, 2025', source: 'USA Swimming' },
+    { event: '200 Fly SCY', time: '2:45.78', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 23, 2025', source: 'USA Swimming' },
+    { event: '100 IM SCY', time: '1:07.84', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 22, 2026', source: 'USA Swimming' },
+    { event: '200 IM SCY', time: '2:24.57', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
+    { event: '400 IM SCY', time: '5:07.58', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 12, 2025', source: 'USA Swimming' },
+    { event: '50 Free LCM', time: '32.71', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 16, 2026', source: 'USA Swimming' },
+    { event: '100 Free LCM', time: '1:10.19', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming' },
+    { event: '200 Free LCM', time: '2:29.00', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming' },
+    { event: '400 Free LCM', time: '5:19.02', meet: '2026 CAN Rapids West Coast Open', date: 'May 2, 2026', source: 'USA Swimming' },
+    { event: '50 Back LCM', time: '37.44', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming' },
+    { event: '100 Back LCM', time: '1:21.66', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 16, 2026', source: 'USA Swimming' },
+    { event: '200 Back LCM', time: '2:46.66', meet: '2026 PN VAST Summer Sprints', date: 'Jun 7, 2026', source: 'USA Swimming' },
+    { event: '50 Breast LCM', time: '36.62', meet: '2026 PN OCA Last Chance Invitational', date: 'Jul 11, 2026', source: 'USA Swimming' },
+    { event: '100 Breast LCM', time: '1:20.92', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming' },
+    { event: '200 Breast LCM', time: '2:54.37', meet: '2026 PN OCA Last Chance Invitational', date: 'Jul 11, 2026', source: 'USA Swimming' },
+    { event: '50 Fly LCM', time: '34.33', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming' },
+    { event: '100 Fly LCM', time: '1:17.45', meet: '2026 PN IST June Invitational', date: 'Jun 14, 2026', source: 'USA Swimming' },
+    { event: '200 Fly LCM', time: '2:54.10', meet: '2026 PN OCA Last Chance Invitational', date: 'Jul 12, 2026', source: 'USA Swimming' },
+    { event: '200 IM LCM', time: '2:38.62', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming' },
+    { event: '400 IM LCM', time: '5:39.21', meet: '2026 PN VAST Summer Sprints', date: 'Jun 7, 2026', source: 'USA Swimming' },
+    { event: '25 Free SCY', time: '20.69', meet: '2022  PN Fall Divisionals, Division 2', date: 'Dec 4, 2022', source: 'USA Swimming' },
+    { event: '25 Back SCY', time: '24.15', meet: '2022  PN Fall Divisionals, Division 2', date: 'Dec 4, 2022', source: 'USA Swimming' },
+    { event: '25 Breast SCY', time: '27.22', meet: '2022  PN Fall Divisionals, Division 2', date: 'Dec 4, 2022', source: 'USA Swimming' },
+    { event: '25 Fly SCY', time: '23.94', meet: '2022  PN Fall Divisionals, Division 2', date: 'Dec 4, 2022', source: 'USA Swimming' }
+  ]
+};
+
+const quinlanTianUsaSwimmingProfile = {
+  id: 'usas_529E741DB1114E',
+  name: 'Quinlan Tian',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Pacific Dragons Swim Team',
+  bestEvent: '50 Free SCY',
+  bestTime: '25.80',
+  usaSwimmingMemberId: '529E741DB1114E',
+  bestTimes: [
+    { event: '100 Back LCM', time: '1:17.36', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '100 Back SCY', time: '1:06.85', meet: '2026 PN PDST Pentathlon and Last Chance Invitational', date: 'Mar 7, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '100 Breast LCM', time: '1:24.65', meet: '2026 PN IST June Invitational', date: 'Jun 13, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '100 Breast SCY', time: '1:10.69', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 20, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '100 Fly SCY', time: '1:08.40', meet: '2026 PN PDST Pentathlon and Last Chance Invitational', date: 'Mar 7, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '100 Free LCM', time: '1:05.36', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '100 Free SCY', time: '58.91', meet: '2026 PN PDST Pentathlon and Last Chance Invitational', date: 'Mar 7, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '100 IM SCY', time: '1:03.35', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 22, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '200 Back LCM', time: '2:47.69', meet: '2026 PN VAST Summer Sprints', date: 'Jun 7, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '200 Back SCY', time: '2:28.72', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '200 Breast LCM', time: '3:06.25', meet: '2026 PN VAST Summer Sprints', date: 'Jun 7, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '200 Breast SCY', time: '2:32.32', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 21, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '200 Free LCM', time: '2:46.69', meet: '2025 PN OCA July Jamboree Invitational', date: 'Jul 13, 2025', source: 'USA Swimming', course: 'LCM' },
+    { event: '200 Free SCY', time: '2:08.77', meet: '2026 PN PDST Pentathlon and Last Chance Invitational', date: 'Mar 8, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '200 IM LCM', time: '2:43.44', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 16, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '200 IM SCY', time: '2:26.35', meet: '2026 PN PDST Pentathlon and Last Chance Invitational', date: 'Mar 7, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '25 Breast SCY', time: '29.13', meet: '2022  PN Fall Divisionals, Division 2', date: 'Dec 4, 2022', source: 'USA Swimming', course: 'SCY' },
+    { event: '25 Fly SCY', time: '28.77', meet: '2022 PN 14&U October Challenge, Division 4', date: 'Oct 1, 2022', source: 'USA Swimming', course: 'SCY' },
+    { event: '25 Free SCY', time: '22.14', meet: '2022 PN 14&U October Challenge, Division 4', date: 'Oct 1, 2022', source: 'USA Swimming', course: 'SCY' },
+    { event: '50 Back LCM', time: '34.58', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '50 Back SCY', time: '30.30', meet: '2026 PN February Age Group Invitational, Division 2', date: 'Mar 1, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '50 Breast LCM', time: '36.71', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '50 Breast SCY', time: '32.43', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 22, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '50 Fly LCM', time: '34.69', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '50 Fly SCY', time: '30.20', meet: '2026 PN PDST Winter Invitational', date: 'Jan 24, 2026', source: 'USA Swimming', course: 'SCY' },
+    { event: '50 Free LCM', time: '28.65', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 16, 2026', source: 'USA Swimming', course: 'LCM' },
+    { event: '50 Free SCY', time: '25.80', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 20, 2026', source: 'USA Swimming', course: 'SCY' }
+  ]
+};
+
+const irisWangUsaSwimmingProfile = {
+  id: 'usas_C8B64773962AF0',
+  name: 'Iris Wang',
+  ageGroup: '10',
+  division: 'girls',
+  stroke: '',
+  team: 'Pacific Dragons Swim Team',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: 'C8B64773962AF0',
+  bestTimes: []
+};
+
+const alexWangUsaSwimmingProfile = {
+  id: 'usas_03A64F943FE144',
+  name: 'Alex Wang',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Bellevue Club Swim Team',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: '03A64F943FE144',
+  bestTimes: []
+};
+
+const aditeyaVermaUsaSwimmingProfile = {
+  id: 'usas_08104D29B8F2BE',
+  name: 'Aditeya Verma',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Wave Aquatics',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: '08104D29B8F2BE',
+  bestTimes: []
+};
+
+const jaydenSunUsaSwimmingProfile = {
+  id: 'usas_7EFADA7A593345',
+  name: 'Jayden Sun',
+  ageGroup: '13',
+  division: 'boys',
+  stroke: '',
+  team: 'Olympic Cascade Aquatics',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: '7EFADA7A593345',
+  bestTimes: []
+};
+
+const andrewOuyangUsaSwimmingProfile = {
+  id: 'usas_1D0A99255F1747',
+  name: 'Andrew Ouyang',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Wave Aquatics',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: '1D0A99255F1747',
+  bestTimes: []
+};
+
+const maxSunUsaSwimmingProfile = {
+  id: 'usas_F889DA85F5164C',
+  name: 'Max Sun',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Wave Aquatics',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: 'F889DA85F5164C',
+  bestTimes: []
+};
+
+const danSunUsaSwimmingProfile = {
+  id: 'usas_9C37DAB7527E4C',
+  name: 'Dan Sun',
+  ageGroup: '12',
+  division: 'boys',
+  stroke: '',
+  team: 'Wave Aquatics',
+  bestEvent: '',
+  bestTime: '',
+  usaSwimmingMemberId: '9C37DAB7527E4C',
+  bestTimes: []
+};
+
+const seededUsaSwimmingProfiles = [
+  ethanWangUsaSwimmingProfile,
+  quinlanTianUsaSwimmingProfile,
+  irisWangUsaSwimmingProfile,
+  alexWangUsaSwimmingProfile,
+  aditeyaVermaUsaSwimmingProfile,
+  jaydenSunUsaSwimmingProfile,
+  andrewOuyangUsaSwimmingProfile,
+  maxSunUsaSwimmingProfile,
+  danSunUsaSwimmingProfile
+];
+
+function seedUsaSwimmingProfiles() {
+  seededUsaSwimmingProfiles.forEach(profile => seedUsaSwimmingProfile(profile));
+  saveState();
+  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+}
+
+function seedUsaSwimmingProfile(profile) {
+  const existingIndex = appState.swimmers.findIndex(sw =>
+    sw.usaSwimmingMemberId === profile.usaSwimmingMemberId ||
+    (sw.name || '').toLowerCase() === profile.name.toLowerCase() ||
+    profile.name.toLowerCase().split(' ').every(part => (sw.name || '').toLowerCase().includes(part)) && (sw.team || '').toLowerCase().includes('pacific dragons')
+  );
+  if (existingIndex >= 0) {
+    appState.swimmers[existingIndex] = { ...appState.swimmers[existingIndex], ...profile };
+  } else {
+    appState.swimmers.push(profile);
+  }
+}
+
+async function refreshSeededSwimmersFromUsaSwimming() {
+  await Promise.all(seededUsaSwimmingProfiles.map(profile => refreshSwimmerFromUsaSwimming(profile.usaSwimmingMemberId)));
+}
+
+async function refreshSwimmerFromUsaSwimming(memberId) {
+  const sw = appState.swimmers.find(s => s.usaSwimmingMemberId === memberId);
+  if (!sw) return;
+  try {
+    const response = await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Refresh failed');
+    const data = await response.json();
+    if (!Array.isArray(data.bestTimes) || !data.bestTimes.length) return;
+    sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], data.bestTimes);
+    const first = sw.bestTimes[0];
+    if (first) {
+      sw.bestEvent = first.event;
+      sw.bestTime = first.time;
+    }
+    appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
+    saveState();
+    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    renderProfilesPage();
+    const selectedBeforeRefresh = document.getElementById('best-swimmer')?.value;
+    renderBestTimesPicker();
+    const select = document.getElementById('best-swimmer');
+    if (select && selectedBeforeRefresh && appState.swimmers.some(s => s.id === selectedBeforeRefresh)) select.value = selectedBeforeRefresh;
+    if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
+  } catch (error) {
+    console.warn('USA Swimming refresh skipped:', error);
+  }
+}
+
+function mergeBestTimeRows(existingRows, incomingRows) {
+  const merged = [...existingRows];
+  incomingRows.forEach(row => {
+    const index = merged.findIndex(existing => normalizeEventKey(existing.event) === normalizeEventKey(row.event));
+    if (index >= 0) {
+      const existingSeconds = parseRaceTime(merged[index].time);
+      const incomingSeconds = parseRaceTime(row.time);
+      if (!Number.isFinite(existingSeconds) || incomingSeconds < existingSeconds) merged[index] = row;
+      else merged[index] = { ...merged[index], meet: merged[index].meet || row.meet, date: merged[index].date || row.date, source: merged[index].source || row.source };
+    } else {
+      merged.push(row);
+    }
+  });
+  return merged;
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+loadState();
+seedUsaSwimmingProfiles();
+updateNavAccount();
+renderProfilesPage();
+renderBestTimesPicker();
+refreshSeededSwimmersFromUsaSwimming();
+// ─── PAGE NAV ─────────────────────────────────────────────
+function showPage(page) {
+  ['meet','best','standards','zone','profiles'].forEach(p => {
+    document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
+    document.getElementById('ptab-'+p).classList.toggle('active', p === page);
+  });
+  if (page === 'best') {
+    renderBestTimesPicker();
+    renderBestTimes();
+  }
+  if (page === 'standards') renderStandardsPage();
+  if (page === 'profiles') renderProfilesPage();
+}
+
+// ─── AUTH ─────────────────────────────────────────────────
+function updateNavAccount() {
+  const btn = document.getElementById('nav-account-btn');
+  const lbl = document.getElementById('nav-account-label');
+  if (appState.user) {
+    const initials = appState.user.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    btn.innerHTML = `<div class="nav-avatar">${initials}</div><span>${appState.user.name.split(' ')[0]}</span>`;
+  } else {
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sign in</span>`;
+  }
+}
+
+function openAccountModal() {
+  if (appState.user) {
+    showAuthView('account');
+  } else {
+    showAuthView('signin');
+  }
+  openModal('auth-modal');
+}
+
+function showAuthView(view) {
+  ['signin','signup','account'].forEach(v => {
+    const el = document.getElementById('auth-'+v+'-view');
+    if (el) el.style.display = v === view ? 'block' : 'none';
+  });
+  if (view === 'account' && appState.user) {
+    document.getElementById('account-greeting').textContent = 'Hi, ' + appState.user.name.split(' ')[0] + '!';
+    document.getElementById('account-email-display').textContent = appState.user.email;
+    renderModalProfiles();
+  }
+}
+
+function signIn() {
+  const email = document.getElementById('auth-email').value.trim();
+  const pass = document.getElementById('auth-password').value;
+  if (!email || !pass) { showAuthError('Please fill in all fields.'); return; }
+  // Simulated auth — in production connect to a real backend
+  const stored = localStorage.getItem('ll_user_'+email);
+  if (!stored) { showAuthError('No account found. Create one first.'); return; }
+  const user = JSON.parse(stored);
+  if (user.password !== pass) { showAuthError('Incorrect password.'); return; }
+  appState.user = { name: user.name, email: user.email };
+  // Load their swimmers
+  const swimmerData = localStorage.getItem('ll_swimmers_'+email);
+  if (swimmerData) appState.swimmers = JSON.parse(swimmerData);
+  saveState();
+  updateNavAccount();
+  renderProfilesPage();
+  renderBestTimesPicker();
+  closeModal('auth-modal');
+}
+
+function createAccount() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pass = document.getElementById('signup-password').value;
+  if (!name || !email || !pass) { showSignupError('Please fill in all fields.'); return; }
+  if (pass.length < 8) { showSignupError('Password must be at least 8 characters.'); return; }
+  localStorage.setItem('ll_user_'+email, JSON.stringify({ name, email, password: pass }));
+  appState.user = { name, email };
+  appState.swimmers = [];
+  saveState();
+  updateNavAccount();
+  renderProfilesPage();
+  renderBestTimesPicker();
+  closeModal('auth-modal');
+}
+
+function signOut() {
+  // Save swimmers to this account before signing out
+  if (appState.user) {
+    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+  }
+  appState.user = null;
+  appState.swimmers = [];
+  appState.selectedSwimmerId = null;
+  saveState();
+  updateNavAccount();
+  renderProfilesPage();
+  renderBestTimesPicker();
+  closeModal('auth-modal');
+}
+
+function showAuthError(msg) {
+  const b = document.getElementById('auth-error');
+  document.getElementById('auth-error-text').textContent = msg;
+  b.style.display = 'block';
+}
+function showSignupError(msg) {
+  const b = document.getElementById('signup-error');
+  document.getElementById('signup-error-text').textContent = msg;
+  b.style.display = 'block';
+}
+
+// ─── SWIMMERS ─────────────────────────────────────────────
+let editingSwimmerId = null;
+
+function openAddSwimmerModal(id) {
+  editingSwimmerId = id || null;
+  document.getElementById('swimmer-modal-title').textContent = id ? 'Edit swimmer' : 'Add swimmer';
+  if (id) {
+    const sw = appState.swimmers.find(s=>s.id===id);
+    if (sw) {
+      document.getElementById('sw-name').value = sw.name || '';
+      document.getElementById('sw-age-group').value = sw.ageGroup || '';
+      document.getElementById('sw-division').value = sw.division || 'girls';
+      document.getElementById('sw-stroke').value = sw.stroke || '';
+      document.getElementById('sw-team').value = sw.team || '';
+      document.getElementById('sw-best-event').value = sw.bestEvent || '';
+      document.getElementById('sw-best-time').value = sw.bestTime || '';
+      document.getElementById('sw-best-times').value = serializeBestTimes(sw.bestTimes || []);
+    }
+  } else {
+    ['sw-name','sw-team','sw-best-event','sw-best-time'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('sw-best-times').value = '';
+    document.getElementById('sw-age-group').value = '';
+    document.getElementById('sw-division').value = 'girls';
+    document.getElementById('sw-stroke').value = '';
+  }
+  document.getElementById('swimmer-error').style.display = 'none';
+  openModal('add-swimmer-modal');
+}
+
+function saveSwimmer() {
+  const name = document.getElementById('sw-name').value.trim();
+  if (!name) {
+    const b = document.getElementById('swimmer-error');
+    document.getElementById('swimmer-error-text').textContent = 'Please enter a name.';
+    b.style.display = 'block';
+    return;
+  }
+  const sw = {
+    id: editingSwimmerId || ('sw_' + Date.now()),
+    name,
+    ageGroup: document.getElementById('sw-age-group').value,
+    division: document.getElementById('sw-division').value,
+    stroke: document.getElementById('sw-stroke').value,
+    team: document.getElementById('sw-team').value.trim(),
+    bestEvent: document.getElementById('sw-best-event').value.trim(),
+    bestTime: document.getElementById('sw-best-time').value.trim(),
+    bestTimes: parseBestTimesInput(document.getElementById('sw-best-times').value),
+  };
+  if (editingSwimmerId) {
+    appState.swimmers = appState.swimmers.map(s => s.id === editingSwimmerId ? sw : s);
+  } else {
+    appState.swimmers.push(sw);
+  }
+  // Persist to account if signed in
+  if (appState.user) {
+    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+  }
+  saveState();
+  renderProfilesPage();
+  renderBestTimesPicker();
+  closeModal('add-swimmer-modal');
+}
+
+function deleteSwimmer(id) {
+  if (!confirm('Remove this swimmer profile?')) return;
+  appState.swimmers = appState.swimmers.filter(s => s.id !== id);
+  if (appState.selectedSwimmerId === id) appState.selectedSwimmerId = null;
+  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+  saveState();
+  renderProfilesPage();
+  renderBestTimesPicker();
+}
+
+function renderProfilesPage() {
+  const grid = document.getElementById('profiles-grid');
+  let html = '';
+  appState.swimmers.forEach(sw => {
+    const initials = sw.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    html += `<div class="profile-card">
+      <div class="profile-avatar">${initials}</div>
+      <div class="profile-name">${sw.name}</div>
+      <div class="profile-meta">${[sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet'}</div>
+      ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
+      ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
+      ${sw.bestTime ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">Best: <strong style="color:var(--ink);font-family:'DM Mono',monospace">${sw.bestTime}</strong>${sw.bestEvent?' · '+sw.bestEvent:''}</div>` : ''}
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
+        <button class="btn-ghost" style="font-size:12px" onclick="openAddSwimmerModal('${sw.id}')">Edit</button>
+        <button class="btn-ghost" style="font-size:12px;color:var(--red)" onclick="deleteSwimmer('${sw.id}')">Remove</button>
+      </div>
+    </div>`;
+  });
+  html += `<div class="add-profile-card" onclick="openAddSwimmerModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16m-8-8h16" stroke-linecap="round"/></svg>
+    Add swimmer
+  </div>`;
+  grid.innerHTML = html;
+}
+
+function renderModalProfiles() {
+  const container = document.getElementById('modal-profiles-list');
+  if (!appState.swimmers.length) {
+    container.innerHTML = '<p style="font-size:13px;color:var(--muted)">No swimmers added yet.</p>';
+    return;
+  }
+  container.innerHTML = appState.swimmers.map(sw => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--lane);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        ${sw.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:500">${sw.name}</div>
+        <div style="font-size:12px;color:var(--muted)">${sw.ageGroup||''}${sw.division?' · '+(sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women'):''}${sw.stroke?' · '+sw.stroke:''}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── MODAL HELPERS ────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+// ─── BEST TIMES ───────────────────────────────────────────
+const motivationalStandards = {
+  "boys|11-12|50 free scy": { AAAA: "24.59", AAA: "25.79", AA: "26.99", A: "28.09", BB: "30.49", B: "32.79" },
+  "boys|11-12|100 free scy": { AAAA: "53.59", AAA: "56.19", AA: "58.69", A: "1:01.29", BB: "1:06.39", B: "1:11.49" },
+  "boys|11-12|200 free scy": { AAAA: "1:56.99", AAA: "2:02.59", AA: "2:08.19", A: "2:13.69", BB: "2:24.89", B: "2:35.99" },
+  "boys|11-12|500 free scy": { AAAA: "5:14.99", AAA: "5:29.99", AA: "5:44.99", A: "5:59.99", BB: "6:29.99", B: "6:59.89" },
+  "boys|11-12|1000 free scy": { AAAA: "11:02.59", AAA: "11:34.19", AA: "12:05.79", A: "12:37.29", BB: "13:40.39", B: "14:43.49" },
+  "boys|11-12|1650 free scy": { AAAA: "18:20.79", AAA: "19:13.19", AA: "20:05.59", A: "20:58.09", BB: "22:42.89", B: "24:27.69" },
+  "boys|11-12|50 back scy": { AAAA: "28.19", AAA: "29.69", AA: "31.19", A: "32.69", BB: "35.59", B: "38.49" },
+  "boys|11-12|100 back scy": { AAAA: "59.49", AAA: "1:02.79", AA: "1:05.99", A: "1:09.29", BB: "1:15.69", B: "1:22.19" },
+  "boys|11-12|200 back scy": { AAAA: "2:09.69", AAA: "2:15.89", AA: "2:21.99", A: "2:28.19", BB: "2:40.49", B: "2:52.89" },
+  "boys|11-12|50 breast scy": { AAAA: "31.49", AAA: "33.29", AA: "34.99", A: "36.69", BB: "40.09", B: "43.49" },
+  "boys|11-12|100 breast scy": { AAAA: "1:07.79", AAA: "1:11.39", AA: "1:14.89", A: "1:18.39", BB: "1:25.49", B: "1:32.59" },
+  "boys|11-12|200 breast scy": { AAAA: "2:27.29", AAA: "2:34.39", AA: "2:41.39", A: "2:48.39", BB: "3:02.39", B: "3:16.39" },
+  "boys|11-12|50 fly scy": { AAAA: "26.69", AAA: "28.19", AA: "29.69", A: "31.19", BB: "34.19", B: "37.09" },
+  "boys|11-12|100 fly scy": { AAAA: "59.09", AAA: "1:02.49", AA: "1:05.89", A: "1:09.29", BB: "1:16.09", B: "1:22.89" },
+  "boys|11-12|200 fly scy": { AAAA: "2:12.39", AAA: "2:18.69", AA: "2:24.99", A: "2:31.39", BB: "2:43.99", B: "2:56.59" },
+  "boys|11-12|100 im scy": { AAAA: "1:01.09", AAA: "1:03.99", AA: "1:06.99", A: "1:09.99", BB: "1:15.89", B: "1:21.89" },
+  "boys|11-12|200 im scy": { AAAA: "2:12.09", AAA: "2:18.79", AA: "2:25.59", A: "2:32.29", BB: "2:45.79", B: "2:59.29" },
+  "boys|11-12|400 im scy": { AAAA: "4:42.79", AAA: "4:56.29", AA: "5:09.79", A: "5:23.19", BB: "5:50.09", B: "6:17.09" },
+  "boys|11-12|50 free lcm": { AAAA: "28.09", AAA: "29.39", AA: "30.69", A: "32.09", BB: "34.79", B: "37.39" },
+  "boys|11-12|100 free lcm": { AAAA: "1:01.59", AAA: "1:04.49", AA: "1:07.49", A: "1:10.39", BB: "1:16.19", B: "1:22.09" },
+  "boys|11-12|200 free lcm": { AAAA: "2:14.39", AAA: "2:20.79", AA: "2:27.19", A: "2:33.59", BB: "2:46.39", B: "2:59.19" },
+  "boys|11-12|400 free lcm": { AAAA: "4:45.89", AAA: "4:59.49", AA: "5:13.09", A: "5:26.69", BB: "5:53.89", B: "6:21.09" },
+  "boys|11-12|800 free lcm": { AAAA: "10:00.09", AAA: "10:28.69", AA: "10:57.29", A: "11:25.89", BB: "12:22.99", B: "13:20.19" },
+  "boys|11-12|1500 free lcm": { AAAA: "19:23.89", AAA: "20:19.29", AA: "21:14.69", A: "22:10.19", BB: "24:00.99", B: "25:51.79" },
+  "boys|11-12|50 back lcm": { AAAA: "32.59", AAA: "34.29", AA: "35.99", A: "37.69", BB: "41.09", B: "44.49" },
+  "boys|11-12|100 back lcm": { AAAA: "1:10.39", AAA: "1:14.29", AA: "1:18.09", A: "1:21.89", BB: "1:29.59", B: "1:37.19" },
+  "boys|11-12|200 back lcm": { AAAA: "2:32.19", AAA: "2:39.49", AA: "2:46.69", A: "2:53.99", BB: "3:08.49", B: "3:22.99" },
+  "boys|11-12|50 breast lcm": { AAAA: "36.09", AAA: "38.09", AA: "39.99", A: "41.99", BB: "45.89", B: "49.79" },
+  "boys|11-12|100 breast lcm": { AAAA: "1:18.99", AAA: "1:23.09", AA: "1:27.19", A: "1:31.29", BB: "1:39.59", B: "1:47.79" },
+  "boys|11-12|200 breast lcm": { AAAA: "2:50.99", AAA: "2:59.09", AA: "3:07.19", A: "3:15.39", BB: "3:31.59", B: "3:47.89" },
+  "boys|11-12|50 fly lcm": { AAAA: "30.29", AAA: "31.99", AA: "33.59", A: "35.29", BB: "38.69", B: "41.99" },
+  "boys|11-12|100 fly lcm": { AAAA: "1:07.79", AAA: "1:11.69", AA: "1:15.59", A: "1:19.49", BB: "1:27.29", B: "1:35.09" },
+  "boys|11-12|200 fly lcm": { AAAA: "2:33.59", AAA: "2:40.89", AA: "2:48.29", A: "2:55.59", BB: "3:10.19", B: "3:24.79" },
+  "boys|11-12|200 im lcm": { AAAA: "2:30.59", AAA: "2:38.29", AA: "2:45.99", A: "2:53.69", BB: "3:08.99", B: "3:24.39" },
+  "boys|11-12|400 im lcm": { AAAA: "5:28.39", AAA: "5:44.09", AA: "5:59.69", A: "6:15.39", BB: "6:46.59", B: "7:17.89" }
+};
+const motivationalOrder = ["AAAA", "AAA", "AA", "A", "BB", "B"];
+const pnsMeetStandards = [
+  { label: "Northwest Regional", cut: "BB", rank: 2 },
+  { label: "PNS Champs", cut: "B", rank: 1 }
+];
+const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
+
+function parseBestTimesInput(value) {
+  return value.split(/\r?\n/).map(line => {
+    const parts = line.split('|').map(part => part.trim());
+    if (!parts[0] || !parts[1]) return null;
+    return {
+      event: parts[0],
+      time: parts[1],
+      meet: parts[2] || '',
+      date: parts[3] || '',
+      source: parts[4] || '',
+      course: normalizeCourse(parts[0])
+    };
+  }).filter(Boolean);
+}
+
+function serializeBestTimes(times) {
+  return (times || []).map(t => [t.event, t.time, t.meet, t.date, t.source].filter(Boolean).join(' | ')).join('\n');
+}
+
+function bestTimesForSwimmer(sw) {
+  const rows = Array.isArray(sw.bestTimes) ? [...sw.bestTimes] : [];
+  if (sw.bestEvent && sw.bestTime && !rows.some(t => t.event === sw.bestEvent && t.time === sw.bestTime)) {
+    rows.unshift({ event: sw.bestEvent, time: sw.bestTime, meet: '', date: '', source: '', course: normalizeCourse(sw.bestEvent) });
+  }
+  return rows;
+}
+
+function renderBestTimesPicker() {
+  const select = document.getElementById('best-swimmer');
+  if (!select) return;
+  const previousValue = select.value;
+  if (!appState.swimmers.length) {
+    select.innerHTML = '<option value="">No swimmers saved</option>';
+    return;
+  }
+  select.innerHTML = appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('');
+  if (previousValue && appState.swimmers.some(sw => sw.id === previousValue)) select.value = previousValue;
+  select.onchange = () => renderBestTimes();
+}
+
+function renderBestTimes() {
+  const section = document.getElementById('best-results-section');
+  const select = document.getElementById('best-swimmer');
+  if (!section || !select) return;
+  const sw = appState.swimmers.find(s => s.id === select.value) || appState.swimmers[0];
+  if (!sw) {
+    section.innerHTML = '<div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>';
+    return;
+  }
+  const rows = bestTimesForSwimmer(sw).map(t => {
+    const pnsTier = classifyTime(t, sw);
+    const nationalStandard = classifyNationalMotivationalTime(t, sw);
+    const nextAchievement = nextAchievementDrop(t, sw);
+    return { ...t, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(pnsTier) };
+  }).sort(compareBestTimeRows);
+  if (!rows.length) {
+    section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no best times saved.</p><p style="font-size:13px">Edit the swimmer profile and add one time per line.</p></div>`;
+    return;
+  }
+  section.innerHTML = `
+    <div class="best-summary">
+      <div class="best-summary-card"><div class="label">Swimmer</div><div class="value" style="font-size:20px">${sw.name}</div></div>
+      <div class="best-summary-card"><div class="label">Best rows</div><div class="value">${rows.length}</div></div>
+      <div class="best-summary-card"><div class="label">Top nat. standard</div><div class="value">${rows[0]?.nationalStandard || 'NT'}</div></div>
+    </div>
+    <table class="times-table">
+      <thead><tr><th>Event</th><th>Best</th><th>Meet</th><th>PNS tier</th><th>Nat. standard</th><th>Drop to next</th><th>Qualifies to</th></tr></thead>
+      <tbody>
+        ${rows.map(row => `<tr>
+          <td>${row.event}</td>
+          <td><span class="time-val">${row.time}</span></td>
+          <td style="color:var(--muted);font-size:13px">${row.meet || '—'}${row.date ? ' · ' + row.date : ''}</td>
+          <td><span class="standard-pill ${row.pnsTier === 'Northwest Regional' ? 'top' : ''}">${row.pnsTier}</span></td>
+          <td><span class="standard-pill ${['AA','AAA','AAAA'].includes(row.nationalStandard) ? 'top' : ''}">${row.nationalStandard}</span></td>
+          <td><span class="time-val">${row.nextDrop}</span></td>
+          <td><div class="qual-list">${row.qualifies.map(q => `<span class="qual-chip">${q}</span>`).join('')}</div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <p class="source-note">Ranked by national motivational standard from AAAA down, then by the smallest drop needed for the next major achievement.</p>
+  `;
+}
+
+function renderStandardsPage() {
+  const section = document.getElementById('standards-results');
+  if (!section) return;
+  const division = document.getElementById('standards-division')?.value || 'boys';
+  const ageGroup = document.getElementById('standards-age')?.value || '11-12';
+  const rows = Object.entries(motivationalStandards)
+    .map(([key, cuts]) => {
+      const [group, age, eventKey] = key.split('|');
+      const course = eventKey.split(' ').at(-1).toUpperCase();
+      return { group, age, eventKey, course, event: formatStandardsEvent(eventKey), cuts };
+    })
+    .filter(row => row.group === division && row.age === ageGroup)
+    .sort(compareStandardRows);
+
+  if (!rows.length) {
+    section.innerHTML = '<div class="meet-empty">No standards are loaded for that selection yet.</div>';
+    return;
+  }
+
+  section.innerHTML = ['SCY','LCM'].map(course => {
+    const courseRows = rows.filter(row => row.course === course);
+    if (!courseRows.length) return '';
+    return `
+      <h3 class="standards-course-title">${course}</h3>
+      <table class="times-table standards-table">
+      <thead><tr><th>Event</th>${pnsMeetStandards.map(tier => `<th>${tier.label}</th>`).join('')}${nationalStandardsDisplayOrder.map(label => `<th>Nat. ${label}</th>`).join('')}</tr></thead>
+        <tbody>
+          ${courseRows.map(row => `
+            <tr>
+              <td>${row.event}</td>
+              ${pnsMeetStandards.map(tier => `<td><span class="time-val">${row.cuts[tier.cut] || '—'}</span></td>`).join('')}
+              ${nationalStandardsDisplayOrder.map(label => `<td><span class="time-val">${row.cuts[label] || '—'}</span></td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }).join('') + '<p class="source-note">LaneLine currently maps Northwest Regional to the loaded BB cut and PNS Champs to the loaded B cut, with national motivational cuts BB through AAAA shown alongside them.</p>';
+}
+
+function classifyTime(timeRow, sw) {
+  const seconds = parseRaceTime(timeRow.time);
+  const cuts = motivationalCutsFor(timeRow, sw);
+  if (!Number.isFinite(seconds)) return 'NT';
+  if (!cuts) return 'N/A';
+  const tier = pnsMeetStandards.find(item => seconds <= parseRaceTime(cuts[item.cut]));
+  return tier ? tier.label : '—';
+}
+
+function classifyNationalMotivationalTime(timeRow, sw) {
+  const seconds = parseRaceTime(timeRow.time);
+  const cuts = motivationalCutsFor(timeRow, sw);
+  if (!Number.isFinite(seconds)) return 'NT';
+  if (!cuts) return 'N/A';
+  const standard = motivationalOrder.find(label => seconds <= parseRaceTime(cuts[label]));
+  return standard || '—';
+}
+
+function achievementTargetsFor(timeRow, sw) {
+  const cuts = motivationalCutsFor(timeRow, sw);
+  if (!cuts) return [];
+  const targets = [
+    ...pnsMeetStandards.map(tier => ({ label: tier.label, seconds: parseRaceTime(cuts[tier.cut]) })),
+    ...nationalStandardsDisplayOrder.map(label => ({ label: `Nat. ${label}`, seconds: parseRaceTime(cuts[label]) }))
+  ].filter(target => Number.isFinite(target.seconds));
+  return targets
+    .filter((target, index, all) => all.findIndex(other => Math.abs(other.seconds - target.seconds) < 0.001) === index)
+    .sort((a, b) => b.seconds - a.seconds);
+}
+
+function nextAchievementDrop(timeRow, sw) {
+  const seconds = parseRaceTime(timeRow.time);
+  if (!Number.isFinite(seconds)) return { label: 'N/A', dropSeconds: Infinity };
+  const targets = achievementTargetsFor(timeRow, sw);
+  if (!targets.length) return { label: 'N/A', dropSeconds: Infinity };
+  const target = targets.find(item => seconds > item.seconds + 0.001);
+  if (!target) return { label: 'Top achievement', dropSeconds: seconds - targets[targets.length - 1].seconds };
+  const drop = Math.max(0, seconds - target.seconds);
+  return { label: `${formatDrop(drop)} to ${target.label}`, dropSeconds: drop };
+}
+
+function compareBestTimeRows(a, b) {
+  const rankDifference = nationalStandardRank(b.nationalStandard) - nationalStandardRank(a.nationalStandard);
+  if (rankDifference) return rankDifference;
+  const dropDifference = a.nextDropSeconds - b.nextDropSeconds;
+  if (Number.isFinite(dropDifference) && Math.abs(dropDifference) > 0.001) return dropDifference;
+  return String(a.event).localeCompare(String(b.event));
+}
+
+function nationalStandardRank(label) {
+  return ['—','N/A','NT','B','BB','A','AA','AAA','AAAA'].indexOf(label);
+}
+
+function compareStandardRows(a, b) {
+  const courseDifference = a.course.localeCompare(b.course);
+  if (courseDifference) return courseDifference;
+  const eventA = parseStandardsEvent(a.eventKey);
+  const eventB = parseStandardsEvent(b.eventKey);
+  return eventA.stroke.localeCompare(eventB.stroke) || eventA.distance - eventB.distance;
+}
+
+function parseStandardsEvent(eventKey) {
+  const parts = eventKey.split(' ');
+  return { distance: parseInt(parts[0], 10) || 0, stroke: parts.slice(1, -1).join(' ') };
+}
+
+function formatStandardsEvent(eventKey) {
+  return eventKey
+    .replace(/\bscy\b|\blcm\b/g, '')
+    .trim()
+    .split(' ')
+    .map(part => part === 'im' ? 'IM' : part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function motivationalCutsFor(timeRow, sw) {
+  const group = sw.division === 'boys' ? 'boys' : 'girls';
+  const ageGroup = motivationalAgeGroup(sw.ageGroup);
+  const key = normalizeEventKey(timeRow.event);
+  return motivationalStandards[`${group}|${ageGroup}|${key}`];
+}
+
+function qualifyingMeets(standard) {
+  if (!standard || standard === 'NT' || standard === 'N/A' || standard === '—') return ['Time trial'];
+  const rank = standardRank(standard);
+  return pnsMeetStandards.filter(tier => rank >= tier.rank).map(tier => tier.label);
+}
+
+function standardRank(label) {
+  if (label === 'Northwest Regional') return 2;
+  if (label === 'PNS Champs') return 1;
+  return 0;
+}
+
+function compareStandards(a, b) {
+  return standardRank(a) - standardRank(b);
+}
+
+function normalizeCourse(eventName) {
+  const upper = eventName.toUpperCase();
+  if (upper.includes('LCM')) return 'LCM';
+  if (upper.includes('SCM')) return 'SCM';
+  return 'SCY';
+}
+
+function normalizeEventKey(eventName) {
+  const normalized = eventName.toLowerCase()
+    .replace(/freestyle/g, 'free')
+    .replace(/individual medley/g, 'im')
+    .replace(/yards|yard|meters|meter/g, '')
+    .replace(/[^\w]+/g, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+  return /\b(scy|scm|lcm)\b/.test(normalized) ? normalized : `${normalized} scy`;
+}
+
+function motivationalAgeGroup(ageGroup) {
+  const age = parseInt(String(ageGroup || '').match(/\d+/)?.[0], 10);
+  if (!Number.isFinite(age)) return String(ageGroup || '').trim();
+  if (age <= 10) return "10&u";
+  if (age <= 12) return "11-12";
+  if (age <= 14) return "13-14";
+  if (age <= 16) return "15-16";
+  return "17-18";
+}
+
+function parseRaceTime(value) {
+  const parts = String(value).trim().replace(/[^\d:.]/g, '').split(':').map(Number);
+  if (parts.some(n => !Number.isFinite(n))) return NaN;
+  if (parts.length === 1) return parts[0];
+  if (parts.length === 2) return parts[0] * 60 + parts[1];
+  return parts[0] * 3600 + parts[1] * 60 + parts[2];
+}
+
+function formatDrop(seconds) {
+  const rounded = Math.round(seconds * 100) / 100;
+  if (rounded < 60) return `${rounded.toFixed(2)}s`;
+  const minutes = Math.floor(rounded / 60);
+  const remainder = (rounded - minutes * 60).toFixed(2).padStart(5, '0');
+  return `${minutes}:${remainder}`;
+}
+
+// ─── MEET FINDER ──────────────────────────────────────────
+function searchMeet() {
+  const swimmerName = document.getElementById('meet-swimmer').value.trim();
+  if (!swimmerName) {
+    document.getElementById('meet-error-text').textContent = 'Please enter a swimmer name.';
+    document.getElementById('meet-error-box').style.display = 'block';
+    return;
+  }
+  document.getElementById('meet-error-box').style.display = 'none';
+  document.getElementById('meet-results-section').style.display = 'block';
+  document.getElementById('meet-results-content').innerHTML = '<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">Meet lookup is not connected in this local version.</p><p style="font-size:13px">Use swimmer profiles to keep race details organized while live lookup is offline.</p></div>';
+}
+function showMeetResults(data,query) {
+  const section=document.getElementById('meet-results-section');
+  section.style.display='block';
+  if(!data.found||(!data.times?.length&&!data.best_times?.length)){
+    document.getElementById('meet-results-content').innerHTML=`<div class="meet-empty"><p style="font-size:22px;margin-bottom:8px">🔍</p><p style="font-weight:500;margin-bottom:6px">No results found for "${query}"</p><p style="font-size:13px">${data.notes||'Try adding a team name or meet name.'}</p></div>`;
+    return;
+  }
+  let html='';
+  if(data.best_times?.length){
+    html+=`<p style="font-size:12px;font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best times</p>`;
+    html+=`<table class="times-table" style="margin-bottom:1.5rem"><thead><tr><th>Event</th><th>Time</th><th>Meet</th><th>When</th></tr></thead><tbody>`;
+    data.best_times.forEach(t=>{html+=`<tr><td>${t.event||'—'}</td><td><span class="time-val">${t.time||'—'}</span></td><td style="color:var(--muted);font-size:13px">${t.meet||'—'}</td><td style="color:var(--muted);font-size:13px">${t.date||'—'}</td></tr>`;});
+    html+=`</tbody></table>`;
+  }
+  if(data.times?.length){
+    html+=`<p style="font-size:12px;font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">All results</p>`;
+    html+=`<table class="times-table"><thead><tr><th>Event</th><th>Time</th><th>Course</th><th>Meet</th><th>Standard</th></tr></thead><tbody>`;
+    data.times.forEach(t=>{html+=`<tr><td>${t.event||'—'}</td><td><span class="time-val">${t.time||'—'}</span></td><td style="font-size:12px;font-family:'DM Mono',monospace;color:var(--muted)">${t.course||'—'}</td><td style="color:var(--muted);font-size:13px">${t.meet||'—'}${t.date?' · '+t.date:''}</td><td>${t.standard?`<span class="std-badge">${t.standard}</span>`:'—'}</td></tr>`;});
+    html+=`</tbody></table>`;
+  }
+  if(data.notes) html+=`<p class="source-note">${data.notes}</p>`;
+  if(data.sources_checked?.length) html+=`<p class="source-note">Sources: ${data.sources_checked.join(', ')}</p>`;
+  document.getElementById('meet-results-content').innerHTML=html;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "lane-line",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lane Line swim time checker with adjustable benchmark cuts.",
+  "scripts": {
+    "start": "node server.js 5180",
+    "dev": "node server.js 5180"
+  }
+}
