@@ -451,14 +451,6 @@ footer span{color:var(--lane)}
         <label>Team / club</label>
         <input type="text" id="sw-team" placeholder="e.g. Lakeside Swim Club"/>
       </div>
-      <div class="field">
-        <label>Best event</label>
-        <input type="text" id="sw-best-event" placeholder="e.g. 100 Free SCY"/>
-      </div>
-      <div class="field">
-        <label>Best time</label>
-        <input type="text" id="sw-best-time" placeholder="e.g. 54.32"/>
-      </div>
       <div class="field full">
         <label>All best times</label>
         <textarea id="sw-best-times" rows="5" placeholder="100 Free SCY | 54.32 | Winter Classic | Jan 2026 | USA Swimming&#10;50 Free SCY | 24.88 | Districts | Feb 2026 | Meet Mobile"></textarea>
@@ -475,7 +467,7 @@ footer span{color:var(--lane)}
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
-  swimmers: [], // [{id, name, ageGroup, stroke, team, bestEvent, bestTime}]
+  swimmers: [], // [{id, name, ageGroup, stroke, team, bestTimes}]
   selectedSwimmerId: null,
 };
 
@@ -496,8 +488,6 @@ const ethanWangUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Pacific Dragons Swim Team',
-  bestEvent: '50 Free SCY',
-  bestTime: '30.14',
   usaSwimmingMemberId: '9DCE8A4B52EF4A',
   bestTimes: [
     { event: '50 Free SCY', time: '30.14', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 22, 2025', source: 'USA Swimming' },
@@ -545,8 +535,6 @@ const quinlanTianUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Pacific Dragons Swim Team',
-  bestEvent: '50 Free SCY',
-  bestTime: '25.80',
   usaSwimmingMemberId: '529E741DB1114E',
   bestTimes: [
     { event: '100 Back LCM', time: '1:17.36', meet: '2026 PN VAST Summer Sprints', date: 'Jun 6, 2026', source: 'USA Swimming', course: 'LCM' },
@@ -586,8 +574,6 @@ const irisWangUsaSwimmingProfile = {
   division: 'girls',
   stroke: '',
   team: 'Pacific Dragons Swim Team',
-  bestEvent: '50 Free SCY',
-  bestTime: '36.64',
   usaSwimmingMemberId: 'C8B64773962AF0',
   bestTimes: [
     { event: '100 Back LCM', time: '1:37.59', meet: '2026 CAN Rapids West Coast Open', date: 'May 2, 2026', source: 'USA Swimming', course: 'LCM' },
@@ -625,8 +611,6 @@ const alexWangUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Bellevue Club Swim Team',
-  bestEvent: '',
-  bestTime: '',
   usaSwimmingMemberId: '03A64F943FE144',
   bestTimes: []
 };
@@ -638,8 +622,6 @@ const aditeyaVermaUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
-  bestEvent: '100 Back LCM',
-  bestTime: '1:27.48',
   usaSwimmingMemberId: '08104D29B8F2BE',
   bestTimes: [
     { event: '100 Back LCM', time: '1:27.48', meet: '', date: '', source: 'USA Swimming', course: 'LCM' }
@@ -653,8 +635,6 @@ const jaydenSunUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Olympic Cascade Aquatics',
-  bestEvent: '100 Back LCM',
-  bestTime: '1:12.21',
   usaSwimmingMemberId: '7EFADA7A593345',
   bestTimes: [
     { event: '100 Back LCM', time: '1:12.21', meet: '', date: '', source: 'USA Swimming', course: 'LCM' }
@@ -668,8 +648,6 @@ const andrewOuyangUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
-  bestEvent: '',
-  bestTime: '',
   usaSwimmingMemberId: '1D0A99255F1747',
   bestTimes: []
 };
@@ -681,8 +659,6 @@ const maxSunUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
-  bestEvent: '',
-  bestTime: '',
   usaSwimmingMemberId: 'F889DA85F5164C',
   bestTimes: []
 };
@@ -694,8 +670,6 @@ const danSunUsaSwimmingProfile = {
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
-  bestEvent: '',
-  bestTime: '',
   usaSwimmingMemberId: '9C37DAB7527E4C',
   bestTimes: []
 };
@@ -751,11 +725,6 @@ async function refreshSwimmerFromUsaSwimming(memberId) {
     const data = await response.json();
     if (!Array.isArray(data.bestTimes) || !data.bestTimes.length) return;
     sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], data.bestTimes);
-    const first = sw.bestTimes[0];
-    if (first) {
-      sw.bestEvent = first.event;
-      sw.bestTime = first.time;
-    }
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
     if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
@@ -916,12 +885,10 @@ function openAddSwimmerModal(id) {
       document.getElementById('sw-division').value = sw.division || 'girls';
       document.getElementById('sw-stroke').value = sw.stroke || '';
       document.getElementById('sw-team').value = sw.team || '';
-      document.getElementById('sw-best-event').value = sw.bestEvent || '';
-      document.getElementById('sw-best-time').value = sw.bestTime || '';
       document.getElementById('sw-best-times').value = serializeBestTimes(sw.bestTimes || []);
     }
   } else {
-    ['sw-name','sw-team','sw-best-event','sw-best-time'].forEach(id => document.getElementById(id).value = '');
+    ['sw-name','sw-team'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('sw-best-times').value = '';
     document.getElementById('sw-age-group').value = '';
     document.getElementById('sw-division').value = 'girls';
@@ -946,8 +913,6 @@ function saveSwimmer() {
     division: document.getElementById('sw-division').value,
     stroke: document.getElementById('sw-stroke').value,
     team: document.getElementById('sw-team').value.trim(),
-    bestEvent: document.getElementById('sw-best-event').value.trim(),
-    bestTime: document.getElementById('sw-best-time').value.trim(),
     bestTimes: parseBestTimesInput(document.getElementById('sw-best-times').value),
   };
   if (editingSwimmerId) {
@@ -986,7 +951,6 @@ function renderProfilesPage() {
       <div class="profile-meta">${[sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet'}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
-      ${sw.bestTime ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">Best: <strong style="color:var(--ink);font-family:'DM Mono',monospace">${sw.bestTime}</strong>${sw.bestEvent?' · '+sw.bestEvent:''}</div>` : ''}
       <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
         <button class="btn-ghost" style="font-size:12px" onclick="openAddSwimmerModal('${sw.id}')">Edit</button>
         <button class="btn-ghost" style="font-size:12px;color:var(--red)" onclick="deleteSwimmer('${sw.id}')">Remove</button>
@@ -1091,9 +1055,6 @@ function serializeBestTimes(times) {
 
 function bestTimesForSwimmer(sw) {
   const rows = Array.isArray(sw.bestTimes) ? [...sw.bestTimes] : [];
-  if (sw.bestEvent && sw.bestTime && !rows.some(t => t.event === sw.bestEvent && t.time === sw.bestTime)) {
-    rows.unshift({ event: sw.bestEvent, time: sw.bestTime, meet: '', date: '', source: '', course: normalizeCourse(sw.bestEvent) });
-  }
   return rows;
 }
 
