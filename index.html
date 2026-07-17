@@ -51,8 +51,8 @@ nav{background:var(--navy);padding:0 1.5rem;height:56px;display:flex;align-items
 
 /* PAGE TABS */
 .page-tabs-wrap{background:var(--navy);border-bottom:0.5px solid rgba(255,255,255,0.08);position:sticky;top:56px;z-index:100}
-.page-tabs{max-width:940px;margin:0 auto;display:flex;padding:0 1.5rem}
-.page-tab{flex:1;max-width:200px;padding:14px 12px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:color .15s}
+.page-tabs{max-width:1100px;margin:0 auto;display:flex;padding:0 1.5rem}
+.page-tab{flex:1;max-width:180px;padding:14px 10px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:color .15s}
 .page-tab svg{width:15px;height:15px}
 .page-tab.active{color:#fff;border-bottom-color:var(--lane)}
 .page-tab:not(.active):hover{color:rgba(255,255,255,0.75)}
@@ -142,8 +142,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .best-summary-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}
 .best-summary-card .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .best-summary-card .value{font-size:26px;font-weight:300;color:var(--navy)}
+.growth-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.growth-chart{width:100%;height:auto;display:block;background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.growth-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.growth-legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.growth-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.growth-note{font-size:12px;color:var(--muted);margin-top:8px}
 @media(max-width:900px){.wide-page{width:calc(100vw - 24px)}}
-@media(max-width:620px){.best-tools,.best-summary,.standards-toolbar{grid-template-columns:1fr}.times-table{font-size:13px}}
+@media(max-width:620px){.best-tools,.best-summary,.standards-toolbar,.growth-toolbar{grid-template-columns:1fr}.times-table{font-size:13px}.page-tabs{overflow-x:auto;justify-content:flex-start}.page-tab{min-width:138px}}
 
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
@@ -230,6 +236,10 @@ footer span{color:var(--lane)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 21h8m-7-4h6m-8-4h10l1-9H6l1 9zm-3-7H2a4 4 0 004 4m12-4h2a4 4 0 01-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Best times
     </button>
+    <button class="page-tab" id="ptab-growth" onclick="showPage('growth')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Growth
+    </button>
     <button class="page-tab" id="ptab-standards" onclick="showPage('standards')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
       PNS standards
@@ -313,6 +323,34 @@ footer span{color:var(--lane)}
     </div>
     <div class="card-section" id="best-results-section">
       <div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GROWTH PAGE ══ -->
+<div id="growth-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Growth</div>
+      <div class="meet-disclaimer"><p>Growth graphs use dated time rows saved on swimmer profiles. Lines rise as times get faster, with green segments for drops and red segments for added time.</p></div>
+      <div class="growth-toolbar">
+        <div class="field">
+          <label for="growth-swimmer">Swimmer</label>
+          <select id="growth-swimmer"></select>
+        </div>
+        <div class="field">
+          <label for="growth-event">Event</label>
+          <select id="growth-event"></select>
+        </div>
+      </div>
+    </div>
+    <div class="card-section">
+      <div class="section-label">All events</div>
+      <div id="growth-main-chart"></div>
+    </div>
+    <div class="card-section">
+      <div class="section-label">Selected event</div>
+      <div id="growth-event-chart"></div>
     </div>
   </div>
 </div>
@@ -774,6 +812,7 @@ async function refreshSwimmerBestTimes(profile) {
     renderProfilesPage();
     const selectedBeforeRefresh = document.getElementById('best-swimmer')?.value;
     renderBestTimesPicker();
+    renderGrowthPickers();
     const select = document.getElementById('best-swimmer');
     if (select && selectedBeforeRefresh && appState.swimmers.some(s => s.id === selectedBeforeRefresh)) select.value = selectedBeforeRefresh;
     if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
@@ -802,16 +841,21 @@ seedUsaSwimmingProfiles();
 updateNavAccount();
 renderProfilesPage();
 renderBestTimesPicker();
+renderGrowthPickers();
 refreshSeededSwimmersFromUsaSwimming();
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
-  ['meet','best','standards','zone','profiles'].forEach(p => {
+  ['meet','best','growth','standards','zone','profiles'].forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
     document.getElementById('ptab-'+p).classList.toggle('active', p === page);
   });
   if (page === 'best') {
     renderBestTimesPicker();
     renderBestTimes();
+  }
+  if (page === 'growth') {
+    renderGrowthPickers();
+    renderGrowthPage();
   }
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
@@ -972,6 +1016,7 @@ function saveSwimmer() {
   saveState();
   renderProfilesPage();
   renderBestTimesPicker();
+  renderGrowthPickers();
   if (sw.swimcloudId || sw.usaSwimmingMemberId) refreshSwimmerBestTimes(sw);
   closeModal('add-swimmer-modal');
 }
@@ -984,6 +1029,7 @@ function deleteSwimmer(id) {
   saveState();
   renderProfilesPage();
   renderBestTimesPicker();
+  renderGrowthPickers();
 }
 
 function renderProfilesPage() {
@@ -1173,6 +1219,143 @@ function renderBestTimes() {
     </table>
     <p class="source-note">Ranked by national motivational standard from AAAA down, then by the smallest drop needed for the next major achievement.</p>
   `;
+}
+
+// ─── GROWTH CHARTS ────────────────────────────────────────
+const chartPalette = ['#1A6B8A', '#0E8A5F', '#7C3AED', '#D97706', '#BE123C', '#2563EB', '#0891B2', '#9333EA'];
+const worldRecordEstimates = {
+  '50 free scy': 17.63, '100 free scy': 39.90, '200 free scy': 1 * 60 + 28.81, '500 free scy': 4 * 60 + 6.32, '1000 free scy': 8 * 60 + 33.93, '1650 free scy': 14 * 60 + 12.08,
+  '50 back scy': 20.20, '100 back scy': 43.35, '200 back scy': 1 * 60 + 35.73, '50 breast scy': 22.58, '100 breast scy': 49.53, '200 breast scy': 1 * 60 + 47.91,
+  '50 fly scy': 19.49, '100 fly scy': 42.80, '200 fly scy': 1 * 60 + 37.35, '100 im scy': 49.28, '200 im scy': 1 * 60 + 36.34, '400 im scy': 3 * 60 + 28.82,
+  '50 free lcm': 20.91, '100 free lcm': 46.40, '200 free lcm': 1 * 60 + 42.00, '400 free lcm': 3 * 60 + 39.96, '800 free lcm': 7 * 60 + 32.12, '1500 free lcm': 14 * 60 + 30.67,
+  '50 back lcm': 23.55, '100 back lcm': 51.60, '200 back lcm': 1 * 60 + 51.92, '50 breast lcm': 25.95, '100 breast lcm': 56.88, '200 breast lcm': 2 * 60 + 5.48,
+  '50 fly lcm': 22.27, '100 fly lcm': 49.45, '200 fly lcm': 1 * 60 + 50.34, '200 im lcm': 1 * 60 + 54.00, '400 im lcm': 4 * 60 + 2.50
+};
+
+function renderGrowthPickers() {
+  const swimmerSelect = document.getElementById('growth-swimmer');
+  const eventSelect = document.getElementById('growth-event');
+  if (!swimmerSelect || !eventSelect) return;
+  const previousSwimmer = swimmerSelect.value;
+  const previousEvent = eventSelect.value;
+  swimmerSelect.innerHTML = appState.swimmers.length ? appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('') : '<option value="">No swimmers saved</option>';
+  if (previousSwimmer && appState.swimmers.some(sw => sw.id === previousSwimmer)) swimmerSelect.value = previousSwimmer;
+  const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
+  const events = growthEventsForSwimmer(sw);
+  eventSelect.innerHTML = events.length ? events.map(event => `<option value="${event}">${event}</option>`).join('') : '<option value="">No dated events</option>';
+  if (previousEvent && events.includes(previousEvent)) eventSelect.value = previousEvent;
+  swimmerSelect.onchange = () => {
+    renderGrowthPickers();
+    renderGrowthPage();
+  };
+  eventSelect.onchange = () => renderGrowthPage();
+}
+
+function renderGrowthPage() {
+  const swimmerSelect = document.getElementById('growth-swimmer');
+  const eventSelect = document.getElementById('growth-event');
+  const main = document.getElementById('growth-main-chart');
+  const detail = document.getElementById('growth-event-chart');
+  if (!swimmerSelect || !eventSelect || !main || !detail) return;
+  const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
+  if (!sw) {
+    main.innerHTML = '<div class="meet-empty">Add a swimmer with dated times to see growth.</div>';
+    detail.innerHTML = '';
+    return;
+  }
+  const groups = groupGrowthRows(sw);
+  const events = Object.keys(groups);
+  if (!events.length) {
+    main.innerHTML = `<div class="meet-empty">${sw.name} needs dated time rows before growth can be graphed.</div>`;
+    detail.innerHTML = '';
+    return;
+  }
+  const selectedEvent = eventSelect.value && groups[eventSelect.value] ? eventSelect.value : events[0];
+  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', title: `${sw.name} growth by event` });
+  detail.innerHTML = renderGrowthChart(groups[selectedEvent].map(row => ({ ...row, event: selectedEvent })), { mode: 'event', title: selectedEvent });
+}
+
+function groupGrowthRows(sw) {
+  return bestTimesForSwimmer(sw)
+    .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event) }))
+    .filter(row => Number.isFinite(row.seconds) && row.dateValue && row.event)
+    .sort((a, b) => a.dateValue - b.dateValue)
+    .reduce((groups, row) => {
+      (groups[row.event] ||= []).push(row);
+      return groups;
+    }, {});
+}
+
+function growthEventsForSwimmer(sw) {
+  return Object.keys(groupGrowthRows(sw)).sort((a, b) => a.localeCompare(b));
+}
+
+function renderGrowthChart(rows, options) {
+  const width = 720;
+  const height = options.mode === 'all' ? 330 : 300;
+  const pad = { left: 62, right: 24, top: 28, bottom: 48 };
+  if (!rows.length) return '<div class="meet-empty">No dated rows available for this graph.</div>';
+  const dates = rows.map(row => row.dateValue.getTime());
+  const minDate = Math.min(...dates);
+  const maxDate = Math.max(...dates);
+  const slowest = Math.max(...rows.map(row => row.seconds));
+  const fastestRecord = Math.min(...rows.map(row => worldRecordSecondsForEvent(row.event, row.seconds)));
+  const topSeconds = Math.min(fastestRecord, Math.min(...rows.map(row => row.seconds)) * 0.92);
+  const bottomSeconds = slowest;
+  const xFor = row => pad.left + ((row.dateValue.getTime() - minDate) / Math.max(1, maxDate - minDate)) * (width - pad.left - pad.right);
+  const yFor = seconds => pad.top + ((seconds - topSeconds) / Math.max(1, bottomSeconds - topSeconds)) * (height - pad.top - pad.bottom);
+  const grouped = rows.reduce((groups, row) => {
+    (groups[row.event] ||= []).push(row);
+    return groups;
+  }, {});
+  const eventNames = Object.keys(grouped);
+  const recordY = yFor(topSeconds);
+  const slowY = yFor(bottomSeconds);
+  const lines = eventNames.map((event, index) => {
+    const eventRows = grouped[event].sort((a, b) => a.dateValue - b.dateValue);
+    const color = chartPalette[index % chartPalette.length];
+    const segments = eventRows.slice(1).map((row, rowIndex) => {
+      const prev = eventRows[rowIndex];
+      const stroke = row.seconds <= prev.seconds ? 'var(--green)' : 'var(--red)';
+      return `<line x1="${xFor(prev)}" y1="${yFor(prev.seconds)}" x2="${xFor(row)}" y2="${yFor(row.seconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/>`;
+    }).join('');
+    const points = eventRows.map(row => `<circle cx="${xFor(row)}" cy="${yFor(row.seconds)}" r="4" fill="${color}"><title>${event}: ${row.time} on ${row.date || 'unknown date'}</title></circle>`).join('');
+    return segments + points;
+  }).join('');
+  const legend = eventNames.map((event, index) => `<span><i style="background:${chartPalette[index % chartPalette.length]}"></i>${event}</span>`).join('');
+  return `
+    <svg class="growth-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.title}">
+      <line x1="${pad.left}" y1="${recordY}" x2="${width - pad.right}" y2="${recordY}" stroke="rgba(11,31,58,.18)" stroke-dasharray="4 5"/>
+      <line x1="${pad.left}" y1="${slowY}" x2="${width - pad.right}" y2="${slowY}" stroke="rgba(11,31,58,.12)"/>
+      <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
+      <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
+      <text x="12" y="${recordY + 4}" font-size="11" fill="#5A7089">World record</text>
+      <text x="12" y="${slowY - 6}" font-size="11" fill="#5A7089">Slowest</text>
+      <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(minDate))}</text>
+      <text x="${width - pad.right - 70}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(maxDate))}</text>
+      ${lines}
+    </svg>
+    ${options.mode === 'all' ? `<div class="growth-legend">${legend}</div>` : '<div class="growth-legend"><span><i style="background:var(--green)"></i>Dropped time</span><span><i style="background:var(--red)"></i>Added time</span></div>'}
+    <p class="growth-note">Higher is faster. Top line is the world-record reference when LaneLine has that event; otherwise it uses a fast reference line.</p>
+  `;
+}
+
+function normalizeGrowthEvent(eventName) {
+  return String(eventName || '').replace(/\s+/g, ' ').trim();
+}
+
+function worldRecordSecondsForEvent(eventName, swimmerSeconds) {
+  const key = normalizeEventKey(eventName);
+  return worldRecordEstimates[key] || swimmerSeconds * 0.72;
+}
+
+function parseGrowthDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatGrowthDate(date) {
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
 function renderStandardsPage() {
