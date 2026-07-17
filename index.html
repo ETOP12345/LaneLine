@@ -1331,45 +1331,57 @@ function renderGrowthChart(rows, options) {
   const dates = rows.map(row => row.dateValue.getTime());
   const minDate = Math.min(...dates);
   const maxDate = Math.max(...dates);
-  const slowest = Math.max(...rows.map(row => row.seconds));
-  const fastestRecord = Math.min(...rows.map(row => worldRecordSecondsForEvent(row.event, row.seconds)));
-  const topSeconds = Math.min(fastestRecord, Math.min(...rows.map(row => row.seconds)) * 0.92);
-  const bottomSeconds = slowest;
   const xFor = row => pad.left + ((row.dateValue.getTime() - minDate) / Math.max(1, maxDate - minDate)) * (width - pad.left - pad.right);
-  const yFor = seconds => pad.top + ((seconds - topSeconds) / Math.max(1, bottomSeconds - topSeconds)) * (height - pad.top - pad.bottom);
   const grouped = rows.reduce((groups, row) => {
     (groups[row.event] ||= []).push(row);
     return groups;
   }, {});
   const eventNames = Object.keys(grouped);
-  const recordY = yFor(topSeconds);
-  const slowY = yFor(bottomSeconds);
-  const lines = eventNames.map((event, index) => {
+  const growthRows = eventNames.flatMap(event => {
     const eventRows = grouped[event].sort((a, b) => a.dateValue - b.dateValue);
+    const baseline = eventRows[0].seconds;
+    const recordGrowth = Math.max(0, baseline - worldRecordSecondsForEvent(event, baseline));
+    return eventRows.map(row => ({
+      ...row,
+      growthSeconds: baseline - row.seconds,
+      recordGrowth
+    }));
+  });
+  const maxActualGrowth = Math.max(0, ...growthRows.map(row => row.growthSeconds));
+  const minActualGrowth = Math.min(0, ...growthRows.map(row => row.growthSeconds));
+  const selectedRecordGrowth = options.mode === 'event' ? Math.max(...growthRows.map(row => row.recordGrowth)) : 0;
+  const topGrowth = Math.max(maxActualGrowth, selectedRecordGrowth || 0, 1);
+  const bottomGrowth = Math.min(minActualGrowth, 0);
+  const yFor = growth => pad.top + ((topGrowth - growth) / Math.max(1, topGrowth - bottomGrowth)) * (height - pad.top - pad.bottom);
+  const baselineY = yFor(0);
+  const recordY = yFor(selectedRecordGrowth);
+  const lines = eventNames.map((event, index) => {
+    const eventRows = growthRows.filter(row => row.event === event).sort((a, b) => a.dateValue - b.dateValue);
     const color = chartPalette[index % chartPalette.length];
     const segments = eventRows.slice(1).map((row, rowIndex) => {
       const prev = eventRows[rowIndex];
-      const stroke = row.seconds <= prev.seconds ? 'var(--green)' : 'var(--red)';
-      return `<line x1="${xFor(prev)}" y1="${yFor(prev.seconds)}" x2="${xFor(row)}" y2="${yFor(row.seconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/>`;
+      const stroke = row.growthSeconds >= prev.growthSeconds ? 'var(--green)' : 'var(--red)';
+      return `<line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/>`;
     }).join('');
-    const points = eventRows.map(row => `<circle cx="${xFor(row)}" cy="${yFor(row.seconds)}" r="4" fill="${color}"><title>${event}: ${row.time} on ${row.date || 'unknown date'}</title></circle>`).join('');
+    const points = eventRows.map(row => `<circle cx="${xFor(row)}" cy="${yFor(row.growthSeconds)}" r="4" fill="${color}"><title>${event}: ${formatSignedGrowth(row.growthSeconds)} from start, ${row.time} on ${row.date || 'unknown date'}</title></circle>`).join('');
     return segments + points;
   }).join('');
   const legend = eventNames.map((event, index) => `<span><i style="background:${chartPalette[index % chartPalette.length]}"></i>${event}</span>`).join('');
   return `
     <svg class="growth-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.title}">
-      <line x1="${pad.left}" y1="${recordY}" x2="${width - pad.right}" y2="${recordY}" stroke="rgba(11,31,58,.18)" stroke-dasharray="4 5"/>
-      <line x1="${pad.left}" y1="${slowY}" x2="${width - pad.right}" y2="${slowY}" stroke="rgba(11,31,58,.12)"/>
+      ${options.mode === 'event' ? `<line x1="${pad.left}" y1="${recordY}" x2="${width - pad.right}" y2="${recordY}" stroke="rgba(11,31,58,.18)" stroke-dasharray="4 5"/>` : ''}
+      <line x1="${pad.left}" y1="${baselineY}" x2="${width - pad.right}" y2="${baselineY}" stroke="rgba(11,31,58,.12)"/>
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
       <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
-      <text x="12" y="${recordY + 4}" font-size="11" fill="#5A7089">World record</text>
-      <text x="12" y="${slowY - 6}" font-size="11" fill="#5A7089">Slowest</text>
+      ${options.mode === 'event' ? `<text x="12" y="${recordY + 4}" font-size="11" fill="#5A7089">World record</text>` : `<text x="12" y="${pad.top + 4}" font-size="11" fill="#5A7089">Most drop</text>`}
+      <text x="12" y="${baselineY - 6}" font-size="11" fill="#5A7089">Start</text>
+      <text x="12" y="${height - pad.bottom - 6}" font-size="11" fill="#5A7089">${formatSignedGrowth(bottomGrowth)}</text>
       <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(minDate))}</text>
       <text x="${width - pad.right - 70}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(maxDate))}</text>
       ${lines}
     </svg>
     ${options.mode === 'all' ? `<div class="growth-legend">${legend}</div>` : '<div class="growth-legend"><span><i style="background:var(--green)"></i>Dropped time</span><span><i style="background:var(--red)"></i>Added time</span></div>'}
-    <p class="growth-note">Higher is faster. Top line is the world-record reference when LaneLine has that event; otherwise it uses a fast reference line.</p>
+    <p class="growth-note">Higher means more seconds dropped from that event's first dated swim. All events start together at 0.00s.</p>
   `;
 }
 
@@ -1389,6 +1401,11 @@ function parseGrowthDate(value) {
 
 function formatGrowthDate(date) {
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function formatSignedGrowth(seconds) {
+  if (Math.abs(seconds) < 0.005) return '0.00s';
+  return `${seconds > 0 ? '+' : ''}${seconds.toFixed(2)}s`;
 }
 
 function renderStandardsPage() {
