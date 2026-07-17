@@ -134,7 +134,10 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .dashboard-frame{width:100%;min-height:820px;border:0;border-radius:var(--radius);background:var(--chalk)}
 .qual-list{display:flex;flex-wrap:wrap;gap:6px}
 .qual-chip{font-size:11px;background:var(--foam);color:var(--pool);border:0.5px solid rgba(26,107,138,.2);padding:3px 8px;border-radius:99px}
-.best-tools{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+.best-tools{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:end}
+.course-toggle{display:inline-flex;align-items:center;background:var(--chalk);border:0.5px solid var(--border);border-radius:8px;padding:3px;min-height:39px}
+.course-toggle button{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);background:none;border:0;border-radius:6px;padding:7px 10px;cursor:pointer;min-width:46px}
+.course-toggle button.active{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(11,31,58,.08)}
 .best-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem}
 .best-summary-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}
 .best-summary-card .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
@@ -297,6 +300,13 @@ footer span{color:var(--lane)}
         <div class="field">
           <label for="best-swimmer">Swimmer</label>
           <select id="best-swimmer"></select>
+        </div>
+        <div class="field">
+          <label>Course</label>
+          <div class="course-toggle" aria-label="Best times course">
+            <button type="button" id="best-course-scy" class="active" onclick="setBestTimesCourse('SCY')">SCY</button>
+            <button type="button" id="best-course-lcm" onclick="setBestTimesCourse('LCM')">LCM</button>
+          </div>
         </div>
         <button class="btn-secondary" onclick="renderBestTimes()">Load bests</button>
       </div>
@@ -1033,6 +1043,7 @@ const pnsMeetStandards = [
   { label: "PNS Champs", cut: "B", rank: 1 }
 ];
 const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
+let bestTimesCourse = 'SCY';
 
 function parseBestTimesInput(value) {
   return value.split(/\r?\n/).map(line => {
@@ -1071,6 +1082,13 @@ function renderBestTimesPicker() {
   select.onchange = () => renderBestTimes();
 }
 
+function setBestTimesCourse(course) {
+  bestTimesCourse = course === 'LCM' ? 'LCM' : 'SCY';
+  document.getElementById('best-course-scy')?.classList.toggle('active', bestTimesCourse === 'SCY');
+  document.getElementById('best-course-lcm')?.classList.toggle('active', bestTimesCourse === 'LCM');
+  renderBestTimes();
+}
+
 function renderBestTimes() {
   const section = document.getElementById('best-results-section');
   const select = document.getElementById('best-swimmer');
@@ -1080,20 +1098,20 @@ function renderBestTimes() {
     section.innerHTML = '<div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>';
     return;
   }
-  const rows = bestTimesForSwimmer(sw).map(t => {
+  const rows = bestTimesForSwimmer(sw).filter(t => normalizeCourse(t.course || t.event) === bestTimesCourse).map(t => {
     const pnsTier = classifyTime(t, sw);
     const nationalStandard = classifyNationalMotivationalTime(t, sw);
     const nextAchievement = nextAchievementDrop(t, sw);
     return { ...t, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(pnsTier) };
   }).sort(compareBestTimeRows);
   if (!rows.length) {
-    section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no best times saved.</p><p style="font-size:13px">Edit the swimmer profile and add one time per line.</p></div>`;
+    section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no ${bestTimesCourse} best times saved.</p><p style="font-size:13px">Switch course or edit the swimmer profile and add one time per line.</p></div>`;
     return;
   }
   section.innerHTML = `
     <div class="best-summary">
       <div class="best-summary-card"><div class="label">Swimmer</div><div class="value" style="font-size:20px">${sw.name}</div></div>
-      <div class="best-summary-card"><div class="label">Best rows</div><div class="value">${rows.length}</div></div>
+      <div class="best-summary-card"><div class="label">Different events</div><div class="value">${rows.length}</div></div>
       <div class="best-summary-card"><div class="label">Top nat. standard</div><div class="value">${rows[0]?.nationalStandard || 'NT'}</div></div>
     </div>
     <table class="times-table">
