@@ -37,6 +37,21 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (urlPath === "/api/swimcloud/best-times") {
+    const profile = requestUrl.searchParams.get("profile");
+    if (!profile) {
+      sendJson(res, 400, { error: "Missing Swimcloud profile ID or URL." });
+      return;
+    }
+    try {
+      const bestTimes = await fetchSwimcloudBestTimes(profile);
+      sendJson(res, 200, { profile: normalizeSwimcloudProfile(profile), bestTimes, checkedAt: new Date().toISOString() });
+    } catch (error) {
+      sendJson(res, 502, { error: "Could not refresh Swimcloud best times.", details: error.message });
+    }
+    return;
+  }
+
   const relativePath = urlPath === "/" ? "index.html" : urlPath.replace(/^\/+/, "");
   const safePath = path.normalize(relativePath).replace(/^(\.\.[/\\])+/, "");
   const filePath = path.join(root, safePath);
@@ -114,6 +129,38 @@ function requestJson(url, body) {
   });
 }
 
+function requestText(url) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url);
+    const req = https.request({
+      method: "GET",
+      hostname: parsed.hostname,
+      path: parsed.pathname + parsed.search,
+      headers: {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
+      }
+    }, (response) => {
+      let data = "";
+      response.setEncoding("utf8");
+      response.on("data", chunk => { data += chunk; });
+      response.on("end", () => {
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          reject(new Error(data || `Swimcloud returned ${response.statusCode}`));
+          return;
+        }
+        resolve(data);
+      });
+    });
+    req.on("error", reject);
+    req.setTimeout(15000, () => {
+      req.destroy(new Error("Swimcloud request timed out."));
+    });
+    req.end();
+  });
+}
+
 async function fetchUsaSwimmingBestTimes(memberId) {
   const requests = usaSwimmingEvents.map(([distance, strokeAbbreviation]) =>
     requestJson("https://times-api.usaswimming.org/swims/TimesSearch/BestTimes", {
@@ -143,6 +190,61 @@ function toLaneLineBestTime(row) {
     source: "USA Swimming",
     course: course || ""
   };
+}
+
+async function fetchSwimcloudBestTimes(profile) {
+  const swimmerId = normalizeSwimcloudProfile(profile);
+  const html = await requestText(`https://www.swimcloud.com/swimmer/${encodeURIComponent(swimmerId)}/times/`);
+  return parseSwimcloudTimes(html);
+}
+
+function normalizeSwimcloudProfile(profile) {
+  const value = String(profile || "").trim();
+  const match = value.match(/swimcloud\.com\/swimmer\/(\d+)/i) || value.match(/^(\d+)$/);
+  if (!match) throw new Error("Use a Swimcloud swimmer URL or numeric swimmer ID.");
+  return match[1];
+}
+
+function parseSwimcloudTimes(html) {
+  const rows = [];
+  const rowMatches = html.match(/<tr[\s\S]*?<\/tr>/gi) || [];
+  rowMatches.forEach(rowHtml => {
+    const cells = [...rowHtml.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)]
+      .map(match => cleanHtml(match[1]))
+      .filter(Boolean);
+    const parsed = parseSwimcloudCells(cells);
+    if (parsed) rows.push(parsed);
+  });
+  const deduped = new Map();
+  rows.forEach(row => {
+    const key = `${row.event}|${row.time}`;
+    if (!deduped.has(key)) deduped.set(key, row);
+  });
+  return [...deduped.values()].sort((a, b) => a.event.localeCompare(b.event));
+}
+
+function parseSwimcloudCells(cells) {
+  const course = cells.find(cell => /^(SCY|LCM|SCM)$/i.test(cell))?.toUpperCase();
+  const time = cells.find(cell => /^\d{1,2}:?\d{1,2}\.\d{2}[A-Z]?$/i.test(cell));
+  const event = cells.find(cell => /^\d+\s+(Free|Back|Breast|Fly|IM|Freestyle|Backstroke|Breaststroke|Butterfly)/i.test(cell));
+  if (!course || !time || !event) return null;
+  const eventName = `${event.replace(/\bFreestyle\b/i, "Free").replace(/\bBackstroke\b/i, "Back").replace(/\bBreaststroke\b/i, "Breast").replace(/\bButterfly\b/i, "Fly")} ${course}`;
+  const meet = cells.find(cell => cell !== event && cell !== time && cell !== course && /\d{4}|Invite|Open|Champ|Meet|Classic|Regional|Sectional|Cup/i.test(cell)) || "";
+  const date = cells.find(cell => /(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|\d{1,2}\/\d{1,2}\/\d{2,4})/i.test(cell)) || "";
+  return { event: eventName, time, meet, date, source: "Swimcloud", course };
+}
+
+function cleanHtml(value) {
+  return String(value)
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function listen(port) {

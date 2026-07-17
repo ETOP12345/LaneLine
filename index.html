@@ -462,6 +462,10 @@ footer span{color:var(--lane)}
         <input type="text" id="sw-team" placeholder="e.g. Lakeside Swim Club"/>
       </div>
       <div class="field full">
+        <label>Swimcloud profile URL / ID</label>
+        <input type="text" id="sw-swimcloud" placeholder="e.g. https://www.swimcloud.com/swimmer/1234567/"/>
+      </div>
+      <div class="field full">
         <label>All best times</label>
         <textarea id="sw-best-times" rows="5" placeholder="100 Free SCY | 54.32 | Winter Classic | Jan 2026 | USA Swimming&#10;50 Free SCY | 24.88 | Districts | Feb 2026 | Meet Mobile"></textarea>
       </div>
@@ -477,7 +481,7 @@ footer span{color:var(--lane)}
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
-  swimmers: [], // [{id, name, ageGroup, stroke, team, bestTimes}]
+  swimmers: [], // [{id, name, ageGroup, stroke, team, swimcloudId, bestTimes}]
   selectedSwimmerId: null,
 };
 
@@ -723,18 +727,47 @@ function seedUsaSwimmingProfile(profile) {
 }
 
 async function refreshSeededSwimmersFromUsaSwimming() {
-  await Promise.all(seededUsaSwimmingProfiles.map(profile => refreshSwimmerFromUsaSwimming(profile.usaSwimmingMemberId)));
+  await Promise.all(seededUsaSwimmingProfiles.map(profile => refreshSwimmerBestTimes(profile)));
 }
 
 async function refreshSwimmerFromUsaSwimming(memberId) {
   const sw = appState.swimmers.find(s => s.usaSwimmingMemberId === memberId);
   if (!sw) return;
+  await refreshSwimmerBestTimes(sw);
+}
+
+async function refreshSwimmerBestTimes(profile) {
+  const sw = appState.swimmers.find(s =>
+    s.id === profile.id ||
+    s.usaSwimmingMemberId === profile.usaSwimmingMemberId ||
+    s.swimcloudId === profile.swimcloudId
+  );
+  if (!sw) return;
+  const incomingRows = [];
   try {
-    const response = await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
-    if (!response.ok) throw new Error('Refresh failed');
-    const data = await response.json();
-    if (!Array.isArray(data.bestTimes) || !data.bestTimes.length) return;
-    sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], data.bestTimes);
+    if (sw.usaSwimmingMemberId) {
+      const response = await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.bestTimes)) incomingRows.push(...data.bestTimes);
+      }
+    }
+  } catch (error) {
+    console.warn('USA Swimming refresh skipped:', error);
+  }
+  try {
+    if (sw.swimcloudId) {
+      const response = await fetch(`/api/swimcloud/best-times?profile=${encodeURIComponent(sw.swimcloudId)}`, { cache: 'no-store' });
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.bestTimes)) incomingRows.push(...data.bestTimes);
+      }
+    }
+  } catch (error) {
+    console.warn('Swimcloud refresh skipped:', error);
+  }
+  if (incomingRows.length) {
+    sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], incomingRows);
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
     if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
@@ -744,8 +777,6 @@ async function refreshSwimmerFromUsaSwimming(memberId) {
     const select = document.getElementById('best-swimmer');
     if (select && selectedBeforeRefresh && appState.swimmers.some(s => s.id === selectedBeforeRefresh)) select.value = selectedBeforeRefresh;
     if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
-  } catch (error) {
-    console.warn('USA Swimming refresh skipped:', error);
   }
 }
 
@@ -895,10 +926,11 @@ function openAddSwimmerModal(id) {
       document.getElementById('sw-division').value = sw.division || 'girls';
       document.getElementById('sw-stroke').value = sw.stroke || '';
       document.getElementById('sw-team').value = sw.team || '';
+      document.getElementById('sw-swimcloud').value = sw.swimcloudId || '';
       document.getElementById('sw-best-times').value = serializeBestTimes(sw.bestTimes || []);
     }
   } else {
-    ['sw-name','sw-team'].forEach(id => document.getElementById(id).value = '');
+    ['sw-name','sw-team','sw-swimcloud'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('sw-best-times').value = '';
     document.getElementById('sw-age-group').value = '';
     document.getElementById('sw-division').value = 'girls';
@@ -923,8 +955,11 @@ function saveSwimmer() {
     division: document.getElementById('sw-division').value,
     stroke: document.getElementById('sw-stroke').value,
     team: document.getElementById('sw-team').value.trim(),
+    swimcloudId: normalizeSwimcloudProfile(document.getElementById('sw-swimcloud').value.trim()),
     bestTimes: parseBestTimesInput(document.getElementById('sw-best-times').value),
   };
+  const existing = editingSwimmerId ? appState.swimmers.find(s => s.id === editingSwimmerId) : null;
+  if (existing?.usaSwimmingMemberId) sw.usaSwimmingMemberId = existing.usaSwimmingMemberId;
   if (editingSwimmerId) {
     appState.swimmers = appState.swimmers.map(s => s.id === editingSwimmerId ? sw : s);
   } else {
@@ -937,6 +972,7 @@ function saveSwimmer() {
   saveState();
   renderProfilesPage();
   renderBestTimesPicker();
+  if (sw.swimcloudId || sw.usaSwimmingMemberId) refreshSwimmerBestTimes(sw);
   closeModal('add-swimmer-modal');
 }
 
@@ -1062,6 +1098,13 @@ function parseBestTimesInput(value) {
 
 function serializeBestTimes(times) {
   return (times || []).map(t => [t.event, t.time, t.meet, t.date, t.source].filter(Boolean).join(' | ')).join('\n');
+}
+
+function normalizeSwimcloudProfile(value) {
+  const trimmed = String(value || '').trim();
+  if (!trimmed) return '';
+  const match = trimmed.match(/swimcloud\.com\/swimmer\/(\d+)/i) || trimmed.match(/^(\d+)$/);
+  return match ? match[1] : trimmed;
 }
 
 function bestTimesForSwimmer(sw) {
