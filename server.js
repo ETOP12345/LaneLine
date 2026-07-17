@@ -173,10 +173,14 @@ async function fetchUsaSwimmingBestTimes(memberId) {
   const rows = results.map(toLaneLineBestTime);
   const deduped = new Map();
   rows.forEach(row => {
-    const key = `${row.event}|${row.time}`;
+    const key = `${row.event}|${row.time}|${row.date}|${row.meet}`;
     if (!deduped.has(key)) deduped.set(key, row);
   });
-  return [...deduped.values()].sort((a, b) => a.event.localeCompare(b.event));
+  return [...deduped.values()].sort((a, b) =>
+    a.event.localeCompare(b.event) ||
+    new Date(a.date || 0) - new Date(b.date || 0) ||
+    a.time.localeCompare(b.time)
+  );
 }
 
 function toLaneLineBestTime(row) {
@@ -217,10 +221,14 @@ function parseSwimcloudTimes(html) {
   });
   const deduped = new Map();
   rows.forEach(row => {
-    const key = `${row.event}|${row.time}`;
+    const key = `${row.event}|${row.time}|${row.date}|${row.meet}`;
     if (!deduped.has(key)) deduped.set(key, row);
   });
-  return [...deduped.values()].sort((a, b) => a.event.localeCompare(b.event));
+  return [...deduped.values()].sort((a, b) =>
+    a.event.localeCompare(b.event) ||
+    new Date(a.date || 0) - new Date(b.date || 0) ||
+    a.time.localeCompare(b.time)
+  );
 }
 
 function parseSwimcloudCells(cells) {

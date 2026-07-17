@@ -504,7 +504,7 @@ footer span{color:var(--lane)}
         <input type="text" id="sw-swimcloud" placeholder="e.g. https://www.swimcloud.com/swimmer/1234567/"/>
       </div>
       <div class="field full">
-        <label>All best times</label>
+        <label>Time history</label>
         <textarea id="sw-best-times" rows="5" placeholder="100 Free SCY | 54.32 | Winter Classic | Jan 2026 | USA Swimming&#10;50 Free SCY | 24.88 | Districts | Feb 2026 | Meet Mobile"></textarea>
       </div>
     </div>
@@ -519,7 +519,7 @@ footer span{color:var(--lane)}
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
-  swimmers: [], // [{id, name, ageGroup, stroke, team, swimcloudId, bestTimes}]
+  swimmers: [], // [{id, name, ageGroup, stroke, team, swimcloudId, bestTimes, timeHistory}]
   selectedSwimmerId: null,
 };
 
@@ -753,14 +753,16 @@ function seedUsaSwimmingProfile(profile) {
   if (existingIndex >= 0) {
     const existing = appState.swimmers[existingIndex];
     const existingTimes = Array.isArray(existing.bestTimes) ? existing.bestTimes : [];
+    const existingHistory = Array.isArray(existing.timeHistory) ? existing.timeHistory : existingTimes;
     const profileTimes = Array.isArray(profile.bestTimes) ? profile.bestTimes : [];
     appState.swimmers[existingIndex] = {
       ...existing,
       ...profile,
-      bestTimes: profileTimes.length ? mergeBestTimeRows(existingTimes, profileTimes) : existingTimes
+      bestTimes: profileTimes.length ? mergeBestTimeRows(existingTimes, profileTimes) : existingTimes,
+      timeHistory: profileTimes.length ? mergeTimeHistoryRows(existingHistory, profileTimes) : existingHistory
     };
   } else {
-    appState.swimmers.push(profile);
+    appState.swimmers.push({ ...profile, timeHistory: Array.isArray(profile.timeHistory) ? profile.timeHistory : (profile.bestTimes || []) });
   }
 }
 
@@ -805,6 +807,7 @@ async function refreshSwimmerBestTimes(profile) {
     console.warn('Swimcloud refresh skipped:', error);
   }
   if (incomingRows.length) {
+    sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], incomingRows);
     sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], incomingRows);
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
@@ -816,6 +819,7 @@ async function refreshSwimmerBestTimes(profile) {
     const select = document.getElementById('best-swimmer');
     if (select && selectedBeforeRefresh && appState.swimmers.some(s => s.id === selectedBeforeRefresh)) select.value = selectedBeforeRefresh;
     if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
+    if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
   }
 }
 
@@ -833,6 +837,28 @@ function mergeBestTimeRows(existingRows, incomingRows) {
     }
   });
   return merged;
+}
+
+function mergeTimeHistoryRows(existingRows, incomingRows) {
+  const merged = [...existingRows];
+  incomingRows.forEach(row => {
+    const key = timeHistoryKey(row);
+    if (!merged.some(existing => timeHistoryKey(existing) === key)) merged.push(row);
+  });
+  return merged.sort((a, b) => {
+    const eventOrder = String(a.event || '').localeCompare(String(b.event || ''));
+    if (eventOrder) return eventOrder;
+    return (parseGrowthDate(a.date)?.getTime() || 0) - (parseGrowthDate(b.date)?.getTime() || 0);
+  });
+}
+
+function timeHistoryKey(row) {
+  return [
+    normalizeEventKey(row.event || ''),
+    String(row.time || '').trim().toLowerCase(),
+    String(row.date || '').trim().toLowerCase(),
+    String(row.meet || '').trim().toLowerCase()
+  ].join('|');
 }
 
 // ─── INIT ─────────────────────────────────────────────────
@@ -971,7 +997,7 @@ function openAddSwimmerModal(id) {
       document.getElementById('sw-stroke').value = sw.stroke || '';
       document.getElementById('sw-team').value = sw.team || '';
       document.getElementById('sw-swimcloud').value = sw.swimcloudId || '';
-      document.getElementById('sw-best-times').value = serializeBestTimes(sw.bestTimes || []);
+      document.getElementById('sw-best-times').value = serializeBestTimes(sw.timeHistory || sw.bestTimes || []);
     }
   } else {
     ['sw-name','sw-team','sw-swimcloud'].forEach(id => document.getElementById(id).value = '');
@@ -992,6 +1018,7 @@ function saveSwimmer() {
     b.style.display = 'block';
     return;
   }
+  const parsedRows = parseBestTimesInput(document.getElementById('sw-best-times').value);
   const sw = {
     id: editingSwimmerId || ('sw_' + Date.now()),
     name,
@@ -1000,7 +1027,8 @@ function saveSwimmer() {
     stroke: document.getElementById('sw-stroke').value,
     team: document.getElementById('sw-team').value.trim(),
     swimcloudId: normalizeSwimcloudProfile(document.getElementById('sw-swimcloud').value.trim()),
-    bestTimes: parseBestTimesInput(document.getElementById('sw-best-times').value),
+    bestTimes: mergeBestTimeRows([], parsedRows),
+    timeHistory: mergeTimeHistoryRows([], parsedRows),
   };
   const existing = editingSwimmerId ? appState.swimmers.find(s => s.id === editingSwimmerId) : null;
   if (existing?.usaSwimmingMemberId) sw.usaSwimmingMemberId = existing.usaSwimmingMemberId;
@@ -1276,7 +1304,7 @@ function renderGrowthPage() {
 }
 
 function groupGrowthRows(sw) {
-  return bestTimesForSwimmer(sw)
+  return timeHistoryForSwimmer(sw)
     .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event) }))
     .filter(row => Number.isFinite(row.seconds) && row.dateValue && row.event)
     .sort((a, b) => a.dateValue - b.dateValue)
@@ -1288,6 +1316,11 @@ function groupGrowthRows(sw) {
 
 function growthEventsForSwimmer(sw) {
   return Object.keys(groupGrowthRows(sw)).sort((a, b) => a.localeCompare(b));
+}
+
+function timeHistoryForSwimmer(sw) {
+  const history = Array.isArray(sw?.timeHistory) && sw.timeHistory.length ? sw.timeHistory : (sw?.bestTimes || []);
+  return [...history];
 }
 
 function renderGrowthChart(rows, options) {
