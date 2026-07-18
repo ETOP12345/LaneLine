@@ -37,6 +37,17 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (urlPath === "/api/usa-swimming/time-history") {
+    const memberId = requestUrl.searchParams.get("memberId") || usaSwimmingMemberId;
+    try {
+      const timeHistory = await fetchUsaSwimmingTimeHistory(memberId);
+      sendJson(res, 200, { memberId, timeHistory, checkedAt: new Date().toISOString() });
+    } catch (error) {
+      sendJson(res, 502, { error: "Could not refresh USA Swimming time history.", details: error.message });
+    }
+    return;
+  }
+
   if (urlPath === "/api/swimcloud/best-times") {
     const profile = requestUrl.searchParams.get("profile");
     if (!profile) {
@@ -183,8 +194,27 @@ async function fetchUsaSwimmingBestTimes(memberId) {
   );
 }
 
+async function fetchUsaSwimmingTimeHistory(memberId) {
+  const filterBodies = [
+    { memberId, page: 1, pageSize: 500 },
+    { memberId, pageNumber: 1, pageSize: 500 },
+    { memberIds: [memberId], page: 1, pageSize: 500 },
+    { swimmerId: memberId, page: 1, pageSize: 500 },
+    { memberId, bestTimesOnly: false, page: 1, pageSize: 500 },
+    { memberId, includeAllTimes: true, page: 1, pageSize: 500 }
+  ];
+  for (const body of filterBodies) {
+    try {
+      const rows = await requestJson("https://times-api.usaswimming.org/swims/TimesSearch/GetAllTimesForFilters", body);
+      const mapped = normalizeTimeRows(rows, "USA Swimming");
+      if (mapped.length) return mapped;
+    } catch (error) {}
+  }
+  throw new Error("USA Swimming all-times endpoint did not return history rows.");
+}
+
 function toLaneLineBestTime(row) {
-  const [distance, stroke, course] = String(row.eventCode || "").split(/\s+/);
+  const [distance, stroke, course] = String(row.eventCode || row.event || "").split(/\s+/);
   const strokeName = { FR: "Free", BK: "Back", BR: "Breast", FL: "Fly", IM: "IM" }[stroke] || stroke;
   return {
     event: `${distance} ${strokeName} ${course}`,
@@ -194,6 +224,53 @@ function toLaneLineBestTime(row) {
     source: "USA Swimming",
     course: course || ""
   };
+}
+
+function normalizeTimeRows(rows, source) {
+  return (Array.isArray(rows) ? rows : [])
+    .map(row => toLaneLineTimeRow(row, source))
+    .filter(row => row.event && row.time)
+    .sort((a, b) =>
+      a.event.localeCompare(b.event) ||
+      new Date(a.date || 0) - new Date(b.date || 0) ||
+      a.time.localeCompare(b.time)
+    );
+}
+
+function toLaneLineTimeRow(row, source) {
+  const rawEvent = row.eventCode || row.event || row.eventName || row.eventDescription || row.swimEvent || "";
+  const parts = String(rawEvent).trim().split(/\s+/);
+  const distance = row.distance || parts[0] || "";
+  const strokeCode = row.strokeAbbreviation || row.stroke || parts[1] || "";
+  const course = row.course || row.eventCourse || row.poolCourse || parts.find(part => /^(SCY|LCM|SCM)$/i.test(part)) || "";
+  const strokeName = {
+    FR: "Free", FREE: "Free", FREESTYLE: "Free",
+    BK: "Back", BACK: "Back", BACKSTROKE: "Back",
+    BR: "Breast", BREAST: "Breast", BREASTSTROKE: "Breast",
+    FL: "Fly", FLY: "Fly", BUTTERFLY: "Fly",
+    IM: "IM"
+  }[String(strokeCode).toUpperCase()] || strokeCode;
+  const event = rawEvent && /\b(SCY|LCM|SCM)\b/i.test(rawEvent)
+    ? formatEventName(rawEvent)
+    : [distance, strokeName, course].filter(Boolean).join(" ");
+  return {
+    event,
+    time: row.swimTime || row.time || row.resultTime || row.finalTime || "",
+    meet: row.meetName || row.meet || row.competitionName || "",
+    date: row.swimDate || row.date || row.meetDate || row.startDate || "",
+    source,
+    course: String(course || "").toUpperCase()
+  };
+}
+
+function formatEventName(eventName) {
+  return String(eventName)
+    .replace(/\bFR\b/g, "Free")
+    .replace(/\bBK\b/g, "Back")
+    .replace(/\bBR\b/g, "Breast")
+    .replace(/\bFL\b/g, "Fly")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 async function fetchSwimcloudBestTimes(profile) {

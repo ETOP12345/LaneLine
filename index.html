@@ -784,8 +784,14 @@ async function refreshSwimmerBestTimes(profile) {
   );
   if (!sw) return;
   const incomingRows = [];
+  const historyRows = [];
   try {
     if (sw.usaSwimmingMemberId) {
+      const historyResponse = await fetch(`/api/usa-swimming/time-history?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      if (historyResponse.ok) {
+        const historyData = await historyResponse.json();
+        if (Array.isArray(historyData.timeHistory)) historyRows.push(...historyData.timeHistory);
+      }
       const response = await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
       if (response.ok) {
         const data = await response.json();
@@ -800,14 +806,17 @@ async function refreshSwimmerBestTimes(profile) {
       const response = await fetch(`/api/swimcloud/best-times?profile=${encodeURIComponent(sw.swimcloudId)}`, { cache: 'no-store' });
       if (response.ok) {
         const data = await response.json();
-        if (Array.isArray(data.bestTimes)) incomingRows.push(...data.bestTimes);
+        if (Array.isArray(data.bestTimes)) {
+          incomingRows.push(...data.bestTimes);
+          historyRows.push(...data.bestTimes);
+        }
       }
     }
   } catch (error) {
     console.warn('Swimcloud refresh skipped:', error);
   }
-  if (incomingRows.length) {
-    sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], incomingRows);
+  if (incomingRows.length || historyRows.length) {
+    sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], historyRows.length ? historyRows : incomingRows);
     sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], incomingRows);
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
@@ -1269,8 +1278,9 @@ function renderGrowthPickers() {
   swimmerSelect.innerHTML = appState.swimmers.length ? appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('') : '<option value="">No swimmers saved</option>';
   if (previousSwimmer && appState.swimmers.some(sw => sw.id === previousSwimmer)) swimmerSelect.value = previousSwimmer;
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
-  const events = growthEventsForSwimmer(sw);
-  eventSelect.innerHTML = events.length ? events.map(event => `<option value="${event}">${event}</option>`).join('') : '<option value="">No dated events</option>';
+  const groups = groupGrowthRows(sw);
+  const events = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+  eventSelect.innerHTML = events.length ? events.map(event => `<option value="${event}">${event} (${groups[event].length})</option>`).join('') : '<option value="">No dated events</option>';
   if (previousEvent && events.includes(previousEvent)) eventSelect.value = previousEvent;
   swimmerSelect.onchange = () => {
     renderGrowthPickers();
@@ -1300,7 +1310,11 @@ function renderGrowthPage() {
   }
   const selectedEvent = eventSelect.value && groups[eventSelect.value] ? eventSelect.value : events[0];
   main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', title: `${sw.name} growth by event` });
-  detail.innerHTML = renderGrowthChart(groups[selectedEvent].map(row => ({ ...row, event: selectedEvent })), { mode: 'event', title: selectedEvent });
+  const selectedRows = groups[selectedEvent].map(row => ({ ...row, event: selectedEvent }));
+  const historyNote = selectedRows.length < 2
+    ? `<div class="meet-disclaimer"><p>Only one history row is loaded for ${selectedEvent}. Growth needs every swim for this event, not just the fastest time.</p></div>`
+    : '';
+  detail.innerHTML = historyNote + renderGrowthChart(selectedRows, { mode: 'event', title: selectedEvent });
 }
 
 function groupGrowthRows(sw) {
