@@ -252,6 +252,10 @@ footer span{color:var(--lane)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Swimmers
     </button>
+    <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M4 6h9a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Video analysis
+    </button>
   </div>
 </div>
 
@@ -296,6 +300,22 @@ footer span{color:var(--lane)}
       <div class="pool-anim"><div class="swimmer-dot"></div></div>
       <h3>Searching meet results</h3>
       <p id="meet-loading-msg">Searching public databases…</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ VIDEO ANALYSIS PAGE ══ -->
+<div id="analysis-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Video analysis</div>
+      <div class="meet-disclaimer"><p>Video analysis is planned as a separate upload and AI feedback workflow. This tab is intentionally frontend-only for now, so the existing LaneLine tabs and server endpoints continue to work unchanged.</p></div>
+      <div class="meet-empty">
+        <p style="font-size:22px;margin-bottom:8px">🎥</p>
+        <p style="font-weight:500;margin-bottom:6px">Swimming video analysis coming soon</p>
+        <p style="font-size:13px">Future versions can add secure upload, frame extraction, and stroke-feedback results here without changing the current meet, best-times, growth, standards, zone, or swimmer tabs.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -880,7 +900,7 @@ renderGrowthPickers();
 refreshSeededSwimmersFromUsaSwimming();
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
-  ['meet','best','growth','standards','zone','profiles'].forEach(p => {
+  ['meet','best','growth','standards','zone','profiles','analysis'].forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
     document.getElementById('ptab-'+p).classList.toggle('active', p === page);
   });
