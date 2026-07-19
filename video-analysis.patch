@@ -1,0 +1,567 @@
+diff --git a/.env.example b/.env.example
+new file mode 100644
+index 0000000..262d979
+--- /dev/null
++++ b/.env.example
+@@ -0,0 +1,13 @@
++OPENAI_API_KEY=
++OPENAI_VISION_MODEL=gpt-4.1-mini
++MAX_DAILY_ANALYSES=30
++MAX_HOURLY_ANALYSES=10
++VIDEO_MAX_SIZE_MB=50
++VIDEO_MAX_DURATION_SECONDS=30
++VIDEO_MIN_HEIGHT=480
++FRAME_SAMPLE_FPS=6
++MAX_CANDIDATE_FRAMES=180
++MAX_ANALYSIS_FRAMES=30
++FRAME_MAX_LONG_EDGE=1280
++FRAME_JPEG_QUALITY=78
++PROCESSING_TIMEOUT_MS=180000
+diff --git a/README.md b/README.md
+index 87fda54..65c40ae 100644
+--- a/README.md
++++ b/README.md
+@@ -1,6 +1,6 @@
+ # Lane Line
+ 
+-Lane Line is a swim time checker for swimmer profiles, best times, PNS cuts, USA Swimming motivational standards, and meet qualification tracking.
++Lane Line is a swim time checker for swimmer profiles, best times, PNS cuts, USA Swimming motivational standards, meet qualification tracking, and swimming-video stroke analysis.
+ 
+ ## Run
+ 
+@@ -10,10 +10,54 @@ npm run dev
+ 
+ Open `http://localhost:5180`.
+ 
+-No package install is required. The app uses the included Node server for the static page and the USA Swimming best-times refresh endpoint.
++No package install is required. The app uses the included Node server for the static page, USA Swimming best-times refresh endpoints, Swimcloud best-times proxy, and the video-analysis API.
++
++## Video analysis
++
++The **Video analysis** tab uploads a short MP4, MOV, or WebM swimming clip to the local Node server. The server:
++
++- validates file type and size before processing
++- inspects real video metadata with `ffprobe`
++- rejects clips that are too long or below the minimum resolution
++- extracts dense candidate frames with `ffmpeg` at 6 frames per second by default
++- selects up to 30 representative timestamped frames
++- sends selected frames to the OpenAI Responses API when `OPENAI_API_KEY` is configured
++- returns a demo result when no OpenAI key is configured so the UI flow can be exercised without API spend
++- deletes temporary local files after processing
++
++Default free-tier-friendly limits are 30 analyses per day, 10 per hour, 30 seconds per clip, and 50 MB per upload.
++
++## Environment
++
++Copy `.env.example` to `.env` for local secrets and tunable limits:
++
++```bash
++cp .env.example .env
++```
++
++At minimum, real AI analysis requires these server-side values:
++
++```text
++OPENAI_API_KEY=
++OPENAI_VISION_MODEL=gpt-4.1-mini
++```
++
++Never put the OpenAI API key in browser JavaScript.
++
++## FFmpeg requirement
++
++Install FFmpeg locally or on the hosting service so both commands are available on `PATH`:
++
++```bash
++ffmpeg -version
++ffprobe -version
++```
+ 
+ ## Files
+ 
+-- `index.html` - Lane Line interface and swim standards logic
+-- `server.js` - local static server and USA Swimming best-times proxy
+-- `package.json` - run scripts
++- `index.html` - Lane Line interface, swim standards logic, and video-analysis UI
++- `server.js` - local static server, swim-times proxies, and video-analysis route mounting
++- `videoAnalysis.js` - upload validation, rate limiting, FFprobe/FFmpeg processing, frame selection, and OpenAI integration
++- `test/videoAnalysis.test.js` - Node tests for validation and frame selection
++- `package.json` - run, test, and check scripts
++- `.env.example` - server-side configuration template
+diff --git a/index.html b/index.html
+index d5bae1f..ed57da2 100644
+--- a/index.html
++++ b/index.html
+@@ -310,12 +310,57 @@ footer span{color:var(--lane)}
+   <div class="card">
+     <div class="card-section">
+       <div class="section-label">Video analysis</div>
+-      <div class="meet-disclaimer"><p>Video analysis is planned as a separate upload and AI feedback workflow. This tab is intentionally frontend-only for now, so the existing LaneLine tabs and server endpoints continue to work unchanged.</p></div>
+-      <div class="meet-empty">
+-        <p style="font-size:22px;margin-bottom:8px">🎥</p>
+-        <p style="font-weight:500;margin-bottom:6px">Swimming video analysis coming soon</p>
+-        <p style="font-size:13px">Future versions can add secure upload, frame extraction, and stroke-feedback results here without changing the current meet, best-times, growth, standards, zone, or swimmer tabs.</p>
++      <div class="meet-disclaimer"><p><strong>Connected upload workflow:</strong> choose a short swimming clip, add stroke context, and submit it to the server-side frame extraction and AI feedback pipeline. Existing LaneLine tabs and swim-times endpoints are unchanged.</p></div>
++      <div class="fields-grid" style="margin-bottom:14px">
++        <div class="field full">
++          <label for="analysis-video-file">Swimming video clip</label>
++          <input type="file" id="analysis-video-file" name="video" accept="video/mp4,video/quicktime,video/webm" onchange="updateVideoAnalysisDraft()" />
++          <p class="source-note">Current MVP limits: MP4, MOV, or WebM; 30 seconds or shorter; one swimmer preferred; 480p or better.</p>
++        </div>
++        <div class="field">
++          <label for="analysis-stroke">Stroke</label>
++          <select id="analysis-stroke" name="strokeType" onchange="updateVideoAnalysisDraft()">
++            <option value="freestyle">Freestyle</option>
++            <option value="backstroke">Backstroke</option>
++            <option value="breaststroke">Breaststroke</option>
++            <option value="butterfly">Butterfly</option>
++            <option value="unknown">Unknown</option>
++          </select>
++        </div>
++        <div class="field">
++          <label for="analysis-angle">Camera angle</label>
++          <select id="analysis-angle" name="cameraAngle" onchange="updateVideoAnalysisDraft()">
++            <option value="side">Side</option>
++            <option value="front">Front</option>
++            <option value="rear">Rear</option>
++            <option value="above water">Above water</option>
++            <option value="underwater">Underwater</option>
++            <option value="mixed / unknown">Mixed / unknown</option>
++          </select>
++        </div>
++        <div class="field">
++          <label for="analysis-level">Swimmer level</label>
++          <select id="analysis-level" name="swimmerLevel" onchange="updateVideoAnalysisDraft()">
++            <option value="competitive">Competitive</option>
++            <option value="advanced">Advanced</option>
++            <option value="intermediate">Intermediate</option>
++            <option value="beginner">Beginner</option>
++          </select>
++        </div>
++        <div class="field">
++          <label for="analysis-goal">Goal or question</label>
++          <input type="text" id="analysis-goal" name="goal" placeholder="e.g. Improve freestyle catch timing" maxlength="160" oninput="updateVideoAnalysisDraft()" />
++        </div>
++        <div class="field full">
++          <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" id="analysis-consent" name="consent" onchange="updateVideoAnalysisDraft()" /> I understand this future feature is for educational swim feedback and should not replace a certified coach, medical professional, or lifeguard.</label>
++        </div>
+       </div>
++      <button class="btn-primary" id="analysis-start-btn" type="button" onclick="submitVideoAnalysis()" disabled>Analyze swim video</button>
++      <div class="error-box" id="analysis-message-box"><p id="analysis-message-text"></p></div>
++    </div>
++    <div class="card-section" id="analysis-draft-section" style="display:none">
++      <div class="section-label">Draft request</div>
++      <div id="analysis-draft-content" class="meet-empty"></div>
+     </div>
+   </div>
+ </div>
+@@ -1624,6 +1669,105 @@ function formatDrop(seconds) {
+   return `${minutes}:${remainder}`;
+ }
+ 
++// ─── VIDEO ANALYSIS DRAFT ─────────────────────────────────
++function escapeVideoAnalysisHtml(value) {
++  return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
++}
++
++function updateVideoAnalysisDraft() {
++  const file = document.getElementById('analysis-video-file')?.files?.[0];
++  const consent = document.getElementById('analysis-consent')?.checked;
++  const stroke = document.getElementById('analysis-stroke')?.value || 'unknown';
++  const angle = document.getElementById('analysis-angle')?.value || 'mixed / unknown';
++  const level = document.getElementById('analysis-level')?.value || 'competitive';
++  const goal = document.getElementById('analysis-goal')?.value.trim();
++  const draftSection = document.getElementById('analysis-draft-section');
++  const draftContent = document.getElementById('analysis-draft-content');
++  const startButton = document.getElementById('analysis-start-btn');
++  if (!draftSection || !draftContent || !startButton) return;
++  startButton.disabled = !(file && consent);
++  if (!file && !goal) {
++    draftSection.style.display = 'none';
++    return;
++  }
++  draftSection.style.display = 'block';
++  draftContent.innerHTML = `
++    <p style="font-weight:500;margin-bottom:8px">${file ? escapeVideoAnalysisHtml(file.name) : 'No video selected yet'}</p>
++    <p style="font-size:13px">Stroke: ${escapeVideoAnalysisHtml(stroke)} · Camera: ${escapeVideoAnalysisHtml(angle)} · Level: ${escapeVideoAnalysisHtml(level)}</p>
++    <p style="font-size:13px;color:var(--muted);margin-top:6px">Goal: ${escapeVideoAnalysisHtml(goal || 'No goal entered')}</p>
++  `;
++}
++
++let activeVideoAnalysisTimer = null;
++
++async function submitVideoAnalysis() {
++  const file = document.getElementById('analysis-video-file')?.files?.[0];
++  const consent = document.getElementById('analysis-consent')?.checked;
++  if (!file || !consent) return;
++  setVideoAnalysisMessage('Uploading video for analysis…');
++  document.getElementById('analysis-start-btn').disabled = true;
++  const formData = new FormData();
++  formData.append('video', file);
++  formData.append('strokeType', document.getElementById('analysis-stroke')?.value || 'unknown');
++  formData.append('cameraAngle', document.getElementById('analysis-angle')?.value || 'mixed');
++  formData.append('swimmerLevel', document.getElementById('analysis-level')?.value || 'competitive');
++  formData.append('goal', document.getElementById('analysis-goal')?.value || '');
++  formData.append('consent', 'true');
++  try {
++    const response = await fetch('/api/video-analysis', { method: 'POST', body: formData });
++    const data = await response.json();
++    if (!response.ok) throw new Error(data.error || 'Upload failed.');
++    pollVideoAnalysis(data.id);
++  } catch (error) {
++    document.getElementById('analysis-start-btn').disabled = false;
++    setVideoAnalysisMessage(error.message);
++  }
++}
++
++async function pollVideoAnalysis(id) {
++  clearTimeout(activeVideoAnalysisTimer);
++  try {
++    const response = await fetch(`/api/video-analysis/${id}`);
++    const data = await response.json();
++    if (!response.ok) throw new Error(data.error || 'Could not check analysis status.');
++    setVideoAnalysisMessage(data.stage || data.status);
++    if (data.status === 'completed') return loadVideoAnalysisResult(id);
++    if (data.status === 'failed') throw new Error(data.error || 'Analysis failed.');
++    activeVideoAnalysisTimer = setTimeout(() => pollVideoAnalysis(id), 1500);
++  } catch (error) {
++    document.getElementById('analysis-start-btn').disabled = false;
++    setVideoAnalysisMessage(error.message);
++  }
++}
++
++async function loadVideoAnalysisResult(id) {
++  const response = await fetch(`/api/video-analysis/${id}/result`);
++  const data = await response.json();
++  if (!response.ok) throw new Error(data.error || 'Could not load analysis result.');
++  const result = data.result || {};
++  const draftSection = document.getElementById('analysis-draft-section');
++  const draftContent = document.getElementById('analysis-draft-content');
++  if (!draftSection || !draftContent) return;
++  draftSection.style.display = 'block';
++  draftContent.innerHTML = `
++    <p style="font-weight:500;margin-bottom:8px">${escapeVideoAnalysisHtml(result.summary || 'Analysis complete.')}</p>
++    <p style="font-size:13px">Detected stroke: ${escapeVideoAnalysisHtml(result.detected_stroke || '—')} · Confidence: ${Math.round((result.confidence || 0) * 100)}%</p>
++    <p style="font-size:13px;color:var(--muted);margin-top:6px">Frames reviewed: ${data.frames?.length || result.frame_count || 0}</p>
++    ${Array.isArray(result.improvements) ? `<h3 class="standards-course-title">Improvements</h3><ul>${result.improvements.map(item => `<li>${escapeVideoAnalysisHtml(item)}</li>`).join('')}</ul>` : ''}
++    ${Array.isArray(result.drills) ? `<h3 class="standards-course-title">Drills</h3><ul>${result.drills.map(item => `<li>${escapeVideoAnalysisHtml(item)}</li>`).join('')}</ul>` : ''}
++    <p class="source-note">${escapeVideoAnalysisHtml(result.safety_notice || '')}</p>
++  `;
++  setVideoAnalysisMessage('Recommendations ready.');
++}
++
++function setVideoAnalysisMessage(message) {
++  const messageBox = document.getElementById('analysis-message-box');
++  const messageText = document.getElementById('analysis-message-text');
++  if (!messageBox || !messageText) return;
++  messageText.textContent = message;
++  messageBox.style.display = 'block';
++}
++
+ // ─── MEET FINDER ──────────────────────────────────────────
+ function searchMeet() {
+   const swimmerName = document.getElementById('meet-swimmer').value.trim();
+diff --git a/package.json b/package.json
+index 4640475..5747585 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,8 @@
+   "description": "Lane Line swim time checker with adjustable benchmark cuts.",
+   "scripts": {
+     "start": "node server.js 5180",
+-    "dev": "node server.js 5180"
++    "dev": "node server.js 5180",
++    "test": "node --test",
++    "check": "node -c server.js && node -c videoAnalysis.js && node --test"
+   }
+ }
+diff --git a/server.js b/server.js
+index 49a0bbd..3109d2c 100644
+--- a/server.js
++++ b/server.js
+@@ -2,6 +2,7 @@ const http = require("http");
+ const https = require("https");
+ const fs = require("fs");
+ const path = require("path");
++const { createVideoAnalysisRouter } = require("./videoAnalysis");
+ 
+ const root = __dirname;
+ const preferredPort = Number(process.argv[2] || process.env.PORT || 5180);
+@@ -13,6 +14,8 @@ const usaSwimmingEvents = [
+   [25, "FL"], [50, "FL"], [100, "FL"], [200, "FL"],
+   [100, "IM"], [200, "IM"], [400, "IM"]
+ ];
++const handleVideoAnalysis = createVideoAnalysisRouter();
++
+ const types = {
+   ".html": "text/html; charset=utf-8",
+   ".css": "text/css; charset=utf-8",
+@@ -26,6 +29,11 @@ const server = http.createServer(async (req, res) => {
+   const requestUrl = new URL(req.url, `http://${host}`);
+   const urlPath = decodeURIComponent(requestUrl.pathname);
+ 
++  if (urlPath.startsWith("/api/video-analysis")) {
++    const handled = await handleVideoAnalysis(req, res, requestUrl);
++    if (handled) return;
++  }
++
+   if (urlPath === "/api/usa-swimming/best-times") {
+     const memberId = requestUrl.searchParams.get("memberId") || usaSwimmingMemberId;
+     try {
+diff --git a/test/videoAnalysis.test.js b/test/videoAnalysis.test.js
+new file mode 100644
+index 0000000..9b7634f
+--- /dev/null
++++ b/test/videoAnalysis.test.js
+@@ -0,0 +1,23 @@
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const { selectFrames, validateVideoMetadata, validateUploadedVideo } = require('../videoAnalysis');
++
++test('selectFrames chooses 30 frames across a 30 second competitive clip', () => {
++  const frames = Array.from({ length: 180 }, (_, index) => ({ path: `frame_${index}.jpg`, timestampSeconds: index / 6 }));
++  const selected = selectFrames(frames, 30, 30);
++  assert.equal(selected.length, 30);
++  assert.ok(selected[0].timestampSeconds < 1);
++  assert.ok(selected.at(-1).timestampSeconds > 29);
++});
++
++test('validateVideoMetadata rejects over-duration clips', () => {
++  assert.throws(() => validateVideoMetadata({ durationSeconds: 31, width: 1280, height: 720 }, { maxVideoDurationSeconds: 30, minVideoHeight: 480 }), /30 seconds/);
++});
++
++test('validateUploadedVideo accepts mp4 uploads', () => {
++  assert.equal(validateUploadedVideo({ filename: 'swim.mp4', contentType: 'video/mp4', data: Buffer.alloc(1024) }, { maxVideoSizeMb: 50 }), '');
++});
++
++test('validateUploadedVideo rejects non-video extensions', () => {
++  assert.match(validateUploadedVideo({ filename: 'notes.txt', contentType: 'text/plain', data: Buffer.alloc(1024) }, { maxVideoSizeMb: 50 }), /MP4/);
++});
+diff --git a/videoAnalysis.js b/videoAnalysis.js
+new file mode 100644
+index 0000000..5f4008f
+--- /dev/null
++++ b/videoAnalysis.js
+@@ -0,0 +1,222 @@
++const { execFile } = require("child_process");
++const crypto = require("crypto");
++const fs = require("fs");
++const fsp = require("fs/promises");
++const os = require("os");
++const path = require("path");
++
++loadDotEnvFile(path.join(__dirname, ".env"));
++
++const DEFAULT_CONFIG = Object.freeze({
++  maxDailyAnalyses: Number(process.env.MAX_DAILY_ANALYSES || 30),
++  maxHourlyAnalyses: Number(process.env.MAX_HOURLY_ANALYSES || 10),
++  maxVideoSizeMb: Number(process.env.VIDEO_MAX_SIZE_MB || 50),
++  maxVideoDurationSeconds: Number(process.env.VIDEO_MAX_DURATION_SECONDS || 30),
++  minVideoHeight: Number(process.env.VIDEO_MIN_HEIGHT || 480),
++  frameSampleFps: Number(process.env.FRAME_SAMPLE_FPS || 6),
++  maxCandidateFrames: Number(process.env.MAX_CANDIDATE_FRAMES || 180),
++  maxAnalysisFrames: Number(process.env.MAX_ANALYSIS_FRAMES || 30),
++  frameMaxLongEdge: Number(process.env.FRAME_MAX_LONG_EDGE || 1280),
++  frameJpegQuality: Number(process.env.FRAME_JPEG_QUALITY || 78),
++  processingTimeoutMs: Number(process.env.PROCESSING_TIMEOUT_MS || 180000),
++  openaiModel: process.env.OPENAI_VISION_MODEL || "gpt-4.1-mini"
++});
++
++const analyses = new Map();
++const requestLog = [];
++const allowedExtensions = new Set([".mp4", ".mov", ".webm"]);
++const allowedMimeTypes = new Set(["video/mp4", "video/quicktime", "video/webm", "application/octet-stream"]);
++
++function createVideoAnalysisRouter(config = DEFAULT_CONFIG) {
++  return async function handleVideoAnalysis(req, res, requestUrl) {
++    const parts = requestUrl.pathname.split("/").filter(Boolean);
++    if (req.method === "GET" && parts.length === 3 && parts[2] === "config") {
++      return sendJson(res, 200, publicConfig(config));
++    }
++    if (req.method === "POST" && parts.length === 2) {
++      return handleCreateAnalysis(req, res, config);
++    }
++    if (req.method === "GET" && parts.length === 3) {
++      return handleGetAnalysis(parts[2], res, false);
++    }
++    if (req.method === "GET" && parts.length === 4 && parts[3] === "result") {
++      return handleGetAnalysis(parts[2], res, true);
++    }
++    return false;
++  };
++}
++
++async function handleCreateAnalysis(req, res, config) {
++  if (!allowRequest(config)) return sendJson(res, 429, { error: "Video analysis limit reached. Please try later." });
++  let parsed;
++  try {
++    parsed = await parseMultipartForm(req, config.maxVideoSizeMb * 1024 * 1024);
++  } catch (error) {
++    return sendJson(res, 400, { error: error.message });
++  }
++  const file = parsed.files.video;
++  if (!file) return sendJson(res, 400, { error: "Please choose a swimming video." });
++  const uploadError = validateUploadedVideo(file, config);
++  if (uploadError) return sendJson(res, 400, { error: uploadError });
++
++  const id = crypto.randomUUID();
++  const analysis = {
++    id,
++    status: "queued",
++    stage: "Upload complete",
++    createdAt: new Date().toISOString(),
++    updatedAt: new Date().toISOString(),
++    form: sanitizeAnalysisForm(parsed.fields),
++    result: null,
++    error: null,
++    metadata: null,
++    frames: []
++  };
++  analyses.set(id, analysis);
++  sendJson(res, 202, { id, status: analysis.status, stage: analysis.stage });
++  processAnalysis(analysis, file, config).catch(error => failAnalysis(analysis, error));
++}
++
++async function processAnalysis(analysis, file, config) {
++  const workDir = await fsp.mkdtemp(path.join(os.tmpdir(), "laneline-video-"));
++  try {
++    updateAnalysis(analysis, "validating", "Inspecting video");
++    const inputPath = path.join(workDir, safeFileName(file.filename || "upload.mp4"));
++    await fsp.writeFile(inputPath, file.data);
++    const metadata = await inspectVideo(inputPath, config.processingTimeoutMs);
++    validateVideoMetadata(metadata, config);
++
++    updateAnalysis(analysis, "extracting_frames", "Extracting competitive stroke frames");
++    const framesDir = path.join(workDir, "frames");
++    await fsp.mkdir(framesDir, { recursive: true });
++    const candidates = await extractFrames(inputPath, framesDir, metadata, config);
++    const selected = selectFrames(candidates, metadata.durationSeconds, config.maxAnalysisFrames);
++    if (!selected.length) throw new UserFacingError("No usable frames were extracted from that video.");
++
++    updateAnalysis(analysis, "analyzing", "Analyzing technique");
++    const result = await analyzeWithOpenAI({ analysis, metadata, frames: selected, config });
++    analysis.metadata = metadata;
++    analysis.frames = selected.map(frame => ({ timestampSeconds: frame.timestampSeconds }));
++    analysis.result = result;
++    updateAnalysis(analysis, "completed", "Recommendations ready");
++  } catch (error) {
++    failAnalysis(analysis, error);
++  } finally {
++    await fsp.rm(workDir, { recursive: true, force: true });
++  }
++}
++
++async function analyzeWithOpenAI({ analysis, metadata, frames, config }) {
++  if (!process.env.OPENAI_API_KEY) return demoAnalysis(analysis.form, metadata, frames);
++  const prompt = buildAnalysisPrompt(analysis.form, metadata, frames);
++  const content = [
++    { type: "input_text", text: prompt },
++    ...frames.map(frame => ({ type: "input_image", image_url: `data:image/jpeg;base64,${fs.readFileSync(frame.path).toString("base64")}` }))
++  ];
++  const response = await fetch("https://api.openai.com/v1/responses", {
++    method: "POST",
++    headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
++    body: JSON.stringify({ model: config.openaiModel, input: [{ role: "user", content }], text: { format: { type: "json_schema", name: "swim_stroke_analysis", strict: true, schema: analysisSchema() } } })
++  });
++  if (!response.ok) throw new UserFacingError(`OpenAI request failed with status ${response.status}.`);
++  const data = await response.json();
++  const text = data.output_text || data.output?.flatMap(item => item.content || []).find(item => item.type === "output_text")?.text;
++  if (!text) throw new UserFacingError("OpenAI did not return analysis text.");
++  return JSON.parse(text);
++}
++
++function buildAnalysisPrompt(form, metadata, frames) {
++  return `You are a cautious swimming technique analysis assistant. The images are timestamped still frames from one chronological swim video. Analyze only visible evidence. Do not identify the swimmer or infer sensitive traits. Do not diagnose medical issues. Avoid precise joint angles unless calculated separately. Prioritize no more than three improvements.\n\nContext:\nStroke: ${form.strokeType}\nCamera angle: ${form.cameraAngle}\nSwimmer level: ${form.swimmerLevel}\nGoal: ${form.goal || "none"}\nDuration: ${metadata.durationSeconds.toFixed(2)} seconds\nResolution: ${metadata.width}x${metadata.height}\nFrame timestamps: ${frames.map(frame => frame.timestampSeconds.toFixed(2)).join(", ")} seconds`;
++}
++
++async function inspectVideo(inputPath, timeoutMs) {
++  const stdout = await execFileText("ffprobe", ["-v", "error", "-print_format", "json", "-show_format", "-show_streams", inputPath], timeoutMs);
++  const data = JSON.parse(stdout);
++  const stream = (data.streams || []).find(row => row.codec_type === "video");
++  if (!stream) throw new UserFacingError("That file does not contain a readable video stream.");
++  return { durationSeconds: Number(data.format?.duration || stream.duration || 0), width: Number(stream.width || 0), height: Number(stream.height || 0), fps: parseFps(stream.avg_frame_rate || stream.r_frame_rate), codec: stream.codec_name || "unknown" };
++}
++
++function validateVideoMetadata(metadata, config) {
++  if (!Number.isFinite(metadata.durationSeconds) || metadata.durationSeconds <= 0) throw new UserFacingError("Could not read the video duration.");
++  if (metadata.durationSeconds > config.maxVideoDurationSeconds) throw new UserFacingError(`Please upload a clip ${config.maxVideoDurationSeconds} seconds or shorter.`);
++  if (Math.min(metadata.width, metadata.height) < config.minVideoHeight) throw new UserFacingError(`Please upload at least ${config.minVideoHeight}p video.`);
++}
++
++async function extractFrames(inputPath, framesDir, metadata, config) {
++  const fps = Math.min(config.frameSampleFps, Math.max(1, config.maxCandidateFrames / Math.max(metadata.durationSeconds, 1)));
++  const outputPattern = path.join(framesDir, "frame_%05d.jpg");
++  const scale = `scale='if(gt(iw,ih),min(${config.frameMaxLongEdge},iw),-2)':'if(gt(ih,iw),min(${config.frameMaxLongEdge},ih),-2)'`;
++  await execFileText("ffmpeg", ["-hide_banner", "-loglevel", "error", "-i", inputPath, "-vf", `fps=${fps},${scale}`, "-q:v", String(jpegQualityToQscale(config.frameJpegQuality)), outputPattern], config.processingTimeoutMs);
++  const names = (await fsp.readdir(framesDir)).filter(name => name.endsWith(".jpg")).sort().slice(0, config.maxCandidateFrames);
++  return names.map((name, index) => ({ path: path.join(framesDir, name), timestampSeconds: index / fps }));
++}
++
++function selectFrames(frames, durationSeconds, maxFrames) {
++  if (frames.length <= maxFrames) return frames;
++  const selected = [];
++  for (let index = 0; index < maxFrames; index += 1) {
++    const target = (index + 0.5) * durationSeconds / maxFrames;
++    const frame = frames.reduce((best, candidate) => Math.abs(candidate.timestampSeconds - target) < Math.abs(best.timestampSeconds - target) ? candidate : best, frames[0]);
++    if (!selected.includes(frame)) selected.push(frame);
++  }
++  return selected;
++}
++
++function parseMultipartForm(req, maxBytes) {
++  return new Promise((resolve, reject) => {
++    const boundary = (req.headers["content-type"] || "").match(/boundary=(.+)$/)?.[1];
++    if (!boundary) return reject(new Error("Upload must use multipart/form-data."));
++    const chunks = [];
++    let size = 0;
++    req.on("data", chunk => { size += chunk.length; if (size > maxBytes + 1024 * 1024) req.destroy(new Error("Uploaded file is too large.")); else chunks.push(chunk); });
++    req.on("error", reject);
++    req.on("end", () => resolve(parseMultipartBuffer(Buffer.concat(chunks), boundary)));
++  });
++}
++
++function parseMultipartBuffer(buffer, boundary) {
++  const body = buffer.toString("binary");
++  const fields = {};
++  const files = {};
++  for (const part of body.split(`--${boundary}`)) {
++    const [rawHeaders, rawValue] = part.split("\r\n\r\n");
++    if (!rawHeaders || rawValue === undefined) continue;
++    const name = /name="([^"]+)"/.exec(rawHeaders)?.[1];
++    if (!name) continue;
++    const value = rawValue.replace(/\r\n$/, "");
++    const filename = /filename="([^"]*)"/.exec(rawHeaders)?.[1];
++    const contentType = /Content-Type:\s*([^\r\n]+)/i.exec(rawHeaders)?.[1] || "application/octet-stream";
++    if (filename) files[name] = { filename, contentType, data: Buffer.from(value, "binary") };
++    else fields[name] = value;
++  }
++  return { fields, files };
++}
++
++function validateUploadedVideo(file, config) {
++  if (file.data.length > config.maxVideoSizeMb * 1024 * 1024) return `Please upload a video ${config.maxVideoSizeMb} MB or smaller.`;
++  if (!allowedExtensions.has(path.extname(file.filename || "").toLowerCase())) return "Please upload an MP4, MOV, or WebM video.";
++  if (!allowedMimeTypes.has(file.contentType)) return "The uploaded file type is not supported.";
++  return "";
++}
++
++function demoAnalysis(form, metadata, frames) {
++  return { summary: "Demo mode: frame extraction succeeded. Add OPENAI_API_KEY to enable AI stroke analysis.", detected_stroke: form.strokeType, confidence: 0.5, strengths: ["Server-side frame extraction is ready."], improvements: ["Connect an OpenAI API key for technique feedback."], drills: ["Record a clear side-angle clip for the next test."], safety_notice: "AI feedback is educational and is not a substitute for a certified coach, medical professional, or lifeguard.", frame_count: frames.length, duration_seconds: metadata.durationSeconds };
++}
++function analysisSchema() { return { type: "object", additionalProperties: true, required: ["summary", "detected_stroke", "confidence", "strengths", "improvements", "drills", "safety_notice"], properties: { summary: { type: "string" }, detected_stroke: { type: "string" }, confidence: { type: "number" }, strengths: { type: "array", items: { type: "string" } }, improvements: { type: "array", items: { type: "string" } }, drills: { type: "array", items: { type: "string" } }, safety_notice: { type: "string" } } }; }
++function sanitizeAnalysisForm(fields) { return { strokeType: clean(fields.strokeType, "unknown"), cameraAngle: clean(fields.cameraAngle, "mixed"), swimmerLevel: clean(fields.swimmerLevel, "competitive"), goal: String(fields.goal || "").slice(0, 500) }; }
++function clean(value, fallback) { return String(value || fallback).replace(/[^a-z_ /-]/gi, "").slice(0, 40) || fallback; }
++function publicConfig(config) { return { maxDailyAnalyses: config.maxDailyAnalyses, maxHourlyAnalyses: config.maxHourlyAnalyses, maxVideoSizeMb: config.maxVideoSizeMb, maxVideoDurationSeconds: config.maxVideoDurationSeconds, frameSampleFps: config.frameSampleFps, maxCandidateFrames: config.maxCandidateFrames, maxAnalysisFrames: config.maxAnalysisFrames, openaiEnabled: Boolean(process.env.OPENAI_API_KEY) }; }
++function allowRequest(config) { const now = Date.now(); while (requestLog.length && now - requestLog[0] > 86400000) requestLog.shift(); const hourly = requestLog.filter(time => now - time < 3600000).length; if (requestLog.length >= config.maxDailyAnalyses || hourly >= config.maxHourlyAnalyses) return false; requestLog.push(now); return true; }
++function updateAnalysis(analysis, status, stage) { analysis.status = status; analysis.stage = stage; analysis.updatedAt = new Date().toISOString(); }
++function failAnalysis(analysis, error) { analysis.status = "failed"; analysis.stage = "Failed"; analysis.error = error instanceof UserFacingError ? error.message : "Video analysis failed. Please try a shorter, clearer clip."; analysis.updatedAt = new Date().toISOString(); console.error("video-analysis", analysis.id, error?.message || error); }
++function handleGetAnalysis(id, res, includeResult) { const analysis = analyses.get(id); if (!analysis) return sendJson(res, 404, { error: "Analysis not found." }); return sendJson(res, 200, includeResult ? analysis : { id: analysis.id, status: analysis.status, stage: analysis.stage, error: analysis.error }); }
++function loadDotEnvFile(envPath) { if (!fs.existsSync(envPath)) return; for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) { const trimmed = line.trim(); if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue; const index = trimmed.indexOf("="); const key = trimmed.slice(0, index).trim(); const value = trimmed.slice(index + 1).trim().replace(/^(['"])(.*)\1$/, "$2"); if (key && process.env[key] === undefined) process.env[key] = value; } }
++function safeFileName(name) { return path.basename(name).replace(/[^\w.-]/g, "_") || "upload.mp4"; }
++function parseFps(value) { const [a, b] = String(value || "0/1").split("/").map(Number); return b ? a / b : a; }
++function jpegQualityToQscale(quality) { return Math.max(2, Math.min(31, Math.round((100 - quality) / 3))); }
++function execFileText(command, args, timeout) { return new Promise((resolve, reject) => execFile(command, args, { timeout }, (error, stdout, stderr) => error ? reject(new UserFacingError(`${command} failed. ${String(stderr || error.message).slice(0, 160)}`)) : resolve(stdout))); }
++function sendJson(res, status, value) { res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store, max-age=0" }); res.end(JSON.stringify(value)); return true; }
++class UserFacingError extends Error {}
++
++module.exports = { createVideoAnalysisRouter, selectFrames, validateVideoMetadata, validateUploadedVideo, parseMultipartBuffer, DEFAULT_CONFIG };

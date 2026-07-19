@@ -2,6 +2,7 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+const { createVideoAnalysisRouter } = require("./videoAnalysis");
 
 const root = __dirname;
 const preferredPort = Number(process.argv[2] || process.env.PORT || 5180);
@@ -13,6 +14,8 @@ const usaSwimmingEvents = [
   [25, "FL"], [50, "FL"], [100, "FL"], [200, "FL"],
   [100, "IM"], [200, "IM"], [400, "IM"]
 ];
+const handleVideoAnalysis = createVideoAnalysisRouter();
+
 const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -25,6 +28,11 @@ const server = http.createServer(async (req, res) => {
   const host = req.headers.host || "localhost";
   const requestUrl = new URL(req.url, `http://${host}`);
   const urlPath = decodeURIComponent(requestUrl.pathname);
+
+  if (urlPath.startsWith("/api/video-analysis")) {
+    const handled = await handleVideoAnalysis(req, res, requestUrl);
+    if (handled) return;
+  }
 
   if (urlPath === "/api/usa-swimming/best-times") {
     const memberId = requestUrl.searchParams.get("memberId") || usaSwimmingMemberId;
