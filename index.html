@@ -13,7 +13,7 @@
   --navy:#0B1F3A;--pool:#1A6B8A;--lane:#2DBBDA;
   --foam:#E8F7FB;--chalk:#F5F7F9;--ink:#0B1F3A;--muted:#5A7089;
   --border:rgba(11,31,58,0.12);
-  --green:#0E8A5F;--green-bg:#E6F5EF;
+  --green:#0B1F3A;--green-bg:#E8EEF5;
   --red:#C0392B;--red-bg:#FBEAEA;
   --blue-bg:#E8F4FC;--blue-txt:#1A6B8A;
   --amber:#B45309;--amber-bg:#FEF3C7;
@@ -142,14 +142,33 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .best-summary-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}
 .best-summary-card .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .best-summary-card .value{font-size:26px;font-weight:300;color:var(--navy)}
-.growth-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.growth-toolbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem}
 .growth-chart{width:100%;height:auto;display:block;background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .growth-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .growth-legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
 .growth-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
 .growth-note{font-size:12px;color:var(--muted);margin-top:8px}
+.growth-tooltip{position:fixed;display:none;pointer-events:none;z-index:900;background:var(--navy);color:#fff;border-radius:6px;padding:7px 9px;font-size:12px;line-height:1.35;box-shadow:0 10px 24px rgba(11,31,58,.22);max-width:260px}
+.suggestions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.suggestion-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem}
+.suggestion-card h3{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.suggestion-card p{font-size:13px;line-height:1.45;color:var(--muted)}
+.suggestion-card a{display:block;font-size:13px;color:var(--lane);text-decoration:none;margin-top:6px}
+.suggestion-card a:hover{text-decoration:underline}
+.suggestion-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.analysis-upload{border:1.5px dashed rgba(26,107,138,.35);border-radius:var(--radius);background:var(--chalk);padding:1rem;text-align:center}
+.analysis-upload input{margin-top:.5rem;width:100%;font-size:13px;color:var(--muted)}
+.analysis-video{width:100%;max-height:360px;background:var(--navy);border-radius:var(--radius);display:none}
+.analysis-meta{font-size:12px;color:var(--muted);margin-top:8px}
+.analysis-results{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.analysis-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem}
+.analysis-card h3{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:8px}
+.analysis-card ul{padding-left:1.1rem;color:var(--muted);font-size:13px;line-height:1.5}
+.analysis-card li{margin-bottom:5px}
+.analysis-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);background:var(--green-bg);display:inline-block;padding:3px 8px;border-radius:99px;margin-bottom:8px}
 @media(max-width:900px){.wide-page{width:calc(100vw - 24px)}}
-@media(max-width:620px){.best-tools,.best-summary,.standards-toolbar,.growth-toolbar{grid-template-columns:1fr}.times-table{font-size:13px}.page-tabs{overflow-x:auto;justify-content:flex-start}.page-tab{min-width:138px}}
+@media(max-width:620px){.best-tools,.best-summary,.standards-toolbar,.growth-toolbar,.analysis-grid,.analysis-results,.suggestions-grid{grid-template-columns:1fr}.times-table{font-size:13px}.page-tabs{overflow-x:auto;justify-content:flex-start}.page-tab{min-width:138px}}
 
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
@@ -239,6 +258,10 @@ footer span{color:var(--lane)}
     <button class="page-tab" id="ptab-growth" onclick="showPage('growth')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Growth
+    </button>
+    <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 10l4.5-2.5v9L15 14m-9 3h7a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Analysis
     </button>
     <button class="page-tab" id="ptab-standards" onclick="showPage('standards')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -397,11 +420,18 @@ footer span{color:var(--lane)}
   <div class="card">
     <div class="card-section">
       <div class="section-label">Growth</div>
-      <div class="meet-disclaimer"><p>Growth graphs use dated time rows saved on swimmer profiles. Lines rise as times get faster, with green segments for drops and red segments for added time.</p></div>
+      <div class="meet-disclaimer"><p>Growth graphs use saved time history. SCY and LCM are split, and every event is plotted by swim number so first swims line up together.</p></div>
       <div class="growth-toolbar">
         <div class="field">
           <label for="growth-swimmer">Swimmer</label>
           <select id="growth-swimmer"></select>
+        </div>
+        <div class="field">
+          <label for="growth-course">Course</label>
+          <select id="growth-course">
+            <option value="SCY">SCY</option>
+            <option value="LCM">LCM</option>
+          </select>
         </div>
         <div class="field">
           <label for="growth-event">Event</label>
@@ -416,6 +446,73 @@ footer span{color:var(--lane)}
     <div class="card-section">
       <div class="section-label">Selected event</div>
       <div id="growth-event-chart"></div>
+    </div>
+    <div class="card-section">
+      <div class="section-label">Suggestions</div>
+      <div id="growth-suggestions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ANALYSIS PAGE ══ -->
+<div id="analysis-page" style="display:none">
+  <div class="card">
+    <div class="card-section">
+      <div class="section-label">Video analysis</div>
+      <div class="meet-disclaimer"><p>Upload a swim video, choose what to review, and LaneLine will organize technique notes, likely issues, drills, and next-practice goals.</p></div>
+      <div class="analysis-grid">
+        <div class="field">
+          <label for="analysis-swimmer">Swimmer</label>
+          <select id="analysis-swimmer"></select>
+        </div>
+        <div class="field">
+          <label for="analysis-stroke">Stroke</label>
+          <select id="analysis-stroke">
+            <option>Freestyle</option>
+            <option>Backstroke</option>
+            <option>Breaststroke</option>
+            <option>Butterfly</option>
+            <option>IM / Turns</option>
+            <option>Starts</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="analysis-focus">Focus area</label>
+          <select id="analysis-focus">
+            <option>Overall technique</option>
+            <option>Body position</option>
+            <option>Catch and pull</option>
+            <option>Kick timing</option>
+            <option>Breathing</option>
+            <option>Turns and breakouts</option>
+            <option>Start and underwater</option>
+            <option>Race pacing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="analysis-view">Camera angle</label>
+          <select id="analysis-view">
+            <option>Side view</option>
+            <option>Front view</option>
+            <option>Above water</option>
+            <option>Underwater</option>
+            <option>Mixed / race footage</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-section">
+      <div class="section-label">Upload video</div>
+      <div class="analysis-upload">
+        <p style="font-size:13px;color:var(--muted)">Use a clear side or underwater clip when possible. Short clips are easiest to review.</p>
+        <input type="file" id="analysis-video-file" accept="video/*" onchange="handleAnalysisVideoUpload(event)"/>
+      </div>
+      <video id="analysis-video-preview" class="analysis-video" controls playsinline></video>
+      <div class="analysis-meta" id="analysis-video-meta">No video selected.</div>
+      <button class="btn-primary" style="margin-top:1rem" onclick="renderAnalysisReport()">Generate analysis</button>
+    </div>
+    <div class="card-section" id="analysis-results-section">
+      <div class="meet-empty">Upload a video and generate analysis to see targeted feedback.</div>
     </div>
   </div>
 </div>
@@ -835,6 +932,32 @@ async function refreshSeededSwimmersFromUsaSwimming() {
   await Promise.all(seededUsaSwimmingProfiles.map(profile => refreshSwimmerBestTimes(profile)));
 }
 
+async function refreshSeededSwimmersFromDataHubCache() {
+  try {
+    const response = await fetch('datahub-history.json', { cache: 'no-store' });
+    if (!response.ok) return;
+    const histories = await response.json();
+    let changed = false;
+    appState.swimmers.forEach(sw => {
+      const rows = histories?.[sw.usaSwimmingMemberId];
+      if (!Array.isArray(rows) || !rows.length) return;
+      sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], rows);
+      sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], rows);
+      changed = true;
+    });
+    if (!changed) return;
+    saveState();
+    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    renderProfilesPage();
+    renderBestTimesPicker();
+    renderGrowthPickers();
+    if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
+    if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
+  } catch (error) {
+    console.warn('Data Hub history cache skipped:', error);
+  }
+}
+
 async function refreshSwimmerFromUsaSwimming(memberId) {
   const sw = appState.swimmers.find(s => s.usaSwimmingMemberId === memberId);
   if (!sw) return;
@@ -942,6 +1065,8 @@ updateNavAccount();
 renderProfilesPage();
 renderBestTimesPicker();
 renderGrowthPickers();
+renderAnalysisPicker();
+refreshSeededSwimmersFromDataHubCache();
 refreshSeededSwimmersFromUsaSwimming();
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
@@ -957,6 +1082,7 @@ function showPage(page) {
     renderGrowthPickers();
     renderGrowthPage();
   }
+  if (page === 'analysis') renderAnalysisPicker();
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
 }
@@ -1119,6 +1245,7 @@ function saveSwimmer() {
   renderProfilesPage();
   renderBestTimesPicker();
   renderGrowthPickers();
+  renderAnalysisPicker();
   if (sw.swimcloudId || sw.usaSwimmingMemberId) refreshSwimmerBestTimes(sw);
   closeModal('add-swimmer-modal');
 }
@@ -1132,6 +1259,7 @@ function deleteSwimmer(id) {
   renderProfilesPage();
   renderBestTimesPicker();
   renderGrowthPickers();
+  renderAnalysisPicker();
 }
 
 function renderProfilesPage() {
@@ -1174,6 +1302,138 @@ function renderModalProfiles() {
         <div style="font-size:12px;color:var(--muted)">${sw.ageGroup||''}${sw.division?' · '+(sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women'):''}${sw.stroke?' · '+sw.stroke:''}</div>
       </div>
     </div>`).join('');
+}
+
+// ─── VIDEO ANALYSIS ───────────────────────────────────────
+let analysisVideoUrl = '';
+
+function renderAnalysisPicker() {
+  const select = document.getElementById('analysis-swimmer');
+  if (!select) return;
+  const previous = select.value;
+  select.innerHTML = appState.swimmers.length ? appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('') : '<option value="">No swimmers saved</option>';
+  if (previous && appState.swimmers.some(sw => sw.id === previous)) select.value = previous;
+}
+
+function handleAnalysisVideoUpload(event) {
+  const file = event.target.files?.[0];
+  const video = document.getElementById('analysis-video-preview');
+  const meta = document.getElementById('analysis-video-meta');
+  if (!file || !video || !meta) return;
+  if (analysisVideoUrl) URL.revokeObjectURL(analysisVideoUrl);
+  analysisVideoUrl = URL.createObjectURL(file);
+  video.src = analysisVideoUrl;
+  video.style.display = 'block';
+  meta.textContent = `${file.name} - ${Math.round(file.size / 1024 / 1024 * 10) / 10} MB`;
+}
+
+function renderAnalysisReport() {
+  const section = document.getElementById('analysis-results-section');
+  if (!section) return;
+  const swimmer = appState.swimmers.find(sw => sw.id === document.getElementById('analysis-swimmer')?.value);
+  const stroke = document.getElementById('analysis-stroke')?.value || 'Freestyle';
+  const focus = document.getElementById('analysis-focus')?.value || 'Overall technique';
+  const view = document.getElementById('analysis-view')?.value || 'Side view';
+  const hasVideo = !!document.getElementById('analysis-video-file')?.files?.length;
+  const tips = analysisTipsFor(stroke, focus, view);
+  section.innerHTML = `
+    <div class="analysis-results">
+      <div class="analysis-card">
+        <div class="analysis-score">${hasVideo ? 'Video ready' : 'No video uploaded'}</div>
+        <h3>Primary diagnosis</h3>
+        <ul>${tips.diagnosis.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+      <div class="analysis-card">
+        <h3>What to check in the clip</h3>
+        <ul>${tips.checks.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+      <div class="analysis-card">
+        <h3>Drills</h3>
+        <ul>${tips.drills.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+      <div class="analysis-card">
+        <h3>Next practice goal</h3>
+        <ul>
+          <li>${swimmer ? swimmer.name : 'This swimmer'} should pick one cue for the next set, not all of them at once.</li>
+          <li>${tips.goal}</li>
+          <li>Re-film from the same angle after practice and compare the first 10 seconds.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="growth-note">This local analysis is a technique checklist based on your selected stroke, focus, and camera angle. For exact frame-by-frame diagnosis, use clear side and underwater footage.</p>
+  `;
+}
+
+function analysisTipsFor(stroke, focus, view) {
+  const base = {
+    diagnosis: [
+      `Review ${stroke.toLowerCase()} with the main question: is speed coming from clean body position or from extra effort?`,
+      `For ${focus.toLowerCase()}, look for the first moment the body line or rhythm breaks.`,
+      `${view} is useful, but a second angle will catch issues this view hides.`
+    ],
+    checks: [
+      'Head stays quiet instead of lifting or turning late.',
+      'Hips stay high through breathing, turns, and fatigue.',
+      'Kick supports rotation or timing instead of fighting it.'
+    ],
+    drills: [
+      '6-kick switch with a patient head position.',
+      'Single-arm drill focused on line and balance.',
+      'Build 25s: easy speed first, then race tempo.'
+    ],
+    goal: 'Hold one technical cue for 4 x 25, then one 50 at controlled race rhythm.'
+  };
+  const focusTips = {
+    'Body position': {
+      diagnosis: ['The biggest speed leak is usually drag: dropped hips, lifted head, or a wide body line.'],
+      checks: ['Freeze the video at breath or recovery: shoulders and hips should still look connected.', 'Watch if the feet kick below the body line.'],
+      drills: ['Side-kick with one goggle in the water.', 'Streamline kick on back with ribs down.'],
+      goal: 'Keep hips near the surface for a full 25 without forcing the kick.'
+    },
+    'Catch and pull': {
+      diagnosis: ['Look for slipping water: dropped elbow, short catch, or pulling wide before the forearm is set.'],
+      checks: ['Pause right after hand entry and check if fingertips drop before the elbow.', 'Count strokes: faster tempo should not mean shorter water hold.'],
+      drills: ['Scull 1 into 25 swim.', 'Dog paddle with high-elbow catch.', 'Paddle-free fist drill.'],
+      goal: 'Feel pressure on the forearm before accelerating the pull.'
+    },
+    'Kick timing': {
+      diagnosis: ['Timing issues show up as pauses: kick, hips, and arms stop helping each other.'],
+      checks: ['Watch whether the kick gets bigger when tired.', 'Check if the kick spikes during breathing or turns.'],
+      drills: ['Vertical kick into fast 12.5.', '3-3-3 drill for rhythm.', 'Kick-swim by 12.5s.'],
+      goal: 'Keep kick size smaller but more connected to the stroke rhythm.'
+    },
+    'Breathing': {
+      diagnosis: ['Breathing should fit inside the stroke, not interrupt it. Look for head lift or late rotation.'],
+      checks: ['Pause at breath: one goggle should stay low.', 'Check if the lead arm drops while breathing.'],
+      drills: ['Single-side breathe 25s.', '3 strokes breathe, 3 strokes no breathe.', 'Side-kick breathe timing.'],
+      goal: 'Take quicker, lower breaths without changing stroke count.'
+    },
+    'Turns and breakouts': {
+      diagnosis: ['Most lost time comes from slow wall speed, loose streamline, or surfacing too early.'],
+      checks: ['Count frames from touch/flip to feet leaving wall.', 'Check if elbows lock and head hides before push-off.'],
+      drills: ['Turn 10s from flags.', 'Streamline push-offs to 8-10 yards.', 'Breakout timing: last kick into first stroke.'],
+      goal: 'Leave every wall in a tighter line than the swim into it.'
+    },
+    'Start and underwater': {
+      diagnosis: ['The start should create speed forward, not height. Underwaters should preserve that speed.'],
+      checks: ['Look for clean entry hole and tight arms.', 'Check if dolphin kicks get too large or slow.'],
+      drills: ['Track-start jumps to streamline.', 'Underwater 6-kick breakout repeats.', '15m breakout timing.'],
+      goal: 'Hit a cleaner entry and surface without the first stroke stalling.'
+    },
+    'Race pacing': {
+      diagnosis: ['Pacing issues show as early tempo spikes, fading stroke length, or rushed turns.'],
+      checks: ['Compare first and last 15m stroke count.', 'Look for whether tempo rises while distance per stroke drops.'],
+      drills: ['Negative split 50s.', 'Descend 4 x 25 by tempo only.', 'Race-finish 12.5s.'],
+      goal: 'Finish with the same line and stroke count pattern as the opening length.'
+    }
+  };
+  const chosen = focusTips[focus] || {};
+  return {
+    diagnosis: [...(chosen.diagnosis || []), ...base.diagnosis].slice(0, 4),
+    checks: [...(chosen.checks || []), ...base.checks].slice(0, 5),
+    drills: [...(chosen.drills || []), ...base.drills].slice(0, 5),
+    goal: chosen.goal || base.goal
+  };
 }
 
 // ─── MODAL HELPERS ────────────────────────────────────────
@@ -1336,18 +1596,25 @@ const worldRecordEstimates = {
 
 function renderGrowthPickers() {
   const swimmerSelect = document.getElementById('growth-swimmer');
+  const courseSelect = document.getElementById('growth-course');
   const eventSelect = document.getElementById('growth-event');
-  if (!swimmerSelect || !eventSelect) return;
+  if (!swimmerSelect || !courseSelect || !eventSelect) return;
   const previousSwimmer = swimmerSelect.value;
+  const previousCourse = courseSelect.value || 'SCY';
   const previousEvent = eventSelect.value;
   swimmerSelect.innerHTML = appState.swimmers.length ? appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('') : '<option value="">No swimmers saved</option>';
   if (previousSwimmer && appState.swimmers.some(sw => sw.id === previousSwimmer)) swimmerSelect.value = previousSwimmer;
+  courseSelect.value = previousCourse === 'LCM' ? 'LCM' : 'SCY';
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
-  const groups = groupGrowthRows(sw);
+  const groups = groupGrowthRows(sw, courseSelect.value);
   const events = Object.keys(groups).sort((a, b) => a.localeCompare(b));
   eventSelect.innerHTML = events.length ? events.map(event => `<option value="${event}">${event} (${groups[event].length})</option>`).join('') : '<option value="">No dated events</option>';
   if (previousEvent && events.includes(previousEvent)) eventSelect.value = previousEvent;
   swimmerSelect.onchange = () => {
+    renderGrowthPickers();
+    renderGrowthPage();
+  };
+  courseSelect.onchange = () => {
     renderGrowthPickers();
     renderGrowthPage();
   };
@@ -1356,35 +1623,45 @@ function renderGrowthPickers() {
 
 function renderGrowthPage() {
   const swimmerSelect = document.getElementById('growth-swimmer');
+  const courseSelect = document.getElementById('growth-course');
   const eventSelect = document.getElementById('growth-event');
   const main = document.getElementById('growth-main-chart');
   const detail = document.getElementById('growth-event-chart');
-  if (!swimmerSelect || !eventSelect || !main || !detail) return;
+  const suggestions = document.getElementById('growth-suggestions');
+  if (!swimmerSelect || !courseSelect || !eventSelect || !main || !detail || !suggestions) return;
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
+  const course = courseSelect.value === 'LCM' ? 'LCM' : 'SCY';
   if (!sw) {
     main.innerHTML = '<div class="meet-empty">Add a swimmer with dated times to see growth.</div>';
     detail.innerHTML = '';
+    suggestions.innerHTML = '';
     return;
   }
-  const groups = groupGrowthRows(sw);
+  const groups = groupGrowthRows(sw, course);
   const events = Object.keys(groups);
   if (!events.length) {
-    main.innerHTML = `<div class="meet-empty">${sw.name} needs dated time rows before growth can be graphed.</div>`;
+    main.innerHTML = `<div class="meet-empty">${sw.name} needs dated ${course} time rows before growth can be graphed.</div>`;
     detail.innerHTML = '';
+    suggestions.innerHTML = '';
     return;
   }
   const selectedEvent = eventSelect.value && groups[eventSelect.value] ? eventSelect.value : events[0];
-  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', title: `${sw.name} growth by event` });
+  const selectedForHighlight = main.dataset.highlightEvent && groups[main.dataset.highlightEvent] ? main.dataset.highlightEvent : '';
+  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', title: `${sw.name} ${course} growth by event`, selectedEvent: selectedForHighlight });
   const selectedRows = groups[selectedEvent].map(row => ({ ...row, event: selectedEvent }));
   const historyNote = selectedRows.length < 2
     ? `<div class="meet-disclaimer"><p>Only one history row is loaded for ${selectedEvent}. Growth needs every swim for this event, not just the fastest time.</p></div>`
     : '';
   detail.innerHTML = historyNote + renderGrowthChart(selectedRows, { mode: 'event', title: selectedEvent });
+  suggestions.innerHTML = renderGrowthSuggestions(sw, selectedEvent, course, selectedRows);
+  attachGrowthChartInteractions('growth-main-chart');
+  attachGrowthChartInteractions('growth-event-chart');
 }
 
-function groupGrowthRows(sw) {
+function groupGrowthRows(sw, course = 'SCY') {
   return timeHistoryForSwimmer(sw)
-    .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event) }))
+    .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event), course: normalizeCourse(row.course || row.event || '') }))
+    .filter(row => row.course === course)
     .filter(row => Number.isFinite(row.seconds) && row.dateValue && row.event)
     .sort((a, b) => a.dateValue - b.dateValue)
     .reduce((groups, row) => {
@@ -1402,30 +1679,233 @@ function timeHistoryForSwimmer(sw) {
   return [...history];
 }
 
+function renderGrowthSuggestions(sw, eventName, course, rows) {
+  if (!rows.length) return '<div class="meet-empty">Select an event with time history to see suggestions.</div>';
+  const ordered = [...rows].sort((a, b) => a.dateValue - b.dateValue);
+  const first = ordered[0];
+  const latest = ordered[ordered.length - 1];
+  const best = ordered.reduce((fastest, row) => row.seconds < fastest.seconds ? row : fastest, first);
+  const totalDrop = first.seconds - best.seconds;
+  const latestDrop = first.seconds - latest.seconds;
+  const recent = ordered.slice(-4);
+  const recentDrops = recent.slice(1).map((row, index) => recent[index].seconds - row.seconds);
+  const improvingCount = recentDrops.filter(drop => drop > 0.05).length;
+  const addedCount = recentDrops.filter(drop => drop < -0.05).length;
+  const recentRange = recent.length > 1 ? Math.max(...recent.map(row => row.seconds)) - Math.min(...recent.map(row => row.seconds)) : 0;
+  const profile = eventCoachingProfile(eventName);
+  const cards = [
+    {
+      tag: `${ordered.length} swims`,
+      title: 'Current read',
+      text: coachingTrendText(sw.name, eventName, totalDrop, latestDrop, improvingCount, addedCount, recent.length)
+    },
+    {
+      tag: profile.tag,
+      title: 'Main improvement area',
+      text: profile.focus
+    },
+    {
+      tag: 'race plan',
+      title: 'Race strategy',
+      text: racePlanText(eventName, recentRange, latest.seconds, best.seconds)
+    },
+    {
+      tag: 'practice',
+      title: 'Next set focus',
+      text: practiceFocusText(eventName, totalDrop, recentRange)
+    },
+    {
+      tag: 'next goal',
+      title: 'Short-term target',
+      text: nextGoalText(best, latest, eventName)
+    }
+  ];
+  return `<div class="suggestions-grid">${cards.map(card => `
+    <div class="suggestion-card">
+      <div class="suggestion-tag">${escapeHtml(card.tag)}</div>
+      <h3>${escapeHtml(card.title)}</h3>
+      <p>${escapeHtml(card.text)}</p>
+    </div>`).join('')}${renderSuggestionResources(eventName)}</div>`;
+}
+
+function renderSuggestionResources(eventName) {
+  const resources = suggestionResourcesForEvent(eventName);
+  return resources.map(resource => `
+    <div class="suggestion-card">
+      <div class="suggestion-tag">${escapeHtml(resource.type)}</div>
+      <h3>${escapeHtml(resource.title)}</h3>
+      <p>${escapeHtml(resource.note)}</p>
+      ${resource.links.map(link => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${escapeHtml(link.label)}</a>`).join('')}
+    </div>`).join('');
+}
+
+function suggestionResourcesForEvent(eventName) {
+  const key = normalizeEventKey(eventName);
+  const common = [
+    { label: 'USMS turns guide', url: 'https://www.usms.org/turns' },
+    { label: 'SwimSwam progression drills', url: 'https://swimswam.com/?cat=118812' }
+  ];
+  const forum = { label: 'USMS community: pool training and technique', url: 'https://community.usms.org/swimming/' };
+  if (key.includes('breast')) {
+    return [
+      {
+        type: 'videos and guides',
+        title: 'Breaststroke technique resources',
+        note: 'Use these for pullout timing, posture, kick timing, and reducing drag.',
+        links: [
+          { label: 'USMS breaststroke guide', url: 'https://www.usms.org/fitness-and-training/guides/breaststroke' },
+          { label: 'USA Swimming development model drills', url: 'https://www.usaswimming.org/coaches-leaders/coaches/american-development-model' },
+          ...common
+        ]
+      },
+      resourceForumCard(forum)
+    ];
+  }
+  if (key.includes('back')) {
+    return [
+      {
+        type: 'videos and guides',
+        title: 'Backstroke technique resources',
+        note: 'Good for rotation, head position, underwater work, and backstroke turns.',
+        links: [
+          { label: 'USMS backstroke guide', url: 'https://www.usms.org/fitness-and-training/guides/backstroke' },
+          { label: 'USMS turns guide', url: 'https://www.usms.org/turns' },
+          { label: 'USA Swimming development model drills', url: 'https://www.usaswimming.org/coaches-leaders/coaches/american-development-model' }
+        ]
+      },
+      resourceForumCard(forum)
+    ];
+  }
+  if (key.includes('fly')) {
+    return [
+      {
+        type: 'videos and guides',
+        title: 'Butterfly technique resources',
+        note: 'Useful for rhythm, second kick timing, breath timing, and keeping the stroke long under fatigue.',
+        links: [
+          { label: 'USMS butterfly guide', url: 'https://www.usms.org/fitness-and-training/guides/butterfly' },
+          { label: 'SwimSwam progression drills', url: 'https://swimswam.com/?cat=118812' },
+          { label: 'USA Swimming development model drills', url: 'https://www.usaswimming.org/coaches-leaders/coaches/american-development-model' }
+        ]
+      },
+      resourceForumCard(forum)
+    ];
+  }
+  if (key.includes('im')) {
+    return [
+      {
+        type: 'videos and guides',
+        title: 'IM transitions and turns',
+        note: 'Use these to clean up stroke transitions, wall speed, and legal turn habits.',
+        links: [
+          { label: 'USMS IM turns article', url: 'https://www.usms.org/fitness-and-training/articles-and-videos/articles/how-to-master-your-im-turns' },
+          { label: 'USMS turns guide', url: 'https://www.usms.org/turns' },
+          { label: 'SwimSwam progression drills', url: 'https://swimswam.com/?cat=118812' }
+        ]
+      },
+      resourceForumCard(forum)
+    ];
+  }
+  return [
+    {
+      type: 'videos and guides',
+      title: 'Freestyle and speed resources',
+      note: 'Good starting points for body position, catch, breathing, starts, turns, and efficient speed.',
+      links: [
+        { label: 'USMS freestyle guide', url: 'https://www.usms.org/fitness-and-training/guides/freestyle' },
+        { label: 'USMS stroke basics', url: 'https://cd3.usms.org/fitness-and-training/guides/swimming-101/the-stroke-basics' },
+        { label: 'Arena starts guide', url: 'https://blog.arenaswim.com/us/training-technique-us/swimming-starts/' }
+      ]
+    },
+    resourceForumCard(forum)
+  ];
+}
+
+function resourceForumCard(forum) {
+  return {
+    type: 'forum',
+    title: 'Ask and compare ideas',
+    note: 'Use forums for extra perspectives, but keep your coach as the final filter for technique changes.',
+    links: [forum]
+  };
+}
+
+function coachingTrendText(name, eventName, totalDrop, latestDrop, improvingCount, addedCount, recentCount) {
+  if (recentCount < 3) return `${name} has limited history in ${eventName}. Treat this as a baseline and race it a few more times before judging the trend too hard.`;
+  if (improvingCount >= 2 && latestDrop >= 0) return `${name} is trending the right way here. Keep the race plan stable and sharpen the small details instead of changing everything at once.`;
+  if (addedCount >= 2) return `The best swim is there, but recent races are drifting slower. Focus on cleaner execution under fatigue and avoid forcing speed too early.`;
+  if (Math.abs(latestDrop - totalDrop) < 0.25) return `Recent form is close to the best version of this event. This is a good time to chase a smaller technical drop.`;
+  return `The event has proven drop potential, but the recent pattern is mixed. Keep one race cue and measure whether it holds across the whole swim.`;
+}
+
+function eventCoachingProfile(eventName) {
+  const key = normalizeEventKey(eventName);
+  const distance = parseInt(key, 10) || 0;
+  if (key.includes('breast')) return { tag: 'breaststroke', focus: 'Prioritize pullout timing, a fast line into the first stroke, and holding distance per stroke when tempo rises.' };
+  if (key.includes('back')) return { tag: 'backstroke', focus: 'Work on steady rotation, quick catch connection, and carrying speed through the flags into the turn.' };
+  if (key.includes('fly')) return { tag: 'butterfly', focus: 'Keep the second kick connected to the front of the stroke and protect body line when fatigue starts to show.' };
+  if (key.includes('im')) return { tag: 'IM', focus: 'The biggest gains usually come from transition speed and not over-spending the first stroke. Make each wall decisive.' };
+  if (distance >= 400) return { tag: 'distance free', focus: 'Build a repeatable pace, keep the kick controlled early, and make the final third look more organized than the first third.' };
+  if (distance <= 50) return { tag: 'sprint free', focus: 'Put the most attention on start speed, breakout quality, and finishing without lifting the head.' };
+  return { tag: 'free', focus: 'Hold length while increasing tempo. The goal is more speed without throwing away water on the catch.' };
+}
+
+function racePlanText(eventName, recentRange, latestSeconds, bestSeconds) {
+  const key = normalizeEventKey(eventName);
+  if (key.startsWith('50 ')) return 'Think start, breakout, and finish. There is not enough race distance to fix a slow first 15 yards later.';
+  if (key.startsWith('100 ')) return 'Open fast but controlled, then make the second half about rhythm and walls instead of panic tempo.';
+  if (key.startsWith('200 ')) return 'Split the race into quarters: easy speed, build pressure, commit to the third 50, then finish with kick discipline.';
+  if (key.startsWith('400 ') || key.startsWith('500 ') || key.startsWith('800 ') || key.startsWith('1000 ') || key.startsWith('1500 ') || key.startsWith('1650 ')) return 'Use a pace target and protect stroke count early. The drop comes from staying efficient after halfway.';
+  return recentRange > 2 ? 'Recent races vary a lot, so simplify the race plan before chasing a bigger drop.' : 'Recent races are fairly consistent, so target one sharper detail instead of changing the whole race.';
+}
+
+function practiceFocusText(eventName, totalDrop, recentRange) {
+  const key = normalizeEventKey(eventName);
+  if (key.includes('breast')) return 'Try pullout plus breakout 12.5s, then 25s holding stroke count at race tempo.';
+  if (key.includes('back')) return 'Try 6-kick rotation work into fast 25s, with a hard rule for tight turns from the flags.';
+  if (key.includes('fly')) return 'Try short fly repeats with perfect rhythm, then broken race pieces where the last 10 yards stay long.';
+  if (key.includes('im')) return 'Try transition 25s and wall-focused IM rounds. Make the stroke changes fast without rushing the first cycle.';
+  if (recentRange > 2) return 'Use pace-control repeats so the first and last repeat are close. Consistency is the easiest next win.';
+  return totalDrop > 5 ? 'The base improvement is strong. Shift practice toward race-specific details: starts, turns, breakouts, and finishing speed.' : 'Build speed in small pieces: 12.5s and 25s with one technical cue, then connect it into a controlled race-effort swim.';
+}
+
+function nextGoalText(best, latest, eventName) {
+  const gap = latest.seconds - best.seconds;
+  if (gap <= 0.05) return `Set the next target just under ${best.time}. The swimmer is already near the best version of this event.`;
+  return `First target: get back within ${gap.toFixed(2)} seconds of the best time (${best.time}), then chase the next drop.`;
+}
+
 function renderGrowthChart(rows, options) {
   const width = 720;
   const height = options.mode === 'all' ? 330 : 300;
   const pad = { left: 62, right: 24, top: 28, bottom: 48 };
   if (!rows.length) return '<div class="meet-empty">No dated rows available for this graph.</div>';
-  const dates = rows.map(row => row.dateValue.getTime());
-  const minDate = Math.min(...dates);
-  const maxDate = Math.max(...dates);
-  const xFor = row => pad.left + ((row.dateValue.getTime() - minDate) / Math.max(1, maxDate - minDate)) * (width - pad.left - pad.right);
   const grouped = rows.reduce((groups, row) => {
     (groups[row.event] ||= []).push(row);
     return groups;
   }, {});
   const eventNames = Object.keys(grouped);
+  const dates = rows.map(row => row.dateValue.getTime());
+  const minDate = Math.min(...dates);
+  const maxDate = Math.max(...dates);
   const growthRows = eventNames.flatMap(event => {
     const eventRows = grouped[event].sort((a, b) => a.dateValue - b.dateValue);
     const baseline = eventRows[0].seconds;
     const recordGrowth = Math.max(0, baseline - worldRecordSecondsForEvent(event, baseline));
-    return eventRows.map(row => ({
+    return eventRows.map((row, index) => ({
       ...row,
+      swimIndex: index + 1,
       growthSeconds: baseline - row.seconds,
       recordGrowth
     }));
   });
+  const maxSwimIndex = Math.max(1, ...growthRows.map(row => row.swimIndex));
+  const xFor = row => {
+    if (options.mode === 'event') {
+      return pad.left + ((row.dateValue.getTime() - minDate) / Math.max(1, maxDate - minDate)) * (width - pad.left - pad.right);
+    }
+    return pad.left + ((row.swimIndex - 1) / Math.max(1, maxSwimIndex - 1)) * (width - pad.left - pad.right);
+  };
   const maxActualGrowth = Math.max(0, ...growthRows.map(row => row.growthSeconds));
   const minActualGrowth = Math.min(0, ...growthRows.map(row => row.growthSeconds));
   const selectedRecordGrowth = options.mode === 'event' ? Math.max(...growthRows.map(row => row.recordGrowth)) : 0;
@@ -1437,12 +1917,16 @@ function renderGrowthChart(rows, options) {
   const lines = eventNames.map((event, index) => {
     const eventRows = growthRows.filter(row => row.event === event).sort((a, b) => a.dateValue - b.dateValue);
     const color = chartPalette[index % chartPalette.length];
+    const dimmed = options.mode === 'all' && options.selectedEvent && event !== options.selectedEvent;
+    const eventAttrs = `data-growth-event="${escapeSvgText(event)}"`;
+    const opacity = dimmed ? '0.16' : '1';
     const segments = eventRows.slice(1).map((row, rowIndex) => {
       const prev = eventRows[rowIndex];
       const stroke = row.growthSeconds >= prev.growthSeconds ? 'var(--green)' : 'var(--red)';
-      return `<line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/>`;
+      const title = escapeSvgText(`${event}, swim ${row.swimIndex}: ${row.time} on ${row.date || 'unknown date'} (${formatSignedGrowth(row.growthSeconds)} from start)`);
+      return `<g ${eventAttrs} data-growth-tooltip="${title}" style="cursor:pointer;opacity:${opacity}"><line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/><line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="transparent" stroke-width="16" stroke-linecap="round" pointer-events="stroke"/></g>`;
     }).join('');
-    const points = eventRows.map(row => `<circle cx="${xFor(row)}" cy="${yFor(row.growthSeconds)}" r="4" fill="${color}"><title>${event}: ${formatSignedGrowth(row.growthSeconds)} from start, ${row.time} on ${row.date || 'unknown date'}</title></circle>`).join('');
+    const points = eventRows.map(row => `<circle ${eventAttrs} data-growth-tooltip="${escapeSvgText(`${event}, swim ${row.swimIndex}: ${row.time} on ${row.date || 'unknown date'} (${formatSignedGrowth(row.growthSeconds)} from start)`)}" cx="${xFor(row)}" cy="${yFor(row.growthSeconds)}" r="${dimmed ? 2.5 : 3.5}" fill="${color}" stroke="#fff" stroke-width="1" style="cursor:pointer;opacity:${opacity}"/>`).join('');
     return segments + points;
   }).join('');
   const legend = eventNames.map((event, index) => `<span><i style="background:${chartPalette[index % chartPalette.length]}"></i>${event}</span>`).join('');
@@ -1455,12 +1939,12 @@ function renderGrowthChart(rows, options) {
       ${options.mode === 'event' ? `<text x="12" y="${recordY + 4}" font-size="11" fill="#5A7089">World record</text>` : `<text x="12" y="${pad.top + 4}" font-size="11" fill="#5A7089">Most drop</text>`}
       <text x="12" y="${baselineY - 6}" font-size="11" fill="#5A7089">Start</text>
       <text x="12" y="${height - pad.bottom - 6}" font-size="11" fill="#5A7089">${formatSignedGrowth(bottomGrowth)}</text>
-      <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(minDate))}</text>
-      <text x="${width - pad.right - 70}" y="${height - 16}" font-size="11" fill="#5A7089">${formatGrowthDate(new Date(maxDate))}</text>
+      <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(minDate)) : 'Swim 1'}</text>
+      <text x="${width - pad.right - 78}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(maxDate)) : `Swim ${maxSwimIndex}`}</text>
       ${lines}
     </svg>
     ${options.mode === 'all' ? `<div class="growth-legend">${legend}</div>` : '<div class="growth-legend"><span><i style="background:var(--green)"></i>Dropped time</span><span><i style="background:var(--red)"></i>Added time</span></div>'}
-    <p class="growth-note">Higher means more seconds dropped from that event's first dated swim. All events start together at 0.00s.</p>
+    <p class="growth-note">${options.mode === 'event' ? 'Higher means more seconds dropped from this event\'s first swim. The x-axis is date swum for the selected event.' : 'Higher means more seconds dropped from that event\'s first swim. The x-axis is swim number, so every event starts at Swim 1.'}</p>
   `;
 }
 
@@ -1485,6 +1969,71 @@ function formatGrowthDate(date) {
 function formatSignedGrowth(seconds) {
   if (Math.abs(seconds) < 0.005) return '0.00s';
   return `${seconds > 0 ? '+' : ''}${seconds.toFixed(2)}s`;
+}
+
+function attachGrowthChartInteractions(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const tooltip = growthTooltip();
+  container.querySelectorAll('[data-growth-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', event => {
+      tooltip.textContent = el.getAttribute('data-growth-tooltip') || '';
+      tooltip.style.display = 'block';
+      moveGrowthTooltip(event, tooltip);
+    });
+    el.addEventListener('mousemove', event => moveGrowthTooltip(event, tooltip));
+    el.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+    el.addEventListener('click', () => {
+      if (containerId !== 'growth-main-chart') return;
+      const selectedEvent = el.getAttribute('data-growth-event');
+      const eventSelect = document.getElementById('growth-event');
+      if (!selectedEvent || !eventSelect) return;
+      eventSelect.value = selectedEvent;
+      container.dataset.highlightEvent = selectedEvent;
+      renderGrowthPage();
+    });
+  });
+  if (containerId === 'growth-main-chart') {
+    container.addEventListener('click', event => {
+      if (event.target.closest('[data-growth-event]')) return;
+      delete container.dataset.highlightEvent;
+      renderGrowthPage();
+    });
+  }
+}
+
+function growthTooltip() {
+  let tooltip = document.getElementById('growth-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'growth-tooltip';
+    tooltip.className = 'growth-tooltip';
+    document.body.appendChild(tooltip);
+  }
+  return tooltip;
+}
+
+function moveGrowthTooltip(event, tooltip) {
+  const offset = 14;
+  const maxX = window.innerWidth - tooltip.offsetWidth - 12;
+  const maxY = window.innerHeight - tooltip.offsetHeight - 12;
+  tooltip.style.left = `${Math.max(12, Math.min(maxX, event.clientX + offset))}px`;
+  tooltip.style.top = `${Math.max(12, Math.min(maxY, event.clientY + offset))}px`;
+}
+
+function escapeSvgText(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeHtml(value) {
+  return escapeSvgText(value);
 }
 
 function renderStandardsPage() {

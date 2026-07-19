@@ -112,17 +112,22 @@ function requestJson(url, body) {
   return new Promise((resolve, reject) => {
     const payload = body ? JSON.stringify(body) : null;
     const parsed = new URL(url);
+    const headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Device-Id": makeDeviceId(),
+      "AppName": "DataHub",
+      "Usas-Sub-Id": "Anonymous",
+      "Origin": "https://data.usaswimming.org",
+      "Referer": "https://data.usaswimming.org/",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+    };
+    if (payload) headers["Content-Length"] = Buffer.byteLength(payload);
     const req = https.request({
       method: payload ? "POST" : "GET",
       hostname: parsed.hostname,
       path: parsed.pathname + parsed.search,
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": payload ? Buffer.byteLength(payload) : 0,
-        "Device-Id": makeDeviceId(),
-        "AppName": "DataHub",
-        "Usas-Sub-Id": "Anonymous"
-      }
+      headers
     }, (response) => {
       let data = "";
       response.setEncoding("utf8");
@@ -181,6 +186,12 @@ function requestText(url) {
 }
 
 async function fetchUsaSwimmingBestTimes(memberId) {
+  try {
+    const memberRows = await requestJson(`https://times-api.usaswimming.org/swims/TimesSearch/GetBestTimesForMember/${encodeURIComponent(memberId)}`);
+    const mappedRows = normalizeTimeRows(memberRows, "USA Swimming");
+    if (mappedRows.length) return mergeFastestRows(mappedRows);
+  } catch (error) {}
+
   const requests = usaSwimmingEvents.map(([distance, strokeAbbreviation]) =>
     requestJson("https://times-api.usaswimming.org/swims/TimesSearch/BestTimes", {
       memberId,
@@ -190,35 +201,60 @@ async function fetchUsaSwimmingBestTimes(memberId) {
   );
   const results = (await Promise.all(requests)).flat().filter(Boolean);
   const rows = results.map(toLaneLineBestTime);
-  const deduped = new Map();
-  rows.forEach(row => {
-    const key = `${row.event}|${row.time}|${row.date}|${row.meet}`;
-    if (!deduped.has(key)) deduped.set(key, row);
-  });
-  return [...deduped.values()].sort((a, b) =>
-    a.event.localeCompare(b.event) ||
-    new Date(a.date || 0) - new Date(b.date || 0) ||
-    a.time.localeCompare(b.time)
-  );
+  return mergeFastestRows(rows);
 }
 
 async function fetchUsaSwimmingTimeHistory(memberId) {
+  const errors = [];
   const filterBodies = [
-    { memberId, page: 1, pageSize: 500 },
-    { memberId, pageNumber: 1, pageSize: 500 },
-    { memberIds: [memberId], page: 1, pageSize: 500 },
-    { swimmerId: memberId, page: 1, pageSize: 500 },
-    { memberId, bestTimesOnly: false, page: 1, pageSize: 500 },
-    { memberId, includeAllTimes: true, page: 1, pageSize: 500 }
+    {
+      events: null,
+      course: null,
+      seasonKey: null,
+      startDate: null,
+      endDate: null,
+      minAge: null,
+      maxAge: null,
+      timeStandardType: null,
+      sortBy: null,
+      memberId
+    },
+    {
+      events: null,
+      course: "SCY",
+      seasonKey: null,
+      startDate: null,
+      endDate: null,
+      minAge: null,
+      maxAge: null,
+      timeStandardType: null,
+      sortBy: null,
+      memberId
+    },
+    {
+      events: null,
+      course: "LCM",
+      seasonKey: null,
+      startDate: null,
+      endDate: null,
+      minAge: null,
+      maxAge: null,
+      timeStandardType: null,
+      sortBy: null,
+      memberId
+    }
   ];
   for (const body of filterBodies) {
     try {
       const rows = await requestJson("https://times-api.usaswimming.org/swims/TimesSearch/GetAllTimesForFilters", body);
       const mapped = normalizeTimeRows(rows, "USA Swimming");
       if (mapped.length) return mapped;
-    } catch (error) {}
+      errors.push(`empty ${body.course || "all courses"}`);
+    } catch (error) {
+      errors.push(`${body.course || "all courses"}: ${error.message}`);
+    }
   }
-  throw new Error("USA Swimming all-times endpoint did not return history rows.");
+  throw new Error(`USA Swimming all-times endpoint did not return history rows. ${errors.join(" | ")}`);
 }
 
 function toLaneLineBestTime(row) {
@@ -235,7 +271,7 @@ function toLaneLineBestTime(row) {
 }
 
 function normalizeTimeRows(rows, source) {
-  return (Array.isArray(rows) ? rows : [])
+  return extractRows(rows)
     .map(row => toLaneLineTimeRow(row, source))
     .filter(row => row.event && row.time)
     .sort((a, b) =>
@@ -243,6 +279,63 @@ function normalizeTimeRows(rows, source) {
       new Date(a.date || 0) - new Date(b.date || 0) ||
       a.time.localeCompare(b.time)
     );
+}
+
+function extractRows(value) {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== "object") return [];
+  const rowKeys = [
+    "allTimes",
+    "allTimesSwimTimes",
+    "bestTimes",
+    "bestTimesSwimTimes",
+    "swimTimes",
+    "times",
+    "results",
+    "items",
+    "data",
+    "rows",
+    "value"
+  ];
+  for (const key of rowKeys) {
+    if (Array.isArray(value[key])) return value[key];
+  }
+  for (const nested of Object.values(value)) {
+    const rows = extractRows(nested);
+    if (rows.length) return rows;
+  }
+  return [];
+}
+
+function mergeFastestRows(rows) {
+  const fastest = new Map();
+  rows.forEach(row => {
+    if (!row.event || !row.time) return;
+    const key = normalizeEventKey(row.event);
+    const previous = fastest.get(key);
+    const previousSeconds = parseRaceTime(previous?.time);
+    const rowSeconds = parseRaceTime(row.time);
+    if (!previous || !Number.isFinite(previousSeconds) || (Number.isFinite(rowSeconds) && rowSeconds < previousSeconds)) {
+      fastest.set(key, row);
+    }
+  });
+  return [...fastest.values()].sort((a, b) =>
+    a.event.localeCompare(b.event) ||
+    new Date(a.date || 0) - new Date(b.date || 0) ||
+    a.time.localeCompare(b.time)
+  );
+}
+
+function normalizeEventKey(eventName) {
+  return String(eventName || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function parseRaceTime(value) {
+  const clean = String(value || "").trim().replace(/[a-z]+$/i, "");
+  if (!clean) return NaN;
+  const parts = clean.split(":").map(Number);
+  if (parts.some(part => Number.isNaN(part))) return NaN;
+  return parts.reduce((total, part) => total * 60 + part, 0);
 }
 
 function toLaneLineTimeRow(row, source) {
