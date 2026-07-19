@@ -1,3 +1,4 @@
+const Busboy = require("busboy");
 const { execFile } = require("child_process");
 const crypto = require("crypto");
 const fs = require("fs");
@@ -10,6 +11,7 @@ loadDotEnvFile(path.join(__dirname, ".env"));
 const DEFAULT_CONFIG = Object.freeze({
   maxDailyAnalyses: Number(process.env.MAX_DAILY_ANALYSES || 30),
   maxHourlyAnalyses: Number(process.env.MAX_HOURLY_ANALYSES || 10),
+  maxConcurrentAnalyses: Number(process.env.MAX_CONCURRENT_ANALYSES || 1),
   maxVideoSizeMb: Number(process.env.VIDEO_MAX_SIZE_MB || 50),
   maxVideoDurationSeconds: Number(process.env.VIDEO_MAX_DURATION_SECONDS || 30),
   minVideoHeight: Number(process.env.VIDEO_MIN_HEIGHT || 480),
@@ -19,22 +21,41 @@ const DEFAULT_CONFIG = Object.freeze({
   frameMaxLongEdge: Number(process.env.FRAME_MAX_LONG_EDGE || 1280),
   frameJpegQuality: Number(process.env.FRAME_JPEG_QUALITY || 78),
   processingTimeoutMs: Number(process.env.PROCESSING_TIMEOUT_MS || 180000),
-  openaiModel: process.env.OPENAI_VISION_MODEL || "gpt-4.1-mini"
+  openaiTimeoutMs: Number(process.env.OPENAI_TIMEOUT_MS || 120000),
+  openaiModel: process.env.OPENAI_VISION_MODEL || "gpt-5.6-terra",
+  openaiReasoningEffort: process.env.OPENAI_REASONING_EFFORT || "low",
+  openaiImageDetail: process.env.OPENAI_IMAGE_DETAIL || "high",
+  accessCode: process.env.APP_ACCESS_CODE || "",
+  sessionSecret: process.env.SESSION_SECRET || process.env.APP_ACCESS_CODE || "",
+  analysisRetentionMs: Number(process.env.ANALYSIS_RETENTION_MS || 3600000)
 });
 
 const analyses = new Map();
-const requestLog = [];
+const requestLog = new Map();
+const loginAttempts = new Map();
 const allowedExtensions = new Set([".mp4", ".mov", ".webm"]);
 const allowedMimeTypes = new Set(["video/mp4", "video/quicktime", "video/webm", "application/octet-stream"]);
+let activeAnalysisCount = 0;
 
-function createVideoAnalysisRouter(config = DEFAULT_CONFIG) {
+function createVideoAnalysisRouter(config = DEFAULT_CONFIG, dependencies = {}) {
+  const processAnalysisTask = dependencies.processAnalysis || processAnalysis;
   return async function handleVideoAnalysis(req, res, requestUrl) {
     const parts = requestUrl.pathname.split("/").filter(Boolean);
+
     if (req.method === "GET" && parts.length === 3 && parts[2] === "config") {
       return sendJson(res, 200, publicConfig(config));
     }
+    if (req.method === "POST" && parts.length === 3 && parts[2] === "session") {
+      return handleCreateSession(req, res, config);
+    }
+    if (req.method === "GET" && parts.length === 3 && parts[2] === "session") {
+      return sendJson(res, 200, { authorized: isAuthorized(req, config), accessRequired: Boolean(config.accessCode) });
+    }
+    if (!isAuthorized(req, config)) {
+      return sendJson(res, 401, { error: "Enter the LaneLine access code to use video analysis." });
+    }
     if (req.method === "POST" && parts.length === 2) {
-      return handleCreateAnalysis(req, res, config);
+      return handleCreateAnalysis(req, res, config, processAnalysisTask);
     }
     if (req.method === "GET" && parts.length === 3) {
       return handleGetAnalysis(parts[2], res, false);
@@ -46,18 +67,64 @@ function createVideoAnalysisRouter(config = DEFAULT_CONFIG) {
   };
 }
 
-async function handleCreateAnalysis(req, res, config) {
-  if (!allowRequest(config)) return sendJson(res, 429, { error: "Video analysis limit reached. Please try later." });
-  let parsed;
+async function handleCreateSession(req, res, config) {
+  if (!config.accessCode) return sendJson(res, 200, { ok: true, accessRequired: false });
+  if (!allowLoginAttempt(req)) return sendJson(res, 429, { error: "Too many access attempts. Try again later." });
+
+  let body;
   try {
-    parsed = await parseMultipartForm(req, config.maxVideoSizeMb * 1024 * 1024);
+    body = await readJsonBody(req, 4096);
   } catch (error) {
     return sendJson(res, 400, { error: error.message });
   }
+  if (!secureEqual(String(body.accessCode || ""), config.accessCode)) {
+    return sendJson(res, 401, { error: "The access code is not correct." });
+  }
+
+  const cookie = [
+    `laneline_session=${sessionToken(config)}`,
+    "Path=/",
+    "HttpOnly",
+    "SameSite=Strict",
+    "Max-Age=604800",
+    isSecureRequest(req) ? "Secure" : ""
+  ].filter(Boolean).join("; ");
+  return sendJson(res, 200, { ok: true, accessRequired: true }, { "Set-Cookie": cookie });
+}
+
+async function handleCreateAnalysis(req, res, config, processAnalysisTask) {
+  if (activeAnalysisCount >= config.maxConcurrentAnalyses) {
+    return sendJson(res, 503, { error: "Another video is being analyzed. Please try again shortly." });
+  }
+
+  let uploadDir;
+  let parsed;
+  try {
+    uploadDir = await fsp.mkdtemp(path.join(os.tmpdir(), "laneline-upload-"));
+    parsed = await parseMultipartForm(req, config.maxVideoSizeMb * 1024 * 1024, uploadDir);
+  } catch (error) {
+    if (uploadDir) await fsp.rm(uploadDir, { recursive: true, force: true });
+    return sendJson(res, error.statusCode || 400, { error: error.message });
+  }
+
   const file = parsed.files.video;
-  if (!file) return sendJson(res, 400, { error: "Please choose a swimming video." });
+  if (!file) {
+    await fsp.rm(uploadDir, { recursive: true, force: true });
+    return sendJson(res, 400, { error: "Please choose a swimming video." });
+  }
   const uploadError = validateUploadedVideo(file, config);
-  if (uploadError) return sendJson(res, 400, { error: uploadError });
+  if (uploadError) {
+    await fsp.rm(uploadDir, { recursive: true, force: true });
+    return sendJson(res, 400, { error: uploadError });
+  }
+  if (!allowRequest(req, config)) {
+    await fsp.rm(uploadDir, { recursive: true, force: true });
+    return sendJson(res, 429, { error: "Video analysis limit reached. Please try later." });
+  }
+  if (activeAnalysisCount >= config.maxConcurrentAnalyses) {
+    await fsp.rm(uploadDir, { recursive: true, force: true });
+    return sendJson(res, 503, { error: "Another video is being analyzed. Please try again shortly." });
+  }
 
   const id = crypto.randomUUID();
   const analysis = {
@@ -73,27 +140,36 @@ async function handleCreateAnalysis(req, res, config) {
     frames: []
   };
   analyses.set(id, analysis);
+  activeAnalysisCount += 1;
   sendJson(res, 202, { id, status: analysis.status, stage: analysis.stage });
-  processAnalysis(analysis, file, config).catch(error => failAnalysis(analysis, error));
+
+  Promise.resolve()
+    .then(() => processAnalysisTask(analysis, file, config))
+    .catch(error => failAnalysis(analysis, error))
+    .finally(() => {
+      activeAnalysisCount = Math.max(0, activeAnalysisCount - 1);
+      scheduleAnalysisExpiry(id, config.analysisRetentionMs);
+    });
+  return true;
 }
 
 async function processAnalysis(analysis, file, config) {
-  const workDir = await fsp.mkdtemp(path.join(os.tmpdir(), "laneline-video-"));
+  const workDir = file.uploadDir || await fsp.mkdtemp(path.join(os.tmpdir(), "laneline-video-"));
   try {
     updateAnalysis(analysis, "validating", "Inspecting video");
-    const inputPath = path.join(workDir, safeFileName(file.filename || "upload.mp4"));
-    await fsp.writeFile(inputPath, file.data);
+    const inputPath = file.path || path.join(workDir, safeFileName(file.filename || "upload.mp4"));
+    if (!file.path) await fsp.writeFile(inputPath, file.data);
     const metadata = await inspectVideo(inputPath, config.processingTimeoutMs);
     validateVideoMetadata(metadata, config);
 
-    updateAnalysis(analysis, "extracting_frames", "Extracting competitive stroke frames");
+    updateAnalysis(analysis, "extracting_frames", `Extracting frames at ${config.frameSampleFps} fps`);
     const framesDir = path.join(workDir, "frames");
     await fsp.mkdir(framesDir, { recursive: true });
     const candidates = await extractFrames(inputPath, framesDir, metadata, config);
     const selected = selectFrames(candidates, metadata.durationSeconds, config.maxAnalysisFrames);
     if (!selected.length) throw new UserFacingError("No usable frames were extracted from that video.");
 
-    updateAnalysis(analysis, "analyzing", "Analyzing technique");
+    updateAnalysis(analysis, "analyzing", `Analyzing ${selected.length} selected frames`);
     const result = await analyzeWithOpenAI({ analysis, metadata, frames: selected, config });
     analysis.metadata = metadata;
     analysis.frames = selected.map(frame => ({ timestampSeconds: frame.timestampSeconds }));
@@ -107,26 +183,83 @@ async function processAnalysis(analysis, file, config) {
 }
 
 async function analyzeWithOpenAI({ analysis, metadata, frames, config }) {
-  if (!process.env.OPENAI_API_KEY) return demoAnalysis(analysis.form, metadata, frames);
+  if (!process.env.OPENAI_API_KEY) return demoAnalysis(analysis.form, metadata, frames, config.openaiModel);
   const prompt = buildAnalysisPrompt(analysis.form, metadata, frames);
-  const content = [
-    { type: "input_text", text: prompt },
-    ...frames.map(frame => ({ type: "input_image", image_url: `data:image/jpeg;base64,${fs.readFileSync(frame.path).toString("base64")}` }))
-  ];
-  const response = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: config.openaiModel, input: [{ role: "user", content }], text: { format: { type: "json_schema", name: "swim_stroke_analysis", strict: true, schema: analysisSchema() } } })
+  const encodedFrames = await Promise.all(frames.map(async frame => ({
+    timestampSeconds: frame.timestampSeconds,
+    imageUrl: `data:image/jpeg;base64,${(await fsp.readFile(frame.path)).toString("base64")}`
+  })));
+  const content = [{ type: "input_text", text: prompt }];
+  encodedFrames.forEach((frame, index) => {
+    content.push({ type: "input_text", text: `Frame ${index + 1} at ${frame.timestampSeconds.toFixed(2)} seconds` });
+    content.push({ type: "input_image", detail: config.openaiImageDetail, image_url: frame.imageUrl });
   });
-  if (!response.ok) throw new UserFacingError(`OpenAI request failed with status ${response.status}.`);
+
+  const requestBody = {
+    model: config.openaiModel,
+    input: [{ role: "user", content }],
+    max_output_tokens: 2200,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "swim_stroke_analysis",
+        strict: true,
+        schema: analysisSchema()
+      }
+    }
+  };
+  if (config.openaiReasoningEffort) requestBody.reasoning = { effort: config.openaiReasoningEffort };
+
+  const response = await fetchOpenAIWithRetry(requestBody, config.openaiTimeoutMs);
   const data = await response.json();
-  const text = data.output_text || data.output?.flatMap(item => item.content || []).find(item => item.type === "output_text")?.text;
-  if (!text) throw new UserFacingError("OpenAI did not return analysis text.");
-  return JSON.parse(text);
+  const outputText = data.output_text || data.output
+    ?.flatMap(item => item.content || [])
+    .find(item => item.type === "output_text")?.text;
+  if (!outputText) throw new UserFacingError("OpenAI did not return analysis text.");
+  try {
+    return JSON.parse(outputText);
+  } catch {
+    throw new UserFacingError("OpenAI returned analysis in an unexpected format.");
+  }
+}
+
+async function fetchOpenAIWithRetry(requestBody, timeoutMs) {
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody),
+        signal: controller.signal
+      });
+      if (response.ok) return response;
+      const requestId = response.headers.get("x-request-id");
+      if (attempt === 0 && (response.status === 429 || response.status >= 500)) {
+        await delay(750);
+        continue;
+      }
+      throw new UserFacingError(`OpenAI request failed with status ${response.status}${requestId ? ` (${requestId})` : ""}.`);
+    } catch (error) {
+      if (error instanceof UserFacingError) throw error;
+      if (attempt === 0 && error.name !== "AbortError") {
+        await delay(750);
+        continue;
+      }
+      throw new UserFacingError(error.name === "AbortError" ? "OpenAI analysis timed out." : "Could not reach OpenAI for analysis.");
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  throw new UserFacingError("Could not reach OpenAI for analysis.");
 }
 
 function buildAnalysisPrompt(form, metadata, frames) {
-  return `You are a cautious swimming technique analysis assistant. The images are timestamped still frames from one chronological swim video. Analyze only visible evidence. Do not identify the swimmer or infer sensitive traits. Do not diagnose medical issues. Avoid precise joint angles unless calculated separately. Prioritize no more than three improvements.\n\nContext:\nStroke: ${form.strokeType}\nCamera angle: ${form.cameraAngle}\nSwimmer level: ${form.swimmerLevel}\nGoal: ${form.goal || "none"}\nDuration: ${metadata.durationSeconds.toFixed(2)} seconds\nResolution: ${metadata.width}x${metadata.height}\nFrame timestamps: ${frames.map(frame => frame.timestampSeconds.toFixed(2)).join(", ")} seconds`;
+  return `You are a cautious swimming technique analysis assistant. The following ${frames.length} images are chronological still frames from one swim video. Analyze only visible evidence. Detect the stroke and camera view from the images; do not assume them from the uploader note. Use the uploader note only to choose which visible swimmer to follow. If the requested swimmer cannot be distinguished consistently, state that limitation. Do not identify the swimmer, infer identity or sensitive traits, assign a skill level, or diagnose medical issues. Avoid precise joint angles unless measured. Return no more than three priority improvements. For every improvement, cite the most relevant visible timestamp, explain the performance impact, and provide one short actionable cue. Recommend concise drills that directly address those improvements. If the footage does not support a conclusion, say so instead of guessing.\n\nContext:\nUploader focus note: ${form.focusNote || "none; analyze the most prominent swimmer"}\nDuration: ${metadata.durationSeconds.toFixed(2)} seconds\nResolution: ${metadata.width}x${metadata.height}\nFrame timestamps: ${frames.map(frame => frame.timestampSeconds.toFixed(2)).join(", ")} seconds`;
 }
 
 async function inspectVideo(inputPath, timeoutMs) {
@@ -134,7 +267,13 @@ async function inspectVideo(inputPath, timeoutMs) {
   const data = JSON.parse(stdout);
   const stream = (data.streams || []).find(row => row.codec_type === "video");
   if (!stream) throw new UserFacingError("That file does not contain a readable video stream.");
-  return { durationSeconds: Number(data.format?.duration || stream.duration || 0), width: Number(stream.width || 0), height: Number(stream.height || 0), fps: parseFps(stream.avg_frame_rate || stream.r_frame_rate), codec: stream.codec_name || "unknown" };
+  return {
+    durationSeconds: Number(data.format?.duration || stream.duration || 0),
+    width: Number(stream.width || 0),
+    height: Number(stream.height || 0),
+    fps: parseFps(stream.avg_frame_rate || stream.r_frame_rate),
+    codec: stream.codec_name || "unknown"
+  };
 }
 
 function validateVideoMetadata(metadata, config) {
@@ -163,15 +302,76 @@ function selectFrames(frames, durationSeconds, maxFrames) {
   return selected;
 }
 
-function parseMultipartForm(req, maxBytes) {
+function parseMultipartForm(req, maxBytes, uploadDir) {
   return new Promise((resolve, reject) => {
-    const boundary = (req.headers["content-type"] || "").match(/boundary=(.+)$/)?.[1];
-    if (!boundary) return reject(new Error("Upload must use multipart/form-data."));
-    const chunks = [];
-    let size = 0;
-    req.on("data", chunk => { size += chunk.length; if (size > maxBytes + 1024 * 1024) req.destroy(new Error("Uploaded file is too large.")); else chunks.push(chunk); });
-    req.on("error", reject);
-    req.on("end", () => resolve(parseMultipartBuffer(Buffer.concat(chunks), boundary)));
+    let parser;
+    try {
+      parser = Busboy({
+        headers: req.headers,
+        limits: { fileSize: maxBytes, files: 1, fields: 8, parts: 10, fieldSize: 2048 }
+      });
+    } catch {
+      reject(new UserFacingError("Upload must use multipart/form-data."));
+      return;
+    }
+
+    const fields = {};
+    const files = {};
+    const writePromises = [];
+    let fileTooLarge = false;
+    let settled = false;
+    const fail = error => {
+      if (settled) return;
+      settled = true;
+      reject(error instanceof UserFacingError ? error : new UserFacingError("Could not read the uploaded video."));
+    };
+
+    parser.on("field", (name, value, info) => {
+      if (!info.valueTruncated) fields[name] = value;
+    });
+    parser.on("file", (name, stream, info) => {
+      if (name !== "video" || files.video) {
+        stream.resume();
+        return;
+      }
+      const filename = safeFileName(info.filename || "upload.mp4");
+      const filePath = path.join(uploadDir, `${crypto.randomUUID()}-${filename}`);
+      const file = {
+        filename,
+        contentType: info.mimeType || "application/octet-stream",
+        path: filePath,
+        uploadDir,
+        size: 0
+      };
+      files.video = file;
+      const output = fs.createWriteStream(filePath, { flags: "wx" });
+      stream.on("data", chunk => { file.size += chunk.length; });
+      stream.on("limit", () => { fileTooLarge = true; });
+      writePromises.push(new Promise((resolveWrite, rejectWrite) => {
+        output.on("finish", resolveWrite);
+        output.on("error", rejectWrite);
+        stream.on("error", rejectWrite);
+      }));
+      stream.pipe(output);
+    });
+    parser.on("filesLimit", () => fail(new UserFacingError("Upload one video at a time.")));
+    parser.on("fieldsLimit", () => fail(new UserFacingError("Too many upload fields.")));
+    parser.on("partsLimit", () => fail(new UserFacingError("Upload contains too many parts.")));
+    parser.on("error", fail);
+    parser.on("close", async () => {
+      if (settled) return;
+      try {
+        await Promise.all(writePromises);
+        if (fileTooLarge) throw new UserFacingError(`Please upload a video ${Math.round(maxBytes / 1024 / 1024)} MB or smaller.`);
+        settled = true;
+        resolve({ fields, files });
+      } catch (error) {
+        fail(error);
+      }
+    });
+    req.on("aborted", () => fail(new UserFacingError("Video upload was interrupted.")));
+    req.on("error", fail);
+    req.pipe(parser);
   });
 }
 
@@ -187,36 +387,248 @@ function parseMultipartBuffer(buffer, boundary) {
     const value = rawValue.replace(/\r\n$/, "");
     const filename = /filename="([^"]*)"/.exec(rawHeaders)?.[1];
     const contentType = /Content-Type:\s*([^\r\n]+)/i.exec(rawHeaders)?.[1] || "application/octet-stream";
-    if (filename) files[name] = { filename, contentType, data: Buffer.from(value, "binary") };
+    if (filename) files[name] = { filename, contentType, data: Buffer.from(value, "binary"), size: Buffer.byteLength(value, "binary") };
     else fields[name] = value;
   }
   return { fields, files };
 }
 
 function validateUploadedVideo(file, config) {
-  if (file.data.length > config.maxVideoSizeMb * 1024 * 1024) return `Please upload a video ${config.maxVideoSizeMb} MB or smaller.`;
+  const size = Number(file.size ?? file.data?.length ?? 0);
+  if (!size) return "The selected video is empty.";
+  if (size > config.maxVideoSizeMb * 1024 * 1024) return `Please upload a video ${config.maxVideoSizeMb} MB or smaller.`;
   if (!allowedExtensions.has(path.extname(file.filename || "").toLowerCase())) return "Please upload an MP4, MOV, or WebM video.";
   if (!allowedMimeTypes.has(file.contentType)) return "The uploaded file type is not supported.";
   return "";
 }
 
-function demoAnalysis(form, metadata, frames) {
-  return { summary: "Demo mode: frame extraction succeeded. Add OPENAI_API_KEY to enable AI stroke analysis.", detected_stroke: form.strokeType, confidence: 0.5, strengths: ["Server-side frame extraction is ready."], improvements: ["Connect an OpenAI API key for technique feedback."], drills: ["Record a clear side-angle clip for the next test."], safety_notice: "AI feedback is educational and is not a substitute for a certified coach, medical professional, or lifeguard.", frame_count: frames.length, duration_seconds: metadata.durationSeconds };
+function analysisSchema() {
+  const strictStringArray = { type: "array", maxItems: 3, items: { type: "string" } };
+  return {
+    type: "object",
+    additionalProperties: false,
+    required: ["summary", "detected_stroke", "detected_camera_angle", "confidence", "strengths", "improvements", "drills", "safety_notice"],
+    properties: {
+      summary: { type: "string" },
+      detected_stroke: { type: "string" },
+      detected_camera_angle: { type: "string" },
+      confidence: { type: "number", minimum: 0, maximum: 1 },
+      strengths: strictStringArray,
+      improvements: {
+        type: "array",
+        maxItems: 3,
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["timestamp_seconds", "observation", "impact", "cue"],
+          properties: {
+            timestamp_seconds: { type: "number", minimum: 0 },
+            observation: { type: "string" },
+            impact: { type: "string" },
+            cue: { type: "string" }
+          }
+        }
+      },
+      drills: {
+        type: "array",
+        maxItems: 3,
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["name", "instructions", "purpose"],
+          properties: {
+            name: { type: "string" },
+            instructions: { type: "string" },
+            purpose: { type: "string" }
+          }
+        }
+      },
+      safety_notice: { type: "string" }
+    }
+  };
 }
-function analysisSchema() { return { type: "object", additionalProperties: true, required: ["summary", "detected_stroke", "confidence", "strengths", "improvements", "drills", "safety_notice"], properties: { summary: { type: "string" }, detected_stroke: { type: "string" }, confidence: { type: "number" }, strengths: { type: "array", items: { type: "string" } }, improvements: { type: "array", items: { type: "string" } }, drills: { type: "array", items: { type: "string" } }, safety_notice: { type: "string" } } }; }
-function sanitizeAnalysisForm(fields) { return { strokeType: clean(fields.strokeType, "unknown"), cameraAngle: clean(fields.cameraAngle, "mixed"), swimmerLevel: clean(fields.swimmerLevel, "competitive"), goal: String(fields.goal || "").slice(0, 500) }; }
-function clean(value, fallback) { return String(value || fallback).replace(/[^a-z_ /-]/gi, "").slice(0, 40) || fallback; }
-function publicConfig(config) { return { maxDailyAnalyses: config.maxDailyAnalyses, maxHourlyAnalyses: config.maxHourlyAnalyses, maxVideoSizeMb: config.maxVideoSizeMb, maxVideoDurationSeconds: config.maxVideoDurationSeconds, frameSampleFps: config.frameSampleFps, maxCandidateFrames: config.maxCandidateFrames, maxAnalysisFrames: config.maxAnalysisFrames, openaiEnabled: Boolean(process.env.OPENAI_API_KEY) }; }
-function allowRequest(config) { const now = Date.now(); while (requestLog.length && now - requestLog[0] > 86400000) requestLog.shift(); const hourly = requestLog.filter(time => now - time < 3600000).length; if (requestLog.length >= config.maxDailyAnalyses || hourly >= config.maxHourlyAnalyses) return false; requestLog.push(now); return true; }
-function updateAnalysis(analysis, status, stage) { analysis.status = status; analysis.stage = stage; analysis.updatedAt = new Date().toISOString(); }
-function failAnalysis(analysis, error) { analysis.status = "failed"; analysis.stage = "Failed"; analysis.error = error instanceof UserFacingError ? error.message : "Video analysis failed. Please try a shorter, clearer clip."; analysis.updatedAt = new Date().toISOString(); console.error("video-analysis", analysis.id, error?.message || error); }
-function handleGetAnalysis(id, res, includeResult) { const analysis = analyses.get(id); if (!analysis) return sendJson(res, 404, { error: "Analysis not found." }); return sendJson(res, 200, includeResult ? analysis : { id: analysis.id, status: analysis.status, stage: analysis.stage, error: analysis.error }); }
-function loadDotEnvFile(envPath) { if (!fs.existsSync(envPath)) return; for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) { const trimmed = line.trim(); if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue; const index = trimmed.indexOf("="); const key = trimmed.slice(0, index).trim(); const value = trimmed.slice(index + 1).trim().replace(/^(['"])(.*)\1$/, "$2"); if (key && process.env[key] === undefined) process.env[key] = value; } }
+
+function demoAnalysis(form, metadata, frames, model) {
+  return {
+    summary: `Demo mode: ${frames.length} frames were extracted successfully. Add OPENAI_API_KEY to enable ${model} analysis.`,
+    detected_stroke: "unknown",
+    detected_camera_angle: "unknown",
+    confidence: 0.5,
+    strengths: ["Server-side frame extraction is ready."],
+    improvements: [{ timestamp_seconds: frames[0]?.timestampSeconds || 0, observation: "AI analysis is not enabled.", impact: "Technique feedback requires an OpenAI API key.", cue: "Configure the production secret and retry." }],
+    drills: [{ name: "Clear side-angle recording", instructions: "Record a short, well-lit clip with the full swimmer visible.", purpose: "Provide stronger visual evidence for the next analysis." }],
+    safety_notice: "AI feedback is educational and is not a substitute for a certified coach, medical professional, or lifeguard.",
+    frame_count: frames.length,
+    duration_seconds: metadata.durationSeconds
+  };
+}
+
+function sanitizeAnalysisForm(fields) {
+  return {
+    focusNote: String(fields.focusNote || fields.goal || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 300)
+  };
+}
+
+function publicConfig(config) {
+  return {
+    maxDailyAnalyses: config.maxDailyAnalyses,
+    maxHourlyAnalyses: config.maxHourlyAnalyses,
+    maxConcurrentAnalyses: config.maxConcurrentAnalyses,
+    maxVideoSizeMb: config.maxVideoSizeMb,
+    maxVideoDurationSeconds: config.maxVideoDurationSeconds,
+    frameSampleFps: config.frameSampleFps,
+    maxCandidateFrames: config.maxCandidateFrames,
+    maxAnalysisFrames: config.maxAnalysisFrames,
+    model: config.openaiModel,
+    openaiEnabled: Boolean(process.env.OPENAI_API_KEY),
+    accessRequired: Boolean(config.accessCode)
+  };
+}
+
+function allowRequest(req, config) {
+  const now = Date.now();
+  const key = clientKey(req);
+  const rows = (requestLog.get(key) || []).filter(time => now - time < 86400000);
+  const hourly = rows.filter(time => now - time < 3600000).length;
+  if (rows.length >= config.maxDailyAnalyses || hourly >= config.maxHourlyAnalyses) return false;
+  rows.push(now);
+  requestLog.set(key, rows);
+  return true;
+}
+
+function allowLoginAttempt(req) {
+  const now = Date.now();
+  const key = clientKey(req);
+  const rows = (loginAttempts.get(key) || []).filter(time => now - time < 900000);
+  if (rows.length >= 10) return false;
+  rows.push(now);
+  loginAttempts.set(key, rows);
+  return true;
+}
+
+function isAuthorized(req, config) {
+  if (!config.accessCode) return true;
+  const token = parseCookies(req.headers.cookie || "").laneline_session || "";
+  return secureEqual(token, sessionToken(config));
+}
+
+function sessionToken(config) {
+  return crypto.createHmac("sha256", config.sessionSecret).update("laneline-video-access-v1").digest("base64url");
+}
+
+function parseCookies(value) {
+  return Object.fromEntries(String(value).split(";").map(part => part.trim()).filter(Boolean).map(part => {
+    const index = part.indexOf("=");
+    return index < 0 ? [part, ""] : [part.slice(0, index), part.slice(index + 1)];
+  }));
+}
+
+function secureEqual(left, right) {
+  const leftHash = crypto.createHash("sha256").update(String(left)).digest();
+  const rightHash = crypto.createHash("sha256").update(String(right)).digest();
+  return crypto.timingSafeEqual(leftHash, rightHash);
+}
+
+function clientKey(req) {
+  return String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "unknown").split(",")[0].trim();
+}
+
+function isSecureRequest(req) {
+  return process.env.NODE_ENV === "production" || String(req.headers["x-forwarded-proto"] || "").split(",")[0].trim() === "https";
+}
+
+function readJsonBody(req, maxBytes) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    req.on("data", chunk => {
+      size += chunk.length;
+      if (size > maxBytes) {
+        reject(new UserFacingError("Request body is too large."));
+        req.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
+    req.on("error", reject);
+    req.on("end", () => {
+      try {
+        resolve(JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}"));
+      } catch {
+        reject(new UserFacingError("Request body must be valid JSON."));
+      }
+    });
+  });
+}
+
+function scheduleAnalysisExpiry(id, retentionMs) {
+  const timer = setTimeout(() => analyses.delete(id), retentionMs);
+  timer.unref?.();
+}
+
+function updateAnalysis(analysis, status, stage) {
+  analysis.status = status;
+  analysis.stage = stage;
+  analysis.updatedAt = new Date().toISOString();
+}
+
+function failAnalysis(analysis, error) {
+  analysis.status = "failed";
+  analysis.stage = "Failed";
+  analysis.error = error instanceof UserFacingError ? error.message : "Video analysis failed. Please try a shorter, clearer clip.";
+  analysis.updatedAt = new Date().toISOString();
+  console.error("video-analysis", analysis.id, error?.message || error);
+}
+
+function handleGetAnalysis(id, res, includeResult) {
+  const analysis = analyses.get(id);
+  if (!analysis) return sendJson(res, 404, { error: "Analysis not found or expired." });
+  return sendJson(res, 200, includeResult ? analysis : { id: analysis.id, status: analysis.status, stage: analysis.stage, error: analysis.error });
+}
+
+function loadDotEnvFile(envPath) {
+  if (!fs.existsSync(envPath)) return;
+  for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue;
+    const index = trimmed.indexOf("=");
+    const key = trimmed.slice(0, index).trim();
+    const value = trimmed.slice(index + 1).trim().replace(/^(['"])(.*)\1$/, "$2");
+    if (key && process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
 function safeFileName(name) { return path.basename(name).replace(/[^\w.-]/g, "_") || "upload.mp4"; }
 function parseFps(value) { const [a, b] = String(value || "0/1").split("/").map(Number); return b ? a / b : a; }
 function jpegQualityToQscale(quality) { return Math.max(2, Math.min(31, Math.round((100 - quality) / 3))); }
-function execFileText(command, args, timeout) { return new Promise((resolve, reject) => execFile(command, args, { timeout }, (error, stdout, stderr) => error ? reject(new UserFacingError(`${command} failed. ${String(stderr || error.message).slice(0, 160)}`)) : resolve(stdout))); }
-function sendJson(res, status, value) { res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store, max-age=0" }); res.end(JSON.stringify(value)); return true; }
+function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+function execFileText(command, args, timeout) {
+  return new Promise((resolve, reject) => execFile(command, args, { timeout }, (error, stdout, stderr) => {
+    if (!error) return resolve(stdout);
+    const detail = error.code === "ENOENT" ? `${command} is not installed on the server.` : `${command} failed. ${String(stderr || error.message).slice(0, 160)}`;
+    reject(new UserFacingError(detail));
+  }));
+}
+
+function sendJson(res, status, value, headers = {}) {
+  res.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store, max-age=0",
+    ...headers
+  });
+  res.end(JSON.stringify(value));
+  return true;
+}
+
 class UserFacingError extends Error {}
 
-module.exports = { createVideoAnalysisRouter, selectFrames, validateVideoMetadata, validateUploadedVideo, parseMultipartBuffer, DEFAULT_CONFIG };
+module.exports = {
+  analysisSchema,
+  createVideoAnalysisRouter,
+  parseMultipartBuffer,
+  selectFrames,
+  validateVideoMetadata,
+  validateUploadedVideo,
+  DEFAULT_CONFIG
+};
