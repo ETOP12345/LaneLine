@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: laneline
+    runtime: docker
+    plan: free
+    region: oregon
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    maxShutdownDelaySeconds: 60
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_VISION_MODEL
+        value: gpt-5.6-terra
+      - key: OPENAI_REASONING_EFFORT
+        value: low
+      - key: OPENAI_IMAGE_DETAIL
+        value: high
+      - key: APP_ACCESS_CODE
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: MAX_CONCURRENT_ANALYSES
+        value: "1"
+      - key: FRAME_SAMPLE_FPS
+        value: "6"
+      - key: MAX_CANDIDATE_FRAMES
+        value: "180"
+      - key: MAX_ANALYSIS_FRAMES
+        value: "30"
+      - key: VIDEO_MAX_SIZE_MB
+        value: "50"
+      - key: VIDEO_MAX_DURATION_SECONDS
+        value: "30"
