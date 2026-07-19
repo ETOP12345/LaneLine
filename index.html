@@ -310,12 +310,57 @@ footer span{color:var(--lane)}
   <div class="card">
     <div class="card-section">
       <div class="section-label">Video analysis</div>
-      <div class="meet-disclaimer"><p>Video analysis is planned as a separate upload and AI feedback workflow. This tab is intentionally frontend-only for now, so the existing LaneLine tabs and server endpoints continue to work unchanged.</p></div>
-      <div class="meet-empty">
-        <p style="font-size:22px;margin-bottom:8px">🎥</p>
-        <p style="font-weight:500;margin-bottom:6px">Swimming video analysis coming soon</p>
-        <p style="font-size:13px">Future versions can add secure upload, frame extraction, and stroke-feedback results here without changing the current meet, best-times, growth, standards, zone, or swimmer tabs.</p>
+      <div class="meet-disclaimer"><p><strong>Connected upload workflow:</strong> choose a short swimming clip, add stroke context, and submit it to the server-side frame extraction and AI feedback pipeline. Existing LaneLine tabs and swim-times endpoints are unchanged.</p></div>
+      <div class="fields-grid" style="margin-bottom:14px">
+        <div class="field full">
+          <label for="analysis-video-file">Swimming video clip</label>
+          <input type="file" id="analysis-video-file" name="video" accept="video/mp4,video/quicktime,video/webm" onchange="updateVideoAnalysisDraft()" />
+          <p class="source-note">Current MVP limits: MP4, MOV, or WebM; 30 seconds or shorter; one swimmer preferred; 480p or better.</p>
+        </div>
+        <div class="field">
+          <label for="analysis-stroke">Stroke</label>
+          <select id="analysis-stroke" name="strokeType" onchange="updateVideoAnalysisDraft()">
+            <option value="freestyle">Freestyle</option>
+            <option value="backstroke">Backstroke</option>
+            <option value="breaststroke">Breaststroke</option>
+            <option value="butterfly">Butterfly</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="analysis-angle">Camera angle</label>
+          <select id="analysis-angle" name="cameraAngle" onchange="updateVideoAnalysisDraft()">
+            <option value="side">Side</option>
+            <option value="front">Front</option>
+            <option value="rear">Rear</option>
+            <option value="above water">Above water</option>
+            <option value="underwater">Underwater</option>
+            <option value="mixed / unknown">Mixed / unknown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="analysis-level">Swimmer level</label>
+          <select id="analysis-level" name="swimmerLevel" onchange="updateVideoAnalysisDraft()">
+            <option value="competitive">Competitive</option>
+            <option value="advanced">Advanced</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="beginner">Beginner</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="analysis-goal">Goal or question</label>
+          <input type="text" id="analysis-goal" name="goal" placeholder="e.g. Improve freestyle catch timing" maxlength="160" oninput="updateVideoAnalysisDraft()" />
+        </div>
+        <div class="field full">
+          <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" id="analysis-consent" name="consent" onchange="updateVideoAnalysisDraft()" /> I understand this future feature is for educational swim feedback and should not replace a certified coach, medical professional, or lifeguard.</label>
+        </div>
       </div>
+      <button class="btn-primary" id="analysis-start-btn" type="button" onclick="submitVideoAnalysis()" disabled>Analyze swim video</button>
+      <div class="error-box" id="analysis-message-box"><p id="analysis-message-text"></p></div>
+    </div>
+    <div class="card-section" id="analysis-draft-section" style="display:none">
+      <div class="section-label">Draft request</div>
+      <div id="analysis-draft-content" class="meet-empty"></div>
     </div>
   </div>
 </div>
@@ -1622,6 +1667,105 @@ function formatDrop(seconds) {
   const minutes = Math.floor(rounded / 60);
   const remainder = (rounded - minutes * 60).toFixed(2).padStart(5, '0');
   return `${minutes}:${remainder}`;
+}
+
+// ─── VIDEO ANALYSIS DRAFT ─────────────────────────────────
+function escapeVideoAnalysisHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+
+function updateVideoAnalysisDraft() {
+  const file = document.getElementById('analysis-video-file')?.files?.[0];
+  const consent = document.getElementById('analysis-consent')?.checked;
+  const stroke = document.getElementById('analysis-stroke')?.value || 'unknown';
+  const angle = document.getElementById('analysis-angle')?.value || 'mixed / unknown';
+  const level = document.getElementById('analysis-level')?.value || 'competitive';
+  const goal = document.getElementById('analysis-goal')?.value.trim();
+  const draftSection = document.getElementById('analysis-draft-section');
+  const draftContent = document.getElementById('analysis-draft-content');
+  const startButton = document.getElementById('analysis-start-btn');
+  if (!draftSection || !draftContent || !startButton) return;
+  startButton.disabled = !(file && consent);
+  if (!file && !goal) {
+    draftSection.style.display = 'none';
+    return;
+  }
+  draftSection.style.display = 'block';
+  draftContent.innerHTML = `
+    <p style="font-weight:500;margin-bottom:8px">${file ? escapeVideoAnalysisHtml(file.name) : 'No video selected yet'}</p>
+    <p style="font-size:13px">Stroke: ${escapeVideoAnalysisHtml(stroke)} · Camera: ${escapeVideoAnalysisHtml(angle)} · Level: ${escapeVideoAnalysisHtml(level)}</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">Goal: ${escapeVideoAnalysisHtml(goal || 'No goal entered')}</p>
+  `;
+}
+
+let activeVideoAnalysisTimer = null;
+
+async function submitVideoAnalysis() {
+  const file = document.getElementById('analysis-video-file')?.files?.[0];
+  const consent = document.getElementById('analysis-consent')?.checked;
+  if (!file || !consent) return;
+  setVideoAnalysisMessage('Uploading video for analysis…');
+  document.getElementById('analysis-start-btn').disabled = true;
+  const formData = new FormData();
+  formData.append('video', file);
+  formData.append('strokeType', document.getElementById('analysis-stroke')?.value || 'unknown');
+  formData.append('cameraAngle', document.getElementById('analysis-angle')?.value || 'mixed');
+  formData.append('swimmerLevel', document.getElementById('analysis-level')?.value || 'competitive');
+  formData.append('goal', document.getElementById('analysis-goal')?.value || '');
+  formData.append('consent', 'true');
+  try {
+    const response = await fetch('/api/video-analysis', { method: 'POST', body: formData });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Upload failed.');
+    pollVideoAnalysis(data.id);
+  } catch (error) {
+    document.getElementById('analysis-start-btn').disabled = false;
+    setVideoAnalysisMessage(error.message);
+  }
+}
+
+async function pollVideoAnalysis(id) {
+  clearTimeout(activeVideoAnalysisTimer);
+  try {
+    const response = await fetch(`/api/video-analysis/${id}`);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Could not check analysis status.');
+    setVideoAnalysisMessage(data.stage || data.status);
+    if (data.status === 'completed') return loadVideoAnalysisResult(id);
+    if (data.status === 'failed') throw new Error(data.error || 'Analysis failed.');
+    activeVideoAnalysisTimer = setTimeout(() => pollVideoAnalysis(id), 1500);
+  } catch (error) {
+    document.getElementById('analysis-start-btn').disabled = false;
+    setVideoAnalysisMessage(error.message);
+  }
+}
+
+async function loadVideoAnalysisResult(id) {
+  const response = await fetch(`/api/video-analysis/${id}/result`);
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || 'Could not load analysis result.');
+  const result = data.result || {};
+  const draftSection = document.getElementById('analysis-draft-section');
+  const draftContent = document.getElementById('analysis-draft-content');
+  if (!draftSection || !draftContent) return;
+  draftSection.style.display = 'block';
+  draftContent.innerHTML = `
+    <p style="font-weight:500;margin-bottom:8px">${escapeVideoAnalysisHtml(result.summary || 'Analysis complete.')}</p>
+    <p style="font-size:13px">Detected stroke: ${escapeVideoAnalysisHtml(result.detected_stroke || '—')} · Confidence: ${Math.round((result.confidence || 0) * 100)}%</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">Frames reviewed: ${data.frames?.length || result.frame_count || 0}</p>
+    ${Array.isArray(result.improvements) ? `<h3 class="standards-course-title">Improvements</h3><ul>${result.improvements.map(item => `<li>${escapeVideoAnalysisHtml(item)}</li>`).join('')}</ul>` : ''}
+    ${Array.isArray(result.drills) ? `<h3 class="standards-course-title">Drills</h3><ul>${result.drills.map(item => `<li>${escapeVideoAnalysisHtml(item)}</li>`).join('')}</ul>` : ''}
+    <p class="source-note">${escapeVideoAnalysisHtml(result.safety_notice || '')}</p>
+  `;
+  setVideoAnalysisMessage('Recommendations ready.');
+}
+
+function setVideoAnalysisMessage(message) {
+  const messageBox = document.getElementById('analysis-message-box');
+  const messageText = document.getElementById('analysis-message-text');
+  if (!messageBox || !messageText) return;
+  messageText.textContent = message;
+  messageBox.style.display = 'block';
 }
 
 // ─── MEET FINDER ──────────────────────────────────────────
