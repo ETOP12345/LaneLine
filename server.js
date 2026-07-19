@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const { createVideoAnalysisRouter } = require("./videoAnalysis");
 
-const root = __dirname;
 const preferredPort = Number(process.argv[2] || process.env.PORT || 5180);
 const usaSwimmingMemberId = "9DCE8A4B52EF4A";
 const usaSwimmingEvents = [
@@ -16,18 +15,24 @@ const usaSwimmingEvents = [
 ];
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
-const types = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".md": "text/markdown; charset=utf-8"
+const publicFiles = {
+  "/": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
+  "/index.html": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
+  "/datahub-history.json": { path: path.join(__dirname, "datahub-history.json"), type: "application/json; charset=utf-8" }
 };
 
 const server = http.createServer(async (req, res) => {
+  for (const [name, value] of Object.entries(responseHeaders({}))) {
+    res.setHeader(name, value);
+  }
   const host = req.headers.host || "localhost";
   const requestUrl = new URL(req.url, `http://${host}`);
   const urlPath = decodeURIComponent(requestUrl.pathname);
+
+  if (urlPath === "/healthz") {
+    sendJson(res, 200, { ok: true, service: "laneline", checkedAt: new Date().toISOString() });
+    return;
+  }
 
   if (urlPath.startsWith("/api/video-analysis")) {
     const handled = await handleVideoAnalysis(req, res, requestUrl);
@@ -71,36 +76,49 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  const relativePath = urlPath === "/" ? "index.html" : urlPath.replace(/^\/+/, "");
-  const safePath = path.normalize(relativePath).replace(/^(\.\.[/\\])+/, "");
-  const filePath = path.join(root, safePath);
-
-  if (!filePath.startsWith(root)) {
-    res.writeHead(403);
-    res.end("Forbidden");
+  const publicFile = publicFiles[urlPath];
+  if (!publicFile) {
+    sendText(res, 404, "Not found");
     return;
   }
 
-  fs.readFile(filePath, (error, data) => {
+  fs.readFile(publicFile.path, (error, data) => {
     if (error) {
-      res.writeHead(404);
-      res.end("Not found");
+      sendText(res, 404, "Not found");
       return;
     }
-    res.writeHead(200, {
-      "Content-Type": types[path.extname(filePath)] || "application/octet-stream",
+    res.writeHead(200, responseHeaders({
+      "Content-Type": publicFile.type,
       "Cache-Control": "no-store, max-age=0"
-    });
+    }));
     res.end(data);
   });
 });
 
 function sendJson(res, status, value) {
-  res.writeHead(status, {
+  res.writeHead(status, responseHeaders({
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store, max-age=0"
-  });
+  }));
   res.end(JSON.stringify(value));
+}
+
+function sendText(res, status, value) {
+  res.writeHead(status, responseHeaders({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "no-store, max-age=0"
+  }));
+  res.end(value);
+}
+
+function responseHeaders(headers) {
+  return {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "same-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    ...headers
+  };
 }
 
 function makeDeviceId() {
@@ -435,10 +453,10 @@ function cleanHtml(value) {
 
 function listen(port) {
   server.once("error", (error) => {
-    if (error.code === "EADDRINUSE") listen(port + 1);
+    if (error.code === "EADDRINUSE" && !process.env.PORT) listen(port + 1);
     else throw error;
   });
-  server.listen(port, () => {
+  server.listen(port, "0.0.0.0", () => {
     console.log(`Lane Line is available at http://localhost:${port}`);
   });
 }
