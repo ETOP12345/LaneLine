@@ -103,3 +103,10 @@ test('completed recommendations render in a dedicated result panel', () => {
   assert.doesNotMatch(html, /id="analysis-(stroke|angle|level)"/);
   assert.match(html, /id="analysis-focus-note"/);
 });
+
+test('GitHub Pages redirects to the backend host and non-JSON API responses are handled', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(html, /etop12345\.github\.io/);
+  assert.match(html, /https:\/\/laneline\.onrender\.com/);
+  assert.match(html, /async function readVideoAnalysisJson/);
+});
