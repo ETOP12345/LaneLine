@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+if (window.location.hostname.toLowerCase() === 'etop12345.github.io') {
+  window.location.replace(`https://laneline.onrender.com/${window.location.search}${window.location.hash}`);
+}
+</script>
 <title>LaneLine — Swim Coaching</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2000,6 +2005,14 @@ function escapeVideoAnalysisHtml(value) {
   return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 }
 
+async function readVideoAnalysisJson(response) {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    throw new Error(`Video analysis server returned an unexpected response (${response.status || 'network error'}). Use https://laneline.onrender.com for video analysis.`);
+  }
+  return response.json();
+}
+
 let videoAnalysisConfig = null;
 
 async function loadVideoAnalysisConfig() {
@@ -2009,8 +2022,10 @@ async function loadVideoAnalysisConfig() {
       fetch('/api/video-analysis/config', { cache: 'no-store' }),
       fetch('/api/video-analysis/session', { cache: 'no-store' })
     ]);
-    const config = await configResponse.json();
-    const session = await sessionResponse.json();
+    const [config, session] = await Promise.all([
+      readVideoAnalysisJson(configResponse),
+      readVideoAnalysisJson(sessionResponse)
+    ]);
     if (!configResponse.ok || !sessionResponse.ok) throw new Error('Video analysis server is unavailable.');
     videoAnalysisConfig = config;
     if (status) {
@@ -2042,7 +2057,7 @@ async function unlockVideoAnalysis() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ accessCode })
     });
-    const data = await response.json();
+    const data = await readVideoAnalysisJson(response);
     if (!response.ok) throw new Error(data.error || 'Could not unlock video analysis.');
     if (input) input.value = '';
     setVideoAnalysisAccessState(false);
@@ -2099,7 +2114,7 @@ async function submitVideoAnalysis() {
   formData.append('consent', 'true');
   try {
     const response = await fetch('/api/video-analysis', { method: 'POST', body: formData });
-    const data = await response.json();
+    const data = await readVideoAnalysisJson(response);
     if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
     if (!response.ok) throw new Error(data.error || 'Upload failed.');
     sessionStorage.setItem('lanelineActiveAnalysisId', data.id);
@@ -2114,7 +2129,7 @@ async function pollVideoAnalysis(id) {
   clearTimeout(activeVideoAnalysisTimer);
   try {
     const response = await fetch(`/api/video-analysis/${id}`);
-    const data = await response.json();
+    const data = await readVideoAnalysisJson(response);
     if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
     if (response.status === 404) sessionStorage.removeItem('lanelineActiveAnalysisId');
     if (!response.ok) throw new Error(data.error || 'Could not check analysis status.');
@@ -2133,7 +2148,7 @@ async function pollVideoAnalysis(id) {
 
 async function loadVideoAnalysisResult(id) {
   const response = await fetch(`/api/video-analysis/${id}/result`);
-  const data = await response.json();
+  const data = await readVideoAnalysisJson(response);
   if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
   if (!response.ok) throw new Error(data.error || 'Could not load analysis result.');
   const result = data.result || {};
