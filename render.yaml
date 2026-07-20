@@ -14,7 +14,7 @@ services:
       - key: OPENAI_VISION_MODEL
         value: gpt-5.6-terra
       - key: OPENAI_REASONING_EFFORT
-        value: low
+        value: medium
       - key: OPENAI_IMAGE_DETAIL
         value: high
       - key: APP_ACCESS_CODE
@@ -26,10 +26,10 @@ services:
       - key: FRAME_SAMPLE_FPS
         value: "6"
       - key: MAX_CANDIDATE_FRAMES
-        value: "180"
+        value: "360"
       - key: MAX_ANALYSIS_FRAMES
         value: "30"
       - key: VIDEO_MAX_SIZE_MB
-        value: "50"
+        value: "100"
       - key: VIDEO_MAX_DURATION_SECONDS
-        value: "30"
+        value: "60"

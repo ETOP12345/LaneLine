@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const fsp = require('node:fs/promises');
 const path = require('node:path');
 const { Readable } = require('node:stream');
-const { analysisSchema, createVideoAnalysisRouter, selectFrames, validateVideoMetadata, validateUploadedVideo, DEFAULT_CONFIG } = require('../videoAnalysis');
+const { analysisSchema, createVideoAnalysisRouter, focusRegionForNote, selectFrames, validateVideoMetadata, validateUploadedVideo, DEFAULT_CONFIG } = require('../videoAnalysis');
 
 function createResponse() {
   return {
@@ -16,16 +16,58 @@ function createResponse() {
   };
 }
 
-test('selectFrames chooses 30 frames across a 30 second competitive clip', () => {
-  const frames = Array.from({ length: 180 }, (_, index) => ({ path: `frame_${index}.jpg`, timestampSeconds: index / 6 }));
-  const selected = selectFrames(frames, 30, 30);
+test('selectFrames chooses clear, distinct frames across a 60 second clip', () => {
+  const frames = Array.from({ length: 360 }, (_, index) => ({
+    path: `frame_${index}.jpg`,
+    timestampSeconds: index / 6,
+    thumbnail: Uint8Array.from({ length: 16 }, (_, pixel) => (index * 47 + pixel * 83 + index * pixel * 11) % 256),
+    sharpness: index % 12 === 0 ? 500 : 10,
+    contrast: 100
+  }));
+  const selected = selectFrames(frames, 60, 30);
   assert.equal(selected.length, 30);
-  assert.ok(selected[0].timestampSeconds < 1);
-  assert.ok(selected.at(-1).timestampSeconds > 29);
+  assert.ok(selected[0].timestampSeconds < 2);
+  assert.ok(selected.at(-1).timestampSeconds >= 58);
+  assert.equal(new Set(selected.map(frame => frame.timestampSeconds)).size, 30);
+  assert.ok(selected.every((frame, index) => index === 0 || frame.timestampSeconds > selected[index - 1].timestampSeconds));
+});
+
+test('selectFrames rejects a sharper duplicate when a clear distinct alternative exists', () => {
+  const black = new Uint8Array(16).fill(0);
+  const white = new Uint8Array(16).fill(255);
+  const frames = [
+    { path: 'first-sharp.jpg', timestampSeconds: 0, thumbnail: black, sharpness: 1000, contrast: 100 },
+    { path: 'first-soft.jpg', timestampSeconds: 1, thumbnail: white, sharpness: 1, contrast: 100 },
+    { path: 'duplicate-sharp.jpg', timestampSeconds: 2, thumbnail: black, sharpness: 1000, contrast: 100 },
+    { path: 'distinct-clear.jpg', timestampSeconds: 3, thumbnail: white, sharpness: 100, contrast: 100 }
+  ];
+  assert.deepEqual(selectFrames(frames, 4, 2).map(frame => frame.path), ['first-sharp.jpg', 'distinct-clear.jpg']);
+});
+
+test('selectFrames reduces repeated short-clip frames while retaining temporal coverage', () => {
+  const same = new Uint8Array(16).fill(64);
+  const frames = Array.from({ length: 12 }, (_, index) => ({
+    path: `short_${index}.jpg`,
+    timestampSeconds: index / 6,
+    thumbnail: same,
+    sharpness: index,
+    contrast: 50
+  }));
+  const selected = selectFrames(frames, 2, 30);
+  assert.equal(selected.length, 6);
+  assert.ok(selected.length < frames.length);
+  assert.ok(selected.at(-1).timestampSeconds >= 10 / 6);
+});
+
+test('focusRegionForNote crops positional lane instructions', () => {
+  assert.equal(focusRegionForNote('Focus on blue cap in bottom lane').label, 'bottom-lane focus');
+  assert.equal(focusRegionForNote('Swimmer in the upper lane').label, 'top-lane focus');
+  assert.equal(focusRegionForNote('middle lane, red cap').label, 'middle-lane focus');
+  assert.equal(focusRegionForNote('blue cap only'), null);
 });
 
 test('validateVideoMetadata rejects over-duration clips', () => {
-  assert.throws(() => validateVideoMetadata({ durationSeconds: 31, width: 1280, height: 720 }, { maxVideoDurationSeconds: 30, minVideoHeight: 480 }), /30 seconds/);
+  assert.throws(() => validateVideoMetadata({ durationSeconds: 61, width: 1280, height: 720 }, { maxVideoDurationSeconds: 60, minVideoHeight: 480 }), /60 seconds/);
 });
 
 test('validateUploadedVideo accepts mp4 uploads', () => {
@@ -80,6 +122,8 @@ test('analysis schema is strict for the response and nested recommendation objec
   const schema = analysisSchema();
   assert.equal(schema.additionalProperties, false);
   assert.ok(schema.required.includes('detected_camera_angle'));
+  assert.ok(!schema.required.includes('stroke_evidence'));
+  assert.deepEqual(schema.properties.detected_stroke.enum, ['freestyle', 'backstroke', 'breaststroke', 'butterfly', 'unknown']);
   assert.equal(schema.properties.improvements.items.additionalProperties, false);
   assert.equal(schema.properties.drills.items.additionalProperties, false);
 });
@@ -97,11 +141,16 @@ test('completed recommendations render in a dedicated result panel', () => {
   assert.match(html, /id="analysis-result-content"/);
   const resultFunction = html.match(/async function loadVideoAnalysisResult[\s\S]*?\n}\n\nfunction resetVideoAnalysisResult/)?.[0] || '';
   assert.match(resultFunction, /analysis-result-content/);
+  assert.match(html, /analysis-improvement-card/);
+  assert.match(resultFunction, /renderVideoImprovement\(item, frames, index\)/);
   assert.doesNotMatch(resultFunction, /updateVideoAnalysisDraft/);
   assert.match(html, /sessionStorage\.setItem\('lanelineActiveAnalysisId'/);
   assert.match(html, /await loadVideoAnalysisResult\(id\)/);
-  assert.doesNotMatch(html, /id="analysis-(stroke|angle|level)"/);
+  assert.doesNotMatch(html, /id="analysis-(angle|level)"/);
+  assert.match(html, /id="analysis-stroke"/);
   assert.match(html, /id="analysis-focus-note"/);
+  assert.match(html, /function closestAnalysisFrame/);
+  assert.match(html, /function safeAnalysisImageUrl/);
 });
 
 test('GitHub Pages redirects to the backend host and non-JSON API responses are handled', () => {

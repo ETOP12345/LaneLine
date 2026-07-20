@@ -12,18 +12,18 @@ const DEFAULT_CONFIG = Object.freeze({
   maxDailyAnalyses: Number(process.env.MAX_DAILY_ANALYSES || 30),
   maxHourlyAnalyses: Number(process.env.MAX_HOURLY_ANALYSES || 10),
   maxConcurrentAnalyses: Number(process.env.MAX_CONCURRENT_ANALYSES || 1),
-  maxVideoSizeMb: Number(process.env.VIDEO_MAX_SIZE_MB || 50),
-  maxVideoDurationSeconds: Number(process.env.VIDEO_MAX_DURATION_SECONDS || 30),
+  maxVideoSizeMb: Number(process.env.VIDEO_MAX_SIZE_MB || 100),
+  maxVideoDurationSeconds: Number(process.env.VIDEO_MAX_DURATION_SECONDS || 60),
   minVideoHeight: Number(process.env.VIDEO_MIN_HEIGHT || 480),
   frameSampleFps: Number(process.env.FRAME_SAMPLE_FPS || 6),
-  maxCandidateFrames: Number(process.env.MAX_CANDIDATE_FRAMES || 180),
+  maxCandidateFrames: Number(process.env.MAX_CANDIDATE_FRAMES || 360),
   maxAnalysisFrames: Number(process.env.MAX_ANALYSIS_FRAMES || 30),
   frameMaxLongEdge: Number(process.env.FRAME_MAX_LONG_EDGE || 1280),
   frameJpegQuality: Number(process.env.FRAME_JPEG_QUALITY || 78),
   processingTimeoutMs: Number(process.env.PROCESSING_TIMEOUT_MS || 180000),
   openaiTimeoutMs: Number(process.env.OPENAI_TIMEOUT_MS || 120000),
   openaiModel: process.env.OPENAI_VISION_MODEL || "gpt-5.6-terra",
-  openaiReasoningEffort: process.env.OPENAI_REASONING_EFFORT || "low",
+  openaiReasoningEffort: process.env.OPENAI_REASONING_EFFORT || "medium",
   openaiImageDetail: process.env.OPENAI_IMAGE_DETAIL || "high",
   accessCode: process.env.APP_ACCESS_CODE || "",
   sessionSecret: process.env.SESSION_SECRET || process.env.APP_ACCESS_CODE || "",
@@ -162,17 +162,19 @@ async function processAnalysis(analysis, file, config) {
     const metadata = await inspectVideo(inputPath, config.processingTimeoutMs);
     validateVideoMetadata(metadata, config);
 
-    updateAnalysis(analysis, "extracting_frames", `Extracting frames at ${config.frameSampleFps} fps`);
+    const focusRegion = focusRegionForNote(analysis.form.focusNote);
+    analysis.form.focusRegion = focusRegion?.label || "full frame";
+    updateAnalysis(analysis, "extracting_frames", `Finding clear, distinct ${analysis.form.focusRegion} frames at ${config.frameSampleFps} fps`);
     const framesDir = path.join(workDir, "frames");
     await fsp.mkdir(framesDir, { recursive: true });
-    const candidates = await extractFrames(inputPath, framesDir, metadata, config);
+    const candidates = await extractFrames(inputPath, framesDir, metadata, config, focusRegion);
     const selected = selectFrames(candidates, metadata.durationSeconds, config.maxAnalysisFrames);
     if (!selected.length) throw new UserFacingError("No usable frames were extracted from that video.");
 
     updateAnalysis(analysis, "analyzing", `Analyzing ${selected.length} selected frames`);
     const result = await analyzeWithOpenAI({ analysis, metadata, frames: selected, config });
     analysis.metadata = metadata;
-    analysis.frames = selected.map(frame => ({ timestampSeconds: frame.timestampSeconds }));
+    analysis.frames = await attachRelevantFrameImages(selected, result);
     analysis.result = result;
     updateAnalysis(analysis, "completed", "Recommendations ready");
   } catch (error) {
@@ -180,6 +182,27 @@ async function processAnalysis(analysis, file, config) {
   } finally {
     await fsp.rm(workDir, { recursive: true, force: true });
   }
+}
+
+async function attachRelevantFrameImages(frames, result) {
+  const improvementTimestamps = Array.isArray(result?.improvements)
+    ? result.improvements.map(item => Number(item?.timestamp_seconds)).filter(Number.isFinite)
+    : [];
+  const imageIndexes = new Set(improvementTimestamps.map(timestamp => nearestFrameIndex(frames, timestamp)));
+  if (!imageIndexes.size && frames.length) imageIndexes.add(Math.floor(frames.length / 2));
+  return Promise.all(frames.map(async (frame, index) => ({
+    timestampSeconds: frame.timestampSeconds,
+    ...(imageIndexes.has(index) ? { imageUrl: `data:image/jpeg;base64,${(await fsp.readFile(frame.path)).toString("base64")}` } : {})
+  })));
+}
+
+function nearestFrameIndex(frames, timestampSeconds) {
+  if (!frames.length) return -1;
+  let nearestIndex = 0;
+  for (let index = 1; index < frames.length; index += 1) {
+    if (Math.abs(frames[index].timestampSeconds - timestampSeconds) < Math.abs(frames[nearestIndex].timestampSeconds - timestampSeconds)) nearestIndex = index;
+  }
+  return nearestIndex;
 }
 
 async function analyzeWithOpenAI({ analysis, metadata, frames, config }) {
@@ -259,7 +282,19 @@ async function fetchOpenAIWithRetry(requestBody, timeoutMs) {
 }
 
 function buildAnalysisPrompt(form, metadata, frames) {
-  return `You are a cautious swimming technique analysis assistant. The following ${frames.length} images are chronological still frames from one swim video. Analyze only visible evidence. Detect the stroke and camera view from the images; do not assume them from the uploader note. Use the uploader note only to choose which visible swimmer to follow. If the requested swimmer cannot be distinguished consistently, state that limitation. Do not identify the swimmer, infer identity or sensitive traits, assign a skill level, or diagnose medical issues. Avoid precise joint angles unless measured. Return no more than three priority improvements. For every improvement, cite the most relevant visible timestamp, explain the performance impact, and provide one short actionable cue. Recommend concise drills that directly address those improvements. If the footage does not support a conclusion, say so instead of guessing.\n\nContext:\nUploader focus note: ${form.focusNote || "none; analyze the most prominent swimmer"}\nDuration: ${metadata.durationSeconds.toFixed(2)} seconds\nResolution: ${metadata.width}x${metadata.height}\nFrame timestamps: ${frames.map(frame => frame.timestampSeconds.toFixed(2)).join(", ")} seconds`;
+  return `You are a cautious swimming technique analysis assistant. The following ${frames.length} chronological images were selected from one swim video for sharpness, visual distinctness, and coverage across the clip. Analyze only visible evidence and use the timestamps to describe when each observation occurs.
+
+The uploader has selected ${form.strokeType} as the stroke to analyze. Treat that selection as authoritative: do not reclassify the stroke, and set detected_stroke to "${form.strokeType}". Evaluate the visible technique using the mechanics and timing expected for ${form.strokeType}. If part of the technique is obscured, state the limitation instead of changing the selected stroke.
+
+Detect the camera view from the images. Use the uploader note only to choose which visible swimmer to follow. If the requested swimmer cannot be distinguished consistently, state that limitation. Do not identify the swimmer, infer identity or sensitive traits, assign a skill level, or diagnose medical issues. Avoid precise joint angles unless measured. Return no more than three priority improvements. For every improvement, cite the most relevant visible timestamp, explain the performance impact, and provide one short actionable cue. Recommend concise drills that directly address those improvements. If the footage does not support a conclusion, say so instead of guessing.
+
+Context:
+Uploader-selected stroke: ${form.strokeType}
+Uploader focus note: ${form.focusNote || "none; analyze the most prominent swimmer"}
+Applied image focus: ${form.focusRegion || "full frame"}
+Duration: ${metadata.durationSeconds.toFixed(2)} seconds
+Resolution: ${metadata.width}x${metadata.height}
+Frame timestamps: ${frames.map(frame => frame.timestampSeconds.toFixed(2)).join(", ")} seconds`;
 }
 
 async function inspectVideo(inputPath, timeoutMs) {
@@ -282,24 +317,127 @@ function validateVideoMetadata(metadata, config) {
   if (Math.min(metadata.width, metadata.height) < config.minVideoHeight) throw new UserFacingError(`Please upload at least ${config.minVideoHeight}p video.`);
 }
 
-async function extractFrames(inputPath, framesDir, metadata, config) {
+async function extractFrames(inputPath, framesDir, metadata, config, focusRegion = null) {
   const fps = Math.min(config.frameSampleFps, Math.max(1, config.maxCandidateFrames / Math.max(metadata.durationSeconds, 1)));
   const outputPattern = path.join(framesDir, "frame_%05d.jpg");
+  const probePattern = path.join(framesDir, "probe_%05d.pgm");
   const scale = `scale='if(gt(iw,ih),min(${config.frameMaxLongEdge},iw),-2)':'if(gt(ih,iw),min(${config.frameMaxLongEdge},ih),-2)'`;
-  await execFileText("ffmpeg", ["-hide_banner", "-loglevel", "error", "-i", inputPath, "-vf", `fps=${fps},${scale}`, "-q:v", String(jpegQualityToQscale(config.frameJpegQuality)), outputPattern], config.processingTimeoutMs);
+  const sharedFilters = [`fps=${fps}`];
+  if (focusRegion) sharedFilters.push(focusRegion.filter);
+  const filterGraph = `[0:v]${sharedFilters.join(",")},split=2[analysis][quality];[analysis]${scale}[analysis_out];[quality]scale=96:-2,format=gray[quality_out]`;
+  await execFileText("ffmpeg", [
+    "-hide_banner", "-loglevel", "error", "-i", inputPath,
+    "-filter_complex", filterGraph,
+    "-map", "[analysis_out]", "-q:v", String(jpegQualityToQscale(config.frameJpegQuality)), outputPattern,
+    "-map", "[quality_out]", probePattern
+  ], config.processingTimeoutMs);
   const names = (await fsp.readdir(framesDir)).filter(name => name.endsWith(".jpg")).sort().slice(0, config.maxCandidateFrames);
-  return names.map((name, index) => ({ path: path.join(framesDir, name), timestampSeconds: index / fps }));
+  return Promise.all(names.map(async (name, index) => {
+    const probePath = path.join(framesDir, name.replace("frame_", "probe_").replace(/\.jpg$/i, ".pgm"));
+    const thumbnail = parsePortableGraymap(await fsp.readFile(probePath));
+    const metrics = grayscaleMetrics(thumbnail.pixels, thumbnail.width, thumbnail.height);
+    return {
+      path: path.join(framesDir, name),
+      timestampSeconds: index / fps,
+      thumbnail: thumbnail.pixels,
+      sharpness: metrics.sharpness,
+      contrast: metrics.contrast
+    };
+  }));
 }
 
-function selectFrames(frames, durationSeconds, maxFrames) {
-  if (frames.length <= maxFrames) return frames;
+function selectFrames(frames, _durationSeconds, maxFrames) {
+  if (!frames.length || maxFrames <= 0) return [];
+  const targetCount = Math.min(
+    maxFrames,
+    frames.length <= maxFrames ? Math.max(Math.min(6, frames.length), Math.ceil(frames.length / 2)) : maxFrames
+  );
   const selected = [];
-  for (let index = 0; index < maxFrames; index += 1) {
-    const target = (index + 0.5) * durationSeconds / maxFrames;
-    const frame = frames.reduce((best, candidate) => Math.abs(candidate.timestampSeconds - target) < Math.abs(best.timestampSeconds - target) ? candidate : best, frames[0]);
-    if (!selected.includes(frame)) selected.push(frame);
+  for (let bucketIndex = 0; bucketIndex < targetCount; bucketIndex += 1) {
+    const start = Math.floor(bucketIndex * frames.length / targetCount);
+    const end = Math.max(start + 1, Math.floor((bucketIndex + 1) * frames.length / targetCount));
+    const candidates = frames.slice(start, end);
+    const ranked = candidates
+      .map(frame => ({ frame, quality: frameQuality(frame), distinctness: minimumFrameDistance(frame, selected) }))
+      .sort((left, right) => {
+        const leftScore = left.quality + left.distinctness * 8;
+        const rightScore = right.quality + right.distinctness * 8;
+        return rightScore - leftScore;
+      });
+    const distinctCandidate = ranked.find(candidate => candidate.distinctness >= 0.025);
+    selected.push((distinctCandidate || ranked[0]).frame);
   }
-  return selected;
+  return selected.sort((left, right) => left.timestampSeconds - right.timestampSeconds);
+}
+
+function parsePortableGraymap(buffer) {
+  let offset = 0;
+  const tokens = [];
+  while (tokens.length < 4 && offset < buffer.length) {
+    while (offset < buffer.length && /\s/.test(String.fromCharCode(buffer[offset]))) offset += 1;
+    if (buffer[offset] === 35) {
+      while (offset < buffer.length && buffer[offset] !== 10) offset += 1;
+      continue;
+    }
+    const start = offset;
+    while (offset < buffer.length && !/\s/.test(String.fromCharCode(buffer[offset]))) offset += 1;
+    tokens.push(buffer.toString("ascii", start, offset));
+  }
+  if (buffer[offset] === 13 && buffer[offset + 1] === 10) offset += 2;
+  else if (offset < buffer.length && /\s/.test(String.fromCharCode(buffer[offset]))) offset += 1;
+  const [magic, widthText, heightText, maxValueText] = tokens;
+  const width = Number(widthText);
+  const height = Number(heightText);
+  const maxValue = Number(maxValueText);
+  if (magic !== "P5" || !width || !height || maxValue !== 255 || buffer.length - offset < width * height) {
+    throw new UserFacingError("Could not score the extracted video frames.");
+  }
+  return { width, height, pixels: new Uint8Array(buffer.subarray(offset, offset + width * height)) };
+}
+
+function grayscaleMetrics(pixels, width, height) {
+  let sum = 0;
+  let sumSquared = 0;
+  let laplacianSum = 0;
+  let laplacianSquared = 0;
+  let laplacianCount = 0;
+  for (const value of pixels) {
+    sum += value;
+    sumSquared += value * value;
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    for (let x = 1; x < width - 1; x += 1) {
+      const index = y * width + x;
+      const laplacian = 4 * pixels[index] - pixels[index - 1] - pixels[index + 1] - pixels[index - width] - pixels[index + width];
+      laplacianSum += laplacian;
+      laplacianSquared += laplacian * laplacian;
+      laplacianCount += 1;
+    }
+  }
+  const mean = sum / pixels.length;
+  const laplacianMean = laplacianSum / Math.max(1, laplacianCount);
+  return {
+    contrast: Math.max(0, sumSquared / pixels.length - mean * mean),
+    sharpness: Math.max(0, laplacianSquared / Math.max(1, laplacianCount) - laplacianMean * laplacianMean)
+  };
+}
+
+function frameQuality(frame) {
+  return Math.log1p(Number(frame.sharpness || 0)) + Math.log1p(Number(frame.contrast || 0)) * 0.15;
+}
+
+function minimumFrameDistance(frame, selected) {
+  if (!frame.thumbnail || !selected.length) return selected.length ? 0 : 1;
+  let minimum = 1;
+  for (const other of selected) {
+    if (!other.thumbnail || other.thumbnail.length !== frame.thumbnail.length) continue;
+    let absoluteDifference = 0;
+    for (let index = 0; index < frame.thumbnail.length; index += 1) {
+      absoluteDifference += Math.abs(frame.thumbnail[index] - other.thumbnail[index]);
+    }
+    minimum = Math.min(minimum, absoluteDifference / (frame.thumbnail.length * 255));
+  }
+  return minimum;
 }
 
 function parseMultipartForm(req, maxBytes, uploadDir) {
@@ -410,7 +548,7 @@ function analysisSchema() {
     required: ["summary", "detected_stroke", "detected_camera_angle", "confidence", "strengths", "improvements", "drills", "safety_notice"],
     properties: {
       summary: { type: "string" },
-      detected_stroke: { type: "string" },
+      detected_stroke: { type: "string", enum: ["freestyle", "backstroke", "breaststroke", "butterfly", "unknown"] },
       detected_camera_angle: { type: "string" },
       confidence: { type: "number", minimum: 0, maximum: 1 },
       strengths: strictStringArray,
@@ -451,7 +589,7 @@ function analysisSchema() {
 function demoAnalysis(form, metadata, frames, model) {
   return {
     summary: `Demo mode: ${frames.length} frames were extracted successfully. Add OPENAI_API_KEY to enable ${model} analysis.`,
-    detected_stroke: "unknown",
+    detected_stroke: form.strokeType,
     detected_camera_angle: "unknown",
     confidence: 0.5,
     strengths: ["Server-side frame extraction is ready."],
@@ -464,9 +602,26 @@ function demoAnalysis(form, metadata, frames, model) {
 }
 
 function sanitizeAnalysisForm(fields) {
+  const allowedStrokes = new Set(["freestyle", "backstroke", "breaststroke", "butterfly"]);
+  const strokeType = String(fields.strokeType || "freestyle").toLowerCase();
   return {
+    strokeType: allowedStrokes.has(strokeType) ? strokeType : "freestyle",
     focusNote: String(fields.focusNote || fields.goal || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 300)
   };
+}
+
+function focusRegionForNote(note) {
+  const normalized = String(note || "").toLowerCase();
+  if (/\b(bottom|lower|lowest|nearest|closest)\b/.test(normalized)) {
+    return { label: "bottom-lane focus", filter: "crop=iw:ih*0.58:0:ih*0.42" };
+  }
+  if (/\b(top|upper|highest|farthest|furthest)\b/.test(normalized)) {
+    return { label: "top-lane focus", filter: "crop=iw:ih*0.58:0:0" };
+  }
+  if (/\b(middle|center|centre)\b/.test(normalized)) {
+    return { label: "middle-lane focus", filter: "crop=iw:ih*0.60:0:ih*0.20" };
+  }
+  return null;
 }
 
 function publicConfig(config) {
@@ -626,6 +781,7 @@ class UserFacingError extends Error {}
 module.exports = {
   analysisSchema,
   createVideoAnalysisRouter,
+  focusRegionForNote,
   parseMultipartBuffer,
   selectFrames,
   validateVideoMetadata,
