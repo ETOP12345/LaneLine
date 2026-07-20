@@ -368,12 +368,12 @@ footer span{color:var(--lane)}
       <div class="fields-grid" style="margin:14px 0">
         <div class="field full">
           <label for="analysis-video-file">Swimming video clip</label>
-          <input type="file" id="analysis-video-file" name="video" accept="video/mp4,video/quicktime,video/webm" onchange="updateVideoAnalysisDraft()" />
+          <input type="file" id="analysis-video-file" name="video" accept="video/mp4,video/quicktime,video/webm" onchange="updateVideoAnalysisFormState()" />
           <p class="source-note">Current MVP limits: MP4, MOV, or WebM; up to 60 seconds and 100 MB; one swimmer preferred; 480p or better. Clear, non-duplicate frames are selected automatically.</p>
         </div>
         <div class="field">
           <label for="analysis-stroke">Stroke</label>
-          <select id="analysis-stroke" name="strokeType" onchange="updateVideoAnalysisDraft()">
+          <select id="analysis-stroke" name="strokeType">
             <option value="freestyle">Freestyle</option>
             <option value="backstroke">Backstroke</option>
             <option value="breaststroke">Breaststroke</option>
@@ -382,20 +382,16 @@ footer span{color:var(--lane)}
         </div>
         <div class="field">
           <label for="analysis-focus-note">Swimmer focus note <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-          <textarea id="analysis-focus-note" name="focusNote" rows="3" maxlength="300" placeholder="e.g. Focus on the swimmer in lane 4 wearing a blue cap." oninput="updateVideoAnalysisDraft()"></textarea>
+          <textarea id="analysis-focus-note" name="focusNote" rows="3" maxlength="300" placeholder="e.g. Focus on the swimmer in lane 4 wearing a blue cap."></textarea>
           <p class="source-note">Use visible details such as lane, cap color, or position. Do not include a swimmer's full name.</p>
         </div>
         <div class="field full">
-          <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" id="analysis-consent" name="consent" onchange="updateVideoAnalysisDraft()" /> I understand this tool provides educational swim feedback and should not replace a certified coach, medical professional, or lifeguard.</label>
+          <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" id="analysis-consent" name="consent" onchange="updateVideoAnalysisFormState()" /> I understand this tool provides educational swim feedback and should not replace a certified coach, medical professional, or lifeguard.</label>
         </div>
       </div>
       <button class="btn-primary" id="analysis-start-btn" type="button" onclick="submitVideoAnalysis()" disabled>Analyze swim video</button>
       </div>
       <div class="error-box" id="analysis-message-box"><p id="analysis-message-text"></p></div>
-    </div>
-    <div class="card-section" id="analysis-draft-section" style="display:none">
-      <div class="section-label">Draft request</div>
-      <div id="analysis-draft-content" class="meet-empty"></div>
     </div>
     <div class="card-section" id="analysis-result-section" style="display:none">
       <div class="section-label">Technique recommendations</div>
@@ -2101,7 +2097,7 @@ async function unlockVideoAnalysis() {
     if (input) input.value = '';
     setVideoAnalysisAccessState(false);
     setVideoAnalysisMessage('Video analysis unlocked for this browser.');
-    updateVideoAnalysisDraft();
+    updateVideoAnalysisFormState();
   } catch (error) {
     setVideoAnalysisMessage(error.message);
   }
@@ -2118,26 +2114,12 @@ function resumeVideoAnalysis() {
   if (id) pollVideoAnalysis(id);
 }
 
-function updateVideoAnalysisDraft() {
+function updateVideoAnalysisFormState() {
   const file = document.getElementById('analysis-video-file')?.files?.[0];
   const consent = document.getElementById('analysis-consent')?.checked;
-  const stroke = document.getElementById('analysis-stroke')?.value || 'freestyle';
-  const focusNote = document.getElementById('analysis-focus-note')?.value.trim();
-  const draftSection = document.getElementById('analysis-draft-section');
-  const draftContent = document.getElementById('analysis-draft-content');
   const startButton = document.getElementById('analysis-start-btn');
-  if (!draftSection || !draftContent || !startButton) return;
+  if (!startButton) return;
   startButton.disabled = !(file && consent);
-  if (!file && !focusNote) {
-    draftSection.style.display = 'none';
-    return;
-  }
-  draftSection.style.display = 'block';
-  draftContent.innerHTML = `
-    <p style="font-weight:500;margin-bottom:8px">${file ? escapeVideoAnalysisHtml(file.name) : 'No video selected yet'}</p>
-    <p style="font-size:13px">Stroke: ${escapeVideoAnalysisHtml(stroke)}</p>
-    <p style="font-size:13px;color:var(--muted);margin-top:6px">Focus: ${escapeVideoAnalysisHtml(focusNote || 'Let the model identify the primary swimmer')}</p>
-  `;
 }
 
 let activeVideoAnalysisTimer = null;
@@ -2162,7 +2144,7 @@ async function submitVideoAnalysis() {
     sessionStorage.setItem('lanelineActiveAnalysisId', data.id);
     pollVideoAnalysis(data.id);
   } catch (error) {
-    updateVideoAnalysisDraft();
+    updateVideoAnalysisFormState();
     setVideoAnalysisMessage(error.message);
   }
 }
@@ -2175,7 +2157,7 @@ async function pollVideoAnalysis(id) {
     if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
     if (response.status === 404) {
       sessionStorage.removeItem('lanelineActiveAnalysisId');
-      updateVideoAnalysisDraft();
+      updateVideoAnalysisFormState();
       return;
     }
     if (!response.ok) throw new Error(data.error || 'Could not check analysis status.');
@@ -2187,7 +2169,7 @@ async function pollVideoAnalysis(id) {
     if (data.status === 'failed') throw new Error(data.error || 'Analysis failed.');
     activeVideoAnalysisTimer = setTimeout(() => pollVideoAnalysis(id), 1500);
   } catch (error) {
-    updateVideoAnalysisDraft();
+    updateVideoAnalysisFormState();
     setVideoAnalysisMessage(error.message);
   }
 }

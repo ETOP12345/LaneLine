@@ -143,7 +143,8 @@ test('completed recommendations render in a dedicated result panel', () => {
   assert.match(resultFunction, /analysis-result-content/);
   assert.match(html, /analysis-improvement-card/);
   assert.match(resultFunction, /renderVideoImprovement\(item, frames, index\)/);
-  assert.doesNotMatch(resultFunction, /updateVideoAnalysisDraft/);
+  assert.doesNotMatch(html, /analysis-draft|Draft request|updateVideoAnalysisDraft/);
+  assert.match(html, /function updateVideoAnalysisFormState/);
   assert.match(html, /sessionStorage\.setItem\('lanelineActiveAnalysisId'/);
   assert.match(html, /await loadVideoAnalysisResult\(id\)/);
   assert.doesNotMatch(html, /id="analysis-(angle|level)"/);
