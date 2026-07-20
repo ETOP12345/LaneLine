@@ -6,7 +6,6 @@ services:
     region: oregon
     autoDeployTrigger: commit
     healthCheckPath: /healthz
-    maxShutdownDelaySeconds: 60
     envVars:
       - key: NODE_ENV
         value: production
