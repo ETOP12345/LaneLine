@@ -139,7 +139,9 @@ test('completed recommendations render in a dedicated result panel', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.match(html, /id="analysis-result-section"/);
   assert.match(html, /id="analysis-result-content"/);
-  const resultFunction = html.match(/async function loadVideoAnalysisResult[\s\S]*?\n}\n\nfunction resetVideoAnalysisResult/)?.[0] || '';
+  const resultStart = html.indexOf('async function loadVideoAnalysisResult');
+  const resetStart = html.indexOf('function resetVideoAnalysisResult');
+  const resultFunction = resultStart >= 0 && resetStart > resultStart ? html.slice(resultStart, resetStart) : '';
   assert.match(resultFunction, /analysis-result-content/);
   assert.match(html, /analysis-improvement-card/);
   assert.match(resultFunction, /renderVideoImprovement\(item, frames, index\)/);
@@ -154,9 +156,10 @@ test('completed recommendations render in a dedicated result panel', () => {
   assert.match(html, /function safeAnalysisImageUrl/);
 });
 
-test('GitHub Pages redirects to the backend host and non-JSON API responses are handled', () => {
+test('local dashboard integration and non-JSON API responses are handled', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.match(html, /etop12345\.github\.io/);
+  assert.match(html, /western-zone-dashboard\/index\.html/);
+  assert.doesNotMatch(html, /etop12345\.github\.io/);
   assert.match(html, /https:\/\/laneline\.onrender\.com/);
   assert.match(html, /async function readVideoAnalysisJson/);
 });

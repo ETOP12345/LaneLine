@@ -131,7 +131,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .standards-table td:first-child,.standards-table th:first-child{text-align:left}
 .wide-page{width:min(1500px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}
 .wide-page .card-section{padding:1rem}
-.dashboard-frame{width:100%;min-height:820px;border:0;border-radius:var(--radius);background:var(--chalk)}
+.dashboard-frame{width:100%;height:1100px;min-height:calc(100vh - 190px);border:0;border-radius:var(--radius);background:var(--chalk)}
 .qual-list{display:flex;flex-wrap:wrap;gap:6px}
 .qual-chip{font-size:11px;background:var(--foam);color:var(--pool);border:0.5px solid rgba(26,107,138,.2);padding:3px 8px;border-radius:99px}
 .best-tools{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:end}
@@ -491,14 +491,7 @@ footer span{color:var(--lane)}
 
 <!-- ══ WESTERN ZONE PAGE ══ -->
 <div id="zone-page" class="wide-page" style="display:none">
-  <div class="card">
-    <div class="card-section">
-      <div class="section-label">Western Zone dashboard</div>
-      <div class="meet-disclaimer"><p>This tab embeds the Western Zone dashboard so you can view it inside LaneLine.</p></div>
-      <iframe class="dashboard-frame" src="https://etop12345.github.io/western-zone-dashboard/?embed=laneline" title="Western Zone Dashboard" loading="lazy"></iframe>
-      <p class="source-note">If the dashboard does not load inside the tab, open it directly: <a href="https://etop12345.github.io/western-zone-dashboard/?embed=laneline" target="_blank" rel="noreferrer">Western Zone Dashboard</a>.</p>
-    </div>
-  </div>
+  <iframe id="zone-dashboard-frame" class="dashboard-frame" src="western-zone-dashboard/index.html" title="Western Zone Dashboard" loading="lazy" onload="resizeZoneDashboard()"></iframe>
 </div>
 
 <!-- ══ PROFILES PAGE ══ -->
@@ -1026,9 +1019,33 @@ function showPage(page) {
     renderGrowthPickers();
     renderGrowthPage();
   }
+  if (page === 'zone') resizeZoneDashboard();
   if (page === 'analysis') loadVideoAnalysisConfig();
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
+}
+
+let zoneDashboardResizeObserver = null;
+function resizeZoneDashboard() {
+  const frame = document.getElementById('zone-dashboard-frame');
+  if (!frame) return;
+  try {
+    const doc = frame.contentDocument || frame.contentWindow.document;
+    if (!doc) return;
+    const height = Math.max(
+      doc.body ? doc.body.scrollHeight : 0,
+      doc.documentElement ? doc.documentElement.scrollHeight : 0,
+      900
+    );
+    frame.style.height = `${height + 20}px`;
+    if (zoneDashboardResizeObserver) zoneDashboardResizeObserver.disconnect();
+    if ('ResizeObserver' in window && doc.body) {
+      zoneDashboardResizeObserver = new ResizeObserver(() => resizeZoneDashboard());
+      zoneDashboardResizeObserver.observe(doc.body);
+    }
+  } catch (error) {
+    frame.style.height = '1100px';
+  }
 }
 
 // ─── AUTH ─────────────────────────────────────────────────
