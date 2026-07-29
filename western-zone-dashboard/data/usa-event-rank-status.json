@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-07-26T15:02:24.496Z",
-  "finishedAt": "2026-07-26T15:07:47.490Z",
+  "checkedAt": "2026-07-28T16:04:20.196Z",
+  "finishedAt": "2026-07-28T16:09:18.774Z",
   "status": "refreshed",
   "source": "USA Swimming Top Times API via data.usaswimming.org",
   "swimmers": 2843,
@@ -343,5 +343,8 @@
       "SCY 200 IM": 25,
       "SCY 400 IM": 25
     }
-  }
+  },
+  "warnings": [
+    "10&U|F LCM 200 Breast: This operation was aborted"
+  ]
 }

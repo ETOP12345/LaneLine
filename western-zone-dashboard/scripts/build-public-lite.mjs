@@ -63,7 +63,7 @@ console.log(`Wrote ${OUTPUT}`);
 async function readPreviousDashboard(outputPath) {
   try {
     const html = await fs.readFile(outputPath, "utf8");
-    const match = html.match(/const DATA=(.*?);\nconst [A-Z][A-Z0-9_]*=/s);
+    const match = html.match(/const DATA=(.*?);\r?\nconst [A-Z][A-Z0-9_]*=/s);
     return match ? JSON.parse(match[1]) : null;
   } catch {
     return null;
