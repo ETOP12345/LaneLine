@@ -1,0 +1,58 @@
+name: Daily Western Zone refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 7:20 AM Pacific during daylight-saving time. GitHub cron schedules use UTC.
+    - cron: "20 14 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: laneline-western-zone-refresh-main
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Refresh Western Zone data
+        run: node western-zone-dashboard/scripts/refresh-from-usa-event-rank.mjs
+
+      - name: Rebuild Western Zone dashboard
+        run: node western-zone-dashboard/scripts/build-public-lite.mjs
+
+      - name: Validate Western Zone dashboard
+        run: node western-zone-dashboard/scripts/validate-age-groups.mjs
+
+      - name: Commit refreshed Western Zone dashboard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add western-zone-dashboard/index.html western-zone-dashboard/data/swimmers.json western-zone-dashboard/data/usa-event-rank-status.json
+          if git diff --cached --quiet; then
+            echo "No Western Zone refresh changes to commit."
+          else
+            git commit -m "Daily Western Zone refresh"
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push; then
+                exit 0
+              fi
+              echo "Push failed on attempt ${attempt}; retrying after fetching latest main."
+              sleep 5
+            done
+            echo "Unable to push refreshed Western Zone dashboard after 3 attempts."
+            exit 1
+          fi
