@@ -2,6 +2,15 @@ name: Daily Western Zone refresh
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/daily-western-zone-refresh.yml"
+      - "western-zone-dashboard/data/swimmers.json"
+      - "western-zone-dashboard/scripts/build-public-lite.mjs"
+      - "western-zone-dashboard/scripts/refresh-from-usa-event-rank.mjs"
+      - "western-zone-dashboard/scripts/validate-age-groups.mjs"
   schedule:
     # 7:20 AM Pacific during daylight-saving time. GitHub cron schedules use UTC.
     - cron: "20 14 * * *"
