@@ -1,0 +1,43 @@
+name: Deploy LaneLine
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Daily LaneLine swimmer refresh', 'Daily Western Zone refresh']
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: laneline-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - name: Package public files only
+        run: |
+          mkdir -p _site/western-zone-dashboard/data
+          cp index.html datahub-history.json _site/
+          if test -f datahub-refresh-status.json; then cp datahub-refresh-status.json _site/; fi
+          cp western-zone-dashboard/index.html _site/western-zone-dashboard/
+          cp western-zone-dashboard/data/*.js western-zone-dashboard/data/*.json _site/western-zone-dashboard/data/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment

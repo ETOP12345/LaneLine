@@ -400,6 +400,7 @@ footer span{color:var(--lane)}
   <div class="card">
     <div class="card-section">
       <div class="section-label">Best times</div>
+      <p id="swimmer-refresh-status" role="status" style="font-size:12px;color:var(--muted)"></p>
       <div class="meet-disclaimer"><p>Best times are read from swimmer profiles saved in this browser. PNS meet labels are local planning cuts and should be checked against the official PNS meet packet before entry decisions.</p></div>
       <div class="best-tools">
         <div class="field">
@@ -638,25 +639,25 @@ const ethanWangUsaSwimmingProfile = {
   ageGroup: '12',
   division: 'boys',
   stroke: '',
-  team: 'Pacific Dragons Swim Team',
+  team: 'Bellevue Club Swim Team',
   usaSwimmingMemberId: '9DCE8A4B52EF4A',
   bestTimes: [
-    { event: '50 Free SCY', time: '30.14', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 22, 2025', source: 'USA Swimming' },
-    { event: '100 Free SCY', time: '1:03.23r', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
+    { event: '50 Free SCY', time: '28.50', meet: '2026 PN BC 48th Annual Blue & Orange Meet', date: '09/20/2026', source: 'Meet Mobile' },
+    { event: '100 Free SCY', time: '58.84', meet: '2026 CSC Cascade Fall Classic', date: '10/04/2026', source: 'Meet Mobile' },
     { event: '200 Free SCY', time: '2:16.06', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
-    { event: '500 Free SCY', time: '5:58.95', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 13, 2025', source: 'USA Swimming' },
-    { event: '50 Back SCY', time: '33.56', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
-    { event: '100 Back SCY', time: '1:11.17', meet: '2026 PN PDST Winter Invitational', date: 'Jan 24, 2026', source: 'USA Swimming' },
+    { event: '500 Free SCY', time: '5:32.38', meet: '2026 CSC Cascade Fall Classic', date: '10/03/2026', source: 'Meet Mobile' },
+    { event: '50 Back SCY', time: '32.47', meet: '2026 PN BC 48th Annual Blue & Orange Meet', date: '09/20/2026', source: 'Meet Mobile' },
+    { event: '100 Back SCY', time: '1:09.57', meet: '2026 CSC Cascade Fall Classic', date: '10/03/2026', source: 'Meet Mobile' },
     { event: '200 Back SCY', time: '2:29.00', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
-    { event: '50 Breast SCY', time: '33.75', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 14, 2025', source: 'USA Swimming' },
-    { event: '100 Breast SCY', time: '1:12.80', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 20, 2026', source: 'USA Swimming' },
+    { event: '50 Breast SCY', time: '31.85', meet: '2026 PN BC 48th Annual Blue & Orange Meet', date: '09/20/2026', source: 'Meet Mobile' },
+    { event: '100 Breast SCY', time: '1:09.20', meet: '2026 CSC Cascade Fall Classic', date: '10/04/2026', source: 'Meet Mobile' },
     { event: '200 Breast SCY', time: '2:32.90', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 21, 2026', source: 'USA Swimming' },
-    { event: '50 Fly SCY', time: '32.48', meet: '2026 PN PDST Winter Invitational', date: 'Jan 24, 2026', source: 'USA Swimming' },
-    { event: '100 Fly SCY', time: '1:14.10', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 22, 2025', source: 'USA Swimming' },
+    { event: '50 Fly SCY', time: '30.37', meet: '2026 PN BC 48th Annual Blue & Orange Meet', date: '09/20/2026', source: 'Meet Mobile' },
+    { event: '100 Fly SCY', time: '1:07.17', meet: '2026 PN CSC Fall Classic', date: '10/03/2026', source: 'USA Swimming' },
     { event: '200 Fly SCY', time: '2:45.78', meet: '2025 PN November Age Group Invitational, Division 1', date: 'Nov 23, 2025', source: 'USA Swimming' },
     { event: '100 IM SCY', time: '1:07.84', meet: '2026 PN Northwest Region Age Group Championships', date: 'Mar 22, 2026', source: 'USA Swimming' },
-    { event: '200 IM SCY', time: '2:24.57', meet: '2026 PN PDST Winter Invitational', date: 'Jan 25, 2026', source: 'USA Swimming' },
-    { event: '400 IM SCY', time: '5:07.58', meet: '2025 PN 14&Under Short Course Championships', date: 'Dec 12, 2025', source: 'USA Swimming' },
+    { event: '200 IM SCY', time: '2:18.41', meet: '2026 CSC Cascade Fall Classic', date: '10/03/2026', source: 'Meet Mobile' },
+    { event: '400 IM SCY', time: '4:50.42', meet: '2026 CSC Cascade Fall Classic', date: '10/04/2026', source: 'Meet Mobile' },
     { event: '50 Free LCM', time: '32.34', meet: '2026 PN LC 12 U Championships Approved', date: 'Jul 23, 2026', source: 'ScoreMeUp' },
     { event: '100 Free LCM', time: '1:10.19', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming' },
     { event: '200 Free LCM', time: '2:29.00', meet: '2026 PN IST Springtime Madness Long Course Challenge', date: 'May 17, 2026', source: 'USA Swimming' },
@@ -871,6 +872,16 @@ async function refreshSeededSwimmersFromUsaSwimming() {
 
 async function refreshSeededSwimmersFromDataHubCache() {
   try {
+    const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
+    if (statusResponse.ok) {
+      const status = await statusResponse.json();
+      const label = document.getElementById('swimmer-refresh-status');
+      if (label) label.textContent = status.status === 'updated'
+        ? `USA Swimming checked ${new Date(status.checkedAt).toLocaleString()}`
+        : status.status === 'manual'
+          ? `Latest results imported ${new Date(status.checkedAt).toLocaleString()}. Daily access still needs authentication.`
+          : 'Daily USA Swimming check failed. Showing saved times; see GitHub Actions for the access error.';
+    }
     const response = await fetch('datahub-history.json', { cache: 'no-store' });
     if (!response.ok) return;
     const histories = await response.json();
@@ -903,9 +914,9 @@ async function refreshSwimmerFromUsaSwimming(memberId) {
 
 async function refreshSwimmerBestTimes(profile) {
   const sw = appState.swimmers.find(s =>
-    s.id === profile.id ||
-    s.usaSwimmingMemberId === profile.usaSwimmingMemberId ||
-    s.swimcloudId === profile.swimcloudId
+    (profile.id && s.id === profile.id) ||
+    (profile.usaSwimmingMemberId && s.usaSwimmingMemberId === profile.usaSwimmingMemberId) ||
+    (profile.swimcloudId && s.swimcloudId === profile.swimcloudId)
   );
   if (!sw) return;
   const incomingRows = [];
@@ -941,8 +952,8 @@ async function refreshSwimmerBestTimes(profile) {
     console.warn('Swimcloud refresh skipped:', error);
   }
   if (incomingRows.length || historyRows.length) {
-    sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], historyRows.length ? historyRows : incomingRows);
-    sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], incomingRows);
+    sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], [...historyRows, ...incomingRows]);
+    sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], [...historyRows, ...incomingRows]);
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
     if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
@@ -964,7 +975,8 @@ function mergeBestTimeRows(existingRows, incomingRows) {
     if (index >= 0) {
       const existingSeconds = parseRaceTime(merged[index].time);
       const incomingSeconds = parseRaceTime(row.time);
-      if (!Number.isFinite(existingSeconds) || incomingSeconds < existingSeconds) merged[index] = row;
+      if (!Number.isFinite(existingSeconds) || incomingSeconds < existingSeconds ||
+          (incomingSeconds === existingSeconds && row.source === 'USA Swimming' && /Meet Mobile/i.test(merged[index].source || ''))) merged[index] = row;
       else merged[index] = { ...merged[index], meet: merged[index].meet || row.meet, date: merged[index].date || row.date, source: merged[index].source || row.source };
     } else {
       merged.push(row);
@@ -974,7 +986,12 @@ function mergeBestTimeRows(existingRows, incomingRows) {
 }
 
 function mergeTimeHistoryRows(existingRows, incomingRows) {
-  const merged = [...existingRows];
+  const merged = existingRows.filter(existing => !(
+    /Meet Mobile/i.test(existing.source || '') && incomingRows.some(row =>
+      row.source === 'USA Swimming' && normalizeEventKey(row.event) === normalizeEventKey(existing.event) &&
+      parseGrowthDate(row.date)?.getTime() === parseGrowthDate(existing.date)?.getTime()
+    )
+  ));
   incomingRows.forEach(row => {
     const key = timeHistoryKey(row);
     if (!merged.some(existing => timeHistoryKey(existing) === key)) merged.push(row);
@@ -1005,6 +1022,8 @@ renderGrowthPickers();
 loadVideoAnalysisConfig();
 refreshSeededSwimmersFromDataHubCache();
 refreshSeededSwimmersFromUsaSwimming();
+setInterval(refreshSeededSwimmersFromDataHubCache, 5 * 60 * 1000);
+window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
   ['meet','best','growth','standards','zone','profiles','analysis'].forEach(p => {
@@ -1094,6 +1113,7 @@ function signIn() {
   // Load their swimmers
   const swimmerData = localStorage.getItem('ll_swimmers_'+email);
   if (swimmerData) appState.swimmers = JSON.parse(swimmerData);
+  refreshSeededSwimmersFromDataHubCache();
   saveState();
   updateNavAccount();
   renderProfilesPage();

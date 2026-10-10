@@ -1,0 +1,51 @@
+name: Daily LaneLine swimmer refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 14 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: laneline-swimmer-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Refresh all swimmer histories
+        id: refresh
+        continue-on-error: true
+        env:
+          USA_SWIMMING_AUTHORIZATION: ${{ secrets.USA_SWIMMING_AUTHORIZATION }}
+        run: node scripts/refresh-swimmer-history.js
+      - name: Publish histories and refresh status
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add datahub-history.json datahub-refresh-status.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh LaneLine swimmer histories and status'
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+              sleep 5
+            done
+            exit 1
+          fi
+      - name: Report upstream failure
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo '::error::Swimmer refresh failed. See datahub-refresh-status.json. Existing times were preserved.'
+          exit 1

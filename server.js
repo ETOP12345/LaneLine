@@ -18,7 +18,8 @@ const handleVideoAnalysis = createVideoAnalysisRouter();
 const publicFiles = {
   "/": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
   "/index.html": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
-  "/datahub-history.json": { path: path.join(__dirname, "datahub-history.json"), type: "application/json; charset=utf-8" }
+  "/datahub-history.json": { path: path.join(__dirname, "datahub-history.json"), type: "application/json; charset=utf-8" },
+  "/datahub-refresh-status.json": { path: path.join(__dirname, "datahub-refresh-status.json"), type: "application/json; charset=utf-8" }
 };
 
 const server = http.createServer(async (req, res) => {
@@ -141,6 +142,7 @@ function requestJson(url, body) {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
     };
     if (payload) headers["Content-Length"] = Buffer.byteLength(payload);
+    if (process.env.USA_SWIMMING_AUTHORIZATION) headers.Authorization = process.env.USA_SWIMMING_AUTHORIZATION;
     const req = https.request({
       method: payload ? "POST" : "GET",
       hostname: parsed.hostname,
@@ -461,4 +463,5 @@ function listen(port) {
   });
 }
 
-listen(preferredPort);
+module.exports = { fetchUsaSwimmingTimeHistory, normalizeTimeRows };
+if (require.main === module) listen(preferredPort);
