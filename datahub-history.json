@@ -1,5 +1,44 @@
 {
   "9DCE8A4B52EF4A": [
+    {"event":"200 IM SCY","time":"2:18.41","meet":"2026 PN CSC Fall Classic","date":"10/03/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"100 Back SCY","time":"1:09.57","meet":"2026 PN CSC Fall Classic","date":"10/03/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"100 Fly SCY","time":"1:07.17","meet":"2026 PN CSC Fall Classic","date":"10/03/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"500 Free SCY","time":"5:32.38","meet":"2026 PN CSC Fall Classic","date":"10/03/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"100 Breast SCY","time":"1:09.20","meet":"2026 PN CSC Fall Classic","date":"10/04/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"100 Free SCY","time":"58.84","meet":"2026 PN CSC Fall Classic","date":"10/04/2026","source":"USA Swimming","course":"SCY"},
+    {"event":"400 IM SCY","time":"4:50.42","meet":"2026 PN CSC Fall Classic","date":"10/04/2026","source":"USA Swimming","course":"SCY"},
+    {
+      "event": "50 Free SCY",
+      "time": "28.50",
+      "meet": "2026 BC 48th Annual Blue & Orange Meet",
+      "date": "09/20/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Breast SCY",
+      "time": "31.85",
+      "meet": "2026 BC 48th Annual Blue & Orange Meet",
+      "date": "09/20/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Back SCY",
+      "time": "32.47",
+      "meet": "2026 BC 48th Annual Blue & Orange Meet",
+      "date": "09/20/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Fly SCY",
+      "time": "30.37",
+      "meet": "2026 BC 48th Annual Blue & Orange Meet",
+      "date": "09/20/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
     {
       "event": "50 Fly LCM",
       "time": "34.79",

@@ -1,0 +1,13 @@
+{
+  "status": "manual",
+  "checkedAt": "2026-10-10T03:44:00Z",
+  "swimmers": {
+    "9DCE8A4B52EF4A": {
+      "status": "manual",
+      "newestSwim": "10/04/2026",
+      "verifiedRows": 11,
+      "lastSuccessAt": null,
+      "note": "Latest SCY results verified in the signed-in USA Swimming Data Hub. Unattended API access remains unverified."
+    }
+  }
+}
