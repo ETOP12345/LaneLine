@@ -1,66 +1,66 @@
 {
   "status": "failed",
-  "checkedAt": "2026-10-16T18:20:09.781Z",
+  "checkedAt": "2026-10-17T17:31:44.694Z",
   "swimmers": {
     "9DCE8A4B52EF4A": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 258,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "529E741DB1114E": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 142,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "C8B64773962AF0": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 0,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "03A64F943FE144": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 339,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "08104D29B8F2BE": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 0,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "7EFADA7A593345": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 321,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "1D0A99255F1747": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 174,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "F889DA85F5164C": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 276,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "9C37DAB7527E4C": {
       "status": "failed",
-      "checkedAt": "2026-10-16T18:20:09.781Z",
+      "checkedAt": "2026-10-17T17:31:44.694Z",
       "lastSuccessAt": null,
       "savedRows": 0,
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
