@@ -12,6 +12,10 @@ Run `node scripts/refresh-swimmer-history.js` locally, or select **Run workflow*
 
 Set repository **Settings > Pages > Source** to **GitHub Actions** for the new Deploy LaneLine workflow. It deploys after regular pushes and after either refresh job completes, including failed checks so the status reaches the site. This is necessary because commits made with `GITHUB_TOKEN` do not trigger normal push workflows. Public artifacts contain only the static HTML and swim datasets, never the server or environment credentials.
 
-## Verification
+## Signed-In Manual Import
+
+When unattended API access is denied, verified visible Data Hub rows can be imported with `node scripts/import-datahub-history.js`. This starts a temporary localhost-only form on port 5191. The JSON snapshot contains `events` (Data Hub event codes), `meets` (meet names), and `swimmers` (member IDs mapped to arrays of `[eventIndex, time, meetIndex, date]`). Only saved member IDs are accepted. The importer validates every row, merges history without removing older races, and records a manual check separately from unattended success. Stop the importer after use. Do not include login credentials or session tokens in snapshots.
+
+## Tests
 
 Run `npm test`. Tests cover empty/invalid results, failure preservation, cross-course history, deduplication, successful publishing, swimmer matching, and best-time updates from history. A fully unattended refresh is not considered verified until an authenticated job has retrieved current swims and deployed them.
