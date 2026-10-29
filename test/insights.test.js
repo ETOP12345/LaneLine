@@ -3,6 +3,29 @@ const assert=require('node:assert/strict');
 const I=require('../insights-engine.js');
 const data=require('../time-standards.json');
 const rated=(stroke,ratio)=>({row:{event:'100 '+stroke+' SCY',time:'1:00.00'},ratio});
+test('yearly types isolate calendar years, course, and deduplicate history and bests',()=>{
+  const motivational={};
+  for(const stroke of ['breast','free','fly'])motivational['boys|11-12|100 '+stroke+' scy']={AAAA:'1:00.00'};
+  const race=(stroke,time,date)=>({event:'100 '+stroke+' SCY',time,date,meet:'Test meet'});
+  const old=race('breast','1:00.00','2024-05-10');
+  const recent=race('fly','55.00','10/10/2025');
+  const sw={id:'me',division:'boys',ageGroup:'12',timeHistory:[old,race('fly','1:20.00','May 11, 2024'),race('free','1:22.00','05/12/2024'),recent,race('breast','1:20.00','10/11/2025'),race('free','1:22.00','10/12/2025'),race('free','40.00','unknown'),{...recent,event:'100 Fly LCM'}],bestTimes:[old,recent]};
+  const years=I.yearlyArchetypes(sw,'SCY',{motivational});
+  assert.deepEqual(years.map(y=>y.year),[2025,2024]);
+  assert.equal(years[0].label,'Specialized Butterfly');
+  assert.equal(years[1].label,'Specialized Breaststroke');
+  assert.equal(years[0].raceCount,3);assert.equal(years[1].raceCount,3);
+  assert.equal(years[1].groups.find(g=>g.key==='fly').best.row.time,'1:20.00');
+  assert.equal(I.yearlyArchetypes(sw,'SCM',{motivational}).length,0);
+});
+test('yearly coverage does not invent missing years or rate undated swims',()=>{
+  const sw=swimmer('me','28.00');
+  assert.equal(I.yearlyArchetypes(sw,'SCY',data).length,0);
+  sw.timeHistory=[{event:'25 Free SCY',time:'15.00',date:'2023-05-01'}];
+  const years=I.yearlyArchetypes(sw,'SCY',data);
+  assert.equal(years.length,1);assert.equal(years[0].year,2023);assert.equal(years[0].provisional,true);
+  assert.equal(years[0].groups.length,0);
+});
 test('archetypes distinguish specialized, dual and all-round without event-count bias',()=>{
   const rows=[rated('breast',1.02),rated('im',0.97),rated('free',0.90),rated('fly',0.88),rated('back',0.89)];
   const type=I.archetype(rows);

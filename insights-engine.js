@@ -41,10 +41,28 @@
       close.length>=3?'All-Round Swimmer':close.length===2?'Dual '+close.map(g=>g.label).join(' / '):'Specialized '+ranked[0].label;
     return {groups,label,provisional:ranked.length<3};
   }
+  function yearlyArchetypes(sw,course,data){
+    const years=new Map(),seen=new Set();
+    for(const row of [...(sw.timeHistory||[]),...(sw.bestTimes||[])]){
+      const raw=String(row.date||'').trim();
+      if(!/\b\d{4}\b/.test(raw)||/^\d{4}$/.test(raw))continue;
+      const date=new Date(raw),time=S.centiseconds(row.time),event=S.eventKey(row.event);
+      if(!Number.isFinite(date.getTime())||!Number.isFinite(time)||!event.endsWith(' '+course.toLowerCase()))continue;
+      const year=/^\d{4}-/.test(raw)?Number(raw.slice(0,4)):date.getFullYear();
+      const key=[event,time,date.toISOString().slice(0,10),row.meet||''].join('|');
+      if(seen.has(key))continue;seen.add(key);
+      if(!years.has(year))years.set(year,[]);
+      years.get(year).push(row);
+    }
+    return [...years.entries()].sort((a,b)=>b[0]-a[0]).map(([year,races])=>{
+      const rated=strengths({...sw,bestTimes:races},[],course,data);
+      return {...archetype(rated),year,raceCount:races.length,eventCount:rated.length};
+    });
+  }
   function goalProgress(goal,current){
     const now=S.centiseconds(current),start=S.centiseconds(goal.baseline),target=S.centiseconds(goal.cut);
     if(![now,start,target].every(Number.isFinite)||start<=target) return null;
     return {met:now<=target,drop:Math.max(0,now-target)/100,progress:Math.max(0,Math.min(100,(start-now)/(start-target)*100))};
   }
-  return {bestRows,strengths,archetype,goalProgress};
+  return {bestRows,strengths,archetype,yearlyArchetypes,goalProgress};
 });
