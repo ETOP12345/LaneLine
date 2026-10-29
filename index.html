@@ -165,6 +165,11 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .insights-surface{background:#fff;padding:24px;border-top:4px solid var(--lane)}
 .insights-surface h2{font-size:24px;margin-bottom:20px;letter-spacing:0}
 .insight-banner{border-left:4px solid #dbab29;background:#fff9df;padding:14px 16px;margin:18px 0;font-size:14px}
+.archetype-section{display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;align-items:center;padding:24px 0;border-bottom:1px solid var(--border);margin-bottom:18px}
+.archetype-chart{width:230px;height:230px;max-width:100%;aspect-ratio:1;display:block}
+.archetype-section h3{font-size:25px;line-height:1.2;overflow-wrap:anywhere;margin-bottom:16px}
+.stroke-legend{display:grid;gap:8px}.stroke-legend li{list-style:none;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px}.stroke-legend i{width:10px;height:10px;border-radius:50%}.stroke-legend small{display:block;color:var(--muted);font-size:11px}.archetype-method{font-size:12px;color:var(--muted);margin:12px 0}.archetype-method summary{cursor:pointer}
+@media(max-width:620px){.archetype-section{grid-template-columns:minmax(0,1fr);gap:16px}.archetype-chart{margin:auto}.archetype-section h3{font-size:22px}}
 .insight-row{padding:18px 0;border-bottom:1px solid var(--border);animation:lane-arrive .35s ease-out both}
 .insight-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .insight-row h3{font-size:15px}.insight-meta{font-size:12px;color:var(--muted);margin:6px 0}
@@ -1483,6 +1488,9 @@ function renderInsights(page,setup=false) {
   if(page==='strengths'){
     const top=rows.find(r=>r.ratio!==null);
     out.innerHTML=`${top?`<div class="insight-banner"><strong>Signature event: ${escapeHtml(top.row.event)}</strong><br>${escapeHtml(top.level)} national motivational level</div>`:''}<p class="insight-meta">Saved swimmers only, same exact age and division. Not a USA national ranking or percentile. Events ordered by AAAA pace index.</p>`+rows.map((r,i)=>`<article class="insight-row" style="animation-delay:${Math.min(i,8)*30}ms"><div class="insight-heading"><h3>${escapeHtml(r.row.event)}</h3><span class="standard-pill">${escapeHtml(r.level)}</span></div><div class="insight-meta">Best ${escapeHtml(r.row.time)} · ${r.total>1?`Rank ${r.rank} of ${r.total} saved swimmers${r.tied?' (tied)':''}`:'No same-age peers with this event yet'}</div>${r.ratio!==null?`<div class="race-track"><span style="width:${Math.min(100,r.ratio*100)}%"></span></div><div class="insight-meta">${(r.ratio*100).toFixed(1)}% AAAA pace index · 100% = AAAA cut, not a percentile</div>`:''}</article>`).join('');
+    const type=LaneLineInsights.archetype(rows);
+    out.insertAdjacentHTML('afterbegin',`<section class="archetype-section"><canvas id="stroke-donut" class="archetype-chart" width="460" height="460" role="img" aria-label="Stroke strength distribution. Values listed alongside the chart."></canvas><div><div class="section-label">${escapeHtml(course)} swimmer type</div><h3>${escapeHtml(type.label)}</h3><ul class="stroke-legend">${type.groups.map(g=>`<li><i style="background:${g.color}"></i><span>${escapeHtml(g.label)}<small>${g.best?escapeHtml(g.best.row.event)+' · '+escapeHtml(g.best.row.time):'No standard-rated time'}</small></span><strong>${(g.share*100).toFixed(1)}%</strong></li>`).join('')}</ul>${type.provisional?'<p class="insight-meta">Provisional: fewer than three strokes have standard-rated times.</p>':''}</div></section><details class="archetype-method"><summary>About this swimmer type</summary><p>LaneLine estimate, not USA Swimming's official archetype. Each stroke uses its strongest AAAA pace index across saved best times for this course. Chart shares emphasize relative strengths; they are not percentiles or race-count shares. A second stroke within 3% of the top index produces a dual type; three or more produce all-round. Fewer than three rated strokes produces an emerging type. Current profile age is used for standards, including older saved swims.</p></details>`);
+    drawStrokeDonut(type);
     return;
   }
   const saved=readPersonalGoals();
@@ -1494,6 +1502,22 @@ function renderInsights(page,setup=false) {
   }).join('');
 }
 function readPersonalGoals(){try{const value=JSON.parse(localStorage.getItem('laneline-personal-goals')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch{return {};}}
+function drawStrokeDonut(type){
+  const canvas=document.getElementById('stroke-donut');if(!canvas)return;
+  const ctx=canvas.getContext('2d');if(!ctx)return;
+  const start=performance.now(),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function draw(now){
+    if(!canvas.isConnected)return;
+    const progress=reduced?1:Math.min(1,(now-start)/650),ease=1-Math.pow(1-progress,3);
+    ctx.clearRect(0,0,460,460);ctx.lineWidth=62;
+    ctx.beginPath();ctx.strokeStyle='#eef1f5';ctx.arc(230,230,175,0,Math.PI*2);ctx.stroke();
+    let angle=-Math.PI/2;
+    for(const g of type.groups){if(!g.share)continue;const length=g.share*Math.PI*2*ease;ctx.beginPath();ctx.strokeStyle=g.color;ctx.arc(230,230,175,angle+0.012,angle+Math.max(0.012,length-0.012));ctx.stroke();angle+=length;}
+    ctx.fillStyle='#0B1F3A';ctx.font='500 26px "DM Sans", sans-serif';ctx.textAlign='center';ctx.fillText('STROKE',230,225);ctx.fillText('STRENGTH',230,259);
+    if(progress<1)requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
 function personalGoalContext(index){
   const sw=appState.swimmers.find(s=>s.id===document.getElementById('goals-swimmer').value);
   const rows=LaneLineInsights.strengths(sw,appState.swimmers,document.getElementById('goals-course').value,verifiedStandardsData);
