@@ -6,7 +6,7 @@
 <title>LaneLine — Swim Coaching</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -202,6 +202,30 @@ button:focus-visible,summary:focus-visible{outline:2px solid var(--pool);outline
 .growth-scoreboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--border);margin:0 0 18px;padding:14px 0;gap:12px}.growth-scoreboard strong{display:block;font:500 22px 'DM Mono',monospace;color:var(--navy)}.growth-scoreboard span{display:block;font-size:11px;color:var(--muted)}.growth-scoreboard>div{padding-left:12px;border-left:3px solid var(--lane)}.growth-scoreboard>div:nth-child(2){border-color:#d28b25}.growth-scoreboard>div:nth-child(3){border-color:#c94b72}
 .growth-chart g[data-growth-event],.growth-chart circle{transition:opacity .2s}.growth-chart circle:hover{stroke:var(--navy);stroke-width:2}.growth-legend span{padding:3px 6px;border-radius:4px;background:var(--chalk)}
 @media(max-width:420px){.growth-scoreboard{gap:5px}.growth-scoreboard>div{padding-left:6px}.growth-scoreboard strong{font-size:17px}}
+/* Light pool palette and comfortable typography */
+:root{--pool:#226cb0;--lane:#4bace0;--foam:#eaf6ff;--chalk:#f2f7fc;--ink:#18344d;--muted:#536d83;--border:rgba(40,91,139,.14);--radius:8px;--radius-lg:8px}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-weight:400;line-height:1.65}
+*,*::before,*::after{letter-spacing:0!important}
+button,input,select,textarea{font-family:'DM Sans',sans-serif}button{font-weight:500}
+nav{background:#fff;border-bottom:1px solid var(--border)}.nav-logo{color:var(--ink)}.nav-account-btn{background:#edf5ff;color:#245f96;border-color:#d3e5f5}.nav-account-btn:hover{background:#e0edfc}
+.hero{background:#eaf4fe;padding:2.5rem 1.5rem 3rem}.hero-wordmark,.hero h1,.hero h1 strong{color:var(--ink)}.hero h1{font-size:42px;font-weight:500;line-height:1.2}.hero h1 .hl{color:#2671b8}.hero p{color:var(--muted);font-size:15px}.hero-logo-icon{background:#d9eefe;border-color:#c5e0f4}.hero-wordmark span{color:#2671b8}.hero-logo{margin-bottom:1rem}
+.page-tabs-wrap{background:#fff;border-bottom:1px solid var(--border)}.page-tab{color:#526e86;font-size:13px}.page-tab.active{background:#eaf4ff;color:#1e5d9a;border-bottom-color:#3a8ed1}.page-tab:not(.active):hover{color:#1d659f;background:#f1f7fe}
+.card{border-color:#dfe9f2}.card-section:first-child{background:#f6faff}.section-label{font-weight:600;color:#3271a5;font-size:11px}
+input[type="text"],input[type="password"],input[type="email"],select,textarea{background:#f7faff;border-color:#d4e2ef;font-weight:400}
+.btn-primary,.search-btn{background:#2468a6}.btn-primary:hover:not(:disabled),.search-btn:hover:not(:disabled){background:#1b568c}.btn-secondary{background:#eef6ff;border-color:#bed8ef;color:#245f96}
+.meet-disclaimer{background:#fff8e9;border-color:#efdfbc}.meet-disclaimer p{color:#816223}.qual-chip{background:#eaf7f4;color:#296f68;border-color:#cce8e2}.standard-pill{background:#e9f2ff;color:#3266a0}.suggestion-card:nth-child(3n+2){background:#fff9ed}.suggestion-card:nth-child(3n){background:#fdf0f5}.suggestion-card a{color:#2468a6}
+.insights-surface{border-top-color:#5ca9e2}.insight-banner{background:#fff7df}.year-option{background:#f2f7ff}.year-option[aria-pressed="true"]{background:#e8f5ff}.goal-stamp{background:#fff0c6;color:#865a0f}
+#growth-page{width:min(1040px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}
+#growth-page>.card{border:0;box-shadow:none;background:transparent;overflow:visible}
+#growth-page .card-section{background:#fff;padding:24px 28px;border:0;border-bottom:1px solid var(--border)}
+#growth-page .card-section:first-child{background:#e9f3ff;border-top:3px solid #6aafe2;border-radius:8px 8px 0 0}
+#growth-page .card-section:nth-child(3){background:#f7fbff}#growth-page .card-section:last-child{border-radius:0 0 8px 8px}
+#growth-page .growth-chart{border:0;border-radius:0;background:transparent;font-family:'DM Sans',sans-serif}
+#growth-page .growth-chart text{font-family:inherit;fill:#537089}
+.growth-legend{gap:6px 10px}.growth-legend span{background:#edf4fc;color:#365a79;border-radius:4px;padding:5px 8px}.growth-legend i{width:8px;height:8px}
+.growth-scoreboard{border:0;padding:0 0 12px;gap:0}.growth-scoreboard>div{padding:12px 16px;border:0;background:#e9f3ff}.growth-scoreboard>div:nth-child(2){background:#fff3d9}.growth-scoreboard>div:nth-child(3){background:#e9f7f3}.growth-scoreboard strong{font-family:'DM Sans',sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:25px}.growth-scoreboard span{font-size:12px}
+.times-table .time-val{font-variant-numeric:tabular-nums}.best-summary-card .value{font-weight:500}
+@media(max-width:620px){.hero h1{font-size:32px}.hero{padding:2rem 1rem}.main{padding-top:1.5rem}#growth-page{width:calc(100vw - 24px)}#growth-page .card-section{padding:18px 14px}.growth-scoreboard>div{padding:10px 7px}.growth-scoreboard strong{font-size:19px}.growth-scoreboard span{font-size:10px}}
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
 .error-box p{font-size:13px;color:var(--red)}
@@ -321,8 +345,8 @@ footer span{color:var(--lane)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Growth
     </button>
-    <button class="page-tab" id="ptab-strengths" onclick="showPage('strengths')">Strengths</button>
-    <button class="page-tab" id="ptab-goals" onclick="showPage('goals')">Goals</button>
+    <button class="page-tab" id="ptab-strengths" onclick="showPage('strengths')"><span aria-hidden="true">💪</span> Strengths</button>
+    <button class="page-tab" id="ptab-goals" onclick="showPage('goals')"><span aria-hidden="true">🎯</span> Goals</button>
     <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 10l4.5-2.5v9L15 14m-9 3h7a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Video analysis
@@ -1926,6 +1950,8 @@ function renderGrowthChart(rows, options) {
   const legend = eventNames.map((event, index) => `<span><i style="background:${chartPalette[index % chartPalette.length]}"></i>${event}</span>`).join('');
   return `
     <svg class="growth-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.title}">
+      ${[0.25,0.5,0.75].map(fraction=>`<line x1="${pad.left}" y1="${pad.top+fraction*(height-pad.top-pad.bottom)}" x2="${width-pad.right}" y2="${pad.top+fraction*(height-pad.top-pad.bottom)}" stroke="#dce8f2" stroke-dasharray="3 6" pointer-events="none"/>`).join('')}
+      ${options.mode==='event'&&growthRows.length>1?`<polygon points="${xFor(growthRows[0])},${baselineY} ${growthRows.map(row=>`${xFor(row)},${yFor(row.growthSeconds)}`).join(' ')} ${xFor(growthRows.at(-1))},${baselineY}" fill="#4897d4" fill-opacity="0.08" pointer-events="none"/>`:''}
       ${options.mode === 'event' ? `<line x1="${pad.left}" y1="${recordY}" x2="${width - pad.right}" y2="${recordY}" stroke="rgba(11,31,58,.18)" stroke-dasharray="4 5"/>` : ''}
       <line x1="${pad.left}" y1="${baselineY}" x2="${width - pad.right}" y2="${baselineY}" stroke="rgba(11,31,58,.12)"/>
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
