@@ -142,6 +142,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .best-summary-card{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}
 .best-summary-card .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .best-summary-card .value{font-size:26px;font-weight:300;color:var(--navy)}
+.all-targets{margin-top:8px;min-width:0}.all-targets summary{cursor:pointer;color:var(--navy);font-size:12px;padding:4px 0}.target-table{width:100%;table-layout:fixed;border-collapse:collapse;margin-top:8px;font-size:12px}.target-table th:first-child{width:48%}.target-table td,.target-table th{padding:7px 4px;text-align:left;white-space:normal;overflow-wrap:anywhere;border-bottom:1px solid var(--border)}.target-table small{display:block;color:var(--muted);font-size:10px}.cut-met{color:var(--navy);font-weight:600}.standards-warning{font-size:12px;color:var(--red);margin:8px 0}.best-table{table-layout:fixed}.best-table td,.best-table th{white-space:normal;overflow-wrap:anywhere}.best-table th:nth-child(1){width:23%}.best-table th:nth-child(2){width:12%}.best-table th:nth-child(3){width:12%}.best-table th:nth-child(4){width:35%}.best-table th:nth-child(5){width:18%}.event-meet{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+@media(max-width:620px){.best-table,.best-table tbody{display:block}.best-table thead{display:none}.best-table>tbody>tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;padding:14px 0;border-bottom:1px solid var(--border)}.best-table>tbody>tr>td{display:block;border:0;padding:2px;min-width:0}.best-table>tbody>tr>td:nth-child(1),.best-table>tbody>tr>td:nth-child(4),.best-table>tbody>tr>td:nth-child(5){grid-column:1/-1}.best-table>tbody>tr>td:nth-child(2){font-size:19px}.target-table{font-size:12px}}
 .growth-toolbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem}
 .growth-chart{width:100%;height:auto;display:block;background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .growth-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -159,6 +161,22 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 @media(max-width:900px){.wide-page{width:calc(100vw - 24px)}}
 @media(max-width:620px){.best-tools,.best-summary,.standards-toolbar,.growth-toolbar,.suggestions-grid{grid-template-columns:1fr}.times-table{font-size:13px}.page-tabs{overflow-x:auto;justify-content:flex-start}.page-tab{min-width:138px}}
 
+.page-tabs{max-width:1400px;overflow-x:auto}.page-tab{flex-shrink:0;white-space:nowrap}
+.insights-surface{background:#fff;padding:24px;border-top:4px solid var(--lane)}
+.insights-surface h2{font-size:24px;margin-bottom:20px;letter-spacing:0}
+.insight-banner{border-left:4px solid #dbab29;background:#fff9df;padding:14px 16px;margin:18px 0;font-size:14px}
+.insight-row{padding:18px 0;border-bottom:1px solid var(--border);animation:lane-arrive .35s ease-out both}
+.insight-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.insight-row h3{font-size:15px}.insight-meta{font-size:12px;color:var(--muted);margin:6px 0}
+.race-track{height:9px;background:#eef1f5;border-radius:4px;overflow:hidden;margin:12px 0}
+.race-track span{height:100%;display:block;background:var(--pool);transform-origin:left;animation:lane-fill .7s ease-out both;border-radius:4px}
+.insight-row:nth-child(3n+2) .race-track span{background:#d28b25}.insight-row:nth-child(3n) .race-track span{background:#c94b72}
+.goal-actions{display:flex;gap:10px;align-items:center;margin-top:10px}.goal-actions select{min-width:0;flex:1}.goal-actions button{flex-shrink:0}
+.goal-stamp{color:#9a5c00;background:#fff2c3;padding:3px 8px;border-radius:4px;font-size:12px}
+@keyframes lane-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes lane-arrive{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:620px){.insights-surface{padding:16px}.goal-actions{flex-wrap:wrap}.goal-actions select{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
 .error-box p{font-size:13px;color:var(--red)}
@@ -278,13 +296,15 @@ footer span{color:var(--lane)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Growth
     </button>
+    <button class="page-tab" id="ptab-strengths" onclick="showPage('strengths')">Strengths</button>
+    <button class="page-tab" id="ptab-goals" onclick="showPage('goals')">Goals</button>
     <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 10l4.5-2.5v9L15 14m-9 3h7a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Video analysis
     </button>
     <button class="page-tab" id="ptab-standards" onclick="showPage('standards')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      PNS standards
+      Time standards
     </button>
     <button class="page-tab" id="ptab-zone" onclick="showPage('zone')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M8 16l3-4 3 2 4-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -401,7 +421,7 @@ footer span{color:var(--lane)}
     <div class="card-section">
       <div class="section-label">Best times</div>
       <p id="swimmer-refresh-status" role="status" style="font-size:12px;color:var(--muted)"></p>
-      <div class="meet-disclaimer"><p>Best times are read from swimmer profiles saved in this browser. PNS meet labels are local planning cuts and should be checked against the official PNS meet packet before entry decisions.</p></div>
+      <div class="meet-disclaimer"><p>Published time cuts only. Meet age, qualifying dates, membership, and entry rules still apply. Regional 2026 cuts are reference-only.</p></div>
       <div class="best-tools">
         <div class="field">
           <label for="best-swimmer">Swimmer</label>
@@ -412,10 +432,12 @@ footer span{color:var(--lane)}
           <div class="course-toggle" aria-label="Best times course">
             <button type="button" id="best-course-scy" class="active" onclick="setBestTimesCourse('SCY')">SCY</button>
             <button type="button" id="best-course-lcm" onclick="setBestTimesCourse('LCM')">LCM</button>
+            <button type="button" id="best-course-scm" onclick="setBestTimesCourse('SCM')">SCM</button>
           </div>
         </div>
         <button class="btn-secondary" onclick="renderBestTimes()">Load bests</button>
       </div>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;margin-top:10px"><input type="checkbox" id="show-all-targets" onchange="renderBestTimes()"/>All target drops</label>
     </div>
     <div class="card-section" id="best-results-section">
       <div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>
@@ -424,6 +446,8 @@ footer span{color:var(--lane)}
 </div>
 
 <!-- ══ GROWTH PAGE ══ -->
+<div id="strengths-page" style="display:none"><section class="insights-surface"><div class="section-label">Your competitive edge</div><h2>Strengths</h2><div id="strengths-controls" class="standards-toolbar"></div><div id="strengths-results" aria-live="polite"></div></section></div>
+<div id="goals-page" style="display:none"><section class="insights-surface"><div class="section-label">One finish at a time</div><h2>Personal goals</h2><div id="goals-controls" class="standards-toolbar"></div><div id="goals-results" aria-live="polite"></div></section></div>
 <div id="growth-page" style="display:none">
   <div class="card">
     <div class="card-section">
@@ -466,8 +490,7 @@ footer span{color:var(--lane)}
 <div id="standards-page" style="display:none">
   <div class="card">
     <div class="card-section">
-      <div class="section-label">PNS time standards</div>
-      <div class="meet-disclaimer"><p>Pacific Northwest Swimming meet standards are shown for PNS Champs and Northwest Regional tiers from the cuts currently loaded in LaneLine.</p></div>
+      <div class="section-label">Time standards</div>
       <div class="standards-toolbar">
         <div class="field">
           <label for="standards-division">Division</label>
@@ -477,11 +500,17 @@ footer span{color:var(--lane)}
           </select>
         </div>
         <div class="field">
-          <label for="standards-age">Age group</label>
+          <label for="standards-age">Age</label>
           <select id="standards-age" onchange="renderStandardsPage()">
-            <option value="11-12">11-12</option>
+            <option value="10">10</option><option value="11">11</option><option value="12" selected>12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option>
           </select>
         </div>
+      </div>
+    </div>
+    <div class="card-section">
+      <div class="standards-toolbar">
+        <div class="field"><label for="standards-meet">Standard</label><select id="standards-meet" onchange="renderStandardsPage()"><option value="motivational">National motivational</option></select></div>
+        <div class="field"><label for="standards-course">Course</label><select id="standards-course" onchange="renderStandardsPage()"><option>SCY</option><option>LCM</option><option>SCM</option></select></div>
       </div>
     </div>
     <div class="card-section" id="standards-results">
@@ -620,6 +649,8 @@ footer span{color:var(--lane)}
   </div>
 </div>
 
+<script src="standards-engine.js"></script>
+<script src="insights-engine.js"></script>
 <script>
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
@@ -924,6 +955,7 @@ async function refreshSeededSwimmersFromDataHubCache() {
     renderGrowthPickers();
     if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
     if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
+    refreshOpenInsights();
   } catch (error) {
     console.warn('Data Hub history cache skipped:', error);
   }
@@ -988,6 +1020,7 @@ async function refreshSwimmerBestTimes(profile) {
     if (select && selectedBeforeRefresh && appState.swimmers.some(s => s.id === selectedBeforeRefresh)) select.value = selectedBeforeRefresh;
     if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
     if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
+    refreshOpenInsights();
   }
 }
 
@@ -1044,12 +1077,13 @@ renderBestTimesPicker();
 renderGrowthPickers();
 loadVideoAnalysisConfig();
 refreshSeededSwimmersFromDataHubCache();
+loadVerifiedStandards();
 refreshSeededSwimmersFromUsaSwimming();
 setInterval(refreshSeededSwimmersFromDataHubCache, 5 * 60 * 1000);
 window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
-  ['meet','best','growth','standards','zone','profiles','analysis'].forEach(p => {
+  ['meet','best','growth','standards','zone','profiles','analysis','strengths','goals'].forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
     document.getElementById('ptab-'+p).classList.toggle('active', p === page);
   });
@@ -1057,6 +1091,7 @@ function showPage(page) {
     renderBestTimesPicker();
     renderBestTimes();
   }
+  if (page === 'strengths' || page === 'goals') renderInsights(page,true);
   if (page === 'growth') {
     renderGrowthPickers();
     renderGrowthPage();
@@ -1321,48 +1356,9 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
 });
 
 // ─── BEST TIMES ───────────────────────────────────────────
-const motivationalStandards = {
-  "boys|11-12|50 free scy": { AAAA: "24.59", AAA: "25.79", AA: "26.99", A: "28.09", BB: "30.49", B: "32.79" },
-  "boys|11-12|100 free scy": { AAAA: "53.59", AAA: "56.19", AA: "58.69", A: "1:01.29", BB: "1:06.39", B: "1:11.49" },
-  "boys|11-12|200 free scy": { AAAA: "1:56.99", AAA: "2:02.59", AA: "2:08.19", A: "2:13.69", BB: "2:24.89", B: "2:35.99" },
-  "boys|11-12|500 free scy": { AAAA: "5:14.99", AAA: "5:29.99", AA: "5:44.99", A: "5:59.99", BB: "6:29.99", B: "6:59.89" },
-  "boys|11-12|1000 free scy": { AAAA: "11:02.59", AAA: "11:34.19", AA: "12:05.79", A: "12:37.29", BB: "13:40.39", B: "14:43.49" },
-  "boys|11-12|1650 free scy": { AAAA: "18:20.79", AAA: "19:13.19", AA: "20:05.59", A: "20:58.09", BB: "22:42.89", B: "24:27.69" },
-  "boys|11-12|50 back scy": { AAAA: "28.19", AAA: "29.69", AA: "31.19", A: "32.69", BB: "35.59", B: "38.49" },
-  "boys|11-12|100 back scy": { AAAA: "59.49", AAA: "1:02.79", AA: "1:05.99", A: "1:09.29", BB: "1:15.69", B: "1:22.19" },
-  "boys|11-12|200 back scy": { AAAA: "2:09.69", AAA: "2:15.89", AA: "2:21.99", A: "2:28.19", BB: "2:40.49", B: "2:52.89" },
-  "boys|11-12|50 breast scy": { AAAA: "31.49", AAA: "33.29", AA: "34.99", A: "36.69", BB: "40.09", B: "43.49" },
-  "boys|11-12|100 breast scy": { AAAA: "1:07.79", AAA: "1:11.39", AA: "1:14.89", A: "1:18.39", BB: "1:25.49", B: "1:32.59" },
-  "boys|11-12|200 breast scy": { AAAA: "2:27.29", AAA: "2:34.39", AA: "2:41.39", A: "2:48.39", BB: "3:02.39", B: "3:16.39" },
-  "boys|11-12|50 fly scy": { AAAA: "26.69", AAA: "28.19", AA: "29.69", A: "31.19", BB: "34.19", B: "37.09" },
-  "boys|11-12|100 fly scy": { AAAA: "59.09", AAA: "1:02.49", AA: "1:05.89", A: "1:09.29", BB: "1:16.09", B: "1:22.89" },
-  "boys|11-12|200 fly scy": { AAAA: "2:12.39", AAA: "2:18.69", AA: "2:24.99", A: "2:31.39", BB: "2:43.99", B: "2:56.59" },
-  "boys|11-12|100 im scy": { AAAA: "1:01.09", AAA: "1:03.99", AA: "1:06.99", A: "1:09.99", BB: "1:15.89", B: "1:21.89" },
-  "boys|11-12|200 im scy": { AAAA: "2:12.09", AAA: "2:18.79", AA: "2:25.59", A: "2:32.29", BB: "2:45.79", B: "2:59.29" },
-  "boys|11-12|400 im scy": { AAAA: "4:42.79", AAA: "4:56.29", AA: "5:09.79", A: "5:23.19", BB: "5:50.09", B: "6:17.09" },
-  "boys|11-12|50 free lcm": { AAAA: "28.09", AAA: "29.39", AA: "30.69", A: "32.09", BB: "34.79", B: "37.39" },
-  "boys|11-12|100 free lcm": { AAAA: "1:01.59", AAA: "1:04.49", AA: "1:07.49", A: "1:10.39", BB: "1:16.19", B: "1:22.09" },
-  "boys|11-12|200 free lcm": { AAAA: "2:14.39", AAA: "2:20.79", AA: "2:27.19", A: "2:33.59", BB: "2:46.39", B: "2:59.19" },
-  "boys|11-12|400 free lcm": { AAAA: "4:45.89", AAA: "4:59.49", AA: "5:13.09", A: "5:26.69", BB: "5:53.89", B: "6:21.09" },
-  "boys|11-12|800 free lcm": { AAAA: "10:00.09", AAA: "10:28.69", AA: "10:57.29", A: "11:25.89", BB: "12:22.99", B: "13:20.19" },
-  "boys|11-12|1500 free lcm": { AAAA: "19:23.89", AAA: "20:19.29", AA: "21:14.69", A: "22:10.19", BB: "24:00.99", B: "25:51.79" },
-  "boys|11-12|50 back lcm": { AAAA: "32.59", AAA: "34.29", AA: "35.99", A: "37.69", BB: "41.09", B: "44.49" },
-  "boys|11-12|100 back lcm": { AAAA: "1:10.39", AAA: "1:14.29", AA: "1:18.09", A: "1:21.89", BB: "1:29.59", B: "1:37.19" },
-  "boys|11-12|200 back lcm": { AAAA: "2:32.19", AAA: "2:39.49", AA: "2:46.69", A: "2:53.99", BB: "3:08.49", B: "3:22.99" },
-  "boys|11-12|50 breast lcm": { AAAA: "36.09", AAA: "38.09", AA: "39.99", A: "41.99", BB: "45.89", B: "49.79" },
-  "boys|11-12|100 breast lcm": { AAAA: "1:18.99", AAA: "1:23.09", AA: "1:27.19", A: "1:31.29", BB: "1:39.59", B: "1:47.79" },
-  "boys|11-12|200 breast lcm": { AAAA: "2:50.99", AAA: "2:59.09", AA: "3:07.19", A: "3:15.39", BB: "3:31.59", B: "3:47.89" },
-  "boys|11-12|50 fly lcm": { AAAA: "30.29", AAA: "31.99", AA: "33.59", A: "35.29", BB: "38.69", B: "41.99" },
-  "boys|11-12|100 fly lcm": { AAAA: "1:07.79", AAA: "1:11.69", AA: "1:15.59", A: "1:19.49", BB: "1:27.29", B: "1:35.09" },
-  "boys|11-12|200 fly lcm": { AAAA: "2:33.59", AAA: "2:40.89", AA: "2:48.29", A: "2:55.59", BB: "3:10.19", B: "3:24.79" },
-  "boys|11-12|200 im lcm": { AAAA: "2:30.59", AAA: "2:38.29", AA: "2:45.99", A: "2:53.69", BB: "3:08.99", B: "3:24.39" },
-  "boys|11-12|400 im lcm": { AAAA: "5:28.39", AAA: "5:44.09", AA: "5:59.69", A: "6:15.39", BB: "6:46.59", B: "7:17.89" }
-};
+const motivationalStandards = {};
+let verifiedStandardsData = null;
 const motivationalOrder = ["AAAA", "AAA", "AA", "A", "BB", "B"];
-const pnsMeetStandards = [
-  { label: "Northwest Regional", cut: "BB", rank: 2 },
-  { label: "PNS Champs", cut: "B", rank: 1 }
-];
 const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
 let bestTimesCourse = 'SCY';
 
@@ -1411,9 +1407,10 @@ function renderBestTimesPicker() {
 }
 
 function setBestTimesCourse(course) {
-  bestTimesCourse = course === 'LCM' ? 'LCM' : 'SCY';
+  bestTimesCourse = ['SCY','LCM','SCM'].includes(course) ? course : 'SCY';
   document.getElementById('best-course-scy')?.classList.toggle('active', bestTimesCourse === 'SCY');
   document.getElementById('best-course-lcm')?.classList.toggle('active', bestTimesCourse === 'LCM');
+  document.getElementById('best-course-scm')?.classList.toggle('active', bestTimesCourse === 'SCM');
   renderBestTimes();
 }
 
@@ -1430,7 +1427,7 @@ function renderBestTimes() {
     const pnsTier = classifyTime(t, sw);
     const nationalStandard = classifyNationalMotivationalTime(t, sw);
     const nextAchievement = nextAchievementDrop(t, sw);
-    return { ...t, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(pnsTier) };
+    return { ...t, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(t,sw) };
   }).sort(compareBestTimeRows);
   if (!rows.length) {
     section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no ${bestTimesCourse} best times saved.</p><p style="font-size:13px">Switch course or edit the swimmer profile and add one time per line.</p></div>`;
@@ -1442,17 +1439,15 @@ function renderBestTimes() {
       <div class="best-summary-card"><div class="label">Different events</div><div class="value">${rows.length}</div></div>
       <div class="best-summary-card"><div class="label">Top nat. standard</div><div class="value">${rows[0]?.nationalStandard || 'NT'}</div></div>
     </div>
-    <table class="times-table">
-      <thead><tr><th>Event</th><th>Best</th><th>Meet</th><th>PNS tier</th><th>Nat. standard</th><th>Drop to next</th><th>Qualifies to</th></tr></thead>
+    <table class="times-table best-table">
+      <thead><tr><th>Event</th><th>Best</th><th>National</th><th>Drop to targets</th><th>Time cuts met</th></tr></thead>
       <tbody>
         ${rows.map(row => `<tr>
-          <td>${row.event}</td>
+          <td>${escapeHtml(row.event)}<span class="event-meet">${escapeHtml(row.meet || '')}${row.date ? ' · '+escapeHtml(row.date) : ''}</span></td>
           <td><span class="time-val">${row.time}</span></td>
-          <td style="color:var(--muted);font-size:13px">${row.meet || '—'}${row.date ? ' · ' + row.date : ''}</td>
-          <td><span class="standard-pill ${row.pnsTier === 'Northwest Regional' ? 'top' : ''}">${row.pnsTier}</span></td>
           <td><span class="standard-pill ${['AA','AAA','AAAA'].includes(row.nationalStandard) ? 'top' : ''}">${row.nationalStandard}</span></td>
-          <td><span class="time-val">${row.nextDrop}</span></td>
-          <td><div class="qual-list">${row.qualifies.map(q => `<span class="qual-chip">${q}</span>`).join('')}</div></td>
+          <td><span class="time-val">${row.nextDrop}</span>${renderAllTargetDrops(row,sw)}</td>
+          <td><div class="qual-list">${row.qualifies.map(q => `<span class="qual-chip">${escapeHtml(q)}</span>`).join('') || '—'}</div></td>
         </tr>`).join('')}
       </tbody>
     </table>
@@ -1471,6 +1466,47 @@ const worldRecordEstimates = {
   '50 fly lcm': 22.27, '100 fly lcm': 49.45, '200 fly lcm': 1 * 60 + 50.34, '200 im lcm': 1 * 60 + 54.00, '400 im lcm': 4 * 60 + 2.50
 };
 
+function refreshOpenInsights(){for(const page of ['strengths','goals']) if(document.getElementById(page+'-page')?.style.display!=='none') renderInsights(page);}
+function renderInsights(page,setup=false) {
+  const controls=document.getElementById(page+'-controls'),out=document.getElementById(page+'-results');
+  if(setup||!controls.children.length){
+    const previous=document.getElementById(page+'-swimmer')?.value||document.getElementById('best-swimmer')?.value;
+    controls.innerHTML=`<div class="field"><label for="${page}-swimmer">Swimmer</label><select id="${page}-swimmer" onchange="renderInsights('${page}')">${appState.swimmers.map(sw=>`<option value="${escapeHtml(sw.id)}">${escapeHtml(sw.name)}</option>`).join('')}</select></div><div class="field"><label for="${page}-course">Course</label><select id="${page}-course" onchange="renderInsights('${page}')"><option>SCY</option><option>LCM</option><option>SCM</option></select></div>`;
+    if(appState.swimmers.some(sw=>sw.id===previous)) document.getElementById(page+'-swimmer').value=previous;
+  }
+  const sw=appState.swimmers.find(s=>s.id===document.getElementById(page+'-swimmer').value);
+  if(!sw){out.innerHTML='<p>No swimmers saved yet.</p>';return;}
+  if(!verifiedStandardsData){out.innerHTML='<p role="status">Waiting for official standards. Reload if they remain unavailable.</p>';return;}
+  const course=document.getElementById(page+'-course').value;
+  const rows=LaneLineInsights.strengths(sw,appState.swimmers,course,verifiedStandardsData);
+  if(!rows.length){out.innerHTML=`<p>No ${course} times saved for ${escapeHtml(sw.name)}.</p>`;return;}
+  if(page==='strengths'){
+    const top=rows.find(r=>r.ratio!==null);
+    out.innerHTML=`${top?`<div class="insight-banner"><strong>Signature event: ${escapeHtml(top.row.event)}</strong><br>${escapeHtml(top.level)} national motivational level</div>`:''}<p class="insight-meta">Saved swimmers only, same exact age and division. Not a USA national ranking or percentile. Events ordered by AAAA pace index.</p>`+rows.map((r,i)=>`<article class="insight-row" style="animation-delay:${Math.min(i,8)*30}ms"><div class="insight-heading"><h3>${escapeHtml(r.row.event)}</h3><span class="standard-pill">${escapeHtml(r.level)}</span></div><div class="insight-meta">Best ${escapeHtml(r.row.time)} · ${r.total>1?`Rank ${r.rank} of ${r.total} saved swimmers${r.tied?' (tied)':''}`:'No same-age peers with this event yet'}</div>${r.ratio!==null?`<div class="race-track"><span style="width:${Math.min(100,r.ratio*100)}%"></span></div><div class="insight-meta">${(r.ratio*100).toFixed(1)}% AAAA pace index · 100% = AAAA cut, not a percentile</div>`:''}</article>`).join('');
+    return;
+  }
+  const saved=readPersonalGoals();
+  out.innerHTML='<p class="insight-meta">Targets use your best times and published cuts. Pinned goals stay on this device; progress updates with new bests. Meet entry rules still apply.</p>'+rows.map((r,i)=>{
+    const row=r.row,key=sw.id+'|'+LaneLineStandards.eventKey(row.event),goal=saved[key];
+    const targets=LaneLineStandards.targets(verifiedStandardsData,row,sw).filter(t=>t.available&&!t.met&&!t.reference);
+    const progress=goal?LaneLineInsights.goalProgress(goal,row.time):null;
+    return `<article class="insight-row"><div class="insight-heading"><h3>${escapeHtml(row.event)}</h3><strong>${escapeHtml(row.time)}</strong></div>${goal?`<div class="insight-meta">Pinned: ${escapeHtml(goal.label)} · ${escapeHtml(goal.cut)} · Set ${escapeHtml(goal.created)}</div><div class="insight-heading"><span>${progress?.met?'<span class="goal-stamp">Goal reached</span>':progress?progress.drop.toFixed(2)+'s to go':'Target saved'}</span><span>${progress?Math.round(progress.progress)+'%':''}</span></div><div class="race-track"><span style="width:${progress?.progress||0}%"></span></div><div class="insight-meta">Starting best: ${escapeHtml(goal.baseline)}</div><button class="btn-ghost" onclick="removePersonalGoal(${i})">Remove goal</button>`:''}${targets.length?`<div class="goal-actions"><select id="goal-target-${i}" aria-label="Target for ${escapeHtml(row.event)}">${targets.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.label)} · ${escapeHtml(t.cut)} · drop ${t.dropSeconds.toFixed(2)}s</option>`).join('')}</select><button class="btn-secondary" onclick="pinPersonalGoal(${i})">${goal?'Replace goal':'Pin goal'}</button></div>`:'<p class="insight-meta">No further published targets for this event.</p>'}</article>`;
+  }).join('');
+}
+function readPersonalGoals(){try{const value=JSON.parse(localStorage.getItem('laneline-personal-goals')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch{return {};}}
+function personalGoalContext(index){
+  const sw=appState.swimmers.find(s=>s.id===document.getElementById('goals-swimmer').value);
+  const rows=LaneLineInsights.strengths(sw,appState.swimmers,document.getElementById('goals-course').value,verifiedStandardsData);
+  return {sw,row:rows[index]?.row};
+}
+function pinPersonalGoal(index){
+  const {sw,row}=personalGoalContext(index);if(!row)return;
+  const id=document.getElementById('goal-target-'+index).value;
+  const target=LaneLineStandards.targets(verifiedStandardsData,row,sw).find(t=>t.id===id&&t.available&&!t.met&&!t.reference);if(!target)return;
+  const goals=readPersonalGoals();goals[sw.id+'|'+LaneLineStandards.eventKey(row.event)]={label:target.label+' '+target.edition,cut:target.cut,baseline:row.time,created:new Date().toISOString().slice(0,10)};
+  try{localStorage.setItem('laneline-personal-goals',JSON.stringify(goals));renderInsights('goals');}catch{alert('This browser could not save your goal. Check available storage.');}
+}
+function removePersonalGoal(index){const {sw,row}=personalGoalContext(index);if(!row)return;const goals=readPersonalGoals();delete goals[sw.id+'|'+LaneLineStandards.eventKey(row.event)];try{localStorage.setItem('laneline-personal-goals',JSON.stringify(goals));renderInsights('goals');}catch{alert('This browser could not update your saved goals.');}}
 function renderGrowthPickers() {
   const swimmerSelect = document.getElementById('growth-swimmer');
   const courseSelect = document.getElementById('growth-course');
@@ -1913,85 +1949,96 @@ function escapeHtml(value) {
   return escapeSvgText(value);
 }
 
+async function loadVerifiedStandards() {
+  try {
+    const response = await fetch('time-standards.json', {cache:'no-store'});
+    if (!response.ok) throw new Error('Standards unavailable');
+    verifiedStandardsData = await response.json();
+    Object.assign(motivationalStandards, verifiedStandardsData.motivational);
+    const select = document.getElementById('standards-meet');
+    if (select) select.innerHTML = '<option value="motivational">National motivational 2024-2028</option>' +
+      verifiedStandardsData.meets.map(meet => `<option value="${meet.id}">${escapeHtml(meet.label)} · ${escapeHtml(meet.edition)}</option>`).join('');
+    renderStandardsPage();
+    for (const page of ['strengths','goals']) if(document.getElementById(page+'-page').style.display!=='none') renderInsights(page);
+    if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
+    if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
+  } catch (error) {
+    console.warn('Standards could not load:', error);
+    const section = document.getElementById('standards-results');
+    if (section) section.textContent = 'Official standards could not be loaded. Reload to retry.';
+  }
+}
+
 function renderStandardsPage() {
   const section = document.getElementById('standards-results');
   if (!section) return;
-  const division = document.getElementById('standards-division')?.value || 'boys';
-  const ageGroup = document.getElementById('standards-age')?.value || '11-12';
-  const rows = Object.entries(motivationalStandards)
-    .map(([key, cuts]) => {
-      const [group, age, eventKey] = key.split('|');
-      const course = eventKey.split(' ').at(-1).toUpperCase();
-      return { group, age, eventKey, course, event: formatStandardsEvent(eventKey), cuts };
-    })
-    .filter(row => row.group === division && row.age === ageGroup)
-    .sort(compareStandardRows);
-
-  if (!rows.length) {
-    section.innerHTML = '<div class="meet-empty">No standards are loaded for that selection yet.</div>';
+  if (!verifiedStandardsData) {
+    section.innerHTML = '<p role="status">Loading official standards...</p>';
     return;
   }
-
-  section.innerHTML = ['SCY','LCM'].map(course => {
-    const courseRows = rows.filter(row => row.course === course);
-    if (!courseRows.length) return '';
-    return `
-      <h3 class="standards-course-title">${course}</h3>
-      <table class="times-table standards-table">
-      <thead><tr><th>Event</th>${pnsMeetStandards.map(tier => `<th>${tier.label}</th>`).join('')}${nationalStandardsDisplayOrder.map(label => `<th>Nat. ${label}</th>`).join('')}</tr></thead>
-        <tbody>
-          ${courseRows.map(row => `
-            <tr>
-              <td>${row.event}</td>
-              ${pnsMeetStandards.map(tier => `<td><span class="time-val">${row.cuts[tier.cut] || '—'}</span></td>`).join('')}
-              ${nationalStandardsDisplayOrder.map(label => `<td><span class="time-val">${row.cuts[label] || '—'}</span></td>`).join('')}
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
-  }).join('') + '<p class="source-note">LaneLine currently maps Northwest Regional to the loaded BB cut and PNS Champs to the loaded B cut, with national motivational cuts BB through AAAA shown alongside them.</p>';
+  const division = document.getElementById('standards-division')?.value || 'boys';
+  const age = document.getElementById('standards-age')?.value || '12';
+  const selected = document.getElementById('standards-meet')?.value || 'motivational';
+  const course = document.getElementById('standards-course')?.value || 'SCY';
+  const swimmer = {division,ageGroup:age};
+  const meet = verifiedStandardsData.meets.find(item => item.id === selected);
+  const source = meet || verifiedStandardsData.motivationalSource;
+  const keys = Object.keys(meet ? meet.cuts : motivationalStandards);
+  const events = [...new Set(keys.map(key => key.split('|')[2]).filter(event => event.endsWith(' '+course.toLowerCase())))];
+  const rows = events.map(event => ({
+    event, cuts:meet ? {cut:LaneLineStandards.meetCut(meet,event,swimmer)} : motivationalCutsFor({event},swimmer)
+  })).filter(row => meet ? row.cuts.cut : row.cuts).sort((a,b) => {
+    const x=parseStandardsEvent(a.event),y=parseStandardsEvent(b.event);
+    return x.stroke.localeCompare(y.stroke)||x.distance-y.distance;
+  });
+  const columns = meet ? ['Cut'] : nationalStandardsDisplayOrder.map(label => 'Nat. '+label);
+  section.innerHTML = `<h3 class="standards-course-title">${escapeHtml(meet?.label || 'National Motivational')} · ${escapeHtml(source.edition)} · ${course}</h3>
+    ${meet?.reference ? '<p class="standards-warning">Prior-edition reference only. Upcoming regional standards are not published on the PNS standards page.</p>' : ''}
+    <table class="times-table standards-table"><thead><tr><th>Event</th>${columns.map(label=>`<th>${label}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(row=>`<tr><td>${formatStandardsEvent(row.event)}</td>${(meet ? [row.cuts.cut] : nationalStandardsDisplayOrder.map(label=>row.cuts[label])).map(value=>`<td><span class="time-val">${value || 'Not offered'}</span></td>`).join('')}</tr>`).join('')}</tbody></table>
+    ${!rows.length ? '<p>No published direct cuts for this selection.</p>' : ''}
+    ${meet?.note ? `<p class="source-note">${escapeHtml(meet.note)}</p>` : ''}
+    <p class="source-note">Time comparisons only; meet age, qualifying-period, membership, and entry rules still apply.
+      <a href="${escapeHtml(source.sourceUrl)}" target="_blank" rel="noopener noreferrer">Official standards · ${escapeHtml(source.edition)}</a></p>`;
 }
 
 function classifyTime(timeRow, sw) {
-  const seconds = parseRaceTime(timeRow.time);
-  const cuts = motivationalCutsFor(timeRow, sw);
-  if (!Number.isFinite(seconds)) return 'NT';
-  if (!cuts) return 'N/A';
-  const tier = pnsMeetStandards.find(item => seconds <= parseRaceTime(cuts[item.cut]));
-  return tier ? tier.label : '—';
+  if (!verifiedStandardsData) return 'N/A';
+  const met = LaneLineStandards.targets(verifiedStandardsData,timeRow,sw)
+    .filter(target=>target.kind==='meet'&&target.met&&!target.reference);
+  return met.at(-1)?.label || '—';
 }
 
 function classifyNationalMotivationalTime(timeRow, sw) {
-  const seconds = parseRaceTime(timeRow.time);
+  const seconds = LaneLineStandards.centiseconds(timeRow.time) / 100;
   const cuts = motivationalCutsFor(timeRow, sw);
   if (!Number.isFinite(seconds)) return 'NT';
   if (!cuts) return 'N/A';
-  const standard = motivationalOrder.find(label => seconds <= parseRaceTime(cuts[label]));
-  return standard || '—';
+  return motivationalOrder.find(label => seconds <= parseRaceTime(cuts[label])) || '—';
 }
 
 function achievementTargetsFor(timeRow, sw) {
-  const cuts = motivationalCutsFor(timeRow, sw);
-  if (!cuts) return [];
-  const targets = [
-    ...pnsMeetStandards.map(tier => ({ label: tier.label, seconds: parseRaceTime(cuts[tier.cut]) })),
-    ...nationalStandardsDisplayOrder.map(label => ({ label: `Nat. ${label}`, seconds: parseRaceTime(cuts[label]) }))
-  ].filter(target => Number.isFinite(target.seconds));
-  return targets
-    .filter((target, index, all) => all.findIndex(other => Math.abs(other.seconds - target.seconds) < 0.001) === index)
-    .sort((a, b) => b.seconds - a.seconds);
+  return verifiedStandardsData ? LaneLineStandards.targets(verifiedStandardsData,timeRow,sw).filter(target=>target.available) : [];
 }
 
 function nextAchievementDrop(timeRow, sw) {
-  const seconds = parseRaceTime(timeRow.time);
-  if (!Number.isFinite(seconds)) return { label: 'N/A', dropSeconds: Infinity };
-  const targets = achievementTargetsFor(timeRow, sw);
-  if (!targets.length) return { label: 'N/A', dropSeconds: Infinity };
-  const target = targets.find(item => seconds > item.seconds + 0.001);
-  if (!target) return { label: 'Top achievement', dropSeconds: seconds - targets[targets.length - 1].seconds };
-  const drop = Math.max(0, seconds - target.seconds);
-  return { label: `${formatDrop(drop)} to ${target.label}`, dropSeconds: drop };
+  if (!verifiedStandardsData) return {label:'Standards loading',dropSeconds:Infinity};
+  const targets = achievementTargetsFor(timeRow,sw);
+  if (!targets.length) return {label:'No published target',dropSeconds:Infinity};
+  const target = targets.find(item=>!item.met);
+  return target ? {label:`${formatDrop(target.dropSeconds)} to ${target.label}${target.reference ? ' (reference)' : ''}`,dropSeconds:target.dropSeconds}
+    : {label:'All loaded cuts met',dropSeconds:0};
+}
+
+function renderAllTargetDrops(timeRow, sw) {
+  if (!verifiedStandardsData) return '';
+  const targets = LaneLineStandards.targets(verifiedStandardsData,timeRow,sw);
+  return `<details class="all-targets" ${document.getElementById('show-all-targets')?.checked ? 'open' : ''}><summary>All targets</summary>
+    <table class="target-table" aria-label="All targets for ${escapeHtml(timeRow.event)}">
+      <thead><tr><th>Target</th><th>Cut</th><th>Drop</th></tr></thead>
+      <tbody>${targets.map(target=>`<tr><td>${escapeHtml(target.label)}<small>${escapeHtml(target.edition)}${target.reference ? ' · Reference' : ''}</small></td>
+        <td>${target.cut || '—'}</td><td class="${target.met ? 'cut-met' : ''}">${!target.available ? 'No cut' : target.met ? (target.reference ? 'Ref. met' : 'Met') : formatDrop(target.dropSeconds)}</td></tr>`).join('')}</tbody>
+    </table></details>`;
 }
 
 function compareBestTimeRows(a, b) {
@@ -2029,16 +2076,12 @@ function formatStandardsEvent(eventKey) {
 }
 
 function motivationalCutsFor(timeRow, sw) {
-  const group = sw.division === 'boys' ? 'boys' : 'girls';
-  const ageGroup = motivationalAgeGroup(sw.ageGroup);
-  const key = normalizeEventKey(timeRow.event);
-  return motivationalStandards[`${group}|${ageGroup}|${key}`];
+  return verifiedStandardsData ? LaneLineStandards.motivationalCuts(verifiedStandardsData,timeRow.event,sw) : null;
 }
 
-function qualifyingMeets(standard) {
-  if (!standard || standard === 'NT' || standard === 'N/A' || standard === '—') return ['Time trial'];
-  const rank = standardRank(standard);
-  return pnsMeetStandards.filter(tier => rank >= tier.rank).map(tier => tier.label);
+function qualifyingMeets(timeRow, sw) {
+  return achievementTargetsFor(timeRow,sw).filter(target=>target.kind==='meet'&&target.met&&!target.reference)
+    .map(target=>target.label+' '+target.edition);
 }
 
 function standardRank(label) {

@@ -16,6 +16,9 @@ const usaSwimmingEvents = [
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
 const publicFiles = {
+  "/insights-engine.js": { path: path.join(__dirname, "insights-engine.js"), type: "text/javascript; charset=utf-8" },
+  "/time-standards.json": { path: path.join(__dirname, "time-standards.json"), type: "application/json; charset=utf-8" },
+  "/standards-engine.js": { path: path.join(__dirname, "standards-engine.js"), type: "text/javascript; charset=utf-8" },
   "/swimmer-roster.json": { path: path.join(__dirname, "swimmer-roster.json"), type: "application/json; charset=utf-8" },
   "/": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
   "/index.html": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
