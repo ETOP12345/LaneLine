@@ -18,4 +18,6 @@ When unattended API access is denied, verified visible Data Hub rows can be impo
 
 ## Tests
 
+Verified team additions are stored in `swimmer-roster.json`, keyed by USA Swimming ID, and loaded before the shared history cache. Existing swimmers are kept even when they age out or move teams. Name-only matching is not used to combine two USA Swimming profiles. The file records discovery coverage rather than claiming a complete club membership roster. Shared history rows are fetched from the dataset rather than duplicated into local storage; locally added history is retained.
+
 Run `npm test`. Tests cover empty/invalid results, failure preservation, cross-course history, deduplication, successful publishing, swimmer matching, and best-time updates from history. A fully unattended refresh is not considered verified until an authenticated job has retrieved current swims and deployed them.

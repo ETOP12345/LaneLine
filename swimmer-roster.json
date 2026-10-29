@@ -1,0 +1,244 @@
+{
+  "source": "USA Swimming Data Hub",
+  "coverage": "Verified current ages 11-12, BCST/WAVE/PDST; discovered from 2026-2027 individual SCY results. Not a certified membership roster.",
+  "complete": false,
+  "importStatus": "rate-limited",
+  "pendingCandidates": 128,
+  "swimmers": [
+    {
+      "id": "usas_413D1D399AE444",
+      "name": "Alessandra Watrous",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "413D1D399AE444",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_1A694E4DBFEA5B",
+      "name": "Ashley Gao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "1A694E4DBFEA5B",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_C8F738E36CF04A",
+      "name": "Ava McNair",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "C8F738E36CF04A",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_2E856638974B43",
+      "name": "Carly Johnson",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "2E856638974B43",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_785C210D7BB64E",
+      "name": "Caroline Cao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "785C210D7BB64E",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_AABE53976B9242",
+      "name": "Elissa Xia",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "AABE53976B9242",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_5DE42DD031024B",
+      "name": "Jacqueline Wu",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "5DE42DD031024B",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_7B37B279CA2D47",
+      "name": "Joy Huang",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "7B37B279CA2D47",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_2741ED402CFB42",
+      "name": "Mia Deng",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "2741ED402CFB42",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_800953DB0A0C44",
+      "name": "Penelope Nguyen",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "800953DB0A0C44",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_7778DC49F58340",
+      "name": "Vivian Miao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "7778DC49F58340",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_5D51C879381F47",
+      "name": "Yushi Chong",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "5D51C879381F47",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_90E0F862112C40",
+      "name": "Zara Suri",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "90E0F862112C40",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_6236092E58254D",
+      "name": "Megan Zhou",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Pacific Dragons Swim Team",
+      "usaSwimmingMemberId": "6236092E58254D",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_8EE6BF587B3D49",
+      "name": "Yuhan Huang",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Pacific Dragons Swim Team",
+      "usaSwimmingMemberId": "8EE6BF587B3D49",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_E0ADACF9E7C842",
+      "name": "Adele Bokach",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "E0ADACF9E7C842",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_0EEE07E508FD46",
+      "name": "beatrix pressman",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "0EEE07E508FD46",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_902003076CE742",
+      "name": "Blakely Hansen",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "902003076CE742",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_C44F095812E04C",
+      "name": "Clara Stevenson",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "C44F095812E04C",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_E096782D93DD42",
+      "name": "Elaina Jiang",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "E096782D93DD42",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_50B74871BCBF63",
+      "name": "Finley Wiegand",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "50B74871BCBF63",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_F16B5756721B4C",
+      "name": "Jennifer Ji",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "F16B5756721B4C",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_E342A681F17C40",
+      "name": "Lingyi Li",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "E342A681F17C40",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_17A348CC298A4E",
+      "name": "Maja Wang",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "17A348CC298A4E",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_A0961C31BB724D",
+      "name": "Natalie Whitbeck",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "A0961C31BB724D",
+      "bestTimes": []
+    },
+    {
+      "id": "usas_C553CD820E064C",
+      "name": "Vivian Hu",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "usaSwimmingMemberId": "C553CD820E064C",
+      "bestTimes": []
+    }
+  ],
+  "verifiedAt": "2026-10-29T03:26:48.105Z"
+}

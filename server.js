@@ -16,6 +16,7 @@ const usaSwimmingEvents = [
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
 const publicFiles = {
+  "/swimmer-roster.json": { path: path.join(__dirname, "swimmer-roster.json"), type: "application/json; charset=utf-8" },
   "/": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
   "/index.html": { path: path.join(__dirname, "index.html"), type: "text/html; charset=utf-8" },
   "/datahub-history.json": { path: path.join(__dirname, "datahub-history.json"), type: "application/json; charset=utf-8" },
