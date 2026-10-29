@@ -500,9 +500,14 @@ footer span{color:var(--lane)}
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
     <div>
       <h2 style="font-size:20px;font-weight:500">Swimmers</h2>
-      <p style="font-size:13px;color:var(--muted);margin-top:2px">Profiles keep each swimmer's key details handy.</p>
+      <p id="profiles-count" style="font-size:13px;color:var(--muted);margin-top:2px"></p>
+      <p id="roster-import-status" role="status" style="font-size:12px;color:var(--muted);margin-top:4px"></p>
     </div>
     <button class="btn-secondary" onclick="openAddSwimmerModal()">+ Add swimmer</button>
+  </div>
+  <div class="best-tools">
+    <div class="field"><label for="profiles-search">Name</label><input type="search" id="profiles-search" oninput="renderProfilesPage()"/></div>
+    <div class="field"><label for="profiles-team">Team</label><select id="profiles-team" onchange="renderProfilesPage()"><option value="">All teams</option><option>Bellevue Club Swim Team</option><option>Wave Aquatics</option><option>Pacific Dragons Swim Team</option><option>Olympic Cascade Aquatics</option></select></div>
   </div>
   <div class="profiles-grid" id="profiles-grid"></div>
 </div>
@@ -630,7 +635,16 @@ function loadState() {
   } catch(e) {}
 }
 function saveState() {
-  try { localStorage.setItem('laneline_state', JSON.stringify(appState)); } catch(e) {}
+  try { localStorage.setItem('laneline_state', JSON.stringify({...appState,swimmers:persistedSwimmers()})); } catch(e) {}
+}
+
+const sharedHistoryKeys = new Map();
+function persistedSwimmers() {
+  return appState.swimmers.map(sw => {
+    const keys = sharedHistoryKeys.get(sw.usaSwimmingMemberId);
+    if (!keys) return sw;
+    return {...sw,timeHistory:(sw.timeHistory || []).filter(row => !keys.has(timeHistoryKey(row)))};
+  });
 }
 
 const ethanWangUsaSwimmingProfile = {
@@ -841,14 +855,14 @@ const seededUsaSwimmingProfiles = [
 function seedUsaSwimmingProfiles() {
   seededUsaSwimmingProfiles.forEach(profile => seedUsaSwimmingProfile(profile));
   saveState();
-  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
 }
 
 function seedUsaSwimmingProfile(profile) {
   const existingIndex = appState.swimmers.findIndex(sw =>
     sw.usaSwimmingMemberId === profile.usaSwimmingMemberId ||
-    (sw.name || '').toLowerCase() === profile.name.toLowerCase() ||
-    profile.name.toLowerCase().split(' ').every(part => (sw.name || '').toLowerCase().includes(part)) && (sw.team || '').toLowerCase().includes('pacific dragons')
+    (!sw.usaSwimmingMemberId && (sw.name || '').toLowerCase() === profile.name.toLowerCase() &&
+      (sw.team || '').toLowerCase() === profile.team.toLowerCase())
   );
   if (existingIndex >= 0) {
     const existing = appState.swimmers[existingIndex];
@@ -872,6 +886,14 @@ async function refreshSeededSwimmersFromUsaSwimming() {
 
 async function refreshSeededSwimmersFromDataHubCache() {
   try {
+    const rosterResponse = await fetch('swimmer-roster.json', { cache: 'no-store' });
+    if (rosterResponse.ok) {
+      const roster = await rosterResponse.json();
+      (roster.swimmers || []).forEach(profile => seedUsaSwimmingProfile(profile));
+      const rosterLabel = document.getElementById('roster-import-status');
+      if (rosterLabel) rosterLabel.textContent = roster.importStatus === 'rate-limited'
+        ? `Team import paused: ${roster.swimmers.length} verified additions; ${roster.pendingCandidates} candidates still to check.` : '';
+    }
     const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
     if (statusResponse.ok) {
       const status = await statusResponse.json();
@@ -889,13 +911,14 @@ async function refreshSeededSwimmersFromDataHubCache() {
     appState.swimmers.forEach(sw => {
       const rows = histories?.[sw.usaSwimmingMemberId];
       if (!Array.isArray(rows) || !rows.length) return;
+      sharedHistoryKeys.set(sw.usaSwimmingMemberId, new Set(rows.map(timeHistoryKey)));
       sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], rows);
       sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], rows);
       changed = true;
     });
     if (!changed) return;
     saveState();
-    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
     renderProfilesPage();
     renderBestTimesPicker();
     renderGrowthPickers();
@@ -956,7 +979,7 @@ async function refreshSwimmerBestTimes(profile) {
     sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], [...historyRows, ...incomingRows]);
     appState.swimmers = appState.swimmers.map(s => s.id === sw.id ? sw : s);
     saveState();
-    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
     renderProfilesPage();
     const selectedBeforeRefresh = document.getElementById('best-swimmer')?.value;
     renderBestTimesPicker();
@@ -1140,7 +1163,7 @@ function createAccount() {
 function signOut() {
   // Save swimmers to this account before signing out
   if (appState.user) {
-    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
   }
   appState.user = null;
   appState.swimmers = [];
@@ -1220,7 +1243,7 @@ function saveSwimmer() {
   }
   // Persist to account if signed in
   if (appState.user) {
-    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+    localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
   }
   saveState();
   renderProfilesPage();
@@ -1235,7 +1258,7 @@ function deleteSwimmer(id) {
   if (!confirm('Remove this swimmer profile?')) return;
   appState.swimmers = appState.swimmers.filter(s => s.id !== id);
   if (appState.selectedSwimmerId === id) appState.selectedSwimmerId = null;
-  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(appState.swimmers));
+  if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
   saveState();
   renderProfilesPage();
   renderBestTimesPicker();
@@ -1245,13 +1268,18 @@ function deleteSwimmer(id) {
 
 function renderProfilesPage() {
   const grid = document.getElementById('profiles-grid');
+  const search = (document.getElementById('profiles-search')?.value || '').trim().toLowerCase();
+  const team = document.getElementById('profiles-team')?.value || '';
+  const swimmers = appState.swimmers.filter(sw => (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
+  const count = document.getElementById('profiles-count');
+  if (count) count.textContent = `${swimmers.length} of ${appState.swimmers.length} swimmers`;
   let html = '';
-  appState.swimmers.forEach(sw => {
+  swimmers.forEach(sw => {
     const initials = sw.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
     html += `<div class="profile-card">
       <div class="profile-avatar">${initials}</div>
-      <div class="profile-name">${sw.name}</div>
-      <div class="profile-meta">${[sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet'}</div>
+      <div class="profile-name">${escapeHtml(sw.name)}</div>
+      <div class="profile-meta">${escapeHtml([sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet')}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
       <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
