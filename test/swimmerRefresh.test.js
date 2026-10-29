@@ -46,7 +46,7 @@ test('best times includes history results and does not match undefined IDs', asy
   const context = {appState:{swimmers:[a,b]},document,console,
     fetch:async url=>({ok:true,json:async()=>url.includes('time-history')?{timeHistory:[row]}:{bestTimes:[]}}),
     mergeTimeHistoryRows:(a,b)=>a.concat(b),mergeBestTimeRows:(a,b)=>a.concat(b),
-    saveState(){},renderProfilesPage(){},renderBestTimesPicker(){},renderGrowthPickers(){},renderBestTimes(){},renderGrowthPage(){}};
+    saveState(){},refreshOpenInsights(){},renderProfilesPage(){},renderBestTimesPicker(){},renderGrowthPickers(){},renderBestTimes(){},renderGrowthPage(){}};
   vm.createContext(context);
   vm.runInContext(body,context);
   await context.refreshSwimmerBestTimes({usaSwimmingMemberId:'second'});
