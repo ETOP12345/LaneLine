@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-29T03:27:56.737Z",
-  "status": "rate-limited",
+  "checkedAt": "2026-10-29T05:18:57.702Z",
+  "status": "in-progress",
   "source": "USA Swimming Data Hub",
   "season": "2026-2027",
   "coverage": "Individual SCY rankings, PN, ages at swim 11-12. Each profile requires current identity verification.",
@@ -39,93 +39,21 @@
     "413D1D399AE444",
     "0EEE07E508FD46",
     "8EE6BF587B3D49",
-    "A0961C31BB724D"
+    "A0961C31BB724D",
+    "8BCF57B9FCA84B",
+    "DBA37CB378A743",
+    "13210C6AF15D46",
+    "E95BDCC8C7A843",
+    "ABDB9662439A4E",
+    "6089DB78A0CD46",
+    "0924D59636AB43",
+    "6B9BF02309174C",
+    "71336307E26842",
+    "66C543F09B1F11",
+    "A19C02013AB74A",
+    "52739F48E4CE48"
   ],
   "pending": [
-    {
-      "name": "Keona Wang",
-      "team": "Pacific Dragons Swim Team",
-      "division": "girls",
-      "ageAtSwim": "12",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Sheela Gupta",
-      "team": "Bellevue Club Swim Team",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Gracie Switaj",
-      "team": "Bellevue Club Swim Team",
-      "division": "girls",
-      "ageAtSwim": "12",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Ramona Coco Seavey",
-      "team": "Pacific Dragons Swim Team",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Jacquelyn Zhang",
-      "team": "Pacific Dragons Swim Team",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Alexis Liao",
-      "team": "Pacific Dragons Swim Team",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Katelyn Chen",
-      "team": "Wave Aquatics",
-      "division": "girls",
-      "ageAtSwim": "12",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=1&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Akira Andhare",
-      "team": "Wave Aquatics",
-      "division": "girls",
-      "ageAtSwim": "12",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=13&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Eleanor McMichael",
-      "team": "Bellevue Club Swim Team",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=13&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Hayley Chou",
-      "team": "Wave Aquatics",
-      "division": "girls",
-      "ageAtSwim": "12",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=13&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Maya Razdan",
-      "team": "Wave Aquatics",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=13&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
-    {
-      "name": "Johanna Burg",
-      "team": "Wave Aquatics",
-      "division": "girls",
-      "ageAtSwim": "11",
-      "sourceUrl": "https://data.usaswimming.org/leaderboards/top-times?eventId=13&course=SCY&competitionGenderTypeId=2&seasonKey=1156&minAge=11&maxAge=12&lscCode=PN"
-    },
     {
       "name": "Avani Yadav",
       "team": "Wave Aquatics",

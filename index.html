@@ -6,7 +6,7 @@
 <title>LaneLine — Swim Coaching</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -233,6 +233,10 @@ nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.nav-log
 .page-tabs{grid-template-columns:repeat(8,minmax(0,1fr))}
 @media(max-width:1000px){.page-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.page-tab{padding:10px 5px}}
 @media(max-width:560px){.hero{padding:3rem 1rem}.hero h1{font-size:32px}.page-tabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 6px}.page-tab{font-size:11px;min-height:40px;padding:8px 3px}.page-tab svg{width:13px;height:13px}}
+.comparison-summary{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.comparison-summary span{padding:4px 9px;border-radius:4px;font-size:12px;background:#edf4fc;color:#365a79}.comparison-summary span:first-child{background:#e8efff;color:#245fbd}
+.comparison-chart{display:block;width:100%;height:auto;max-height:380px}.comparison-chart .peer-bar{transition:filter .2s,opacity .2s}.comparison-chart g:focus{outline:none}.comparison-chart g:focus .peer-bar,.comparison-chart g:hover .peer-bar{filter:brightness(.86)}
+.comparison-legend{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0;font-size:12px;color:var(--muted)}.comparison-legend span{display:flex;align-items:center;gap:6px}.comparison-legend i{width:10px;height:10px;border-radius:3px}
+.comparison-all{margin-top:16px;font-size:13px}.comparison-all summary{cursor:pointer;color:var(--pool);padding:8px 0}.comparison-all table{table-layout:fixed}.comparison-all th:first-child{width:40%}.comparison-all td{overflow-wrap:anywhere}.comparison-you{background:#edf4ff!important;font-weight:600}
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
 .error-box p{font-size:13px;color:var(--red)}
@@ -301,6 +305,7 @@ footer{background:var(--navy);padding:2rem;text-align:center}
 footer p{font-size:12px;color:rgba(255,255,255,.35)}
 footer span{color:var(--lane)}
 </style>
+<link rel="stylesheet" href="performance.css">
 </head>
 <body>
 
@@ -504,7 +509,8 @@ footer span{color:var(--lane)}
   <div class="card">
     <div class="card-section">
       <div class="section-label">Growth</div>
-      <div class="meet-disclaimer"><p>Growth graphs use saved time history. SCY and LCM are split, and every event is plotted by swim number so first swims line up together.</p></div>
+      <img class="growth-photo" src="ui-media/pool.jpg" alt="Butterfly swimmer training in a competition pool"/>
+      <div id="growth-athlete-heading"></div>
       <div class="growth-toolbar">
         <div class="field">
           <label for="growth-swimmer">Swimmer</label>
@@ -523,15 +529,20 @@ footer span{color:var(--lane)}
         </div>
       </div>
     </div>
-    <div class="card-section">
+    <div class="card-section growth-overview">
       <div class="section-label">All events</div>
+      <div class="chart-controls"><label for="growth-scale">Growth scale</label><select id="growth-scale" onchange="renderGrowthPage()"><option value="percent">Percentage improved</option><option value="seconds">Seconds dropped</option></select><button type="button" class="btn-ghost" onclick="clearGrowthSelection()">Show all events</button></div>
       <div id="growth-main-chart"></div>
     </div>
-    <div class="card-section">
+    <div class="card-section growth-detail">
       <div class="section-label">Selected event</div>
       <div id="growth-event-chart"></div>
     </div>
-    <div class="card-section">
+    <div class="card-section growth-race">
+      <div class="section-label">Race ladder</div>
+      <div id="growth-comparison" aria-live="polite"></div>
+    </div>
+    <div class="card-section growth-advice">
       <div class="section-label">Suggestions</div>
       <div id="growth-suggestions"></div>
     </div>
@@ -703,7 +714,16 @@ footer span{color:var(--lane)}
 
 <script src="standards-engine.js"></script>
 <script src="insights-engine.js"></script>
+<script src="upcoming-meets.js"></script>
+<script src="swimmer-ui.js"></script>
+<script src="motion.js"></script>
 <script>
+const motivationalStandards = {};
+let verifiedStandardsData = null;
+let standardsLoadError = '';
+const motivationalOrder = ["AAAA", "AAA", "AA", "A", "BB", "B"];
+const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
+let bestTimesCourse = 'SCY';
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
@@ -935,6 +955,15 @@ const seededUsaSwimmingProfiles = [
   danSunUsaSwimmingProfile
 ];
 
+function orderedSwimmers(){
+  return LaneLineSwimmerUI.ordered(appState.swimmers,seededUsaSwimmingProfiles);
+}
+
+function swimmerPortrait(sw,className){
+  const photo=LaneLineSwimmerUI.photoUrl(sw.photoUrl);
+  return `<span class="swimmer-portrait ${className}" role="img" aria-label="${escapeHtml(sw.name)}${photo?' photo':' — photo unavailable'}"><svg class="portrait-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-2a8 8 0 0 1 16 0v2"/></svg>${photo?`<img src="${escapeHtml(photo)}" alt="${escapeHtml(sw.name)}" loading="lazy" decoding="async" onerror="this.remove()">`:''}</span>`;
+}
+
 function seedUsaSwimmingProfiles() {
   seededUsaSwimmingProfiles.forEach(profile => seedUsaSwimmingProfile(profile));
   saveState();
@@ -964,7 +993,10 @@ function seedUsaSwimmingProfile(profile) {
 }
 
 async function refreshSeededSwimmersFromUsaSwimming() {
-  await Promise.all(seededUsaSwimmingProfiles.map(profile => refreshSwimmerBestTimes(profile)));
+  for(const [index,profile] of seededUsaSwimmingProfiles.entries()){
+    if(index)await new Promise(resolve=>setTimeout(resolve,15000));
+    if(await refreshSwimmerBestTimes(profile)==='blocked')break;
+  }
 }
 
 async function refreshSeededSwimmersFromDataHubCache() {
@@ -975,8 +1007,18 @@ async function refreshSeededSwimmersFromDataHubCache() {
       (roster.swimmers || []).forEach(profile => seedUsaSwimmingProfile(profile));
       const rosterLabel = document.getElementById('roster-import-status');
       if (rosterLabel) rosterLabel.textContent = roster.importStatus === 'rate-limited'
-        ? `Team import paused: ${roster.swimmers.length} verified additions; ${roster.pendingCandidates} candidates still to check.` : '';
+        ? `Roster import paused: ${roster.swimmers.length} verified additions; ${roster.pendingCandidates} candidates still to check. Discovery is not yet complete.` : '';
     }
+    try {
+      const photosResponse=await fetch('swimmer-photos.json',{cache:'no-store'});
+      if(photosResponse.ok){
+        const photos=await photosResponse.json();
+        appState.swimmers.forEach(sw=>{
+          const photo=LaneLineSwimmerUI.photoUrl(photos[sw.usaSwimmingMemberId]);
+          if(photo)sw.photoUrl=photo;
+        });
+      }
+    } catch(error){console.warn('Swimmer photos unavailable:',error);}
     const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
     if (statusResponse.ok) {
       const status = await statusResponse.json();
@@ -1031,12 +1073,13 @@ async function refreshSwimmerBestTimes(profile) {
   try {
     if (sw.usaSwimmingMemberId) {
       const historyResponse = await fetch(`/api/usa-swimming/time-history?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      if([401,403,429,503].includes(historyResponse.status))return 'blocked';
       if (historyResponse.ok) {
         const historyData = await historyResponse.json();
         if (Array.isArray(historyData.timeHistory)) historyRows.push(...historyData.timeHistory);
       }
-      const response = await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
-      if (response.ok) {
+      const response = historyRows.length ? null : await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      if (response?.ok) {
         const data = await response.json();
         if (Array.isArray(data.bestTimes)) incomingRows.push(...data.bestTimes);
       }
@@ -1136,6 +1179,8 @@ window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 window.addEventListener('DOMContentLoaded',()=>showPage('best'));
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
+  const tabOrder=['best','growth','strengths','goals','analysis','standards','zone','profiles'];
+  const previous=tabOrder.find(p=>document.getElementById('ptab-'+p)?.classList.contains('active'));
   ['best','growth','standards','zone','profiles','analysis','strengths','goals'].forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
     document.getElementById('ptab-'+p).classList.toggle('active', p === page);
@@ -1153,18 +1198,15 @@ function showPage(page) {
   if (page === 'analysis') loadVideoAnalysisConfig();
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
-  if (['best','growth','standards'].includes(page)) animatePerformanceView(document.getElementById(page+'-page'));
+  LaneLineMotion.updateTab();
+  if(previous!==page)LaneLineMotion.enter(document.getElementById(page+'-page'),tabOrder.indexOf(page)>=tabOrder.indexOf(previous)?1:-1);
+  animatePerformanceView(document.getElementById(page+'-page'));
 }
 
 function animatePerformanceView(root){
   if(!root)return;
   for(const badge of root.querySelectorAll('.standard-pill'))badge.dataset.level=badge.textContent.trim();
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  const items=[...root.querySelectorAll('.best-summary-card,.times-table:not(.target-table)>tbody>tr')].slice(0,12);
-  for(const [index,item] of items.entries()){
-    item.getAnimations().forEach(animation=>animation.cancel());
-    item.animate([{opacity:.35,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:240,delay:index*12,easing:'ease-out'});
-  }
+  LaneLineMotion.reveal(root);
 }
 
 let zoneDashboardResizeObserver = null;
@@ -1336,6 +1378,7 @@ function saveSwimmer() {
   };
   const existing = editingSwimmerId ? appState.swimmers.find(s => s.id === editingSwimmerId) : null;
   if (existing?.usaSwimmingMemberId) sw.usaSwimmingMemberId = existing.usaSwimmingMemberId;
+  if (existing?.photoUrl) sw.photoUrl = existing.photoUrl;
   if (editingSwimmerId) {
     appState.swimmers = appState.swimmers.map(s => s.id === editingSwimmerId ? sw : s);
   } else {
@@ -1370,15 +1413,15 @@ function renderProfilesPage() {
   const grid = document.getElementById('profiles-grid');
   const search = (document.getElementById('profiles-search')?.value || '').trim().toLowerCase();
   const team = document.getElementById('profiles-team')?.value || '';
-  const swimmers = appState.swimmers.filter(sw => (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
+  const swimmers = orderedSwimmers().filter(sw => (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
   const count = document.getElementById('profiles-count');
   if (count) count.textContent = `${swimmers.length} of ${appState.swimmers.length} swimmers`;
   let html = '';
   swimmers.forEach(sw => {
-    const initials = sw.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
     html += `<div class="profile-card">
-      <div class="profile-avatar">${initials}</div>
+      ${swimmerPortrait(sw,'profile-avatar')}
       <div class="profile-name">${escapeHtml(sw.name)}</div>
+      ${sw.usaSwimmingMemberId?`<a class="usa-profile-link" href="https://data.usaswimming.org/search/athlete/${encodeURIComponent(sw.usaSwimmingMemberId)}/best-times" target="_blank" rel="noopener"><img src="https://prodswimsimages.usaswimming.org/swimShield.svg" alt="USA Swimming"/>Swimmer profile</a>`:''}
       <div class="profile-meta">${escapeHtml([sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet')}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
@@ -1393,6 +1436,7 @@ function renderProfilesPage() {
     Add swimmer
   </div>`;
   grid.innerHTML = html;
+  LaneLineMotion.reveal(grid);
 }
 
 function renderModalProfiles() {
@@ -1401,11 +1445,9 @@ function renderModalProfiles() {
     container.innerHTML = '<p style="font-size:13px;color:var(--muted)">No swimmers added yet.</p>';
     return;
   }
-  container.innerHTML = appState.swimmers.map(sw => `
+  container.innerHTML = orderedSwimmers().map(sw => `
     <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)">
-      <div style="width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--lane);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        ${sw.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
-      </div>
+      ${swimmerPortrait(sw,'modal-portrait')}
       <div style="flex:1;min-width:0">
         <div style="font-size:14px;font-weight:500">${sw.name}</div>
         <div style="font-size:12px;color:var(--muted)">${sw.ageGroup||''}${sw.division?' · '+(sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women'):''}${sw.stroke?' · '+sw.stroke:''}</div>
@@ -1414,18 +1456,13 @@ function renderModalProfiles() {
 }
 
 // ─── MODAL HELPERS ────────────────────────────────────────
-function openModal(id) { document.getElementById(id).classList.add('open'); }
+function openModal(id) { const modal=document.getElementById(id);modal.classList.add('open');LaneLineMotion.dialog(modal.querySelector('.modal')); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
 
 // ─── BEST TIMES ───────────────────────────────────────────
-const motivationalStandards = {};
-let verifiedStandardsData = null;
-const motivationalOrder = ["AAAA", "AAA", "AA", "A", "BB", "B"];
-const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
-let bestTimesCourse = 'SCY';
 
 function parseBestTimesInput(value) {
   return value.split(/\r?\n/).map(line => {
@@ -1466,7 +1503,7 @@ function renderBestTimesPicker() {
     select.innerHTML = '<option value="">No swimmers saved</option>';
     return;
   }
-  select.innerHTML = appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('');
+  select.innerHTML = orderedSwimmers().map(sw => `<option value="${sw.id}">${escapeHtml(sw.name)}</option>`).join('');
   if (previousValue && appState.swimmers.some(sw => sw.id === previousValue)) select.value = previousValue;
   select.onchange = () => renderBestTimes();
 }
@@ -1488,41 +1525,50 @@ function renderBestTimes() {
     section.innerHTML = '<div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>';
     return;
   }
+  const peerRatings=LaneLineInsights.strengths(sw,appState.swimmers,bestTimesCourse,verifiedStandardsData||{});
   const rows = bestTimesForSwimmer(sw).filter(t => normalizeCourse(t.course || t.event) === bestTimesCourse).map(t => {
     const pnsTier = classifyTime(t, sw);
-    const nationalStandard = classifyNationalMotivationalTime(t, sw);
+    const nationalStandard = verifiedStandardsData ? classifyNationalMotivationalTime(t, sw) : standardsLoadError ? 'Unavailable' : 'Loading';
     const nextAchievement = nextAchievementDrop(t, sw);
-    return { ...t, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(t,sw) };
-  }).sort(compareBestTimeRows);
+    const peer=peerRatings.find(r=>normalizeEventKey(r.row.event)===normalizeEventKey(t.event));
+    return { ...t, peer, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(t,sw) };
+  }).sort((a,b)=>a.peer&&b.peer?LaneLineInsights.comparePeerStrength(a.peer,b.peer):compareBestTimeRows(a,b));
   if (!rows.length) {
     section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no ${bestTimesCourse} best times saved.</p><p style="font-size:13px">Switch course or edit the swimmer profile and add one time per line.</p></div>`;
     return;
   }
   section.innerHTML = `
+    ${renderAthleteHeading(sw)}
+    ${!verifiedStandardsData ? standardsLoadStatus() : ''}
     <div class="best-summary">
       <div class="best-summary-card"><div class="label">Swimmer</div><div class="value" style="font-size:20px">${sw.name}</div></div>
       <div class="best-summary-card"><div class="label">Different events</div><div class="value">${rows.length}</div></div>
-      <div class="best-summary-card"><div class="label">Top nat. standard</div><div class="value">${rows[0]?.nationalStandard || 'NT'}</div></div>
+      <div class="best-summary-card"><div class="label">Top nat. standard</div><div class="value">${verifiedStandardsData ? rows[0]?.nationalStandard || 'NT' : '—'}</div></div>
     </div>
-    <table class="times-table best-table">
-      <thead><tr><th>Event</th><th>Best</th><th>National</th><th>Drop to targets</th><th>Time cuts met</th></tr></thead>
+    <div class="table-scroll"><table class="times-table best-table">
+      <thead><tr><th>Event</th><th>Best</th><th>Peer rank</th><th>National</th><th>Next achievement</th><th>Time cuts met</th></tr></thead>
       <tbody>
         ${rows.map(row => `<tr>
-          <td>${escapeHtml(row.event)}<span class="event-meet">${escapeHtml(row.meet || '')}${row.date ? ' · '+escapeHtml(row.date) : ''}</span></td>
-          <td><span class="time-val">${row.time}</span></td>
-          <td><span class="standard-pill ${['AA','AAA','AAAA'].includes(row.nationalStandard) ? 'top' : ''}">${row.nationalStandard}</span></td>
-          <td><span class="time-val">${row.nextDrop}</span>${renderAllTargetDrops(row,sw)}</td>
-          <td><div class="qual-list">${row.qualifies.map(q => `<span class="qual-chip">${escapeHtml(q)}</span>`).join('') || '—'}</div></td>
+          <td><button class="event-link" onclick="openEventGrowth('${escapeHtml(row.event)}','${escapeHtml(sw.id)}')">${escapeHtml(row.event)}</button><span class="event-meet">${escapeHtml(row.meet || '')}${row.date ? ' · '+escapeHtml(row.date) : ''}</span></td>
+          <td data-label="Best time"><span class="time-val">${row.time}</span></td>
+          <td data-label="Peer rank">${row.peer?.total>1?`<span class="peer-rank">#${row.peer.rank}<small>of ${row.peer.total} · Age ${escapeHtml(sw.ageGroup)}</small></span><small>13–14: #${row.peer.olderRank} of ${row.peer.olderTotal}</small>`:'<small>No same-age peers</small>'}</td>
+          <td data-label="National"><span class="standard-pill ${['AA','AAA','AAAA'].includes(row.nationalStandard) ? 'top' : ''}">${row.nationalStandard}</span></td>
+          <td data-label="Next achievement"><span class="time-val">${row.nextDrop}</span>${Number.isFinite(row.nextDropSeconds)&&row.nextDropSeconds>0?`<div class="race-track" title="${(row.nextDropSeconds/parseRaceTime(row.time)*100).toFixed(2)}% time drop needed"><span style="width:${Math.max(4,100-row.nextDropSeconds/parseRaceTime(row.time)*100)}%;background:#2484d8"></span></div><small>${(row.nextDropSeconds/parseRaceTime(row.time)*100).toFixed(2)}% drop</small>`:''}${renderAllTargetDrops(row,sw)}</td>
+          <td data-label="Time cuts met"><div class="qual-list">${row.qualifies.map(q => `<span class="qual-chip">${escapeHtml(q)}</span>`).join('') || '—'}</div></td>
         </tr>`).join('')}
       </tbody>
-    </table>
-    <p class="source-note">Ranked by national motivational standard from AAAA down, then by the smallest drop needed for the next major achievement.</p>
+    </table></div>
+    <p class="source-note">Saved PNS peers only, not a complete official ranking. Ordered by same-age rank, then 13–14 comparison rank. The 13–14 comparison includes your time as a benchmark.</p>
   `;
   animatePerformanceView(section);
 }
+function renderAthleteHeading(sw){
+  return `<header class="athlete-heading">${swimmerPortrait(sw,'athlete-portrait')}<div><h2>${escapeHtml(sw.name)}</h2><p>${escapeHtml(sw.team||'')} · Age ${escapeHtml(sw.ageGroup)} · ${escapeHtml(sw.division)}</p>${sw.usaSwimmingMemberId?`<a class="usa-profile-link" href="https://data.usaswimming.org/search/athlete/${encodeURIComponent(sw.usaSwimmingMemberId)}/best-times" target="_blank" rel="noopener"><img src="https://prodswimsimages.usaswimming.org/swimShield.svg" alt="USA Swimming"/>USA Swimming profile</a>`:''}</div></header>`;
+}
+function openEventGrowth(event,swimmerId){showPage('growth');document.getElementById('growth-swimmer').value=swimmerId;document.getElementById('growth-course').value=normalizeCourse(event);renderGrowthPickers();const select=document.getElementById('growth-event');select.value=[...select.options].find(o=>normalizeEventKey(o.value)===normalizeEventKey(event))?.value||select.value;document.getElementById('growth-main-chart').dataset.highlightEvent=select.value;renderGrowthPage();}
 
 // ─── GROWTH CHARTS ────────────────────────────────────────
-const chartPalette = ['#1A6B8A', '#0E8A5F', '#7C3AED', '#D97706', '#BE123C', '#2563EB', '#0891B2', '#9333EA'];
+const chartPalette = ['#0078d4','#e34c74','#12a69b','#e5a21a','#704ec4','#ed763c','#087f9c','#aa388c','#287e45','#384db8','#bd353d','#788c19','#366b78','#b57012','#674a90','#3154eb','#008482','#c15791','#537334','#8b5a42'];
 const worldRecordEstimates = {
   '50 free scy': 17.63, '100 free scy': 39.90, '200 free scy': 1 * 60 + 28.81, '500 free scy': 4 * 60 + 6.32, '1000 free scy': 8 * 60 + 33.93, '1650 free scy': 14 * 60 + 12.08,
   '50 back scy': 20.20, '100 back scy': 43.35, '200 back scy': 1 * 60 + 35.73, '50 breast scy': 22.58, '100 breast scy': 49.53, '200 breast scy': 1 * 60 + 47.91,
@@ -1537,18 +1583,18 @@ function renderInsights(page,setup=false) {
   const controls=document.getElementById(page+'-controls'),out=document.getElementById(page+'-results');
   if(setup||!controls.children.length){
     const previous=document.getElementById(page+'-swimmer')?.value||document.getElementById('best-swimmer')?.value;
-    controls.innerHTML=`<div class="field"><label for="${page}-swimmer">Swimmer</label><select id="${page}-swimmer" onchange="renderInsights('${page}')">${appState.swimmers.map(sw=>`<option value="${escapeHtml(sw.id)}">${escapeHtml(sw.name)}</option>`).join('')}</select></div><div class="field"><label for="${page}-course">Course</label><select id="${page}-course" onchange="renderInsights('${page}')"><option>SCY</option><option>LCM</option><option>SCM</option></select></div>`;
+    controls.innerHTML=`<div class="field"><label for="${page}-swimmer">Swimmer</label><select id="${page}-swimmer" onchange="renderInsights('${page}')">${orderedSwimmers().map(sw=>`<option value="${escapeHtml(sw.id)}">${escapeHtml(sw.name)}</option>`).join('')}</select></div><div class="field"><label for="${page}-course">Course</label><select id="${page}-course" onchange="renderInsights('${page}')"><option>SCY</option><option>LCM</option><option>SCM</option></select></div>`;
     if(appState.swimmers.some(sw=>sw.id===previous)) document.getElementById(page+'-swimmer').value=previous;
   }
   const sw=appState.swimmers.find(s=>s.id===document.getElementById(page+'-swimmer').value);
   if(!sw){out.innerHTML='<p>No swimmers saved yet.</p>';return;}
-  if(!verifiedStandardsData){out.innerHTML='<p role="status">Waiting for official standards. Reload if they remain unavailable.</p>';return;}
+  if(!verifiedStandardsData){out.innerHTML=standardsLoadStatus();return;}
   const course=document.getElementById(page+'-course').value;
   const rows=LaneLineInsights.strengths(sw,appState.swimmers,course,verifiedStandardsData);
   if(!rows.length){out.innerHTML=`<p>No ${course} times saved for ${escapeHtml(sw.name)}.</p>`;return;}
   if(page==='strengths'){
-    const top=rows.find(r=>r.ratio!==null);
-    out.innerHTML=`${top?`<div class="insight-banner"><strong>Signature event: ${escapeHtml(top.row.event)}</strong><br>${escapeHtml(top.level)} national motivational level</div>`:''}<p class="insight-meta">Saved swimmers only, same exact age and division. Not a USA national ranking or percentile. Events ordered by AAAA pace index.</p>`+rows.map((r,i)=>`<article class="insight-row" style="animation-delay:${Math.min(i,8)*30}ms"><div class="insight-heading"><h3>${escapeHtml(r.row.event)}</h3><span class="standard-pill">${escapeHtml(r.level)}</span></div><div class="insight-meta">Best ${escapeHtml(r.row.time)} · ${r.total>1?`Rank ${r.rank} of ${r.total} saved swimmers${r.tied?' (tied)':''}`:'No same-age peers with this event yet'}</div>${r.ratio!==null?`<div class="race-track"><span style="width:${Math.min(100,r.ratio*100)}%"></span></div><div class="insight-meta">${(r.ratio*100).toFixed(1)}% AAAA pace index · 100% = AAAA cut, not a percentile</div>`:''}</article>`).join('');
+    const signatures=LaneLineInsights.signatureEvents(rows);
+    out.innerHTML=`<section><div class="section-label">${signatures.length>1?'Signature events':'Signature event'}</div><div class="signature-events">${signatures.map(r=>`<article class="signature-event"><h3>${escapeHtml(r.row.event)}</h3><strong>${escapeHtml(r.row.time)}</strong><p>#${r.rank} of ${r.total} saved age-${escapeHtml(sw.ageGroup)} peers · ${escapeHtml(r.level)}</p><p>13–14 benchmark: #${r.olderRank} of ${r.olderTotal}</p></article>`).join('')||'<p>No same-age peer comparison available yet.</p>'}</div></section><p class="insight-meta">Compared with saved swimmers of the same age and division. Ties use the 13–14 benchmark. Coverage is incomplete; these are not official PNS or national rankings.</p><div class="strength-grid">`+rows.map((r,i)=>`<article class="insight-row" style="animation-delay:${Math.min(i,8)*30}ms"><div class="insight-heading"><h3><button class="event-link" onclick="openEventGrowth('${escapeHtml(r.row.event)}','${escapeHtml(sw.id)}')">${escapeHtml(r.row.event)}</button></h3><span class="standard-pill ${['AA','AAA','AAAA'].includes(r.level)?'top':''}">${escapeHtml(r.level)}</span></div><div class="strength-time">${escapeHtml(r.row.time)}</div><div class="rank-pair"><span>Age ${escapeHtml(sw.ageGroup)} <strong>${r.total>1?'#'+r.rank+' / '+r.total:'No peers'}</strong></span><span>13–14 <strong>${r.olderTotal>1?'#'+r.olderRank+' / '+r.olderTotal:'No peers'}</strong></span></div>${r.peerScore!==null?`<div class="race-track"><span style="width:${Math.max(3,r.peerScore*100)}%"></span></div><div class="insight-meta">${Math.round(r.peerScore*100)}% of saved same-age peers matched or outswum</div>`:''}</article>`).join('')+'</div>';
     const type=LaneLineInsights.archetype(rows);
     out.insertAdjacentHTML('afterbegin',`<section class="archetype-section"><canvas id="stroke-donut" class="archetype-chart" width="460" height="460" role="img" aria-label="Stroke strength distribution. Values listed alongside the chart."></canvas><div><div class="section-label">${escapeHtml(course)} swimmer type</div><h3>${escapeHtml(type.label)}</h3><ul class="stroke-legend">${type.groups.map(g=>`<li><i style="background:${g.color}"></i><span>${escapeHtml(g.label)}<small>${g.best?escapeHtml(g.best.row.event)+' · '+escapeHtml(g.best.row.time):'No standard-rated time'}</small></span><strong>${(g.share*100).toFixed(1)}%</strong></li>`).join('')}</ul>${type.provisional?'<p class="insight-meta">Provisional: fewer than three strokes have standard-rated times.</p>':''}</div></section><details class="archetype-method"><summary>About this swimmer type</summary><p>LaneLine estimate, not USA Swimming's official archetype. Each stroke uses its strongest AAAA pace index across saved best times for this course. Chart shares emphasize relative strengths; they are not percentiles or race-count shares. A second stroke within 3% of the top index produces a dual type; three or more produce all-round. Fewer than three rated strokes produces an emerging type. Current profile age is used for standards, including older saved swims.</p></details>`);
     drawStrokeDonut(type);
@@ -1563,8 +1609,19 @@ function renderInsights(page,setup=false) {
     const progress=goal?LaneLineInsights.goalProgress(goal,row.time):null;
     return `<article class="insight-row"><div class="insight-heading"><h3>${escapeHtml(row.event)}</h3><strong>${escapeHtml(row.time)}</strong></div>${goal?`<div class="insight-meta">Pinned: ${escapeHtml(goal.label)} · ${escapeHtml(goal.cut)} · Set ${escapeHtml(goal.created)}</div><div class="insight-heading"><span>${progress?.met?'<span class="goal-stamp">Goal reached</span>':progress?progress.drop.toFixed(2)+'s to go':'Target saved'}</span><span>${progress?Math.round(progress.progress)+'%':''}</span></div><div class="race-track"><span style="width:${progress?.progress||0}%"></span></div><div class="insight-meta">Starting best: ${escapeHtml(goal.baseline)}</div><button class="btn-ghost" onclick="removePersonalGoal(${i})">Remove goal</button>`:''}${targets.length?`<div class="goal-actions"><select id="goal-target-${i}" aria-label="Target for ${escapeHtml(row.event)}">${targets.map(t=>`<option value="${escapeHtml(t.id)}">${escapeHtml(t.label)} · ${escapeHtml(t.cut)} · drop ${t.dropSeconds.toFixed(2)}s</option>`).join('')}</select><button class="btn-secondary" onclick="pinPersonalGoal(${i})">${goal?'Replace goal':'Pin goal'}</button></div>`:'<p class="insight-meta">No further published targets for this event.</p>'}</article>`;
   }).join('');
+  out.insertAdjacentHTML('afterbegin',renderMeetPlanner(sw));
 }
 function readPersonalGoals(){try{const value=JSON.parse(localStorage.getItem('laneline-personal-goals')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch{return {};}}
+function renderMeetPlanner(sw){
+  if(typeof LaneLineMeets==='undefined')return '';
+  const date=value=>new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const upcoming=LaneLineMeets.meets.filter(meet=>meet.end>=new Date().toLocaleDateString('en-CA'));
+  return `<section class="meet-planner"><h3>Your next race days</h3><p class="insight-meta">${escapeHtml(sw.name)} · SCY plans · BCST calendar · Itineraries checked October 29, 2026. Coach review required; recommendations are not entries or confirmation of eligibility.</p>${upcoming.map((meet,i)=>{
+    const plan=LaneLineMeets.recommendations(meet,sw,appState.swimmers,verifiedStandardsData);
+    const today=new Date().toISOString().slice(0,10),closed=meet.teamDeadline<today;
+    return `<details class="meet-option" ${i===0?'open':''}><summary><div><h4>${escapeHtml(meet.name)}</h4><small>${date(meet.start)} – ${date(meet.end)}</small></div><span class="meet-format">${escapeHtml(meet.format)}</span></summary><p>${escapeHtml(meet.location)}<br><small>${escapeHtml(meet.address)}</small></p><p class="meet-notice">BCST deadline: ${date(meet.teamDeadline)}${closed?' · Passed; ask your coach about availability.':''} · Host deadline: ${date(meet.hostDeadline)}. ${meet.id==='sockeye'?'Invitation required.':'Club assignment and event cuts required.'}</p><div class="meet-days">${plan.map(day=>`<section class="meet-day"><h5>${escapeHtml(day.name)}</h5><small>${date(day.date)}</small><ol>${day.choices.map(choice=>`<li><strong>${escapeHtml(choice.name)}</strong> <span class="time-val">${escapeHtml(choice.row.time)}</span><small>${escapeHtml(choice.reason)}${choice.cut?' Qualifying SCY cut: '+escapeHtml(choice.cut)+'.':''}</small></li>`).join('')||'<li>No verified qualifying saved time for these events. Ask your coach about bonus-event options.</li>'}</ol></section>`).join('')}</div><p class="insight-meta">${escapeHtml(meet.rules)}</p><div class="meet-links"><a href="${meet.url}" target="_blank" rel="noopener">BCST event</a><a href="${meet.document}" target="_blank" rel="noopener">Meet itinerary</a>${meet.cutsDocument?`<a href="${meet.cutsDocument}" target="_blank" rel="noopener">Official entry cuts</a>`:''}<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(meet.address)}" target="_blank" rel="noopener">Map</a></div></details>`;
+  }).join('')||'<p class="insight-meta">No future meets in the verified itinerary list. Check the BCST calendar for newly published meets.</p>'}</section>`;
+}
 function renderYearlyStrengths(sw,course){
   const history=LaneLineInsights.yearlyArchetypes(sw,course,verifiedStandardsData);
   const section=document.createElement('section');section.className='year-history';
@@ -1616,7 +1673,7 @@ function renderGrowthPickers() {
   const previousSwimmer = swimmerSelect.value;
   const previousCourse = courseSelect.value || 'SCY';
   const previousEvent = eventSelect.value;
-  swimmerSelect.innerHTML = appState.swimmers.length ? appState.swimmers.map(sw => `<option value="${sw.id}">${sw.name}</option>`).join('') : '<option value="">No swimmers saved</option>';
+  swimmerSelect.innerHTML = appState.swimmers.length ? orderedSwimmers().map(sw => `<option value="${sw.id}">${escapeHtml(sw.name)}</option>`).join('') : '<option value="">No swimmers saved</option>';
   if (previousSwimmer && appState.swimmers.some(sw => sw.id === previousSwimmer)) swimmerSelect.value = previousSwimmer;
   courseSelect.value = previousCourse === 'LCM' ? 'LCM' : 'SCY';
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
@@ -1632,7 +1689,7 @@ function renderGrowthPickers() {
     renderGrowthPickers();
     renderGrowthPage();
   };
-  eventSelect.onchange = () => renderGrowthPage();
+  eventSelect.onchange = () => {document.getElementById('growth-main-chart').dataset.highlightEvent=eventSelect.value;renderGrowthPage();};
 }
 
 function renderGrowthPage() {
@@ -1646,14 +1703,17 @@ function renderGrowthPage() {
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
   const course = courseSelect.value === 'LCM' ? 'LCM' : 'SCY';
   if (!sw) {
+    document.getElementById('growth-comparison').textContent='Select a swimmer to compare best times.';
     main.innerHTML = '<div class="meet-empty">Add a swimmer with dated times to see growth.</div>';
     detail.innerHTML = '';
     suggestions.innerHTML = '';
     return;
   }
   const groups = groupGrowthRows(sw, course);
+  document.getElementById('growth-athlete-heading').innerHTML=renderAthleteHeading(sw);
   const events = Object.keys(groups);
   if (!events.length) {
+    document.getElementById('growth-comparison').textContent='No comparable event history for this course.';
     main.innerHTML = `<div class="meet-empty">${sw.name} needs dated ${course} time rows before growth can be graphed.</div>`;
     detail.innerHTML = '';
     suggestions.innerHTML = '';
@@ -1661,14 +1721,15 @@ function renderGrowthPage() {
   }
   const selectedEvent = eventSelect.value && groups[eventSelect.value] ? eventSelect.value : events[0];
   const selectedForHighlight = main.dataset.highlightEvent && groups[main.dataset.highlightEvent] ? main.dataset.highlightEvent : '';
-  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', title: `${sw.name} ${course} growth by event`, selectedEvent: selectedForHighlight });
+  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', width:main.clientWidth, title: `${sw.name} ${course} growth by event`, selectedEvent: selectedForHighlight, percent:document.getElementById('growth-scale').value==='percent' });
   const selectedRows = groups[selectedEvent].map(row => ({ ...row, event: selectedEvent }));
+  renderGrowthComparison(sw,selectedEvent,course);
   const historyNote = selectedRows.length < 2
     ? `<div class="meet-disclaimer"><p>Only one history row is loaded for ${selectedEvent}. Growth needs every swim for this event, not just the fastest time.</p></div>`
     : '';
   const fastest=selectedRows.reduce((best,row)=>row.seconds<best.seconds?row:best,selectedRows[0]);
   const dropped=Math.max(0,selectedRows[0].seconds-fastest.seconds);
-  detail.innerHTML = `<div class="growth-scoreboard" aria-label="Selected event progress"><div><strong>${selectedRows.length}</strong><span>Swims recorded</span></div><div><strong>${escapeHtml(fastest.time)}</strong><span>Best time</span></div><div><strong>${dropped.toFixed(2)}s</strong><span>Dropped since first swim</span></div></div>` + historyNote + renderGrowthChart(selectedRows, { mode: 'event', title: selectedEvent });
+  detail.innerHTML = `<div class="growth-scoreboard" aria-label="Selected event progress"><div><strong>${selectedRows.length}</strong><span>Swims recorded</span></div><div><strong>${escapeHtml(fastest.time)}</strong><span>Best time</span></div><div><strong>${dropped.toFixed(2)}s</strong><span>Dropped since first swim</span></div></div>` + historyNote + renderGrowthChart(selectedRows, { mode: 'event', width:detail.clientWidth, title: selectedEvent });
   suggestions.innerHTML = renderGrowthSuggestions(sw, selectedEvent, course, selectedRows);
   attachGrowthChartInteractions('growth-main-chart');
   attachGrowthChartInteractions('growth-event-chart');
@@ -1679,7 +1740,39 @@ function renderGrowthPage() {
     }
   }
 }
+let growthResizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(growthResizeTimer);
+  growthResizeTimer=setTimeout(()=>{
+    if(document.getElementById('growth-page')?.style.display!=='none')renderGrowthPage();
+  },150);
+});
+function clearGrowthSelection(){delete document.getElementById('growth-main-chart').dataset.highlightEvent;renderGrowthPage();}
+function selectGrowthEvent(event){const select=document.getElementById('growth-event');select.value=event;document.getElementById('growth-main-chart').dataset.highlightEvent=event;renderGrowthPage();}
 
+function renderGrowthComparison(sw,event,course){
+  const root=document.getElementById('growth-comparison');
+  const comparison=LaneLineInsights.eventComparison(sw,appState.swimmers,event,course);
+  if(!comparison){root.innerHTML='<p class="insight-meta">No saved best time for this event.</p>';return;}
+  const {rows,rank,ahead,behind,tied}=comparison;
+  if(rows.length<2){root.innerHTML=`<h3 style="font-size:16px">${escapeHtml(event)}</h3><p class="insight-meta">No other saved swimmers of age ${escapeHtml(sw.ageGroup)} in this division have a time for this event.</p>`;return;}
+  const limit=matchMedia('(max-width:620px)').matches?5:7;
+  const selfIndex=rows.findIndex(r=>r.isSelf),start=Math.max(0,Math.min(selfIndex-Math.floor(limit/2),rows.length-limit));
+  const shown=rows.slice(start,start+limit),max=Math.max(...shown.map(r=>r.pace));
+  const colors={ahead:'#9b4dde',you:'#0879e2',behind:'#f18b28',tied:'#139b96'};
+  const relation=r=>r.isSelf?'You':r.status==='tied'?'Tied':`${r.gapSeconds.toFixed(2)}s ${r.status==='ahead'?'faster':'slower'}`;
+  const bars=shown.map((r,i)=>{
+    const title=`${r.name}: ${r.row.time}, ${relation(r)}. ${r.row.meet||''} ${r.row.date||''}`;
+    return `<button type="button" class="peer-lane ${r.isSelf?'is-you':''}" title="${escapeHtml(title)}" aria-label="${escapeHtml(title)}" onclick="togglePeerDetail(this)" aria-expanded="false"><span class="peer-lane-name">${start+i+1}. ${escapeHtml(r.name)}${r.isSelf?' (You)':''}<small>${escapeHtml(r.team)}</small></span><span class="peer-lane-track"><span class="peer-lane-fill" style="width:${r.pace/max*100}%;--peer-color:${colors[r.status]}"></span></span><span class="peer-time">${escapeHtml(r.row.time)}<small>${escapeHtml(relation(r))}</small></span><span class="peer-detail" hidden>${escapeHtml(r.row.meet||'')} · ${escapeHtml(r.row.date||'Date unavailable')}</span></button>`;
+  }).join('');
+  root.innerHTML=`<h3 style="font-size:18px">${escapeHtml(event)}</h3><p class="insight-meta">Saved peers · Age ${escapeHtml(sw.ageGroup)} · ${escapeHtml(sw.division)} · ${shown.length} nearest positions of ${rows.length} · Not an official ranking</p><div class="comparison-summary"><span>Rank ${rank} of ${rows.length}</span><span>${ahead} faster</span><span>${behind} slower</span>${tied?`<span>${tied} tied</span>`:''}</div><div class="peer-lanes" aria-label="${escapeHtml(event)} horizontal race ladder">${bars}</div><div class="comparison-legend"><span><i style="background:${colors.ahead}"></i>Faster</span><span><i style="background:${colors.you}"></i>You</span><span><i style="background:${colors.behind}"></i>Slower</span><span><i style="background:${colors.tied}"></i>Tied</span></div><details class="comparison-all"><summary>All ${rows.length} swimmers</summary><table class="times-table"><thead><tr><th>Swimmer</th><th>Best time</th><th>Gap</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r.isSelf?'comparison-you':''}"><td>${escapeHtml(r.name)}${r.isSelf?' (You)':''}<span class="event-meet">${escapeHtml(r.team)}</span></td><td class="time-val">${escapeHtml(r.row.time)}<span class="event-meet">${escapeHtml(r.row.date||'')}</span></td><td>${escapeHtml(relation(r))}</td></tr>`).join('')}</tbody></table></details>`;
+}
+function togglePeerDetail(button){const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));button.querySelector('.peer-detail').hidden=!open;}
+matchMedia('(max-width:620px)').addEventListener('change',()=>{
+  if(document.getElementById('growth-page').style.display==='none')return;
+  const sw=appState.swimmers.find(s=>s.id===document.getElementById('growth-swimmer').value);
+  if(sw)renderGrowthComparison(sw,document.getElementById('growth-event').value,document.getElementById('growth-course').value);
+});
 function groupGrowthRows(sw, course = 'SCY') {
   return timeHistoryForSwimmer(sw)
     .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event), course: normalizeCourse(row.course || row.event || '') }))
@@ -1898,8 +1991,8 @@ function nextGoalText(best, latest, eventName) {
 }
 
 function renderGrowthChart(rows, options) {
-  const width = 720;
-  const height = options.mode === 'all' ? 330 : 300;
+  const width = Math.max(720,Math.round(options.width||720));
+  const height = options.mode === 'all' ? (width>1000?460:390) : 320;
   const pad = { left: 62, right: 24, top: 28, bottom: 48 };
   if (!rows.length) return '<div class="meet-empty">No dated rows available for this graph.</div>';
   const grouped = rows.reduce((groups, row) => {
@@ -1918,6 +2011,7 @@ function renderGrowthChart(rows, options) {
       ...row,
       swimIndex: index + 1,
       growthSeconds: baseline - row.seconds,
+      plotGrowth:options.percent?(baseline-row.seconds)/baseline*100:baseline-row.seconds,
       recordGrowth
     }));
   });
@@ -1928,15 +2022,18 @@ function renderGrowthChart(rows, options) {
     }
     return pad.left + ((row.swimIndex - 1) / Math.max(1, maxSwimIndex - 1)) * (width - pad.left - pad.right);
   };
-  const maxActualGrowth = Math.max(0, ...growthRows.map(row => row.growthSeconds));
-  const minActualGrowth = Math.min(0, ...growthRows.map(row => row.growthSeconds));
-  const selectedRecordGrowth = options.mode === 'event' ? Math.max(...growthRows.map(row => row.recordGrowth)) : 0;
-  const topGrowth = Math.max(maxActualGrowth, selectedRecordGrowth || 0, 1);
+  const scaleRows=options.selectedEvent?growthRows.filter(row=>row.event===options.selectedEvent):growthRows;
+  const maxActualGrowth = Math.max(0, ...scaleRows.map(row => row.plotGrowth));
+  const minActualGrowth = Math.min(0, ...scaleRows.map(row => row.plotGrowth));
+  const selectedRecordGrowth = 0;
+  const topGrowth = Math.max(maxActualGrowth*1.08, 1);
   const bottomGrowth = Math.min(minActualGrowth, 0);
   const yFor = growth => pad.top + ((topGrowth - growth) / Math.max(1, topGrowth - bottomGrowth)) * (height - pad.top - pad.bottom);
   const baselineY = yFor(0);
   const recordY = yFor(selectedRecordGrowth);
-  const lines = eventNames.map((event, index) => {
+  const displayValue=value=>options.percent?value.toFixed(1)+'%':formatSignedGrowth(value);
+  const lines = [...eventNames].sort((a,b)=>Number(a===options.selectedEvent)-Number(b===options.selectedEvent)).map(event => {
+    const index=eventNames.indexOf(event);
     const eventRows = growthRows.filter(row => row.event === event).sort((a, b) => a.dateValue - b.dateValue);
     const color = chartPalette[index % chartPalette.length];
     const dimmed = options.mode === 'all' && options.selectedEvent && event !== options.selectedEvent;
@@ -1946,29 +2043,26 @@ function renderGrowthChart(rows, options) {
       const prev = eventRows[rowIndex];
       const stroke = row.growthSeconds >= prev.growthSeconds ? 'var(--green)' : 'var(--red)';
       const title = escapeSvgText(`${event}, swim ${row.swimIndex}: ${row.time} on ${row.date || 'unknown date'} (${formatSignedGrowth(row.growthSeconds)} from start)`);
-      return `<g ${eventAttrs} data-growth-tooltip="${title}" style="cursor:pointer;opacity:${opacity}"><line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/><line x1="${xFor(prev)}" y1="${yFor(prev.growthSeconds)}" x2="${xFor(row)}" y2="${yFor(row.growthSeconds)}" stroke="transparent" stroke-width="16" stroke-linecap="round" pointer-events="stroke"/></g>`;
+      return `<g ${eventAttrs} data-growth-tooltip="${title}" tabindex="0" role="button" aria-label="${title}" style="cursor:pointer;opacity:${opacity}"><line x1="${xFor(prev)}" y1="${yFor(prev.plotGrowth)}" x2="${xFor(row)}" y2="${yFor(row.plotGrowth)}" stroke="${options.mode === 'all' ? color : stroke}" stroke-width="3" stroke-linecap="round"/><line x1="${xFor(prev)}" y1="${yFor(prev.plotGrowth)}" x2="${xFor(row)}" y2="${yFor(row.plotGrowth)}" stroke="transparent" stroke-width="12" stroke-linecap="round" pointer-events="stroke"/></g>`;
     }).join('');
-    const points = eventRows.map(row => `<circle ${eventAttrs} data-growth-tooltip="${escapeSvgText(`${event}, swim ${row.swimIndex}: ${row.time} on ${row.date || 'unknown date'} (${formatSignedGrowth(row.growthSeconds)} from start)`)}" cx="${xFor(row)}" cy="${yFor(row.growthSeconds)}" r="${dimmed ? 2.5 : 3.5}" fill="${color}" stroke="#fff" stroke-width="1" style="cursor:pointer;opacity:${opacity}"/>`).join('');
+    const points = eventRows.map(row => `<circle ${eventAttrs} data-growth-tooltip="${escapeSvgText(`${event}, swim ${row.swimIndex}: ${row.time} on ${row.date || 'unknown date'} (${formatSignedGrowth(row.growthSeconds)} from start)`)}" cx="${xFor(row)}" cy="${yFor(row.plotGrowth)}" r="${dimmed ? 1.8 : 3}" fill="${color}" stroke="#fff" stroke-width="1" style="cursor:pointer;opacity:${opacity}"/>`).join('');
     return segments + points;
   }).join('');
-  const legend = eventNames.map((event, index) => `<span><i style="background:${chartPalette[index % chartPalette.length]}"></i>${event}</span>`).join('');
+  const legend = eventNames.map((event, index) => `<button type="button" class="growth-event-button" style="--event-color:${chartPalette[index % chartPalette.length]}" data-growth-event="${escapeSvgText(event)}" data-growth-tooltip="${escapeSvgText(event)}" aria-pressed="${event===options.selectedEvent}"><i></i>${escapeHtml(event)}</button>`).join('');
   return `
     <svg class="growth-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.title}">
-      ${[0.25,0.5,0.75].map(fraction=>`<line x1="${pad.left}" y1="${pad.top+fraction*(height-pad.top-pad.bottom)}" x2="${width-pad.right}" y2="${pad.top+fraction*(height-pad.top-pad.bottom)}" stroke="#dce8f2" stroke-dasharray="3 6" pointer-events="none"/>`).join('')}
-      ${options.mode==='event'&&growthRows.length>1?`<polygon points="${xFor(growthRows[0])},${baselineY} ${growthRows.map(row=>`${xFor(row)},${yFor(row.growthSeconds)}`).join(' ')} ${xFor(growthRows.at(-1))},${baselineY}" fill="#4897d4" fill-opacity="0.08" pointer-events="none"/>`:''}
-      ${options.mode === 'event' ? `<line x1="${pad.left}" y1="${recordY}" x2="${width - pad.right}" y2="${recordY}" stroke="rgba(11,31,58,.18)" stroke-dasharray="4 5"/>` : ''}
+      <defs><clipPath id="growth-plot-${options.mode}"><rect x="${pad.left-4}" y="${pad.top-4}" width="${width-pad.left-pad.right+8}" height="${height-pad.top-pad.bottom+8}"/></clipPath></defs>
+      ${[0,.25,.5,.75,1].map(fraction=>`<line x1="${pad.left}" y1="${pad.top+fraction*(height-pad.top-pad.bottom)}" x2="${width-pad.right}" y2="${pad.top+fraction*(height-pad.top-pad.bottom)}" stroke="#dce8f2" stroke-dasharray="3 6" pointer-events="none"/><text x="${pad.left-7}" y="${pad.top+fraction*(height-pad.top-pad.bottom)+4}" text-anchor="end" font-size="10">${displayValue(topGrowth-fraction*(topGrowth-bottomGrowth))}</text>`).join('')}
+      ${options.mode==='event'&&growthRows.length>1?`<polygon points="${xFor(growthRows[0])},${baselineY} ${growthRows.map(row=>`${xFor(row)},${yFor(row.plotGrowth)}`).join(' ')} ${xFor(growthRows.at(-1))},${baselineY}" fill="#4897d4" fill-opacity="0.08" pointer-events="none"/>`:''}
       <line x1="${pad.left}" y1="${baselineY}" x2="${width - pad.right}" y2="${baselineY}" stroke="rgba(11,31,58,.12)"/>
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
       <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
-      ${options.mode === 'event' ? `<text x="12" y="${recordY + 4}" font-size="11" fill="#5A7089">World record</text>` : `<text x="12" y="${pad.top + 4}" font-size="11" fill="#5A7089">Most drop</text>`}
-      <text x="12" y="${baselineY - 6}" font-size="11" fill="#5A7089">Start</text>
-      <text x="12" y="${height - pad.bottom - 6}" font-size="11" fill="#5A7089">${formatSignedGrowth(bottomGrowth)}</text>
       <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(minDate)) : 'Swim 1'}</text>
       <text x="${width - pad.right - 78}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(maxDate)) : `Swim ${maxSwimIndex}`}</text>
-      ${lines}
+      <g clip-path="url(#growth-plot-${options.mode})">${lines}</g>
     </svg>
     ${options.mode === 'all' ? `<div class="growth-legend">${legend}</div>` : '<div class="growth-legend"><span><i style="background:var(--green)"></i>Dropped time</span><span><i style="background:var(--red)"></i>Added time</span></div>'}
-    <p class="growth-note">${options.mode === 'event' ? 'Higher means more seconds dropped from this event\'s first swim. The x-axis is date swum for the selected event.' : 'Higher means more seconds dropped from that event\'s first swim. The x-axis is swim number, so every event starts at Swim 1.'}</p>
+    <p class="growth-note">${options.mode === 'event' ? 'Seconds improved from first swim · Race date' : options.percent?'Improvement from first swim (%) · Swim number':'Seconds improved from first swim · Swim number'}${options.selectedEvent?' · Focus: '+escapeHtml(options.selectedEvent):''}</p>
   `;
 }
 
@@ -2000,6 +2094,7 @@ function attachGrowthChartInteractions(containerId) {
   if (!container) return;
   const tooltip = growthTooltip();
   container.querySelectorAll('[data-growth-tooltip]').forEach(el => {
+    el.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();el.click();}});
     el.addEventListener('mouseenter', event => {
       tooltip.textContent = el.getAttribute('data-growth-tooltip') || '';
       tooltip.style.display = 'block';
@@ -2020,11 +2115,11 @@ function attachGrowthChartInteractions(containerId) {
     });
   });
   if (containerId === 'growth-main-chart') {
-    container.addEventListener('click', event => {
+    container.onclick = event => {
       if (event.target.closest('[data-growth-event]')) return;
       delete container.dataset.highlightEvent;
       renderGrowthPage();
-    });
+    };
   }
 }
 
@@ -2060,23 +2155,40 @@ function escapeHtml(value) {
   return escapeSvgText(value);
 }
 
+function standardsLoadStatus(){
+  return standardsLoadError
+    ? `<div class="meet-disclaimer" role="alert"><p>${escapeHtml(standardsLoadError)}</p><button type="button" class="btn-secondary" onclick="loadVerifiedStandards()" style="margin-top:8px">Retry standards</button></div>`
+    : '<p role="status">Loading official time standards...</p>';
+}
+function refreshStandardsViews(){
+  renderStandardsPage();
+  for(const page of ['strengths','goals'])if(document.getElementById(page+'-page').style.display!=='none')renderInsights(page);
+  if(document.getElementById('best-page').style.display!=='none')renderBestTimes();
+  if(document.getElementById('growth-page').style.display!=='none')renderGrowthPage();
+}
 async function loadVerifiedStandards() {
+  standardsLoadError='';
+  refreshStandardsViews();
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),10000);
   try {
-    const response = await fetch('time-standards.json', {cache:'no-store'});
-    if (!response.ok) throw new Error('Standards unavailable');
-    verifiedStandardsData = await response.json();
+    if(typeof LaneLineStandards==='undefined'||typeof LaneLineInsights==='undefined')throw new Error('App scripts unavailable');
+    const response = await fetch('time-standards.json', {cache:'no-store',signal:controller.signal});
+    if (!response.ok) throw new Error('Standards unavailable: HTTP '+response.status);
+    const data=await response.json();
+    if(!data||!data.motivational||!Object.keys(data.motivational).length||!Array.isArray(data.meets)||!data.motivationalSource)throw new Error('Invalid standards data');
+    verifiedStandardsData = data;
     Object.assign(motivationalStandards, verifiedStandardsData.motivational);
     const select = document.getElementById('standards-meet');
     if (select) select.innerHTML = '<option value="motivational">National motivational 2024-2028</option>' +
       verifiedStandardsData.meets.map(meet => `<option value="${meet.id}">${escapeHtml(meet.label)} · ${escapeHtml(meet.edition)}</option>`).join('');
-    renderStandardsPage();
-    for (const page of ['strengths','goals']) if(document.getElementById(page+'-page').style.display!=='none') renderInsights(page);
-    if (document.getElementById('best-page')?.style.display !== 'none') renderBestTimes();
-    if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
+    refreshStandardsViews();
   } catch (error) {
     console.warn('Standards could not load:', error);
-    const section = document.getElementById('standards-results');
-    if (section) section.textContent = 'Official standards could not be loaded. Reload to retry.';
+    standardsLoadError='Time standards could not load. Check that the current LaneLine server is running, then retry.';
+    refreshStandardsViews();
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -2084,7 +2196,7 @@ function renderStandardsPage() {
   const section = document.getElementById('standards-results');
   if (!section) return;
   if (!verifiedStandardsData) {
-    section.innerHTML = '<p role="status">Loading official standards...</p>';
+    section.innerHTML = standardsLoadStatus();
     return;
   }
   const division = document.getElementById('standards-division')?.value || 'boys';
@@ -2134,7 +2246,7 @@ function achievementTargetsFor(timeRow, sw) {
 }
 
 function nextAchievementDrop(timeRow, sw) {
-  if (!verifiedStandardsData) return {label:'Standards loading',dropSeconds:Infinity};
+  if (!verifiedStandardsData) return {label:standardsLoadError?'Standards unavailable':'Standards loading',dropSeconds:Infinity};
   const targets = achievementTargetsFor(timeRow,sw);
   if (!targets.length) return {label:'No published target',dropSeconds:Infinity};
   const target = targets.find(item=>!item.met);

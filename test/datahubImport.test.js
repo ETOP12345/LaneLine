@@ -5,6 +5,25 @@ const os = require('node:os');
 const path = require('node:path');
 const {importSnapshot} = require('../scripts/import-datahub-history');
 
+test('younger PNS scope accepts age nine, preserves older queue, and rejects age eleven', async () => {
+  const directory=await fs.mkdtemp(path.join(os.tmpdir(),'laneline-younger-'));
+  try {
+    await fs.writeFile(path.join(directory,'datahub-history.json'),'{}');
+    await fs.writeFile(path.join(directory,'datahub-refresh-status.json'),'{"swimmers":{}}');
+    await fs.writeFile(path.join(directory,'pns-a-import-progress.json'),'{"pending":[]}');
+    const id='AAAAAAAAAAAAAA';
+    const snapshot={scope:'pns-a-9-10',events:['50 FR SCY'],meets:['Verified meet'],
+      swimmers:{[id]:[[0,'25.00',0,'10/20/2026']]},
+      profiles:[{name:'Test Swimmer',ageGroup:'9',division:'boys',team:'Test Club',lsc:'PN',usaSwimmingMemberId:id}],
+      discovery:{status:'in-progress',pending:[],pages:[],screened:[]}};
+    assert.equal((await importSnapshot(snapshot,directory))[id].addedRows,1);
+    const younger=JSON.parse(await fs.readFile(path.join(directory,'pns-a-9-10-import-progress.json'),'utf8'));
+    assert.equal(younger.scope,'pns-a-9-10');
+    assert.equal(await fs.readFile(path.join(directory,'pns-a-import-progress.json'),'utf8'),'{"pending":[]}');
+    await assert.rejects(importSnapshot({...snapshot,profiles:[{...snapshot.profiles[0],ageGroup:'11'}]},directory));
+  } finally {await fs.rm(directory,{recursive:true,force:true});}
+});
+
 test('verified import preserves history, deduplicates, and records manual status', async () => {
   const directory=await fs.mkdtemp(path.join(os.tmpdir(),'laneline-import-'));
   try {

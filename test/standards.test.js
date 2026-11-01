@@ -6,6 +6,11 @@ const meet=id=>data.meets.find(m=>m.id===id);
 const girls={division:'girls',ageGroup:'12'};
 const boys={division:'boys',ageGroup:'12'};
 
+test('motivational lookup is safe before standards finish loading',()=>{
+  assert.equal(engine.motivationalCuts({},'50 Free SCY',boys),null);
+  assert.equal(engine.motivationalCuts(null,'50 Free SCY',boys),null);
+});
+
 test('official PNS girls and boys cuts are independent of motivational B',()=>{
   assert.equal(engine.meetCut(meet('pns-champs'),'100 Breast SCY',girls),'1:20.89');
   assert.equal(engine.meetCut(meet('pns-champs'),'100 Breast SCY',boys),'1:20.19');

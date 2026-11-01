@@ -20,7 +20,9 @@ function mergeRows(saved, fresh) {
   return [...merged.values()].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
-async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHistory } = {}) {
+async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHistory,
+  requestDelayMs = fetchHistory === fetchUsaSwimmingTimeHistory ? 15000 : 0,
+  pause = ms => new Promise(resolve => setTimeout(resolve,ms)) } = {}) {
   const historyPath = path.join(directory, 'datahub-history.json');
   const statusPath = path.join(directory, 'datahub-refresh-status.json');
   const histories = JSON.parse(await fs.readFile(historyPath, 'utf8'));
@@ -30,12 +32,21 @@ async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHi
   catch (error) { if (error.code !== 'ENOENT') throw error; }
   const swimmers = {};
   let failures = 0;
+  let stopReason='';
+  let attempted=0;
   for (const memberId of Object.keys(histories)) {
+    if(stopReason){
+      swimmers[memberId]={...previous.swimmers?.[memberId],status:'deferred',savedRows:histories[memberId].length,
+        note:'Refresh deferred after upstream authentication or rate-limit response. Saved history was preserved.'};
+      continue;
+    }
+    if(attempted++ && requestDelayMs>0)await pause(requestDelayMs);
     try {
       const fresh = await fetchHistory(memberId);
       const rows = mergeRows(histories[memberId], fresh);
       histories[memberId] = rows;
       swimmers[memberId] = {
+        ...previous.swimmers?.[memberId],
         status: 'updated', checkedAt, lastSuccessAt: checkedAt,
         fetchedRows: fresh.length, savedRows: rows.length, newestSwim: rows[0].date,
         courses: [...new Set(fresh.map(row => row.course))]
@@ -43,6 +54,7 @@ async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHi
     } catch (error) {
       failures++;
       swimmers[memberId] = {
+        ...previous.swimmers?.[memberId],
         status: 'failed', checkedAt,
         lastSuccessAt: previous.swimmers?.[memberId]?.lastSuccessAt || null,
         savedRows: histories[memberId].length,
@@ -51,6 +63,7 @@ async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHi
           : 'USA Swimming history could not be retrieved. Saved history was preserved.'
       };
       console.error(`Swimmer ${memberId}: ${swimmers[memberId].error}`);
+      if(/\b(401|403|429)\b/.test(error.message))stopReason=error.message;
     }
   }
   // Never erase historical swims on an upstream failure or a truncated response.

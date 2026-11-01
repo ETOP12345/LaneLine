@@ -1,6 +1,6 @@
 {
   "status": "manual",
-  "checkedAt": "2026-10-29T03:27:56.737Z",
+  "checkedAt": "2026-10-31T05:17:22.507Z",
   "swimmers": {
     "9DCE8A4B52EF4A": {
       "status": "manual",
@@ -13,10 +13,10 @@
     },
     "529E741DB1114E": {
       "status": "manual",
-      "checkedAt": "2026-10-28T22:38:32.996Z",
+      "checkedAt": "2026-10-29T23:25:25.139Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
-      "savedRows": 184,
+      "lastImportedAt": "2026-10-29T23:25:25.139Z",
+      "savedRows": 198,
       "newestSwim": "10/25/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
@@ -40,9 +40,9 @@
     },
     "08104D29B8F2BE": {
       "status": "manual",
-      "checkedAt": "2026-10-28T22:38:32.996Z",
+      "checkedAt": "2026-10-29T23:23:53.729Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
+      "lastImportedAt": "2026-10-29T23:23:53.729Z",
       "savedRows": 288,
       "newestSwim": "10/18/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
@@ -67,19 +67,19 @@
     },
     "F889DA85F5164C": {
       "status": "manual",
-      "checkedAt": "2026-10-28T22:38:32.996Z",
+      "checkedAt": "2026-10-29T23:30:47.590Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
-      "savedRows": 309,
+      "lastImportedAt": "2026-10-29T23:30:47.590Z",
+      "savedRows": 315,
       "newestSwim": "10/18/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "9C37DAB7527E4C": {
       "status": "manual",
-      "checkedAt": "2026-10-28T22:38:32.996Z",
+      "checkedAt": "2026-10-29T23:38:00.748Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
-      "savedRows": 282,
+      "lastImportedAt": "2026-10-29T23:38:00.748Z",
+      "savedRows": 283,
       "newestSwim": "10/18/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
@@ -315,6 +315,2454 @@
       "lastImportedAt": "2026-10-29T03:26:48.105Z",
       "savedRows": 280,
       "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "8BCF57B9FCA84B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:07:14.768Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:07:14.768Z",
+      "savedRows": 52,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "DBA37CB378A743": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:07:14.768Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:07:14.768Z",
+      "savedRows": 173,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "13210C6AF15D46": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:07:14.768Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:07:14.768Z",
+      "savedRows": 370,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E95BDCC8C7A843": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:07:14.768Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:07:14.768Z",
+      "savedRows": 185,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "ABDB9662439A4E": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:09:44.983Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:09:44.983Z",
+      "savedRows": 76,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6089DB78A0CD46": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:11:10.724Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:11:10.724Z",
+      "savedRows": 219,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "0924D59636AB43": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:12:23.459Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:12:23.459Z",
+      "savedRows": 160,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6B9BF02309174C": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:13:24.970Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:13:24.970Z",
+      "savedRows": 195,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "71336307E26842": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:14:42.188Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:14:42.188Z",
+      "savedRows": 368,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "66C543F09B1F11": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:15:46.585Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:15:46.585Z",
+      "savedRows": 220,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A19C02013AB74A": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:16:48.476Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:16:48.476Z",
+      "savedRows": 236,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "52739F48E4CE48": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:18:57.702Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:18:57.702Z",
+      "savedRows": 75,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "92292F66666048": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:32:41.357Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:32:41.357Z",
+      "savedRows": 526,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4DC9F1C8BFA349": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:33:54.748Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:33:54.748Z",
+      "savedRows": 570,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "668DF3E7B46A4B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:34:56.416Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:34:56.416Z",
+      "savedRows": 545,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E28CCC4F63484B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:36:01.729Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:36:01.729Z",
+      "savedRows": 778,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "3E553E9572C84E": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:37:14.990Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:37:14.990Z",
+      "savedRows": 492,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "7E805664208E4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:38:16.978Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:38:16.978Z",
+      "savedRows": 506,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "09F75D7D285443": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:39:18.906Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:39:18.906Z",
+      "savedRows": 426,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D7B2DE627D4540": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:40:56.960Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:40:56.960Z",
+      "savedRows": 255,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "86C714EEC7EC48": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:42:01.909Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:42:01.909Z",
+      "savedRows": 212,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "50EABA45BA2D4E": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:43:07.154Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:43:07.154Z",
+      "savedRows": 463,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "EDC41E5D12CE4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:46:29.976Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:46:29.976Z",
+      "savedRows": 111,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4A9BD8C5889242": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:47:44.082Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:47:44.082Z",
+      "savedRows": 293,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A3F1474D52264C": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:48:46.249Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:48:46.249Z",
+      "savedRows": 121,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9F2CFE5098DF4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:49:47.941Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:49:47.941Z",
+      "savedRows": 114,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A576423F843601": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:51:20.001Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:51:20.001Z",
+      "savedRows": 96,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5E4F6E68145C40": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:52:22.051Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:52:22.051Z",
+      "savedRows": 261,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1877DE33FEE94C": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:53:35.596Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:53:35.596Z",
+      "savedRows": 211,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "77112101BB4349": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:55:10.941Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:55:10.941Z",
+      "savedRows": 152,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "50DE00DEC67845": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:56:12.549Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:56:12.549Z",
+      "savedRows": 174,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B6BA4AF4AE48C1": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T05:57:14.215Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T05:57:14.215Z",
+      "savedRows": 184,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4A004EBEB5DE49": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T06:00:04.240Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T06:00:04.240Z",
+      "savedRows": 261,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F0D46559AEE74A": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T06:01:05.926Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T06:01:05.926Z",
+      "savedRows": 266,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D41F2392545D4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T06:02:07.623Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T06:02:07.623Z",
+      "savedRows": 61,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "CAE01ED112324B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T06:04:27.345Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T06:04:27.345Z",
+      "savedRows": 141,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1923958E8F0949": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:27:12.727Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:27:12.727Z",
+      "savedRows": 309,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "94DA7C95C5D844": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:28:59.007Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:28:59.007Z",
+      "savedRows": 550,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "7B37700724A743": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:32:33.653Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:32:33.653Z",
+      "savedRows": 394,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "38A6F355CE7942": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:34:20.055Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:34:20.055Z",
+      "savedRows": 348,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E3E4F1341FCF47": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:36:08.717Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:36:08.717Z",
+      "savedRows": 154,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4BB245C38A1644": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:39:44.143Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:39:44.143Z",
+      "savedRows": 62,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F3434D628AAC6D": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:41:29.792Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:41:29.792Z",
+      "savedRows": 169,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4A8E4FA406BF45": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:43:16.285Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:43:16.285Z",
+      "savedRows": 218,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "EAFE49F392EED8": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:45:00.507Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:45:00.507Z",
+      "savedRows": 297,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "CB0FC4E876F540": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:46:48.223Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:46:48.223Z",
+      "savedRows": 116,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "8037DAF5CCFD4B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:48:34.494Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:48:34.494Z",
+      "savedRows": 163,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C003D5A4C3C24A": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:50:23.359Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:50:23.359Z",
+      "savedRows": 444,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C7276F2BABC94E": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:52:09.228Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:52:09.228Z",
+      "savedRows": 93,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4AB3E1B3605E4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:53:58.618Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:53:58.618Z",
+      "savedRows": 278,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "01B8061DA2D04E": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:55:44.274Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:55:44.274Z",
+      "savedRows": 184,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "141A7DC4174C4B": {
+      "status": "manual",
+      "checkedAt": "2026-10-29T23:57:35.749Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-29T23:57:35.749Z",
+      "savedRows": 519,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A37022C19B0146": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T00:01:12.770Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T00:01:12.770Z",
+      "savedRows": 312,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B289882110604F": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T00:02:59.864Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T00:02:59.864Z",
+      "savedRows": 391,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "18387FEB9B184D": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T00:04:49.984Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T00:04:49.984Z",
+      "savedRows": 286,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "54C91C74F65240": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:46:14.504Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:46:14.504Z",
+      "savedRows": 377,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C635D0FD9CBB4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:47:40.745Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:47:40.745Z",
+      "savedRows": 97,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4A984FFFB06724": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:49:32.355Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:49:32.355Z",
+      "savedRows": 305,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "21C459BCFD4540": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:51:30.587Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:51:30.587Z",
+      "savedRows": 662,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "866C11514EF943": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:53:18.610Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:53:18.610Z",
+      "savedRows": 455,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "81C4CB7EFA8F4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:55:08.669Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:55:08.669Z",
+      "savedRows": 525,
+      "newestSwim": "10/16/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "14F140640DE943": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:57:01.257Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:57:01.257Z",
+      "savedRows": 307,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "DD2C370151E64C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T03:58:52.465Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T03:58:52.465Z",
+      "savedRows": 477,
+      "newestSwim": "10/16/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "550C2D736E244C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:00:52.619Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:00:52.619Z",
+      "savedRows": 273,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "77A23F35899044": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:02:46.398Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:02:46.398Z",
+      "savedRows": 171,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F7D20F4D46A343": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:04:31.374Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:04:31.374Z",
+      "savedRows": 188,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5D4445881ADF48": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:06:19.474Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:06:19.474Z",
+      "savedRows": 386,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A93D381F8E2642": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:08:04.901Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:08:04.901Z",
+      "savedRows": 136,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5681C82DF4FA48": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:09:55.647Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:09:55.647Z",
+      "savedRows": 212,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "ACCB3962A1C743": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:11:42.335Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:11:42.335Z",
+      "savedRows": 206,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "3DD41AF7AB3B41": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:13:27.586Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:13:27.586Z",
+      "savedRows": 265,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4D1AD3F33EB846": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:15:20.207Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:15:20.207Z",
+      "savedRows": 225,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A68EE16CE62D4B": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:17:10.712Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:17:10.712Z",
+      "savedRows": 403,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B728AE3360424F": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:18:57.687Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:18:57.687Z",
+      "savedRows": 390,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B532049E2D5F4E": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:20:51.704Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:20:51.704Z",
+      "savedRows": 388,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "DE72F98FC47545": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:22:45.418Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:22:45.418Z",
+      "savedRows": 610,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4C1AB665821A4C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:24:33.185Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:24:33.185Z",
+      "savedRows": 140,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E677362E90D842": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:26:22.064Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:26:22.064Z",
+      "savedRows": 498,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "AC0C6593436649": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:28:15.916Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:28:15.916Z",
+      "savedRows": 437,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5F80B8F0FBD445": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:30:08.737Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:30:08.737Z",
+      "savedRows": 534,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "761B6A693B1342": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T04:32:04.846Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T04:32:04.846Z",
+      "savedRows": 421,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "26FE6A0FB67B43": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:04:38.551Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:04:38.551Z",
+      "savedRows": 121,
+      "newestSwim": "09/27/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BE38587AE0134F": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:06:25.355Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:06:25.355Z",
+      "savedRows": 384,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6F03D253220940": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:08:12.473Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:08:12.473Z",
+      "savedRows": 418,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "61EFF9953F3C48": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:09:56.609Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:09:56.609Z",
+      "savedRows": 295,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "274539741C4348": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:13:04.637Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:13:04.637Z",
+      "savedRows": 330,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "218476CDC13947": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:14:51.735Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:14:51.735Z",
+      "savedRows": 336,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C788747AD2D54B": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:16:39.447Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:16:39.447Z",
+      "savedRows": 267,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F160727C8C0D4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:19:41.966Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:19:41.966Z",
+      "savedRows": 269,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "182A168B650B46": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:21:24.858Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:21:24.858Z",
+      "savedRows": 465,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "28C2B131A0C746": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:23:07.983Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:23:07.983Z",
+      "savedRows": 297,
+      "newestSwim": "10/16/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "768CEBB6C87F4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:24:54.578Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:24:54.578Z",
+      "savedRows": 174,
+      "newestSwim": "10/11/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D46DDDE52AC841": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:26:36.409Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:26:36.409Z",
+      "savedRows": 78,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "2DD39D1DCD3947": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:28:21.263Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:28:21.263Z",
+      "savedRows": 345,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "8C228F8056BB4C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:30:12.648Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:30:12.648Z",
+      "savedRows": 188,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "77493A17946444": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:31:55.464Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:31:55.464Z",
+      "savedRows": 168,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B71384AB37834A": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:33:37.777Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:33:37.777Z",
+      "savedRows": 358,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F4A103EF1DEB45": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:35:28.297Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:35:28.297Z",
+      "savedRows": 497,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BAFD10F009654E": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:37:12.605Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:37:12.605Z",
+      "savedRows": 362,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5E13D20FFC694D": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:39:33.757Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:39:33.757Z",
+      "savedRows": 483,
+      "newestSwim": "10/24/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A27FA4E01F2947": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T05:41:17.973Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T05:41:17.973Z",
+      "savedRows": 605,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D257F43286564B": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T11:40:28.173Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T11:40:28.173Z",
+      "savedRows": 422,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "0AC9F73B6C2040": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T11:42:09.383Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T11:42:09.383Z",
+      "savedRows": 612,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C61C894A3B9D43": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T11:43:53.761Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T11:43:53.761Z",
+      "savedRows": 603,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "894295B359D84D": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T11:45:44.001Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T11:45:44.001Z",
+      "savedRows": 341,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6BFB8C43279C48": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:12:51.679Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:12:51.679Z",
+      "savedRows": 481,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "72B200B0F3C44C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:15:03.327Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:15:03.327Z",
+      "savedRows": 221,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C1FE3F1B1B7244": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:21:57.840Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:21:57.840Z",
+      "savedRows": 307,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "539F87B5418248": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:24:12.757Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:24:12.757Z",
+      "savedRows": 630,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B300215F6D1540": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:26:25.280Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:26:25.280Z",
+      "savedRows": 628,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "EDFB4871F30348": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:28:43.986Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:28:43.986Z",
+      "savedRows": 351,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9B7E35B3028042": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:30:54.228Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:30:54.228Z",
+      "savedRows": 457,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E46E8886C12F46": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:33:15.492Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:33:15.492Z",
+      "savedRows": 462,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "653DDD5EB72241": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:36:14.298Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:36:14.298Z",
+      "savedRows": 372,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "019C411D8450DF": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:37:58.236Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:37:58.236Z",
+      "savedRows": 373,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "7344E3B6E60A46": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:39:42.458Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:39:42.458Z",
+      "savedRows": 250,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B46296B091CD49": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:41:25.541Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:41:25.541Z",
+      "savedRows": 42,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A90C82019AD146": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:43:04.301Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:43:04.301Z",
+      "savedRows": 222,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D6597870845346": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:44:55.810Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:44:55.810Z",
+      "savedRows": 23,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F22C57721B5C43": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:46:35.196Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:46:35.196Z",
+      "savedRows": 473,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "41474FECA6BC47": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:48:20.919Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:48:20.919Z",
+      "savedRows": 327,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "75B7022B955841": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:50:04.904Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:50:04.904Z",
+      "savedRows": 476,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "94EF7572B73344": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:51:48.923Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:51:48.923Z",
+      "savedRows": 474,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "315EECB547514C": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:54:11.961Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:54:11.961Z",
+      "savedRows": 262,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "24F341F01E3743": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:55:57.065Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:55:57.065Z",
+      "savedRows": 520,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9CD77341B19840": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:57:43.651Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:57:43.651Z",
+      "savedRows": 441,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C3338465EFDF43": {
+      "status": "manual",
+      "checkedAt": "2026-10-30T23:59:25.501Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-30T23:59:25.501Z",
+      "savedRows": 543,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "44B0427766DD41": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:01:14.725Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:01:14.725Z",
+      "savedRows": 430,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "2D47F102DBF34C": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:02:55.474Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:02:55.474Z",
+      "savedRows": 116,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B28EFE54AC8F43": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:04:40.529Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:04:40.529Z",
+      "savedRows": 345,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A5F9CB2A2B6444": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:06:39.090Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:06:39.090Z",
+      "savedRows": 90,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D3BD2E5B160747": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:08:19.950Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:08:19.950Z",
+      "savedRows": 217,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F2DE1686E4124B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:10:23.341Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:10:23.341Z",
+      "savedRows": 283,
+      "newestSwim": "10/10/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6EF1539A770346": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:12:09.015Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:12:09.015Z",
+      "savedRows": 113,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "848F400B880947": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:13:53.608Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:13:53.608Z",
+      "savedRows": 272,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BAD0AFA7FCD544": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:15:35.091Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:15:35.091Z",
+      "savedRows": 373,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "EB5279B52B2A40": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:17:27.638Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:17:27.638Z",
+      "savedRows": 338,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5E180EA17BE245": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:19:09.610Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:19:09.610Z",
+      "savedRows": 547,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "09E64D14DA924D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:20:55.207Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:20:55.207Z",
+      "savedRows": 467,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A0C730E789F649": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:22:41.246Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:22:41.246Z",
+      "savedRows": 447,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "094F5DAF650A43": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:24:25.859Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:24:25.859Z",
+      "savedRows": 454,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9C9006C641624D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:26:08.508Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:26:08.508Z",
+      "savedRows": 438,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "760EE2DCB3AF4C": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:27:58.552Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:27:58.552Z",
+      "savedRows": 381,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "AB5E59CF2D1640": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:29:39.378Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:29:39.378Z",
+      "savedRows": 184,
+      "newestSwim": "10/24/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E7DF655469EB44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:31:23.982Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:31:23.982Z",
+      "savedRows": 355,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "88C4ACA8EE464E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:33:09.467Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:33:09.467Z",
+      "savedRows": 302,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "07D3245587BE44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:34:53.302Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:34:53.302Z",
+      "savedRows": 327,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "372F9253618440": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:36:36.156Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:36:36.156Z",
+      "savedRows": 552,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "0404A35AD44D4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:38:25.459Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:38:25.459Z",
+      "savedRows": 66,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "164B3FF843BF4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:40:06.003Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:40:06.003Z",
+      "savedRows": 375,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "2B54618A8BEE4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:41:49.270Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:41:49.270Z",
+      "savedRows": 162,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1912BF7A55DF47": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:43:34.358Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:43:34.358Z",
+      "savedRows": 356,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "79428C6DEAE549": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:45:18.165Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:45:18.165Z",
+      "savedRows": 198,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "117FB6DE7DBA4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:46:58.531Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:46:58.531Z",
+      "savedRows": 254,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6B367E7944F849": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:48:46.147Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:48:46.147Z",
+      "savedRows": 66,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "31E9CADEE26B45": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:50:26.460Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:50:26.460Z",
+      "savedRows": 355,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "846F637357D44A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:52:10.968Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:52:10.968Z",
+      "savedRows": 373,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5F3857DA86D840": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:53:56.050Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:53:56.050Z",
+      "savedRows": 394,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C1DB9B76EAE044": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:55:39.387Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:55:39.387Z",
+      "savedRows": 243,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "CC4B077C2A044F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:57:20.215Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:57:20.215Z",
+      "savedRows": 270,
+      "newestSwim": "10/11/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E5BD42CE8EA65E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T00:59:08.347Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T00:59:08.347Z",
+      "savedRows": 174,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D442FB71468447": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:00:48.743Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:00:48.743Z",
+      "savedRows": 269,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9C23745028414E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:02:33.929Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:02:33.929Z",
+      "savedRows": 322,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "24E2CBD90FB949": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:04:19.765Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:04:19.765Z",
+      "savedRows": 165,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A038A3A70D7B4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:06:03.506Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:06:03.506Z",
+      "savedRows": 323,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F591D466138E49": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:07:43.877Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:07:43.877Z",
+      "savedRows": 151,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "DB896A0A7A2748": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:09:31.989Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:09:31.989Z",
+      "savedRows": 472,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E062F9147AD548": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:11:12.776Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:11:12.776Z",
+      "savedRows": 168,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "CFFC169275924B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:12:58.873Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:12:58.873Z",
+      "savedRows": 380,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D1FB08BFAD6D44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:35:51.333Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:35:51.333Z",
+      "savedRows": 416,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "EAD8C06157344B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:37:32.269Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:37:32.269Z",
+      "savedRows": 250,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1ABE1BD965DD45": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:40:35.020Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:40:35.020Z",
+      "savedRows": 728,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B0A0E99B156C44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:42:20.912Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:42:20.912Z",
+      "savedRows": 183,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "D24EA016199648": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:44:01.993Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:44:01.993Z",
+      "savedRows": 378,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E9D9C3711E594E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:45:56.733Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:45:56.733Z",
+      "savedRows": 283,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "067E20906DC144": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:47:37.432Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:47:37.432Z",
+      "savedRows": 229,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BAF34BD5706241": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:49:22.292Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:49:22.292Z",
+      "savedRows": 214,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "83BC43F5974C0E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:51:08.914Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:51:08.914Z",
+      "savedRows": 374,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "96EA27F784D349": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:52:52.909Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:52:52.909Z",
+      "savedRows": 274,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1C4AA228FBBC4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:54:33.793Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:54:33.793Z",
+      "savedRows": 201,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1D5164E5F2404A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:58:04.450Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:58:04.450Z",
+      "savedRows": 166,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FE488AC3E45248": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T01:59:48.073Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T01:59:48.073Z",
+      "savedRows": 249,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "64D18D20013E49": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:01:32.135Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:01:32.135Z",
+      "savedRows": 152,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F1023E33D92B4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:03:16.137Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:03:16.137Z",
+      "savedRows": 191,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E3B03FFE940743": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:04:56.210Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:04:56.210Z",
+      "savedRows": 64,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "749E379ACF7F47": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:06:54.271Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:06:54.271Z",
+      "savedRows": 149,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "24AB2D475CBF44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:08:34.612Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:08:34.612Z",
+      "savedRows": 277,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "43945D1757624B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:10:20.374Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:10:20.374Z",
+      "savedRows": 34,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "32C79DCAC9EB4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:12:05.548Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:12:05.548Z",
+      "savedRows": 250,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "AD3771F033224A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:13:51.110Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:13:51.110Z",
+      "savedRows": 34,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "48B2FE2EB11C4A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:15:31.026Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:15:31.026Z",
+      "savedRows": 223,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "71E67DE0797748": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:26:05.752Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:26:05.752Z",
+      "savedRows": 244,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "85B74BB0AF218B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:27:46.096Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:27:46.096Z",
+      "savedRows": 185,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "79026E548C8245": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:29:36.221Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:29:36.221Z",
+      "savedRows": 137,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "AF914CB7464A44": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:31:16.514Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:31:16.514Z",
+      "savedRows": 138,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "54293E5AAF5B45": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:33:00.846Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:33:00.846Z",
+      "savedRows": 246,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9798446D9CFA98": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:34:48.529Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:34:48.529Z",
+      "savedRows": 340,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "495C3579EDC246": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:36:34.459Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:36:34.459Z",
+      "savedRows": 391,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "52FCAFA065F44D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:38:16.223Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:38:16.223Z",
+      "savedRows": 310,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FC67C5E6091744": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:40:04.648Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:40:04.648Z",
+      "savedRows": 45,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "68316AA1ECF446": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:41:44.385Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:41:44.385Z",
+      "savedRows": 83,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "DE63055D0D9842": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:43:33.533Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:43:33.533Z",
+      "savedRows": 460,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F8674BAEB13B46": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:45:19.091Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:45:19.091Z",
+      "savedRows": 286,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "96068E36705643": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:47:02.796Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:47:02.796Z",
+      "savedRows": 331,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "642C491180E8FC": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:48:43.585Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:48:43.585Z",
+      "savedRows": 232,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "39122347D47C43": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:50:35.578Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:50:35.578Z",
+      "savedRows": 336,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FE0E7D0C5EF54E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:52:16.572Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:52:16.572Z",
+      "savedRows": 342,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4E85B7A6D1B449": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:53:59.801Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:53:59.801Z",
+      "savedRows": 171,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "0A55B867D1E743": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:55:45.381Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:55:45.381Z",
+      "savedRows": 258,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "421EB0A4881C43": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:57:27.405Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:57:27.405Z",
+      "savedRows": 219,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4CCA6020ACB448": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T02:59:07.726Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T02:59:07.726Z",
+      "savedRows": 258,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FBD480C363D74D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:00:56.890Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:00:56.890Z",
+      "savedRows": 106,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "9EF36148D1D94E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:02:36.526Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:02:36.526Z",
+      "savedRows": 76,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "29320A9E178443": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:04:19.454Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:04:19.454Z",
+      "savedRows": 110,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "53696833F49644": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:06:06.994Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:06:06.994Z",
+      "savedRows": 395,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F9C2C3181F1948": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:07:53.749Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:07:53.749Z",
+      "savedRows": 125,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BA7742A1C6C842": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:09:34.121Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:09:34.121Z",
+      "savedRows": 267,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "78599CE70AD043": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:37:52.932Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:37:52.932Z",
+      "savedRows": 204,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "B333027C65AD4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:40:48.156Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:40:48.156Z",
+      "savedRows": 139,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "4DD3DE46AFFC4D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:42:32.164Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:42:32.164Z",
+      "savedRows": 186,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "97C38963A3114D": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:45:26.132Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:45:26.132Z",
+      "savedRows": 177,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "88C63D0F665546": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:47:03.580Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:47:03.580Z",
+      "savedRows": 122,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "647C3CB43E9843": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:48:43.495Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:48:43.495Z",
+      "savedRows": 148,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "11548897515544": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:50:22.704Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:50:22.704Z",
+      "savedRows": 179,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "93B68F30441644": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:52:04.697Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:52:04.697Z",
+      "savedRows": 235,
+      "newestSwim": "09/26/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "84A1411E91F0B6": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:53:42.385Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:53:42.385Z",
+      "savedRows": 306,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "6B6C961367234A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:55:26.169Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:55:26.169Z",
+      "savedRows": 131,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "3ED04EBBA8FBA6": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:57:06.644Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:57:06.644Z",
+      "savedRows": 166,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "3BF95C46554B45": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T03:58:49.199Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T03:58:49.199Z",
+      "savedRows": 220,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "76EE5F02833F46": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:00:29.958Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:00:29.958Z",
+      "savedRows": 134,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "024ADEDEEE5842": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:02:14.140Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:02:14.140Z",
+      "savedRows": 124,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "53CF91BB01E84E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:03:52.443Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:03:52.443Z",
+      "savedRows": 98,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A974135E9A984B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:05:34.948Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:05:34.948Z",
+      "savedRows": 128,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1FD85D1728774F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:07:12.475Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:07:12.475Z",
+      "savedRows": 160,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "E75D9BFDD53749": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:08:54.556Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:08:54.556Z",
+      "savedRows": 91,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "86F6E3267FF046": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:10:32.440Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:10:32.440Z",
+      "savedRows": 154,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1CFE61E27B4744": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:17:18.185Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:17:18.185Z",
+      "savedRows": 188,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FD655A8C9FA14A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:13:56.855Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:13:56.855Z",
+      "savedRows": 166,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "84C34ACFB29229": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:15:37.439Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:15:37.439Z",
+      "savedRows": 184,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "0B649A3BE34245": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:19:01.268Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:19:01.268Z",
+      "savedRows": 103,
+      "newestSwim": "10/17/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FFDE7086EC5740": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:20:38.720Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:20:38.720Z",
+      "savedRows": 180,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "1F1F24787DE347": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:22:21.169Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:22:21.169Z",
+      "savedRows": 97,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "5D82EDD7B3204A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:24:01.036Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:24:01.036Z",
+      "savedRows": 141,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "192C84B116E443": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:25:41.169Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:25:41.169Z",
+      "savedRows": 55,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "77D4191AEF4548": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:28:28.904Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:28:28.904Z",
+      "savedRows": 267,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "8A43171274FE48": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:31:23.623Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:31:23.623Z",
+      "savedRows": 47,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "952BFB8DAA304F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:33:01.386Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:33:01.386Z",
+      "savedRows": 26,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "21CDB2B805B74F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:34:43.936Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:34:43.936Z",
+      "savedRows": 189,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "49A1ADA64D6445": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:36:21.353Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:36:21.353Z",
+      "savedRows": 232,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "69BC128103CE4C": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:38:03.364Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:38:03.364Z",
+      "savedRows": 250,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "326B324F7DDD49": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:39:40.709Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:39:40.709Z",
+      "savedRows": 129,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "FECAEAA19DBE4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:41:25.088Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:41:25.088Z",
+      "savedRows": 133,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "635C91F4472146": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:44:12.437Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:44:12.437Z",
+      "savedRows": 124,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A713F4ED44AD4F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:45:51.634Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:45:51.634Z",
+      "savedRows": 137,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "BBC8497EA52A42": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:47:35.829Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:47:35.829Z",
+      "savedRows": 230,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "23244A808CD1DA": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:49:13.413Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:49:13.413Z",
+      "savedRows": 237,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "46A15908E6564F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:50:55.082Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:50:55.082Z",
+      "savedRows": 146,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "ADDD910E54F74A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:52:35.461Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:52:35.461Z",
+      "savedRows": 166,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F9703687ECEB43": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:54:17.221Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:54:17.221Z",
+      "savedRows": 105,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "89D718E9275946": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:55:56.560Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:55:56.560Z",
+      "savedRows": 145,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "C70AA2834DA04B": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:57:39.015Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:57:39.015Z",
+      "savedRows": 159,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "18338D89F3DE40": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T04:59:16.828Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T04:59:16.828Z",
+      "savedRows": 163,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "96E181C7F9104C": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:01:01.274Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:01:01.274Z",
+      "savedRows": 132,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "886BA3C273DD40": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:02:42.031Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:02:42.031Z",
+      "savedRows": 150,
+      "newestSwim": "10/24/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "461F70FB34754E": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:05:28.494Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:05:28.494Z",
+      "savedRows": 49,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "329E47A19589C1": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:07:12.498Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:07:12.498Z",
+      "savedRows": 201,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "F9C64FBAA8EB09": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:08:52.629Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:08:52.629Z",
+      "savedRows": 170,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "8052273E9FEB47": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:10:33.857Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:10:33.857Z",
+      "savedRows": 176,
+      "newestSwim": "10/23/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "401776C2923940": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:12:14.191Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:12:14.191Z",
+      "savedRows": 67,
+      "newestSwim": "10/18/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "33F945DA488146": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:13:58.064Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:13:58.064Z",
+      "savedRows": 41,
+      "newestSwim": "10/04/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "155DE95A6FE64A": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:15:36.516Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:15:36.516Z",
+      "savedRows": 78,
+      "newestSwim": "10/25/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "820CF6F543494F": {
+      "status": "manual",
+      "checkedAt": "2026-10-31T05:17:22.507Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-10-31T05:17:22.507Z",
+      "savedRows": 56,
+      "newestSwim": "10/25/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     }
   }

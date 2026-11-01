@@ -3,6 +3,21 @@ const assert=require('node:assert/strict');
 const I=require('../insights-engine.js');
 const data=require('../time-standards.json');
 const rated=(stroke,ratio)=>({row:{event:'100 '+stroke+' SCY',time:'1:00.00'},ratio});
+test('event comparisons isolate age, division and course, deduplicate IDs, and rank ties',()=>{
+  const me={...swimmer('me','28.00'),name:'Selected',usaSwimmingMemberId:'one'};
+  const faster={...swimmer('fast','27.50'),name:'Faster'};
+  const slower={...swimmer('slow','29.00'),name:'Slower'};
+  const tied={...swimmer('tie','28.00'),name:'Tied'};
+  const otherAge={...swimmer('old','25.00','13'),name:'Older'};
+  const otherDivision={...swimmer('girl','25.00','12','girls'),name:'Other division'};
+  const result=I.eventComparison(me,[me,{...me,id:'duplicate'},faster,slower,tied,otherAge,otherDivision,swimmer('invalid','0.00')],'50 Free SCY','SCY');
+  assert.equal(result.rows.length,4);assert.equal(result.rank,2);
+  assert.equal(result.ahead,1);assert.equal(result.behind,1);assert.equal(result.tied,1);
+  assert.equal(result.rows[0].name,'Faster');assert.equal(result.rows[0].gapSeconds,.5);
+  assert.ok(result.rows[0].pace>100);assert.equal(result.rows.find(r=>r.isSelf).pace,100);
+  assert.equal(I.eventComparison(me,[me],'100 Fly SCY','SCY'),null);
+  assert.equal(I.eventComparison(me,[me,faster],'50 Free LCM','LCM').ahead,0);
+});
 test('yearly types isolate calendar years, course, and deduplicate history and bests',()=>{
   const motivational={};
   for(const stroke of ['breast','free','fly'])motivational['boys|11-12|100 '+stroke+' scy']={AAAA:'1:00.00'};

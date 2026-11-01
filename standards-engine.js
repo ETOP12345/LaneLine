@@ -28,7 +28,7 @@
   }
   function division(swimmer) {return swimmer.division === 'boys' ? 'boys' : 'girls';}
   function motivationalCuts(data, event, swimmer) {
-    return data.motivational[`${division(swimmer)}|${groupFor(swimmer.ageGroup)}|${eventKey(event)}`] || null;
+    return data?.motivational?.[`${division(swimmer)}|${groupFor(swimmer.ageGroup)}|${eventKey(event)}`] || null;
   }
   function meetCut(meet, event, swimmer) {
     const age = ageBounds(swimmer.ageGroup);

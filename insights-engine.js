@@ -6,7 +6,7 @@
     const rows=new Map();
     for(const row of sw.bestTimes||[]){
       const key=S.eventKey(row.event),time=S.centiseconds(row.time);
-      if(!key.endsWith(' '+course.toLowerCase())||!Number.isFinite(time)) continue;
+      if(!key.endsWith(' '+course.toLowerCase())||!Number.isFinite(time)||time<=0) continue;
       if(!rows.has(key)||time<S.centiseconds(rows.get(key).time)) rows.set(key,row);
     }
     return [...rows.values()];
@@ -14,15 +14,30 @@
   function strengths(sw,swimmers,course,data){
     return bestRows(sw,course).map(row=>{
       const key=S.eventKey(row.event),time=S.centiseconds(row.time);
-      const peers=swimmers.filter(p=>p.id!==sw.id&&p.division===sw.division&&String(p.ageGroup)===String(sw.ageGroup))
-        .map(p=>bestRows(p,course).find(r=>S.eventKey(r.event)===key)).filter(Boolean);
+      const seen=new Set([sw.usaSwimmingMemberId||sw.id]);
+      const population=swimmers.filter(p=>{const id=p.usaSwimmingMemberId||p.id;if(!id||seen.has(id)||p.division!==sw.division)return false;seen.add(id);return true;});
+      const eventPeers=population.map(p=>({age:Number(p.ageGroup),row:bestRows(p,course).find(r=>S.eventKey(r.event)===key)})).filter(p=>p.row);
+      const peers=eventPeers.filter(p=>p.age===Number(sw.ageGroup)).map(p=>p.row);
+      const older=eventPeers.filter(p=>p.age>=13&&p.age<=14).map(p=>p.row);
       const faster=peers.filter(p=>S.centiseconds(p.time)<time).length;
       const tied=peers.filter(p=>S.centiseconds(p.time)===time).length;
       const cuts=S.motivationalCuts(data,row.event,sw),levels=['AAAA','AAA','AA','A','BB','B'];
       const level=cuts?(levels.find(l=>time<=S.centiseconds(cuts[l]))||'Below B'):'N/A';
       const ratio=cuts?S.centiseconds(cuts.AAAA)/time:null;
-      return {row,level,ratio,rank:faster+1,total:peers.length+1,tied};
-    }).sort((a,b)=>(b.ratio??0)-(a.ratio??0));
+      const olderRank=older.filter(p=>S.centiseconds(p.time)<time).length+1;
+      return {row,level,ratio,rank:faster+1,total:peers.length+1,tied,olderRank,olderTotal:older.length+1,
+        peerScore:peers.length?1-faster/peers.length:null};
+    }).sort(comparePeerStrength);
+  }
+  function comparePeerStrength(a,b){
+    return Number(a.total<2)-Number(b.total<2)||a.rank-b.rank||
+      Number(a.olderTotal<2)-Number(b.olderTotal<2)||a.olderRank-b.olderRank||
+      (b.ratio??0)-(a.ratio??0)||String(a.row.event).localeCompare(String(b.row.event));
+  }
+  function signatureEvents(rows){
+    const rated=rows.filter(r=>r.total>=2).slice().sort(comparePeerStrength);
+    if(!rated.length)return [];
+    return rated.filter(r=>r.rank===rated[0].rank).slice(0,2);
   }
   function archetype(rows){
     const strokes=[['breast','Breaststroke','#68737d'],['im','Individual medley','#252b36'],['free','Freestyle','#263c79'],['fly','Butterfly','#3897de'],['back','Backstroke','#087b98']];
@@ -59,10 +74,29 @@
       return {...archetype(rated),year,raceCount:races.length,eventCount:rated.length};
     });
   }
+  function eventComparison(sw,swimmers,event,course){
+    const key=S.eventKey(event),self=bestRows(sw,course).find(r=>S.eventKey(r.event)===key);
+    if(!self)return null;
+    const selfTime=S.centiseconds(self.time),seen=new Set(),rows=[];
+    for(const peer of [sw,...swimmers]){
+      const identity=peer.usaSwimmingMemberId||peer.id;
+      if(!identity||seen.has(identity)||peer.division!==sw.division||String(peer.ageGroup)!==String(sw.ageGroup))continue;
+      seen.add(identity);
+      const row=bestRows(peer,course).find(r=>S.eventKey(r.event)===key);if(!row)continue;
+      const time=S.centiseconds(row.time),isSelf=identity===(sw.usaSwimmingMemberId||sw.id);
+      rows.push({id:identity,name:peer.name,team:peer.team||'',row,isSelf,
+        status:isSelf?'you':time<selfTime?'ahead':time>selfTime?'behind':'tied',
+        gapSeconds:Math.abs(time-selfTime)/100,pace:selfTime/time*100,centiseconds:time});
+    }
+    rows.sort((a,b)=>a.centiseconds-b.centiseconds||String(a.name).localeCompare(String(b.name)));
+    return {rows,rank:rows.filter(r=>r.centiseconds<selfTime).length+1,
+      ahead:rows.filter(r=>r.status==='ahead').length,behind:rows.filter(r=>r.status==='behind').length,
+      tied:rows.filter(r=>r.status==='tied').length};
+  }
   function goalProgress(goal,current){
     const now=S.centiseconds(current),start=S.centiseconds(goal.baseline),target=S.centiseconds(goal.cut);
     if(![now,start,target].every(Number.isFinite)||start<=target) return null;
     return {met:now<=target,drop:Math.max(0,now-target)/100,progress:Math.max(0,Math.min(100,(start-now)/(start-target)*100))};
   }
-  return {bestRows,strengths,archetype,yearlyArchetypes,goalProgress};
+  return {bestRows,strengths,comparePeerStrength,signatureEvents,archetype,yearlyArchetypes,eventComparison,goalProgress};
 });

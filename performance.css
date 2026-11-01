@@ -1,0 +1,100 @@
+/* Performance views share a brighter poolside palette; navigation stays unchanged. */
+:is(#best-page,#standards-page,#strengths-page,#goals-page){width:min(1120px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}
+.time-val,.times-table .time-val,.growth-scoreboard strong,.peer-time,.strength-time{font-family:'Manrope','DM Sans',sans-serif!important;font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:0}
+#best-page .card,#growth-page .card,#standards-page .card{border-radius:0;box-shadow:none;border:0}
+.athlete-heading{display:flex;align-items:center;gap:18px;padding:8px 0 24px;border-bottom:1px solid #d7e8f8;margin-bottom:20px}
+.athlete-heading h2{font-size:26px;line-height:1.3}.athlete-heading p{color:#58718b;font-size:13px}
+.athlete-portrait{width:84px;height:84px;flex:none;border-radius:50%;object-fit:cover;background:#d9efff}
+.swimmer-portrait{position:relative;display:inline-grid;place-items:center;overflow:hidden;border-radius:50%;background:#e4f1fc;color:#6c93b4;flex-shrink:0}
+.swimmer-portrait .portrait-placeholder{width:64%;height:64%;position:absolute}
+.swimmer-portrait>img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
+.swimmer-portrait.profile-avatar{display:grid;width:68px;height:68px;margin:0 auto 10px}
+.modal-portrait{width:32px;height:32px}
+.athlete-initials{display:grid;place-items:center;color:#1269c4;font-size:24px;font-weight:700;border:5px solid #dbedff}
+.usa-profile-link{display:inline-flex;gap:7px;align-items:center;color:#1b65b2;font-size:11px;margin-top:8px;text-decoration:none}.usa-profile-link img{width:25px;height:29px;object-fit:contain}
+.best-table{width:100%;border-collapse:collapse}.best-table thead th{background:#1974d2;color:white;font-family:'DM Sans',sans-serif;letter-spacing:0;padding:13px 12px;white-space:normal}
+.best-table tbody tr:nth-child(even){background:#f0f7ff}.best-table tbody tr:hover{background:#dfefff}.best-table td{padding:15px 12px;vertical-align:middle}.best-table .time-val{font-size:16px}.peer-rank{display:block;color:#1268c0;font-size:18px;font-weight:700}.peer-rank small{font-size:11px;font-weight:400;color:#59738d;display:block}
+.event-link{background:none;border:0;color:#145daa;font:inherit;font-weight:600;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px}.event-link:hover{text-decoration-color:currentColor}
+.standard-pill.top{background:#cfe5ff;color:#084f9e}.qual-chip{background:#ddf3ed;color:#176457;border:1px solid #b9ddd2}
+#standards-page .standards-table thead th,#standards-page .standards-table thead th:last-child{background:#1575cf;color:#fff;border-top:0;padding:13px 9px;font-family:'DM Sans',sans-serif;letter-spacing:0}
+#standards-page .standards-table tbody tr:nth-child(even){background:#eaf4ff}#standards-page .standards-table td:last-child{background:transparent}#standards-page .standards-table tr:hover{background:#d8ebff}
+.growth-photo{width:100%;height:150px;object-fit:cover;object-position:center 48%;display:block;margin-bottom:20px;border-bottom:5px solid #36bfd2}
+.chart-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.chart-controls select{width:auto;min-width:150px}.chart-controls label{color:#56728d;font-size:12px}
+.growth-legend{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:7px!important;padding:16px 0}
+.growth-event-button{display:flex;align-items:center;gap:8px;background:#f3f8ff;border:1px solid #d8e8fa;border-left:4px solid var(--event-color);border-radius:5px;padding:9px;color:#294861;font:inherit;font-size:12px;cursor:pointer;transition:background .15s,transform .15s;min-height:39px;text-align:left}
+.growth-event-button:hover{background:#e0efff;transform:translateY(-1px)}.growth-event-button[aria-pressed=true]{background:#d6eaff;border-color:#2071c7;color:#0c4f96;font-weight:700}.growth-event-button i{width:9px;height:9px;border-radius:50%;background:var(--event-color);flex:none}
+.growth-chart{overflow:hidden}.growth-chart [data-growth-event]:focus{outline:none;filter:drop-shadow(0 0 3px #2676cc)}
+.peer-lanes{display:grid;gap:9px;margin:20px 0}.peer-lane{display:grid;grid-template-columns:minmax(100px,155px) minmax(70px,1fr) 90px;align-items:center;gap:12px;border:0;background:#f2f7fc;padding:10px 12px;border-radius:5px;color:#254965;font:inherit;text-align:left;cursor:pointer}.peer-lane:hover{background:#e3effa}.peer-lane.is-you{background:#dcecff;outline:2px solid #2476d0}.peer-lane-name{font-size:12px;overflow-wrap:anywhere}.peer-lane-name small{display:block;color:#6b8096;font-size:10px}.peer-lane-track{height:20px;background:#e0eaf4;border-radius:3px;overflow:hidden}.peer-lane-fill{display:block;height:100%;background:var(--peer-color);transform-origin:left;animation:lane-fill .55s ease-out}.peer-time{font-size:16px;text-align:right}.peer-time small{display:block;font:10px 'DM Sans',sans-serif;color:#53708d}
+.peer-detail{grid-column:1/-1;font-size:12px;color:#496d8c}.peer-detail[hidden]{display:none}
+.signature-events{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0}.signature-event{padding:18px;border-left:5px solid #1879d4;background:#e7f2ff}.signature-event:nth-child(2){background:#e4f7f4;border-color:#159992}.signature-event h3{font-size:20px}.signature-event strong{display:block;font:700 28px 'Manrope',sans-serif;color:#0b5eae}.signature-event p{font-size:12px;color:#486a88}
+.strength-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0 28px}.strength-grid .insight-row{padding:18px 0;border-bottom:1px solid #d8e7f5}.strength-grid h3{font-size:16px}.strength-grid .race-track{height:8px;background:#e5eff9}.strength-grid .race-track span{background:#2388df}.strength-time{font-size:22px;color:#175c9e}.strength-grid .insight-meta{font-size:12px}.rank-pair{display:flex;justify-content:space-between;gap:10px;margin:10px 0;color:#4a6a86;font-size:12px}.rank-pair strong{color:#0a60b2}
+.meet-planner{margin:30px 0}.meet-planner h3{font-size:21px;margin-bottom:12px}.meet-option{border-top:3px solid #2184d9;background:#f2f8ff;margin:16px 0;padding:18px}.meet-option summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}.meet-option summary h4{font-size:17px}.meet-option summary small{color:#557594}.meet-format{color:#0e7091;background:#d9f3f7;font-size:11px;padding:4px 8px;white-space:normal}.meet-days{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:14px 0}.meet-day h5{font-size:14px;color:#1567b0}.meet-day li{margin:10px 0 10px 18px;font-size:13px}.meet-day small{display:block;color:#58728a}.meet-notice{font-size:12px;color:#735611;background:#fff1cc;padding:10px;margin:12px 0}.meet-links{font-size:12px;display:flex;gap:18px;flex-wrap:wrap}.meet-links a{color:#1268b5}.table-scroll{overflow:auto;max-width:100%}
+@keyframes lane-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:620px){:is(#best-page,#standards-page,#strengths-page,#goals-page){width:calc(100vw - 24px)}.athlete-heading h2{font-size:22px}.athlete-portrait{width:64px;height:64px}.growth-photo{height:105px}.peer-lane{grid-template-columns:90px minmax(45px,1fr) 70px;gap:7px;padding:9px 7px}.peer-time{font-size:13px}.best-table td,.best-table th{padding:10px 8px}.best-table>tbody>tr>td:nth-child(6){grid-column:1/-1}.signature-event strong{font-size:24px}.meet-option{padding:12px}.meet-option summary{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.peer-lane-fill{animation:none}.growth-event-button{transition:none}}
+
+/* Desktop workspaces use the available width, independent of the header. */
+.main{max-width:1800px;width:100%;padding-left:32px;padding-right:32px;box-sizing:border-box}
+.main>:is(#best-page,#growth-page,#standards-page,#strengths-page,#goals-page,#profiles-page,#zone-page,#analysis-page){width:100%;margin-left:0;transform:none;min-width:0}
+.profiles-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.profiles-grid .profile-card{min-width:0;padding:22px 16px}
+.profiles-grid .profile-name{overflow-wrap:anywhere}
+.strength-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 32px}
+.best-table th:nth-child(1){width:22%}.best-table th:nth-child(2){width:11%}.best-table th:nth-child(3){width:13%}.best-table th:nth-child(4){width:10%}.best-table th:nth-child(5){width:28%}.best-table th:nth-child(6){width:16%}
+@media(min-width:1100px){
+  #growth-page>.card{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,1fr)}
+  #growth-page>.card>.card-section{min-width:0;padding:26px 28px}
+  #growth-page>.card>.card-section:first-child,.growth-overview,.growth-advice{grid-column:1/-1}
+  .growth-race{border-left:1px solid #d7e8f8}
+  .growth-photo{height:180px}
+  .archetype-section{grid-template-columns:300px minmax(0,1fr);gap:48px}
+  .archetype-chart{width:300px;height:300px}
+  .archetype-section h3{font-size:32px}
+  .stroke-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+  .year-layout{grid-template-columns:minmax(280px,.8fr) minmax(0,1.6fr);gap:40px}
+  .signature-event{padding:24px}.signature-event strong{font-size:32px}
+  .meet-planner{min-width:0}.meet-days{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+}
+@media(min-width:1200px){
+  .best-table,.best-table>tbody{display:block}
+  .best-table>thead{display:none}
+  .best-table>tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+  .best-table>tbody>tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#f6faff;border:1px solid #cdddF0;border-top:3px solid #2586dc;border-radius:6px;overflow:hidden;min-width:0}
+  .best-table>tbody>tr:nth-child(even){background:#eff7ff}
+  .best-table>tbody>tr:hover{background:#e6f2ff}
+  .best-table>tbody>tr>td{display:block;width:auto;border:0;padding:14px 16px;min-width:0}
+  .best-table>tbody>tr>td:first-child{grid-column:1/-1;border:0;border-bottom:1px solid #d4e5f6;background:#e0efff}
+  .best-table>tbody>tr:hover>td:first-child{border-left:0}
+  .best-table>tbody>tr>td:nth-child(5){grid-column:span 2}
+  .best-table>tbody>tr>td[data-label]::before{content:attr(data-label);display:block;font-size:11px;font-weight:600;color:#557591;margin-bottom:7px}
+  .best-table .event-link{font-size:17px}.best-table .event-meet{font-size:12px}
+  .best-table .time-val{font-size:19px}.best-table .peer-rank{font-size:22px}
+  .best-table .all-targets .time-val{font-size:13px}
+}
+@media(max-width:1099px){.main{padding-left:20px;padding-right:20px}}
+@media(max-width:620px){.main{padding-left:12px;padding-right:12px}.profiles-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.strength-grid{grid-template-columns:minmax(0,1fr)}.profiles-grid .profile-card{padding:18px 10px}}
+
+:root{--motion-ease:cubic-bezier(.22,1,.36,1)}
+.page-tabs{position:relative;isolation:isolate}
+.page-tab{position:relative;z-index:1}
+.tab-motion-indicator{position:absolute;z-index:0;pointer-events:none;transform-origin:0 0;background:rgba(90,180,230,.12);border-bottom:2px solid var(--lane);box-sizing:border-box}
+.has-motion-indicator .page-tab.active{background:transparent;border-bottom-color:transparent}
+.profile-card,.signature-event,.best-summary-card,.year-option,.meet-option,.peer-lane{transition:transform 240ms var(--motion-ease),box-shadow 240ms var(--motion-ease),border-color 180ms,background 180ms}
+.swimmer-portrait>img{transition:transform 380ms var(--motion-ease)}
+.growth-event-button{transition:background 160ms,box-shadow 200ms var(--motion-ease),transform 240ms var(--motion-ease)}
+.growth-chart g[data-growth-event]{transition:opacity 180ms var(--motion-ease)}
+.course-toggle button,.btn-primary,.btn-secondary,.btn-ghost{transition:background 160ms,color 160ms,box-shadow 200ms var(--motion-ease),transform 160ms var(--motion-ease)}
+button:focus-visible,.profile-card:focus-within{outline:2px solid #2789dd;outline-offset:3px}
+.peer-lane-fill{animation:lane-fill 480ms var(--motion-ease)}
+.meet-option[open] .meet-days,.year-detail{animation:lane-arrive 240ms var(--motion-ease)}
+@media(hover:hover) and (pointer:fine){
+  .profile-card:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(28,91,143,.1);border-color:#76b5e5}
+  .profile-card:hover .swimmer-portrait>img{transform:scale(1.045)}
+  .signature-event:hover,.best-summary-card:hover{transform:translateY(-2px)}
+  .year-option:hover,.peer-lane:hover{transform:translateX(3px)}
+  .growth-event-button:hover{box-shadow:0 3px 9px rgba(29,102,164,.1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .tab-motion-indicator{transition:none}
+  .profile-card:hover,.signature-event:hover,.best-summary-card:hover,.year-option:hover,.peer-lane:hover,.profile-card:hover .swimmer-portrait>img{transform:none}
+}

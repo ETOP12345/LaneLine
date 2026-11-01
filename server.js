@@ -16,6 +16,12 @@ const usaSwimmingEvents = [
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
 const publicFiles = {
+  "/motion.js": { path:path.join(__dirname,"motion.js"), type:"text/javascript; charset=utf-8" },
+  "/swimmer-ui.js": { path:path.join(__dirname,"swimmer-ui.js"), type:"text/javascript; charset=utf-8" },
+  "/swimmer-photos.json": { path:path.join(__dirname,"swimmer-photos.json"), type:"application/json; charset=utf-8" },
+  "/performance.css": { path:path.join(__dirname,"performance.css"), type:"text/css; charset=utf-8" },
+  "/ui-media/pool.jpg": { path: path.join(__dirname,"ui-media/pool.jpg"), type:"image/jpeg" },
+  "/upcoming-meets.js": { path: path.join(__dirname,"upcoming-meets.js"), type:"text/javascript; charset=utf-8" },
   "/insights-engine.js": { path: path.join(__dirname, "insights-engine.js"), type: "text/javascript; charset=utf-8" },
   "/time-standards.json": { path: path.join(__dirname, "time-standards.json"), type: "application/json; charset=utf-8" },
   "/standards-engine.js": { path: path.join(__dirname, "standards-engine.js"), type: "text/javascript; charset=utf-8" },
@@ -44,13 +50,17 @@ const server = http.createServer(async (req, res) => {
     if (handled) return;
   }
 
+  if (urlPath.startsWith('/api/usa-swimming/') && !process.env.USA_SWIMMING_AUTHORIZATION) {
+    sendJson(res,503,{error:'USA Swimming refresh requires configured server authorization. Saved results remain available.'});
+    return;
+  }
   if (urlPath === "/api/usa-swimming/best-times") {
     const memberId = requestUrl.searchParams.get("memberId") || usaSwimmingMemberId;
     try {
       const bestTimes = await fetchUsaSwimmingBestTimes(memberId);
       sendJson(res, 200, { memberId, bestTimes, checkedAt: new Date().toISOString() });
     } catch (error) {
-      sendJson(res, 502, { error: "Could not refresh USA Swimming best times.", details: error.message });
+      sendJson(res, [401,403,429].includes(error.status)?error.status:502, { error: "Could not refresh USA Swimming best times.", details: error.message });
     }
     return;
   }
@@ -61,7 +71,7 @@ const server = http.createServer(async (req, res) => {
       const timeHistory = await fetchUsaSwimmingTimeHistory(memberId);
       sendJson(res, 200, { memberId, timeHistory, checkedAt: new Date().toISOString() });
     } catch (error) {
-      sendJson(res, 502, { error: "Could not refresh USA Swimming time history.", details: error.message });
+      sendJson(res, [401,403,429].includes(error.status)?error.status:502, { error: "Could not refresh USA Swimming time history.", details: error.message });
     }
     return;
   }
@@ -81,7 +91,8 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  const publicFile = publicFiles[urlPath];
+  const publicFile = publicFiles[urlPath] || (/^\/ui-media\/swimmers\/[A-F0-9]{14}\.jpg$/.test(urlPath)
+    ? {path:path.join(__dirname,urlPath.slice(1)),type:'image/jpeg'} : null);
   if (!publicFile) {
     sendText(res, 404, "Not found");
     return;
@@ -158,7 +169,9 @@ function requestJson(url, body) {
       response.on("data", chunk => { data += chunk; });
       response.on("end", () => {
         if (response.statusCode < 200 || response.statusCode >= 300) {
-          reject(new Error(data || `USA Swimming returned ${response.statusCode}`));
+          const error=new Error(`USA Swimming returned ${response.statusCode}: ${data.slice(0,250)}`);
+          error.status=response.statusCode;
+          reject(error);
           return;
         }
         try {
@@ -228,7 +241,7 @@ async function fetchUsaSwimmingBestTimes(memberId) {
   return mergeFastestRows(rows);
 }
 
-async function fetchUsaSwimmingTimeHistory(memberId) {
+async function fetchUsaSwimmingTimeHistory(memberId, request = requestJson) {
   const errors = [];
   const filterBodies = [
     {
@@ -270,11 +283,12 @@ async function fetchUsaSwimmingTimeHistory(memberId) {
   ];
   for (const body of filterBodies) {
     try {
-      const rows = await requestJson("https://times-api.usaswimming.org/swims/TimesSearch/GetAllTimesForFilters", body);
+      const rows = await request("https://times-api.usaswimming.org/swims/TimesSearch/GetAllTimesForFilters", body);
       const mapped = normalizeTimeRows(rows, "USA Swimming");
       if (mapped.length) return mapped;
       errors.push(`empty ${body.course || "all courses"}`);
     } catch (error) {
+      if([401,403,429].includes(error.status)||/\b(401|403|429)\b/.test(error.message))throw error;
       errors.push(`${body.course || "all courses"}: ${error.message}`);
     }
   }
@@ -467,5 +481,5 @@ function listen(port) {
   });
 }
 
-module.exports = { fetchUsaSwimmingTimeHistory, normalizeTimeRows };
+module.exports = { server, fetchUsaSwimmingTimeHistory, normalizeTimeRows };
 if (require.main === module) listen(preferredPort);
