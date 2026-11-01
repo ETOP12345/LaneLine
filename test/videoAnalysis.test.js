@@ -156,9 +156,11 @@ test('completed recommendations render in a dedicated result panel', () => {
   assert.match(html, /function safeAnalysisImageUrl/);
 });
 
-test('local dashboard integration and non-JSON API responses are handled', () => {
+test('native rankings integration and non-JSON API responses are handled', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.match(html, /western-zone-dashboard\/index\.html/);
+  assert.match(html, /rankings-engine\.js/);
+  assert.match(html, /id="rank-age"/);
+  assert.doesNotMatch(html, /<iframe[^>]+western-zone-dashboard/);
   assert.doesNotMatch(html, /etop12345\.github\.io/);
   assert.match(html, /https:\/\/laneline\.onrender\.com/);
   assert.match(html, /async function readVideoAnalysisJson/);

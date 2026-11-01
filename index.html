@@ -365,7 +365,7 @@ footer span{color:var(--lane)}
     </button>
     <button class="page-tab" id="ptab-zone" onclick="showPage('zone')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5m0 14h16M8 16l3-4 3 2 4-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Western Zone
+      Rankings
     </button>
     <button class="page-tab" id="ptab-profiles" onclick="showPage('profiles')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -584,7 +584,21 @@ footer span{color:var(--lane)}
 
 <!-- ══ WESTERN ZONE PAGE ══ -->
 <div id="zone-page" class="wide-page" style="display:none">
-  <iframe id="zone-dashboard-frame" class="dashboard-frame" src="western-zone-dashboard/index.html" title="Western Zone Dashboard" loading="lazy" onload="resizeZoneDashboard()"></iframe>
+  <section class="insights-surface rankings-surface">
+    <div class="section-label">Pacific Northwest</div><h2>Rankings</h2>
+    <div class="standards-toolbar rankings-controls">
+      <div class="field"><label for="rank-age">Age group</label><select id="rank-age" onchange="renderRankings()"><option>11-12</option><option>13-14</option></select></div>
+      <div class="field"><label for="rank-division">Division</label><select id="rank-division" onchange="renderRankings()"><option value="boys">Boys</option><option value="girls">Girls</option></select></div>
+      <div class="field"><label for="rank-course">Course</label><select id="rank-course" onchange="renderRankings()"><option>SCY</option><option>LCM</option></select></div>
+      <div class="field"><label for="rank-event">Event</label><select id="rank-event" onchange="renderRankings()"><option value="">Overall</option></select></div>
+      <div class="field"><label for="rank-team">Team</label><select id="rank-team" onchange="renderRankings()"><option value="">All teams</option></select></div>
+      <div class="field"><label for="rank-search">Swimmer</label><input type="search" id="rank-search" oninput="renderRankings()" placeholder="Search name"></div>
+    </div>
+    <p class="insight-meta">Saved PNS swimmers only; coverage is incomplete. Overall uses each swimmer's three strongest national AAAA pace indices, averaged. Three events are required. Not official PNS rankings or All-Stars selection.</p>
+    <div id="rank-summary" class="rank-summary"></div>
+    <div class="rankings-layout"><div class="rank-table-wrap"><table class="rank-table"><thead><tr><th>Rank</th><th>Swimmer</th><th>Team</th><th id="rank-value-heading">Pace index</th><th>Events</th></tr></thead><tbody id="rank-body"></tbody></table></div><aside id="rank-detail" class="rank-detail" aria-live="polite"><h3>Swimmer details</h3><p>Select a swimmer to see their ranked events.</p></aside></div>
+    <p class="insight-meta"><a href="https://www.pns.org/page/fast-times" target="_blank" rel="noopener">PNS Fast Times</a> · <a href="https://www.pns.org/page/news/534471/update-2025-all-stars" target="_blank" rel="noopener">All-Stars selection background (2025)</a></p>
+  </section>
 </div>
 
 <!-- ══ PROFILES PAGE ══ -->
@@ -714,6 +728,7 @@ footer span{color:var(--lane)}
 
 <script src="standards-engine.js"></script>
 <script src="insights-engine.js"></script>
+<script src="rankings-engine.js"></script>
 <script src="upcoming-meets.js"></script>
 <script src="swimmer-ui.js"></script>
 <script src="motion.js"></script>
@@ -960,8 +975,8 @@ function orderedSwimmers(){
 }
 
 function swimmerPortrait(sw,className){
-  const photo=LaneLineSwimmerUI.photoUrl(sw.photoUrl);
-  return `<span class="swimmer-portrait ${className}" role="img" aria-label="${escapeHtml(sw.name)}${photo?' photo':' — photo unavailable'}"><svg class="portrait-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-2a8 8 0 0 1 16 0v2"/></svg>${photo?`<img src="${escapeHtml(photo)}" alt="${escapeHtml(sw.name)}" loading="lazy" decoding="async" onerror="this.remove()">`:''}</span>`;
+  const initials=String(sw.name||'').trim().split(/\s+/).filter(Boolean).map(n=>Array.from(n)[0]).slice(0,2).join('').toUpperCase();
+  return `<span class="swimmer-portrait ${className}" role="img" aria-label="${escapeHtml(sw.name)} initials"><span class="portrait-initials" aria-hidden="true">${escapeHtml(initials)}</span></span>`;
 }
 
 function seedUsaSwimmingProfiles() {
@@ -1009,16 +1024,6 @@ async function refreshSeededSwimmersFromDataHubCache() {
       if (rosterLabel) rosterLabel.textContent = roster.importStatus === 'rate-limited'
         ? `Roster import paused: ${roster.swimmers.length} verified additions; ${roster.pendingCandidates} candidates still to check. Discovery is not yet complete.` : '';
     }
-    try {
-      const photosResponse=await fetch('swimmer-photos.json',{cache:'no-store'});
-      if(photosResponse.ok){
-        const photos=await photosResponse.json();
-        appState.swimmers.forEach(sw=>{
-          const photo=LaneLineSwimmerUI.photoUrl(photos[sw.usaSwimmingMemberId]);
-          if(photo)sw.photoUrl=photo;
-        });
-      }
-    } catch(error){console.warn('Swimmer photos unavailable:',error);}
     const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
     if (statusResponse.ok) {
       const status = await statusResponse.json();
@@ -1026,8 +1031,8 @@ async function refreshSeededSwimmersFromDataHubCache() {
       if (label) label.textContent = status.status === 'updated'
         ? `USA Swimming checked ${new Date(status.checkedAt).toLocaleString()}`
         : status.status === 'manual'
-          ? `Latest results imported ${new Date(status.checkedAt).toLocaleString()}. Daily access still needs authentication.`
-          : 'Daily USA Swimming check failed. Showing saved times; see GitHub Actions for the access error.';
+          ? `Latest browser import ${new Date(status.checkedAt).toLocaleString()}.`
+          : 'Showing saved times. Browser refreshes require a signed-in Data Hub session.';
     }
     const response = await fetch('datahub-history.json', { cache: 'no-store' });
     if (!response.ok) return;
@@ -1173,7 +1178,7 @@ renderGrowthPickers();
 loadVideoAnalysisConfig();
 refreshSeededSwimmersFromDataHubCache();
 loadVerifiedStandards();
-refreshSeededSwimmersFromUsaSwimming();
+// Signed-in browser refreshes update the shared history cache separately.
 setInterval(refreshSeededSwimmersFromDataHubCache, 5 * 60 * 1000);
 window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 window.addEventListener('DOMContentLoaded',()=>showPage('best'));
@@ -1194,7 +1199,7 @@ function showPage(page) {
     renderGrowthPickers();
     renderGrowthPage();
   }
-  if (page === 'zone') resizeZoneDashboard();
+  if (page === 'zone') renderRankings();
   if (page === 'analysis') loadVideoAnalysisConfig();
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
@@ -1209,27 +1214,27 @@ function animatePerformanceView(root){
   LaneLineMotion.reveal(root);
 }
 
-let zoneDashboardResizeObserver = null;
-function resizeZoneDashboard() {
-  const frame = document.getElementById('zone-dashboard-frame');
-  if (!frame) return;
-  try {
-    const doc = frame.contentDocument || frame.contentWindow.document;
-    if (!doc) return;
-    const height = Math.max(
-      doc.body ? doc.body.scrollHeight : 0,
-      doc.documentElement ? doc.documentElement.scrollHeight : 0,
-      900
-    );
-    frame.style.height = `${height + 20}px`;
-    if (zoneDashboardResizeObserver) zoneDashboardResizeObserver.disconnect();
-    if ('ResizeObserver' in window && doc.body) {
-      zoneDashboardResizeObserver = new ResizeObserver(() => resizeZoneDashboard());
-      zoneDashboardResizeObserver.observe(doc.body);
-    }
-  } catch (error) {
-    frame.style.height = '1100px';
-  }
+let rankingEntries=[];
+let rankingSelection=null;
+function renderRankings(){
+  const value=id=>document.getElementById(id).value;
+  const course=value('rank-course');
+  const eventSelect=document.getElementById('rank-event'),oldEvent=eventSelect.value;
+  const events=[...new Set(appState.swimmers.flatMap(sw=>LaneLineInsights.bestRows(sw,course).map(r=>LaneLineStandards.eventKey(r.event))))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  eventSelect.innerHTML='<option value="">Overall</option>'+events.map(event=>`<option value="${escapeHtml(event)}">${escapeHtml(event.replace(/\b\w/g,c=>c.toUpperCase()).replace(/Scy/g,'SCY').replace(/Lcm/g,'LCM'))}</option>`).join('');
+  if(events.includes(oldEvent))eventSelect.value=oldEvent;
+  const teamSelect=document.getElementById('rank-team'),oldTeam=teamSelect.value;
+  teamSelect.innerHTML='<option value="">All teams</option>'+[...new Set(appState.swimmers.map(sw=>sw.team).filter(Boolean))].sort().map(team=>`<option>${escapeHtml(team)}</option>`).join('');
+  teamSelect.value=oldTeam;
+  rankingEntries=LaneLineRankings.rank(appState.swimmers,{age:value('rank-age'),division:value('rank-division'),course,event:eventSelect.value},verifiedStandardsData||{});
+  const search=value('rank-search').trim().toLowerCase(),team=teamSelect.value;
+  const shown=rankingEntries.filter(e=>(!team||e.sw.team===team)&&e.sw.name.toLowerCase().includes(search));
+  document.getElementById('rank-summary').textContent=`${shown.length} shown · ${rankingEntries.length} ranked swimmers · ${value('rank-age')} ${course}`;
+  document.getElementById('rank-value-heading').textContent=eventSelect.value?'Best time':'Pace index';
+  document.getElementById('rank-body').innerHTML=shown.map(e=>`<tr class="${rankingSelection===(e.sw.usaSwimmingMemberId||e.sw.id)?'rank-selected':''}"><td><span class="rank-number">${e.rank}</span></td><td><button class="rank-swimmer" data-rank-id="${escapeHtml(e.sw.usaSwimmingMemberId||e.sw.id)}">${swimmerPortrait(e.sw,'ranking-avatar')}<span>${escapeHtml(e.sw.name)}<small>Age ${escapeHtml(e.sw.ageGroup)}</small></span></button></td><td>${escapeHtml(e.sw.team||'')}</td><td class="rank-result">${eventSelect.value?escapeHtml(e.selected.row.time):e.score.toFixed(2)}</td><td>${e.events.length}</td></tr>`).join('')||`<tr><td colspan="5">${!verifiedStandardsData&&!eventSelect.value?'Standards are loading. Choose an event to view time rankings.':'No saved results match these filters.'}</td></tr>`;
+  document.querySelectorAll('[data-rank-id]').forEach(button=>button.addEventListener('click',()=>{rankingSelection=button.dataset.rankId;renderRankings();}));
+  const selected=shown.find(e=>(e.sw.usaSwimmingMemberId||e.sw.id)===rankingSelection);
+  document.getElementById('rank-detail').innerHTML=selected?`${renderAthleteHeading(selected.sw)}<h3>Best events · ${course}</h3>`+selected.events.map(e=>`<div class="rank-event-detail"><strong>${escapeHtml(e.row.event)}</strong><span class="rank-result">${escapeHtml(e.row.time)}</span><small>${escapeHtml(e.row.meet||'')} · ${escapeHtml(e.row.date||'Date unavailable')}</small></div>`).join(''):'<h3>Swimmer details</h3><p>Select a swimmer to see their best events, meets and dates.</p>';
 }
 
 // ─── AUTH ─────────────────────────────────────────────────
@@ -1378,7 +1383,6 @@ function saveSwimmer() {
   };
   const existing = editingSwimmerId ? appState.swimmers.find(s => s.id === editingSwimmerId) : null;
   if (existing?.usaSwimmingMemberId) sw.usaSwimmingMemberId = existing.usaSwimmingMemberId;
-  if (existing?.photoUrl) sw.photoUrl = existing.photoUrl;
   if (editingSwimmerId) {
     appState.swimmers = appState.swimmers.map(s => s.id === editingSwimmerId ? sw : s);
   } else {
@@ -1578,7 +1582,7 @@ const worldRecordEstimates = {
   '50 fly lcm': 22.27, '100 fly lcm': 49.45, '200 fly lcm': 1 * 60 + 50.34, '200 im lcm': 1 * 60 + 54.00, '400 im lcm': 4 * 60 + 2.50
 };
 
-function refreshOpenInsights(){for(const page of ['strengths','goals']) if(document.getElementById(page+'-page')?.style.display!=='none') renderInsights(page);}
+function refreshOpenInsights(){for(const page of ['strengths','goals']) if(document.getElementById(page+'-page')?.style.display!=='none') renderInsights(page);if(document.getElementById('zone-page')?.style.display!=='none')renderRankings();}
 function renderInsights(page,setup=false) {
   const controls=document.getElementById(page+'-controls'),out=document.getElementById(page+'-results');
   if(setup||!controls.children.length){
@@ -2165,6 +2169,7 @@ function refreshStandardsViews(){
   for(const page of ['strengths','goals'])if(document.getElementById(page+'-page').style.display!=='none')renderInsights(page);
   if(document.getElementById('best-page').style.display!=='none')renderBestTimes();
   if(document.getElementById('growth-page').style.display!=='none')renderGrowthPage();
+  if(document.getElementById('zone-page')?.style.display==='block')renderRankings();
 }
 async function loadVerifiedStandards() {
   standardsLoadError='';

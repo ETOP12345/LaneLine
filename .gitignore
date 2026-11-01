@@ -3,3 +3,7 @@ node_modules/
 npm-debug.log*
 .DS_Store
 tmp/standards/
+tmp/privacy-rewrite/
+ui-media/swimmers/
+swimmer-photos.json
+swimmer-photo-progress.json

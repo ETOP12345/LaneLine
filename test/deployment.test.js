@@ -8,7 +8,7 @@ test('public deployment is skipped for private repositories',()=>{
   assert.match(workflow,/if: \$\{\{ !github\.event\.repository\.private \}\}/);
 });
 test('deployment includes frontend dependencies and does not require absent JS data files',()=>{
-  for(const name of ['index.html','datahub-history.json','swimmer-roster.json','time-standards.json','standards-engine.js','insights-engine.js','performance.css','motion.js','swimmer-ui.js','swimmer-photos.json','upcoming-meets.js']){
+  for(const name of ['index.html','datahub-history.json','swimmer-roster.json','time-standards.json','standards-engine.js','insights-engine.js','performance.css','motion.js','swimmer-ui.js','upcoming-meets.js']){
     assert.ok(fs.existsSync(path.join(root,name)),name+' exists');
     assert.ok(workflow.includes(name),name+' is packaged');
   }

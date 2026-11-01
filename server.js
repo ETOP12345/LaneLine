@@ -16,9 +16,9 @@ const usaSwimmingEvents = [
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
 const publicFiles = {
+  "/rankings-engine.js": { path:path.join(__dirname,"rankings-engine.js"), type:"text/javascript; charset=utf-8" },
   "/motion.js": { path:path.join(__dirname,"motion.js"), type:"text/javascript; charset=utf-8" },
   "/swimmer-ui.js": { path:path.join(__dirname,"swimmer-ui.js"), type:"text/javascript; charset=utf-8" },
-  "/swimmer-photos.json": { path:path.join(__dirname,"swimmer-photos.json"), type:"application/json; charset=utf-8" },
   "/performance.css": { path:path.join(__dirname,"performance.css"), type:"text/css; charset=utf-8" },
   "/ui-media/pool.jpg": { path: path.join(__dirname,"ui-media/pool.jpg"), type:"image/jpeg" },
   "/upcoming-meets.js": { path: path.join(__dirname,"upcoming-meets.js"), type:"text/javascript; charset=utf-8" },
@@ -91,8 +91,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  const publicFile = publicFiles[urlPath] || (/^\/ui-media\/swimmers\/[A-F0-9]{14}\.jpg$/.test(urlPath)
-    ? {path:path.join(__dirname,urlPath.slice(1)),type:'image/jpeg'} : null);
+  const publicFile = publicFiles[urlPath];
   if (!publicFile) {
     sendText(res, 404, "Not found");
     return;

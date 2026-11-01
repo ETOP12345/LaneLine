@@ -17,10 +17,5 @@
       return collator.compare(an[0],bn[0])||collator.compare(an[1],bn[1])||collator.compare(a.id,b.id);
     });
   }
-  function photoUrl(value){
-    if(typeof value!=='string')return '';
-    if(/^ui-media\/swimmers\/[A-F0-9]{14}\.jpg$/.test(value))return value;
-    try{const url=new URL(value);return url.protocol==='https:'?url.href:'';}catch{return '';}
-  }
-  return {ordered,nameParts,photoUrl};
+  return {ordered,nameParts};
 });

@@ -2,8 +2,6 @@ name: Daily LaneLine swimmer refresh
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '45 14 * * *'
 
 permissions:
   contents: write

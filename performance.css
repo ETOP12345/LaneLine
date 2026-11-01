@@ -7,6 +7,8 @@
 .athlete-portrait{width:84px;height:84px;flex:none;border-radius:50%;object-fit:cover;background:#d9efff}
 .swimmer-portrait{position:relative;display:inline-grid;place-items:center;overflow:hidden;border-radius:50%;background:#e4f1fc;color:#6c93b4;flex-shrink:0}
 .swimmer-portrait .portrait-placeholder{width:64%;height:64%;position:absolute}
+.portrait-initials{position:absolute;font:700 22px 'Manrope',sans-serif;color:#275f91}
+.swimmer-portrait.ranking-avatar{width:40px;height:40px}.ranking-avatar .portrait-initials{font-size:14px}
 .swimmer-portrait>img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
 .swimmer-portrait.profile-avatar{display:grid;width:68px;height:68px;margin:0 auto 10px}
 .modal-portrait{width:32px;height:32px}
@@ -39,7 +41,22 @@
 .profiles-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
 .profiles-grid .profile-card{min-width:0;padding:22px 16px}
 .profiles-grid .profile-name{overflow-wrap:anywhere}
-.strength-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 32px}
+.strength-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+#strengths-page .insights-surface{max-width:1180px;margin:0 auto}
+.rankings-controls{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:20px 0}
+.rankings-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:24px;align-items:start}
+.rank-table-wrap{overflow:auto}.rank-table{width:100%;border-collapse:collapse;text-align:left}
+.rank-table th{padding:12px;color:#466887;font-size:12px;background:#e6f2ff;white-space:nowrap}
+.rank-table td{padding:12px;border-bottom:1px solid #deebf8;font-size:13px}
+.rank-table tbody tr:hover,.rank-selected{background:#eff7ff}
+.rank-number{display:grid;place-items:center;width:30px;height:30px;border-radius:6px;background:#e0efff;color:#0b61b2;font-weight:700}
+.rank-swimmer{display:flex;align-items:center;gap:10px;border:0;background:none;font:inherit;color:#174a78;text-align:left;cursor:pointer;padding:0}
+.rank-swimmer small{display:block;color:#658097;margin-top:3px}.rank-result{font:600 17px 'Manrope',sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rank-detail{padding:20px;background:#f2f8ff;border-top:3px solid #2586dc;min-width:0}.rank-detail .athlete-heading{flex-wrap:wrap}.rank-detail .athlete-heading h2{font-size:22px}
+.rank-event-detail{display:grid;grid-template-columns:1fr auto;gap:8px;padding:15px 0;border-bottom:1px solid #d7e7f7}.rank-event-detail small{grid-column:1/-1;color:#577794}
+.rank-summary{padding:15px 0;color:#255a85;font-weight:600}
+@media(max-width:1000px){.rankings-controls{grid-template-columns:repeat(3,minmax(0,1fr))}.rankings-layout{grid-template-columns:1fr}}
+@media(max-width:620px){.strength-grid{grid-template-columns:1fr}.rankings-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .best-table th:nth-child(1){width:22%}.best-table th:nth-child(2){width:11%}.best-table th:nth-child(3){width:13%}.best-table th:nth-child(4){width:10%}.best-table th:nth-child(5){width:28%}.best-table th:nth-child(6){width:16%}
 @media(min-width:1100px){
   #growth-page>.card{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,1fr)}

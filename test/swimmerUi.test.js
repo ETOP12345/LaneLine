@@ -14,9 +14,10 @@ test('sort normalizes spacing and supports explicit family names',()=>{
   assert.deepEqual(ui.nameParts({name:' Anna  Erickson '}),['Erickson','Anna']);
   assert.deepEqual(ui.nameParts({name:'Andy Velazquez Diaz',familyName:'Velazquez Diaz',givenName:'Andy'}),['Velazquez Diaz','Andy']);
 });
-test('photo URLs reject executable, blob, and unsafe paths',()=>{
-  assert.equal(ui.photoUrl('javascript:alert(1)'),'');
-  assert.equal(ui.photoUrl('blob:https://example.com/id'),'');
-  assert.equal(ui.photoUrl('ui-media/swimmers/../../private'),'');
-  assert.equal(ui.photoUrl('ui-media/swimmers/72B200B0F3C44C.jpg'),'ui-media/swimmers/72B200B0F3C44C.jpg');
+test('athlete portraits only render initials and never load a photo manifest',()=>{
+  const html=require('node:fs').readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
+  const portrait=html.slice(html.indexOf('function swimmerPortrait('),html.indexOf('function seedUsaSwimmingProfiles('));
+  assert.match(portrait,/portrait-initials/);
+  assert.doesNotMatch(portrait,/<img|photoUrl/);
+  assert.doesNotMatch(html,/fetch\('swimmer-photos/);
 });
