@@ -584,21 +584,7 @@ footer span{color:var(--lane)}
 
 <!-- ══ WESTERN ZONE PAGE ══ -->
 <div id="zone-page" class="wide-page" style="display:none">
-  <section class="insights-surface rankings-surface">
-    <div class="section-label">Pacific Northwest</div><h2>Rankings</h2>
-    <div class="standards-toolbar rankings-controls">
-      <div class="field"><label for="rank-age">Age group</label><select id="rank-age" onchange="renderRankings()"><option>11-12</option><option>13-14</option></select></div>
-      <div class="field"><label for="rank-division">Division</label><select id="rank-division" onchange="renderRankings()"><option value="boys">Boys</option><option value="girls">Girls</option></select></div>
-      <div class="field"><label for="rank-course">Course</label><select id="rank-course" onchange="renderRankings()"><option>SCY</option><option>LCM</option></select></div>
-      <div class="field"><label for="rank-event">Event</label><select id="rank-event" onchange="renderRankings()"><option value="">Overall</option></select></div>
-      <div class="field"><label for="rank-team">Team</label><select id="rank-team" onchange="renderRankings()"><option value="">All teams</option></select></div>
-      <div class="field"><label for="rank-search">Swimmer</label><input type="search" id="rank-search" oninput="renderRankings()" placeholder="Search name"></div>
-    </div>
-    <p class="insight-meta">Saved PNS swimmers only; coverage is incomplete. Overall uses each swimmer's three strongest national AAAA pace indices, averaged. Three events are required. Not official PNS rankings or All-Stars selection.</p>
-    <div id="rank-summary" class="rank-summary"></div>
-    <div class="rankings-layout"><div class="rank-table-wrap"><table class="rank-table"><thead><tr><th>Rank</th><th>Swimmer</th><th>Team</th><th id="rank-value-heading">Pace index</th><th>Events</th></tr></thead><tbody id="rank-body"></tbody></table></div><aside id="rank-detail" class="rank-detail" aria-live="polite"><h3>Swimmer details</h3><p>Select a swimmer to see their ranked events.</p></aside></div>
-    <p class="insight-meta"><a href="https://www.pns.org/page/fast-times" target="_blank" rel="noopener">PNS Fast Times</a> · <a href="https://www.pns.org/page/news/534471/update-2025-all-stars" target="_blank" rel="noopener">All-Stars selection background (2025)</a></p>
-  </section>
+  <iframe id="ranking-dashboard-frame" class="dashboard-frame" src="rankings-dashboard.html" title="PNS Rankings" loading="lazy" style="width:100%;border:0;min-height:1000px"></iframe>
 </div>
 
 <!-- ══ PROFILES PAGE ══ -->
@@ -729,6 +715,8 @@ footer span{color:var(--lane)}
 <script src="standards-engine.js"></script>
 <script src="insights-engine.js"></script>
 <script src="rankings-engine.js"></script>
+<script src="relay-engine.js"></script>
+<script src="rankings-dashboard.js"></script>
 <script src="upcoming-meets.js"></script>
 <script src="swimmer-ui.js"></script>
 <script src="motion.js"></script>
@@ -1214,28 +1202,18 @@ function animatePerformanceView(root){
   LaneLineMotion.reveal(root);
 }
 
-let rankingEntries=[];
-let rankingSelection=null;
+let rankingCourse='SCY';
 function renderRankings(){
-  const value=id=>document.getElementById(id).value;
-  const course=value('rank-course');
-  const eventSelect=document.getElementById('rank-event'),oldEvent=eventSelect.value;
-  const events=[...new Set(appState.swimmers.flatMap(sw=>LaneLineInsights.bestRows(sw,course).map(r=>LaneLineStandards.eventKey(r.event))))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-  eventSelect.innerHTML='<option value="">Overall</option>'+events.map(event=>`<option value="${escapeHtml(event)}">${escapeHtml(event.replace(/\b\w/g,c=>c.toUpperCase()).replace(/Scy/g,'SCY').replace(/Lcm/g,'LCM'))}</option>`).join('');
-  if(events.includes(oldEvent))eventSelect.value=oldEvent;
-  const teamSelect=document.getElementById('rank-team'),oldTeam=teamSelect.value;
-  teamSelect.innerHTML='<option value="">All teams</option>'+[...new Set(appState.swimmers.map(sw=>sw.team).filter(Boolean))].sort().map(team=>`<option>${escapeHtml(team)}</option>`).join('');
-  teamSelect.value=oldTeam;
-  rankingEntries=LaneLineRankings.rank(appState.swimmers,{age:value('rank-age'),division:value('rank-division'),course,event:eventSelect.value},verifiedStandardsData||{});
-  const search=value('rank-search').trim().toLowerCase(),team=teamSelect.value;
-  const shown=rankingEntries.filter(e=>(!team||e.sw.team===team)&&e.sw.name.toLowerCase().includes(search));
-  document.getElementById('rank-summary').textContent=`${shown.length} shown · ${rankingEntries.length} ranked swimmers · ${value('rank-age')} ${course}`;
-  document.getElementById('rank-value-heading').textContent=eventSelect.value?'Best time':'Pace index';
-  document.getElementById('rank-body').innerHTML=shown.map(e=>`<tr class="${rankingSelection===(e.sw.usaSwimmingMemberId||e.sw.id)?'rank-selected':''}"><td><span class="rank-number">${e.rank}</span></td><td><button class="rank-swimmer" data-rank-id="${escapeHtml(e.sw.usaSwimmingMemberId||e.sw.id)}">${swimmerPortrait(e.sw,'ranking-avatar')}<span>${escapeHtml(e.sw.name)}<small>Age ${escapeHtml(e.sw.ageGroup)}</small></span></button></td><td>${escapeHtml(e.sw.team||'')}</td><td class="rank-result">${eventSelect.value?escapeHtml(e.selected.row.time):e.score.toFixed(2)}</td><td>${e.events.length}</td></tr>`).join('')||`<tr><td colspan="5">${!verifiedStandardsData&&!eventSelect.value?'Standards are loading. Choose an event to view time rankings.':'No saved results match these filters.'}</td></tr>`;
-  document.querySelectorAll('[data-rank-id]').forEach(button=>button.addEventListener('click',()=>{rankingSelection=button.dataset.rankId;renderRankings();}));
-  const selected=shown.find(e=>(e.sw.usaSwimmingMemberId||e.sw.id)===rankingSelection);
-  document.getElementById('rank-detail').innerHTML=selected?`${renderAthleteHeading(selected.sw)}<h3>Best events · ${course}</h3>`+selected.events.map(e=>`<div class="rank-event-detail"><strong>${escapeHtml(e.row.event)}</strong><span class="rank-result">${escapeHtml(e.row.time)}</span><small>${escapeHtml(e.row.meet||'')} · ${escapeHtml(e.row.date||'Date unavailable')}</small></div>`).join(''):'<h3>Swimmer details</h3><p>Select a swimmer to see their best events, meets and dates.</p>';
+  document.getElementById('ranking-dashboard-frame')?.contentWindow?.postMessage({type:'laneline-ranking-data',data:LaneLineRankingDashboard.data(appState.swimmers,verifiedStandardsData||{},rankingCourse)},location.origin);
 }
+window.addEventListener('message',event=>{
+  const frame=document.getElementById('ranking-dashboard-frame');
+  if(event.origin!==location.origin||event.source!==frame?.contentWindow)return;
+  if(event.data?.type==='laneline-ranking-ready')renderRankings();
+  if(event.data?.type==='laneline-ranking-course'&&['SCY','LCM'].includes(event.data.course)){rankingCourse=event.data.course;renderRankings();}
+  if(event.data?.type==='laneline-ranking-height'&&Number.isFinite(event.data.height))frame.style.height=Math.max(1000,Math.min(50000,event.data.height+8))+'px';
+  if(event.data?.type==='laneline-ranking-detail'&&Number.isFinite(event.data.offset))window.scrollTo({top:window.scrollY+frame.getBoundingClientRect().top+Math.max(0,Math.min(50000,event.data.offset))-20,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+});
 
 // ─── AUTH ─────────────────────────────────────────────────
 function updateNavAccount() {

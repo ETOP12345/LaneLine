@@ -159,7 +159,7 @@ test('completed recommendations render in a dedicated result panel', () => {
 test('native rankings integration and non-JSON API responses are handled', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.match(html, /rankings-engine\.js/);
-  assert.match(html, /id="rank-age"/);
+  assert.match(html, /id="ranking-dashboard-frame"/);
   assert.doesNotMatch(html, /<iframe[^>]+western-zone-dashboard/);
   assert.doesNotMatch(html, /etop12345\.github\.io/);
   assert.match(html, /https:\/\/laneline\.onrender\.com/);

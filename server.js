@@ -16,6 +16,8 @@ const usaSwimmingEvents = [
 const handleVideoAnalysis = createVideoAnalysisRouter();
 
 const publicFiles = {
+  "/relay-engine.js": { path:path.join(__dirname,"relay-engine.js"), type:"text/javascript; charset=utf-8" },
+  "/rankings-dashboard.js": { path:path.join(__dirname,"rankings-dashboard.js"), type:"text/javascript; charset=utf-8" },
   "/rankings-engine.js": { path:path.join(__dirname,"rankings-engine.js"), type:"text/javascript; charset=utf-8" },
   "/motion.js": { path:path.join(__dirname,"motion.js"), type:"text/javascript; charset=utf-8" },
   "/swimmer-ui.js": { path:path.join(__dirname,"swimmer-ui.js"), type:"text/javascript; charset=utf-8" },
@@ -39,6 +41,11 @@ const server = http.createServer(async (req, res) => {
   const host = req.headers.host || "localhost";
   const requestUrl = new URL(req.url, `http://${host}`);
   const urlPath = decodeURIComponent(requestUrl.pathname);
+  if(urlPath==='/rankings-dashboard.html'){
+    const template=fs.readFileSync(path.join(__dirname,'western-zone-dashboard/index.html'),'utf8');
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});
+    res.end(require('./rankings-dashboard').shell(template));return;
+  }
 
   if (urlPath === "/healthz") {
     sendJson(res, 200, { ok: true, service: "laneline", checkedAt: new Date().toISOString() });
