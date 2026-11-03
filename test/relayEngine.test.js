@@ -3,6 +3,11 @@ const assert=require('node:assert/strict');
 const E=require('../relay-engine');
 const sw=(id,times,division='boys',team='Club')=>({id,name:id,team,ageGroup:'12',division,bestTimes:Object.entries(times).map(([event,time])=>({event:event+' SCY',time,meet:'Meet',date:'2026-10-01'}))});
 const options={age:'11-12',course:'SCY',division:'boys',event:'200-free'};
+test('swimmers who left PNS are not assigned to relays',()=>{
+  const swimmers=Array.from({length:4},(_,i)=>sw('S'+i,{'50 Free':'25.00'}));
+  swimmers[0].activePns=false;
+  assert.ok(E.predict(swimmers,options).every(row=>!row.complete));
+});
 test('A, B and C use twelve unique swimmers and sum exact centiseconds',()=>{
   const swimmers=Array.from({length:12},(_,i)=>sw('S'+i,{'50 Free':(20+i)+'.01'}));
   const rows=E.predict([...swimmers,swimmers[0]],options);

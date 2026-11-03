@@ -13,7 +13,7 @@ test('preview serves every standards dependency with the correct content type',a
     const standards=await fetch(base+'/time-standards.json');
     assert.equal(standards.status,200);assert.match(standards.headers.get('content-type'),/application\/json/);
     assert.ok(Object.keys((await standards.json()).motivational).length>400);
-    for(const name of ['standards-engine.js','insights-engine.js','rankings-engine.js','relay-engine.js']){
+    for(const name of ['standards-engine.js','insights-engine.js','rankings-engine.js','relay-engine.js','rankings-worker.js']){
       const response=await fetch(base+'/'+name);assert.equal(response.status,200);
       assert.match(response.headers.get('content-type'),/javascript/);assert.ok((await response.text()).length>100);
     }

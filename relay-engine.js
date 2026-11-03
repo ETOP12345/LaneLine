@@ -16,7 +16,7 @@
     const teams=new Map(),seen=new Set();
     for(const sw of swimmers){
       const id=sw.usaSwimmingMemberId||sw.id,n=Number(sw.ageGroup),team=String(sw.team||'').trim();
-      if(!id||seen.has(id)||!team||/^(unattached|un|unknown)$/i.test(team)||!['boys','girls'].includes(sw.division)||!Number.isFinite(n)||n<bounds[0]||n>bounds[1]||(sw.lsc&&sw.lsc!=='PN')||(division!=='mixed'&&sw.division!==division))continue;
+      if(sw.activePns===false||!id||seen.has(id)||!team||/^(unattached|un|unknown)$/i.test(team)||!['boys','girls'].includes(sw.division)||!Number.isFinite(n)||n<bounds[0]||n>bounds[1]||(sw.lsc&&sw.lsc!=='PN')||(division!=='mixed'&&sw.division!==division))continue;
       seen.add(id);
       const rows=I.bestRows(sw,course),legs=spec.strokes.map(stroke=>rows.find(r=>S.eventKey(r.event)===S.eventKey(spec.distance+' '+stroke+' '+course)));
       if(!teams.has(team))teams.set(team,[]);

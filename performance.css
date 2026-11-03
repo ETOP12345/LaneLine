@@ -8,6 +8,7 @@
 .swimmer-portrait{position:relative;display:inline-grid;place-items:center;overflow:hidden;border-radius:50%;background:#e4f1fc;color:#6c93b4;flex-shrink:0}
 .swimmer-portrait .portrait-placeholder{width:64%;height:64%;position:absolute}
 .portrait-initials{position:absolute;font:700 22px 'Manrope',sans-serif;color:#275f91}
+.profile-age{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:10px}.profile-age label{display:flex;align-items:center;gap:8px;font-size:12px;color:#426588}.profile-age input{width:70px;min-width:0;padding:6px 8px;border:1px solid #b9d3ee;background:#f3f8ff;border-radius:5px;color:#174a78;font:inherit}
 .swimmer-portrait.ranking-avatar{width:40px;height:40px}.ranking-avatar .portrait-initials{font-size:14px}
 .swimmer-portrait>img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
 .swimmer-portrait.profile-avatar{display:grid;width:68px;height:68px;margin:0 auto 10px}

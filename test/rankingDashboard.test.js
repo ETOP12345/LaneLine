@@ -83,6 +83,12 @@ test('original dashboard renders live payloads, teams, age switches and swimmer 
   element('#relayDivision').value='mixed';
   element('#relayDivision').handlers.change();
   assert.match(element('#relayResults').innerHTML,/two boys and two girls/);
+  const relaySwimmers=Array.from({length:4},(_,i)=>({...sw,id:'relay'+i,name:'Relay Swimmer '+i}));
+  element('#relayDivision').value='boys';
+  listeners.message({source:parent,origin:location.origin,data:{type:'laneline-ranking-data',data:D.data(relaySwimmers,standards,'SCY')}});
+  const summary=element('#relayResults').innerHTML.match(/<summary>([\s\S]*?)<\/summary>/)[1];
+  for(let i=0;i<4;i++)assert.ok(summary.includes('Relay Swimmer '+i));
+  assert.match(summary,/relay-roster/);
   vm.runInContext("state.ageGroup='13-14';render();",context);
   assert.match(element('#rankingBody').innerHTML,/No swimmers/);
 });

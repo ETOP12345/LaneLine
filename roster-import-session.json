@@ -1,0 +1,17 @@
+{
+  "status": "needs-identity-review",
+  "localDate": "2026-11-02",
+  "source": "Signed-in USA Swimming Data Hub",
+  "note": "Resolved Jeff Yin using exact saved member ID and reference race. Current Data Hub age 7 and PC LSC exclude him from this roster. Katherine Van Dyk and Lucy McClintock remain unresolved after alternate-spelling and external-lead checks. No new swimmers added. Not a certified complete PNS roster.",
+  "nextCandidate": null,
+  "completedChecks": 3,
+  "confirmedOutsidePns": 1,
+  "addedSwimmers": 0,
+  "bestTimesOnlyImports": 0,
+  "fullHistoryImports": 0,
+  "totalSavedSwimmers": 537,
+  "remainingDiscoveryCandidates": 2,
+  "uncheckedCandidates": 0,
+  "identityReviewCandidates": 2,
+  "policy": "Current-age A required; below AA use best times only; AA or faster use full history. Preserve existing histories. Stop on login or rate-limit messages."
+}

@@ -90,3 +90,14 @@ test('authoritative rows correct screenshot history and best metadata', async ()
   assert.equal(context.mergeTimeHistoryRows([screenshot],[row]).length,1);
   assert.equal(context.mergeBestTimeRows([screenshot],[row])[0].source,'USA Swimming');
 });
+test('large history merges use indexed lookups rather than repeated scans',async()=>{
+  const html=await fs.readFile(path.join(__dirname,'../index.html'),'utf8');
+  let normalized=0,dated=0;
+  const context={normalizeEventKey:s=>{normalized++;return s.toLowerCase();},parseRaceTime:Number,parseGrowthDate:s=>{dated++;return new Date(s);}};
+  vm.createContext(context);
+  vm.runInContext(html.slice(html.indexOf('function mergeBestTimeRows('),html.indexOf('// \u2500\u2500\u2500 INIT')),context);
+  const rows=Array.from({length:500},(_,i)=>({event:(i%10)+' Free SCY',time:String(30+i/100),date:'2026-01-01',meet:'Meet',source:'USA Swimming'}));
+  assert.equal(context.mergeTimeHistoryRows(rows,rows).length,500);
+  assert.ok(normalized<rows.length*8,'event normalization is linear');
+  assert.ok(dated<rows.length*8,'dates are parsed once before sorting');
+});

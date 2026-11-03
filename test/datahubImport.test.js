@@ -3,7 +3,28 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const os = require('node:os');
 const path = require('node:path');
-const {importSnapshot} = require('../scripts/import-datahub-history');
+const {importSnapshot,checkEligibility} = require('../scripts/import-datahub-history');
+const standards=require('../standards-engine');
+const standardsData=require('../time-standards.json');
+
+test('A-only snapshot saves personal bests without manufacturing race history',async()=>{
+  const directory=await fs.mkdtemp(path.join(os.tmpdir(),'laneline-bests-'));
+  try{
+    const id='ABCDEF12345678',profile={name:'Test Swimmer',ageGroup:'12',division:'boys',team:'Club',lsc:'PN',usaSwimmingMemberId:id};
+    const cuts=standards.motivationalCuts(standardsData,'100 Free SCY',profile);
+    assert.equal(checkEligibility({profile,bestTimes:[{event:'100 Free SCY',time:cuts.A}]}).importMode,'best-times-only');
+    assert.equal(checkEligibility({profile,bestTimes:[{event:'100 Free SCY',time:cuts.AA}]}).importMode,'full-history');
+    await fs.writeFile(path.join(directory,'datahub-history.json'),JSON.stringify({[id]:[{event:'50 Free SCY',time:'30.00',date:'2026-01-01',meet:'Previous'}]}));
+    await fs.writeFile(path.join(directory,'datahub-refresh-status.json'),'{"swimmers":{}}');
+    const snapshot={scope:'pns-a-10-14',bestTimesOnly:true,events:['100 FR SCY'],meets:[],swimmers:{[id]:[[0,cuts.A]]},profiles:[profile]};
+    await importSnapshot(snapshot,directory);
+    const roster=JSON.parse(await fs.readFile(path.join(directory,'swimmer-roster.json'),'utf8'));
+    assert.equal(roster.swimmers[0].bestTimes[0].time,cuts.A);
+    assert.equal(roster.swimmers[0].bestTimes[0].date,undefined);
+    assert.equal(JSON.parse(await fs.readFile(path.join(directory,'datahub-history.json'),'utf8'))[id].length,1);
+    await assert.rejects(importSnapshot({...snapshot,swimmers:{[id]:[[0,cuts.AA]]}},directory),/below AA/);
+  }finally{await fs.rm(directory,{recursive:true,force:true});}
+});
 
 test('younger PNS scope accepts age nine, preserves older queue, and rejects age eleven', async () => {
   const directory=await fs.mkdtemp(path.join(os.tmpdir(),'laneline-younger-'));

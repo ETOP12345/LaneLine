@@ -5,6 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const vm = require('node:vm');
 const {importSnapshot} = require('../scripts/import-datahub-history');
+const {centiseconds} = require('../standards-engine');
 
 test('new verified profiles are added by member ID and age-out profiles rejected',async()=>{
   const directory=await fs.mkdtemp(path.join(os.tmpdir(),'laneline-roster-'));
@@ -76,13 +77,18 @@ test('shared history is not duplicated in browser storage but manual history sta
   assert.equal(context.appState.swimmers[0].timeHistory.length,2);
 });
 
-test('published roster has valid unique identities and race history',async()=>{
+test('published roster has valid unique identities and verified times',async()=>{
   const roster=JSON.parse(await fs.readFile(path.join(__dirname,'../swimmer-roster.json'),'utf8'));
   const histories=JSON.parse(await fs.readFile(path.join(__dirname,'../datahub-history.json'),'utf8'));
   assert.equal(new Set(roster.swimmers.map(s=>s.usaSwimmingMemberId)).size,roster.swimmers.length);
   for(const sw of roster.swimmers){
     assert.ok((sw.lsc==='PN'?['9','10','11','12','13','14']:['11','12']).includes(sw.ageGroup));
-    assert.ok(histories[sw.usaSwimmingMemberId].length>0);
+    if(sw.importMode==='best-times-only'){
+      assert.ok(sw.bestTimes?.length>0,sw.name);
+      assert.ok(sw.bestTimes.every(row=>centiseconds(row.time)>0),sw.name);
+    }else{
+      assert.ok(histories[sw.usaSwimmingMemberId]?.length>0,sw.name);
+    }
     assert.ok(sw.lsc==='PN'||['Bellevue Club Swim Team','Wave Aquatics','Pacific Dragons Swim Team'].includes(sw.team));
   }
 });

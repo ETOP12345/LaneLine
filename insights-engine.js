@@ -12,11 +12,20 @@
     return [...rows.values()];
   }
   function strengths(sw,swimmers,course,data){
+    const seen=new Set([sw.usaSwimmingMemberId||sw.id]),byEvent=new Map();
+    for(const peer of swimmers){
+      const id=peer.usaSwimmingMemberId||peer.id;
+      if(peer.activePns===false||!id||seen.has(id)||peer.division!==sw.division)continue;
+      seen.add(id);
+      for(const row of bestRows(peer,course)){
+        const key=S.eventKey(row.event);
+        if(!byEvent.has(key))byEvent.set(key,[]);
+        byEvent.get(key).push({age:Number(peer.ageGroup),row});
+      }
+    }
     return bestRows(sw,course).map(row=>{
       const key=S.eventKey(row.event),time=S.centiseconds(row.time);
-      const seen=new Set([sw.usaSwimmingMemberId||sw.id]);
-      const population=swimmers.filter(p=>{const id=p.usaSwimmingMemberId||p.id;if(!id||seen.has(id)||p.division!==sw.division)return false;seen.add(id);return true;});
-      const eventPeers=population.map(p=>({age:Number(p.ageGroup),row:bestRows(p,course).find(r=>S.eventKey(r.event)===key)})).filter(p=>p.row);
+      const eventPeers=byEvent.get(key)||[];
       const peers=eventPeers.filter(p=>p.age===Number(sw.ageGroup)).map(p=>p.row);
       const older=eventPeers.filter(p=>p.age>=13&&p.age<=14).map(p=>p.row);
       const faster=peers.filter(p=>S.centiseconds(p.time)<time).length;
@@ -80,7 +89,7 @@
     const selfTime=S.centiseconds(self.time),seen=new Set(),rows=[];
     for(const peer of [sw,...swimmers]){
       const identity=peer.usaSwimmingMemberId||peer.id;
-      if(!identity||seen.has(identity)||peer.division!==sw.division||String(peer.ageGroup)!==String(sw.ageGroup))continue;
+      if((peer.activePns===false&&peer!==sw)||!identity||seen.has(identity)||peer.division!==sw.division||String(peer.ageGroup)!==String(sw.ageGroup))continue;
       seen.add(identity);
       const row=bestRows(peer,course).find(r=>S.eventKey(r.event)===key);if(!row)continue;
       const time=S.centiseconds(row.time),isSelf=identity===(sw.usaSwimmingMemberId||sw.id);

@@ -662,19 +662,8 @@ footer span{color:var(--lane)}
     <div class="fields-grid">
       <div class="field full"><label>Full name</label><input type="text" id="sw-name" placeholder="e.g. Jamie Chen"/></div>
       <div class="field">
-        <label>Age group</label>
-        <select id="sw-age-group">
-          <option value="">Not specified</option>
-          <option>10 &amp; under</option>
-          <option>11–12</option>
-          <option>13–14</option>
-          <option>15–16</option>
-          <option>17–18</option>
-          <option>15 &amp; over</option>
-          <option>Senior / Open</option>
-          <option>College</option>
-          <option>Masters</option>
-        </select>
+        <label for="sw-age-group">Age</label>
+        <input type="number" id="sw-age-group" min="1" max="120" step="1"/>
       </div>
       <div class="field">
         <label>Division</label>
@@ -890,7 +879,7 @@ const alexWangUsaSwimmingProfile = {
 const aditeyaVermaUsaSwimmingProfile = {
   id: 'usas_08104D29B8F2BE',
   name: 'Aditeya Verma',
-  ageGroup: '12',
+  ageGroup: '13',
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
@@ -927,7 +916,7 @@ const andrewOuyangUsaSwimmingProfile = {
 const maxSunUsaSwimmingProfile = {
   id: 'usas_F889DA85F5164C',
   name: 'Max Sun',
-  ageGroup: '12',
+  ageGroup: '13',
   division: 'boys',
   stroke: '',
   team: 'Wave Aquatics',
@@ -987,6 +976,7 @@ function seedUsaSwimmingProfile(profile) {
     appState.swimmers[existingIndex] = {
       ...existing,
       ...profile,
+      ...LaneLineSwimmerUI.importedAge(existing,profile),
       bestTimes: profileTimes.length ? mergeBestTimeRows(existingTimes, profileTimes) : existingTimes,
       timeHistory: profileTimes.length ? mergeTimeHistoryRows(existingHistory, profileTimes) : existingHistory
     };
@@ -1009,8 +999,7 @@ async function refreshSeededSwimmersFromDataHubCache() {
       const roster = await rosterResponse.json();
       (roster.swimmers || []).forEach(profile => seedUsaSwimmingProfile(profile));
       const rosterLabel = document.getElementById('roster-import-status');
-      if (rosterLabel) rosterLabel.textContent = roster.importStatus === 'rate-limited'
-        ? `Roster import paused: ${roster.swimmers.length} verified additions; ${roster.pendingCandidates} candidates still to check. Discovery is not yet complete.` : '';
+      if (rosterLabel) rosterLabel.textContent = roster.complete?'':`Roster coverage is incomplete: ${appState.swimmers.length} saved swimmers; ${roster.pendingCandidates?roster.pendingCandidates+' discovery candidates still need verification.':'discovery is still in progress.'}`;
     }
     const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
     if (statusResponse.ok) {
@@ -1026,14 +1015,15 @@ async function refreshSeededSwimmersFromDataHubCache() {
     if (!response.ok) return;
     const histories = await response.json();
     let changed = false;
-    appState.swimmers.forEach(sw => {
+    for(const [index,sw] of appState.swimmers.entries()) {
       const rows = histories?.[sw.usaSwimmingMemberId];
-      if (!Array.isArray(rows) || !rows.length) return;
+      if (!Array.isArray(rows) || !rows.length) continue;
       sharedHistoryKeys.set(sw.usaSwimmingMemberId, new Set(rows.map(timeHistoryKey)));
       sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], rows);
       sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], rows);
       changed = true;
-    });
+      if(index%8===7)await new Promise(resolve=>setTimeout(resolve,0));
+    }
     if (!changed) return;
     saveState();
     if (appState.user) localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
@@ -1114,15 +1104,18 @@ async function refreshSwimmerBestTimes(profile) {
 
 function mergeBestTimeRows(existingRows, incomingRows) {
   const merged = [...existingRows];
+  const indices=new Map();
+  merged.forEach((row,index)=>{const key=normalizeEventKey(row.event);if(!indices.has(key))indices.set(key,index);});
   incomingRows.forEach(row => {
-    const index = merged.findIndex(existing => normalizeEventKey(existing.event) === normalizeEventKey(row.event));
-    if (index >= 0) {
+    const key=normalizeEventKey(row.event),index=indices.get(key);
+    if (index !== undefined) {
       const existingSeconds = parseRaceTime(merged[index].time);
       const incomingSeconds = parseRaceTime(row.time);
       if (!Number.isFinite(existingSeconds) || incomingSeconds < existingSeconds ||
           (incomingSeconds === existingSeconds && row.source === 'USA Swimming' && /Meet Mobile/i.test(merged[index].source || ''))) merged[index] = row;
       else merged[index] = { ...merged[index], meet: merged[index].meet || row.meet, date: merged[index].date || row.date, source: merged[index].source || row.source };
     } else {
+      indices.set(key,merged.length);
       merged.push(row);
     }
   });
@@ -1130,21 +1123,18 @@ function mergeBestTimeRows(existingRows, incomingRows) {
 }
 
 function mergeTimeHistoryRows(existingRows, incomingRows) {
-  const merged = existingRows.filter(existing => !(
-    /Meet Mobile/i.test(existing.source || '') && incomingRows.some(row =>
-      row.source === 'USA Swimming' && normalizeEventKey(row.event) === normalizeEventKey(existing.event) &&
-      parseGrowthDate(row.date)?.getTime() === parseGrowthDate(existing.date)?.getTime()
-    )
-  ));
+  const authoritative=new Set(incomingRows.filter(row=>row.source==='USA Swimming').map(row=>normalizeEventKey(row.event)+'|'+parseGrowthDate(row.date)?.getTime()));
+  const merged = existingRows.filter(existing => !(/Meet Mobile/i.test(existing.source||'')&&authoritative.has(normalizeEventKey(existing.event)+'|'+parseGrowthDate(existing.date)?.getTime())));
+  const keys=new Set(merged.map(timeHistoryKey));
   incomingRows.forEach(row => {
     const key = timeHistoryKey(row);
-    if (!merged.some(existing => timeHistoryKey(existing) === key)) merged.push(row);
+    if (!keys.has(key)){keys.add(key);merged.push(row);}
   });
-  return merged.sort((a, b) => {
-    const eventOrder = String(a.event || '').localeCompare(String(b.event || ''));
+  return merged.map(row=>({row,event:String(row.event||''),date:parseGrowthDate(row.date)?.getTime()||0})).sort((a, b) => {
+    const eventOrder = a.event.localeCompare(b.event);
     if (eventOrder) return eventOrder;
-    return (parseGrowthDate(a.date)?.getTime() || 0) - (parseGrowthDate(b.date)?.getTime() || 0);
-  });
+    return a.date-b.date;
+  }).map(entry=>entry.row);
 }
 
 function timeHistoryKey(row) {
@@ -1203,8 +1193,33 @@ function animatePerformanceView(root){
 }
 
 let rankingCourse='SCY';
+let rankingWorker=null,rankingRequest=0;
+const rankingCache=new Map(),rankingJobs=new Map();
 function renderRankings(){
-  document.getElementById('ranking-dashboard-frame')?.contentWindow?.postMessage({type:'laneline-ranking-data',data:LaneLineRankingDashboard.data(appState.swimmers,verifiedStandardsData||{},rankingCourse)},location.origin);
+  if(document.getElementById('zone-page')?.style.display==='none')return;
+  const frame=document.getElementById('ranking-dashboard-frame');
+  const swimmers=appState.swimmers.map(({id,usaSwimmingMemberId,name,team,ageGroup,division,lsc,activePns,bestTimes})=>({id,usaSwimmingMemberId,name,team,ageGroup,division,lsc,activePns,bestTimes}));
+  const signature=JSON.stringify(swimmers),standards=verifiedStandardsData,course=rankingCourse,id=++rankingRequest;
+  const publish=data=>frame?.contentWindow?.postMessage({type:'laneline-ranking-data',data},location.origin);
+  const cached=rankingCache.get(course);
+  if(cached?.signature===signature&&cached.standards===standards){publish(cached.data);return;}
+  const fallback=()=>setTimeout(()=>{if(id!==rankingRequest)return;const data=LaneLineRankingDashboard.data(swimmers,standards||{},course);rankingCache.set(course,{signature,standards,data});publish(data);},0);
+  if(typeof Worker==='undefined'){fallback();return;}
+  try{
+    if(!rankingWorker){
+      rankingWorker=new Worker('rankings-worker.js');
+      rankingWorker.onmessage=event=>{
+        const job=rankingJobs.get(event.data.id);rankingJobs.delete(event.data.id);
+        if(!job)return;
+        if(event.data.error){job.fallback();return;}
+        rankingCache.set(job.course,{signature:job.signature,standards:job.standards,data:event.data.data});
+        if(event.data.id===rankingRequest)publish(event.data.data);
+      };
+      rankingWorker.onerror=()=>{rankingWorker.terminate();rankingWorker=null;const jobs=[...rankingJobs.values()];rankingJobs.clear();jobs.forEach(job=>job.fallback());};
+    }
+    rankingJobs.set(id,{signature,standards,course,fallback});
+    rankingWorker.postMessage({id,swimmers,standards:standards||{},course});
+  }catch{rankingJobs.delete(id);fallback();}
 }
 window.addEventListener('message',event=>{
   const frame=document.getElementById('ranking-dashboard-frame');
@@ -1348,6 +1363,8 @@ function saveSwimmer() {
     return;
   }
   const parsedRows = parseBestTimesInput(document.getElementById('sw-best-times').value);
+  const ageValue=document.getElementById('sw-age-group').value;
+  if(ageValue&&!LaneLineSwimmerUI.validAge(ageValue)){document.getElementById('sw-age-group').reportValidity();return;}
   const sw = {
     id: editingSwimmerId || ('sw_' + Date.now()),
     name,
@@ -1360,6 +1377,7 @@ function saveSwimmer() {
     timeHistory: mergeTimeHistoryRows([], parsedRows),
   };
   const existing = editingSwimmerId ? appState.swimmers.find(s => s.id === editingSwimmerId) : null;
+  if(existing){sw.sourceAgeGroup=existing.sourceAgeGroup??existing.ageGroup;if(ageValue&&(existing.manualAge||ageValue!==existing.ageGroup))sw.manualAge=ageValue;if(!ageValue)sw.ageGroup=sw.sourceAgeGroup;}
   if (existing?.usaSwimmingMemberId) sw.usaSwimmingMemberId = existing.usaSwimmingMemberId;
   if (editingSwimmerId) {
     appState.swimmers = appState.swimmers.map(s => s.id === editingSwimmerId ? sw : s);
@@ -1391,7 +1409,16 @@ function deleteSwimmer(id) {
   renderAnalysisPicker();
 }
 
+function setManualSwimmerAge(id,value){
+  const index=appState.swimmers.findIndex(sw=>sw.id===id);
+  if(index<0)return;
+  appState.swimmers[index]=LaneLineSwimmerUI.setAge(appState.swimmers[index],value);
+  saveState();
+  if(appState.user)localStorage.setItem('ll_swimmers_'+appState.user.email,JSON.stringify(persistedSwimmers()));
+  renderProfilesPage();renderBestTimesPicker();renderGrowthPickers();refreshStandardsViews();
+}
 function renderProfilesPage() {
+  if(document.getElementById('profiles-page')?.style.display==='none')return;
   const grid = document.getElementById('profiles-grid');
   const search = (document.getElementById('profiles-search')?.value || '').trim().toLowerCase();
   const team = document.getElementById('profiles-team')?.value || '';
@@ -1403,8 +1430,10 @@ function renderProfilesPage() {
     html += `<div class="profile-card">
       ${swimmerPortrait(sw,'profile-avatar')}
       <div class="profile-name">${escapeHtml(sw.name)}</div>
+      ${sw.activePns===false?`<div class="profile-tag">No longer active in PNS</div><div class="profile-meta">${escapeHtml(sw.rosterNote||'Saved results retained')}</div>`:''}
       ${sw.usaSwimmingMemberId?`<a class="usa-profile-link" href="https://data.usaswimming.org/search/athlete/${encodeURIComponent(sw.usaSwimmingMemberId)}/best-times" target="_blank" rel="noopener"><img src="https://prodswimsimages.usaswimming.org/swimShield.svg" alt="USA Swimming"/>Swimmer profile</a>`:''}
       <div class="profile-meta">${escapeHtml([sw.ageGroup, sw.division === 'boys' ? 'Boys/Men' : 'Girls/Women', sw.team].filter(Boolean).join(' · ') || 'No details yet')}</div>
+      <div class="profile-age"><label>Age <input type="number" min="1" max="120" step="1" data-swimmer-age="${escapeHtml(sw.id)}" aria-label="Age for ${escapeHtml(sw.name)}" value="${LaneLineSwimmerUI.validAge(sw.ageGroup)?escapeHtml(sw.ageGroup):''}" title="${sw.manualAge?'Manual age':'Imported age'}"></label>${sw.manualAge?`<button type="button" class="btn-ghost" data-age-reset="${escapeHtml(sw.id)}" aria-label="Use imported age for ${escapeHtml(sw.name)}" title="Use imported age">↺</button>`:''}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
       <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
@@ -1418,6 +1447,8 @@ function renderProfilesPage() {
     Add swimmer
   </div>`;
   grid.innerHTML = html;
+  grid.querySelectorAll('[data-swimmer-age]').forEach(input=>input.addEventListener('change',()=>{if(!input.value||!input.checkValidity()){input.reportValidity();return;}setManualSwimmerAge(input.dataset.swimmerAge,input.value);}));
+  grid.querySelectorAll('[data-age-reset]').forEach(button=>button.addEventListener('click',()=>setManualSwimmerAge(button.dataset.ageReset,null)));
   LaneLineMotion.reveal(grid);
 }
 
@@ -1648,6 +1679,7 @@ function pinPersonalGoal(index){
 }
 function removePersonalGoal(index){const {sw,row}=personalGoalContext(index);if(!row)return;const goals=readPersonalGoals();delete goals[sw.id+'|'+LaneLineStandards.eventKey(row.event)];try{localStorage.setItem('laneline-personal-goals',JSON.stringify(goals));renderInsights('goals');}catch{alert('This browser could not update your saved goals.');}}
 function renderGrowthPickers() {
+  if(document.getElementById('growth-page')?.style.display==='none')return;
   const swimmerSelect = document.getElementById('growth-swimmer');
   const courseSelect = document.getElementById('growth-course');
   const eventSelect = document.getElementById('growth-event');
