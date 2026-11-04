@@ -2,6 +2,7 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+const zlib = require("zlib");
 const { createVideoAnalysisRouter } = require("./videoAnalysis");
 
 const preferredPort = Number(process.argv[2] || process.env.PORT || 5180);
@@ -14,6 +15,7 @@ const usaSwimmingEvents = [
   [100, "IM"], [200, "IM"], [400, "IM"]
 ];
 const handleVideoAnalysis = createVideoAnalysisRouter();
+const compressedPublicFiles=new Map();
 
 const publicFiles = {
   "/rankings-worker.js": { path:path.join(__dirname,"rankings-worker.js"), type:"text/javascript; charset=utf-8" },
@@ -21,6 +23,8 @@ const publicFiles = {
   "/rankings-dashboard.js": { path:path.join(__dirname,"rankings-dashboard.js"), type:"text/javascript; charset=utf-8" },
   "/rankings-engine.js": { path:path.join(__dirname,"rankings-engine.js"), type:"text/javascript; charset=utf-8" },
   "/motion.js": { path:path.join(__dirname,"motion.js"), type:"text/javascript; charset=utf-8" },
+  "/fluid-engine.js": { path:path.join(__dirname,"fluid-engine.js"), type:"text/javascript; charset=utf-8" },
+  "/history-worker.js": { path:path.join(__dirname,"history-worker.js"), type:"text/javascript; charset=utf-8" },
   "/swimmer-ui.js": { path:path.join(__dirname,"swimmer-ui.js"), type:"text/javascript; charset=utf-8" },
   "/performance.css": { path:path.join(__dirname,"performance.css"), type:"text/css; charset=utf-8" },
   "/ui-media/pool.jpg": { path: path.join(__dirname,"ui-media/pool.jpg"), type:"image/jpeg" },
@@ -105,16 +109,28 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  fs.stat(publicFile.path,(statError,stat)=>{
+    if(statError){sendText(res,404,"Not found");return;}
+    const etag='"'+stat.size.toString(16)+'-'+Math.trunc(stat.mtimeMs).toString(16)+'"';
+    const headers={"Content-Type":publicFile.type,"Cache-Control":"no-cache",ETag:etag,Vary:"Accept-Encoding"};
+    if(req.headers['if-none-match']===etag){res.writeHead(304,responseHeaders(headers));res.end();return;}
+    const acceptsGzip=/\bgzip\b/.test(req.headers['accept-encoding']||'');
+    const cached=compressedPublicFiles.get(publicFile.path);
+    if(acceptsGzip&&cached?.etag===etag){res.writeHead(200,responseHeaders({...headers,'Content-Encoding':'gzip'}));res.end(cached.data);return;}
   fs.readFile(publicFile.path, (error, data) => {
     if (error) {
       sendText(res, 404, "Not found");
       return;
     }
-    res.writeHead(200, responseHeaders({
-      "Content-Type": publicFile.type,
-      "Cache-Control": "no-store, max-age=0"
-    }));
-    res.end(data);
+    if(data.length>2048&&/json|javascript|text\//.test(publicFile.type)&&acceptsGzip){
+      zlib.gzip(data,{level:4},(error,compressed)=>{
+        if(error){res.writeHead(200,responseHeaders(headers));res.end(data);return;}
+        compressedPublicFiles.set(publicFile.path,{etag,data:compressed});
+        if(compressedPublicFiles.size>32)compressedPublicFiles.delete(compressedPublicFiles.keys().next().value);
+        res.writeHead(200,responseHeaders({...headers,'Content-Encoding':'gzip'}));res.end(compressed);
+      });
+    }else{res.writeHead(200,responseHeaders(headers));res.end(data);}
+  });
   });
 });
 

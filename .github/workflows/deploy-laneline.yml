@@ -34,7 +34,7 @@ jobs:
       - name: Package public files only
         run: |
           mkdir -p _site/western-zone-dashboard/data
-          cp index.html datahub-history.json swimmer-roster.json time-standards.json standards-engine.js insights-engine.js rankings-engine.js relay-engine.js rankings-dashboard.js rankings-worker.js performance.css motion.js swimmer-ui.js upcoming-meets.js _site/
+          cp index.html datahub-history.json swimmer-roster.json time-standards.json standards-engine.js insights-engine.js rankings-engine.js relay-engine.js rankings-dashboard.js rankings-worker.js history-worker.js performance.css motion.js fluid-engine.js swimmer-ui.js upcoming-meets.js _site/
           node -e "const fs=require('fs');fs.writeFileSync('_site/rankings-dashboard.html',require('./rankings-dashboard').shell(fs.readFileSync('western-zone-dashboard/index.html','utf8')))"
           if test -f datahub-refresh-status.json; then cp datahub-refresh-status.json _site/; fi
           cp western-zone-dashboard/index.html _site/western-zone-dashboard/

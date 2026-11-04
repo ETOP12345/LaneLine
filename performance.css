@@ -41,6 +41,7 @@
 .main>:is(#best-page,#growth-page,#standards-page,#strengths-page,#goals-page,#profiles-page,#zone-page,#analysis-page){width:100%;margin-left:0;transform:none;min-width:0}
 .profiles-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
 .profiles-grid .profile-card{min-width:0;padding:22px 16px}
+.profiles-grid .profile-card{content-visibility:auto;contain-intrinsic-size:auto 320px}
 .profiles-grid .profile-name{overflow-wrap:anywhere}
 .strength-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
 #strengths-page .insights-surface{max-width:1180px;margin:0 auto}
@@ -125,6 +126,26 @@
 .hero .lane-line:nth-child(3n){animation-duration:8s;animation-delay:-6s}
 .hero .lane-line.is-lit{opacity:.75;box-shadow:0 0 12px rgba(68,203,237,.3)}
 @keyframes lane-rope-drift{from{transform:translateY(-48px)}to{transform:translateY(48px)}}
+.hero .lane-line:has(.lane-water-rope){background:none;box-shadow:none}
+.lane-water-rope{position:absolute;left:-58px;top:0;width:120px;height:100%;overflow:visible;pointer-events:none}
+.lane-water-rope path{fill:none;stroke-width:4;vector-effect:non-scaling-stroke}
+.lane-water-rope .rope-core{stroke:#23799d}
+.lane-water-rope .rope-floats{stroke:#8cdef0;stroke-dasharray:12 7}
+.hero .lane-line.is-lit .rope-floats{stroke:#c4f4ff;stroke-width:5}
+.hero.has-water .lanes{display:none}
+.hero.has-water{user-select:none}
+.hero>.banner-water{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:.7}
+.hero>.banner-fluid{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:.85}
+.hero.has-fluid>.banner-water{z-index:1}
+.hero.has-fluid>:not(canvas):not(.lanes){z-index:2}
+.hero.has-water h1,.hero.has-water p{text-shadow:0 2px 12px #0b1f3a,0 0 28px #0b1f3a}
+.hero h1{animation:banner-type-float 7s ease-in-out infinite}
+.hero>p{animation:banner-type-float 8.5s ease-in-out -3s infinite}
+@keyframes banner-type-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.water-word{display:inline-block;white-space:nowrap}
+.water-letter{display:inline-block;transform-origin:center 65%;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.water-letter{transform:none!important}}
+@media(prefers-reduced-motion:reduce){.hero h1,.hero>p{animation:none}}
 @media(max-width:620px){.hero .lane-line{width:3px;opacity:.18}}
 .page-tab svg{transition:transform 360ms var(--motion-ease),color 220ms}
 .page-tab.active svg{animation:tab-settle 500ms var(--motion-ease)}
@@ -230,6 +251,9 @@ body{background:#edf5fc}
 .year-option[aria-pressed=true]{background:#0b63c7;color:#fff;border-color:#0b63c7;box-shadow:4px 4px 0 #b5d6f4}
 .meet-option summary h4{color:#0757ad;font-weight:800}
 .meet-format{background:#ffdf79;color:#61470d;font-weight:700}
+.championship-meet{background:#e8f3ff;border-top-width:5px}
+.championship-meet .goal-stamp{display:inline-block;margin-bottom:8px}
+.championship-meet .meet-day ol li:first-child strong{color:#075fc5}
 .profile-card{border:1px solid #c4dbee;border-top:4px solid #167bd7;box-shadow:3px 3px 0 #d8e8f6}
 .profile-card:has(.favorite-swimmer[aria-pressed=true]){border-top-color:#ee695a;background:#fff9f5}
 .profile-name{font-family:'Manrope','DM Sans',sans-serif;font-weight:800;color:#103a63}
@@ -246,4 +270,103 @@ body{background:#edf5fc}
   #best-page .best-summary-card .value{font-size:28px}
   .growth-photo{height:130px}
   .signature-event strong{font-size:30px}
+}
+
+/* Quiet poolside motion, separate from the race data and chart markers. */
+span.time-val,.strength-time,.peer-time,.rank-result,.growth-scoreboard strong,.insight-heading>strong{
+  transform-origin:center;position:relative;
+}
+span.time-val{display:inline-block;max-width:100%}
+@keyframes race-time-pop{
+  0%,100%{scale:1}
+  40%{scale:1.2}
+  70%{scale:.96}
+}
+@media(hover:hover) and (pointer:fine){
+  :is(span.time-val,.strength-time,.peer-time,.rank-result,.growth-scoreboard strong,.insight-heading>strong):hover{
+    animation:race-time-pop 420ms cubic-bezier(.22,1,.36,1);z-index:2;
+    text-shadow:0 3px 12px rgba(33,124,211,.16);
+  }
+  .standards-table td:hover span.time-val{animation:race-time-pop 420ms cubic-bezier(.22,1,.36,1);color:#075fc5}
+  .peer-lane:focus-visible .peer-time{animation:race-time-pop 420ms cubic-bezier(.22,1,.36,1)}
+}
+@media(prefers-reduced-motion:reduce){
+  :is(span.time-val,.strength-time,.peer-time,.rank-result,.growth-scoreboard strong,.insight-heading>strong){animation:none!important;scale:1!important}
+}
+.archetype-chart{cursor:grab;touch-action:pan-y}
+.archetype-chart:active{cursor:grabbing}
+.archetype-chart:focus-visible{outline:3px solid #2586dc;outline-offset:5px;border-radius:50%}
+.best-summary-card{position:relative;overflow:hidden}
+.best-summary-card::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.3) 50%,transparent 75%);transform:translateX(-140%);pointer-events:none}
+.growth-event-button i{transition:transform 450ms var(--motion-ease),border-radius 300ms}
+.profile-avatar{transition:transform 450ms var(--motion-ease)}
+@media(hover:hover) and (pointer:fine){
+  .best-summary-card:hover::before{animation:summary-hover-glint 750ms var(--motion-ease)}
+  .growth-event-button:hover i{transform:rotate(180deg) scale(1.35);border-radius:2px}
+  .profile-card:hover .profile-avatar{transform:rotate(-7deg)}
+  .signature-event:hover{box-shadow:inset 5px 0 #2586dc,4px 5px 0 #d6e8f7}
+}
+@keyframes summary-hover-glint{to{transform:translateX(140%)}}
+@media(prefers-reduced-motion:reduce){.best-summary-card:hover::before{animation:none}.growth-event-button:hover i,.profile-card:hover .profile-avatar{transform:none}}
+.main .section-label{font-size:13px;font-weight:800;color:#0757ad}
+.main :is(h2,h3,h4){color:#103b68;font-weight:800;line-height:1.3}
+.main .athlete-heading h2{color:#07366c}
+.growth-scoreboard strong{font-size:30px;color:#075fc5;line-height:1.25}
+.growth-scoreboard :is(small,.label){color:#395b7c;font-weight:650}
+.strength-time{font-size:27px;color:#064d9d;font-weight:800}
+.insight-heading>strong{font-family:'Manrope','DM Sans',sans-serif;font-size:23px;color:#075fc5;font-variant-numeric:tabular-nums}
+.peer-rank{font-size:23px;font-weight:800;color:#075bb8}
+.peer-rank small{font-size:11px;font-weight:500;color:#47647e}
+.best-table td:nth-child(5)>.time-val{font-size:19px;font-weight:800;color:#134b7e}
+.best-table .event-link{font-weight:800;color:#084f9b}
+.best-table td[data-label]::before{font-weight:750!important;color:#385e81!important}
+.main .standard-pill{font-weight:800}
+.main .standard-pill.top{color:#fff}
+#standards-page .standards-table td:not(:first-child){font-weight:650;color:#143f68;font-variant-numeric:tabular-nums}
+#standards-page .standards-table td:first-child{font-weight:800;color:#0a4f94}
+.goal-stamp{font-size:13px;padding:5px 9px}
+.profile-name{font-size:18px}
+.page-tab.active{font-weight:800}
+@media(max-width:620px){.growth-scoreboard strong{font-size:24px}.insight-heading>strong{font-size:20px}.strength-time{font-size:24px}}
+.main .card-section:not(:last-child)::after,.roster-scope::after{
+  background-size:60px 3px;animation:pool-rope-flow 14s linear infinite;
+}
+.main .card-section:nth-child(even)::after{animation-direction:reverse}
+.main .section-label::before{background-size:60px 4px;animation:pool-rope-flow 10s linear infinite}
+@keyframes pool-rope-flow{to{background-position:60px 0}}
+.best-summary-card .label{position:relative;padding-right:20px}
+.best-summary-card .label::after{
+  content:'';position:absolute;right:0;top:1px;width:12px;height:12px;
+  background:currentColor;clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;animation:pool-flag-wave 6s ease-in-out infinite;
+  opacity:.75;pointer-events:none;
+}
+.best-summary-card:nth-child(2) .label::after{animation-delay:-2s}
+.best-summary-card:nth-child(3) .label::after{animation-delay:-4s}
+@keyframes pool-flag-wave{0%,65%,100%{transform:rotate(0)}75%{transform:rotate(14deg)}87%{transform:rotate(-9deg)}}
+.growth-scoreboard{position:relative}
+.growth-scoreboard::after{
+  content:'';position:absolute;left:0;bottom:0;width:42px;height:3px;
+  background:#36bdd8;animation:pool-score-drift 8s ease-in-out infinite;pointer-events:none;
+}
+@keyframes pool-score-drift{0%,15%,100%{transform:translateX(0);opacity:.3}50%,65%{transform:translateX(70px);opacity:.8}}
+.peer-lane-fill::after,.race-track span::after{animation:pool-progress-glint 9s var(--motion-ease) infinite}
+@keyframes pool-progress-glint{0%,70%{transform:translateX(-105%)}92%,100%{transform:translateX(105%)}}
+.favorite-swimmer[aria-pressed=true] svg{animation:pool-star-nod 9s ease-in-out infinite;transform-origin:center}
+@keyframes pool-star-nod{0%,80%,100%{transform:rotate(0)}86%{transform:rotate(-12deg)}93%{transform:rotate(8deg)}}
+.year-option[aria-pressed=true]{position:relative;overflow:hidden}
+.year-option[aria-pressed=true]::after{
+  content:'';position:absolute;right:10px;bottom:8px;width:16px;height:3px;
+  background:#a9edff;animation:pool-year-marker 4s ease-in-out infinite;pointer-events:none;
+}
+@keyframes pool-year-marker{0%,100%{transform:scaleX(.5);opacity:.4}50%{transform:scaleX(1);opacity:1}}
+@media(hover:hover) and (pointer:fine){
+  .profile-card:hover .portrait-initials{animation:pool-avatar-bob 1.8s ease-in-out infinite}
+  @keyframes pool-avatar-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+}
+@media(prefers-reduced-motion:reduce){
+  .main .card-section::after,.roster-scope::after,.main .section-label::before,
+  .best-summary-card .label::after,.growth-scoreboard::after,.peer-lane-fill::after,
+  .race-track span::after,.favorite-swimmer svg,.year-option::after,
+  .profile-card:hover .portrait-initials{animation:none!important}
 }

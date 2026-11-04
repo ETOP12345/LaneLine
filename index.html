@@ -712,6 +712,7 @@ footer span{color:var(--lane)}
 <script src="rankings-dashboard.js"></script>
 <script src="upcoming-meets.js"></script>
 <script src="swimmer-ui.js"></script>
+<script src="fluid-engine.js"></script>
 <script src="motion.js"></script>
 <script>
 const motivationalStandards = {};
@@ -1008,11 +1009,43 @@ async function refreshSeededSwimmersFromUsaSwimming() {
   }
 }
 
-async function refreshSeededSwimmersFromDataHubCache() {
+let historyRefreshJob=null,lastHistoryRefresh=0,historyCacheWorker=null;
+const sharedFileVersions=new Map();
+async function fetchChangedSharedJson(url){
+  const response=await fetch(url,{cache:'no-cache'});
+  if(!response.ok)return null;
+  const version=response.headers.get('etag')||response.headers.get('last-modified');
+  if(version&&sharedFileVersions.get(url)===version)return null;
+  const value=await response.json();if(version)sharedFileVersions.set(url,version);return value;
+}
+function readSharedHistories(){
+  if(typeof Worker==='undefined')return fetchChangedSharedJson('datahub-history.json');
+  return new Promise((resolve,reject)=>{
+    try{
+      if(!historyCacheWorker)historyCacheWorker=new Worker('history-worker.js');
+      const histories={};
+      historyCacheWorker.onmessage=event=>{
+        const message=event.data;
+        if(message.type==='batch')for(const [id,rows] of message.entries)histories[id]=rows;
+        if(message.type==='done')resolve(message.unchanged?null:histories);
+        if(message.type==='error')reject(Error(message.message));
+      };
+      historyCacheWorker.onerror=()=>{historyCacheWorker.terminate();historyCacheWorker=null;fetchChangedSharedJson('datahub-history.json').then(resolve,reject);};
+      historyCacheWorker.postMessage({type:'refresh'});
+    }catch{fetchChangedSharedJson('datahub-history.json').then(resolve,reject);}
+  });
+}
+function refreshSeededSwimmersFromDataHubCache() {
+  if(historyRefreshJob)return historyRefreshJob;
+  if(Date.now()-lastHistoryRefresh<60000)return Promise.resolve();
+  lastHistoryRefresh=Date.now();
+  historyRefreshJob=refreshSharedSwimmerCache().finally(()=>{historyRefreshJob=null;});
+  return historyRefreshJob;
+}
+async function refreshSharedSwimmerCache() {
   try {
-    const rosterResponse = await fetch('swimmer-roster.json', { cache: 'no-store' });
-    if (rosterResponse.ok) {
-      const roster = await rosterResponse.json();
+    const roster = await fetchChangedSharedJson('swimmer-roster.json');
+    if (roster) {
       (roster.swimmers || []).forEach(profile => seedUsaSwimmingProfile(profile));
       const rosterLabel = document.getElementById('roster-import-status');
       if (rosterLabel) rosterLabel.textContent = roster.complete?'':`Roster coverage is incomplete: ${appState.swimmers.length} saved swimmers; ${roster.pendingCandidates?roster.pendingCandidates+' discovery candidates still need verification.':'discovery is still in progress.'}`;
@@ -1027,10 +1060,9 @@ async function refreshSeededSwimmersFromDataHubCache() {
           ? `Latest browser import ${new Date(status.checkedAt).toLocaleString()}.`
           : 'Showing saved times. Browser refreshes require a signed-in Data Hub session.';
     }
-    const response = await fetch('datahub-history.json', { cache: 'no-store' });
-    if (!response.ok) return;
-    const histories = await response.json();
-    let changed = false;
+    const histories = await readSharedHistories()||{};
+    let changed = Boolean(roster);
+    let lastYield=performance.now();
     for(const [index,sw] of appState.swimmers.entries()) {
       const rows = histories?.[sw.usaSwimmingMemberId];
       if (!Array.isArray(rows) || !rows.length) continue;
@@ -1038,7 +1070,7 @@ async function refreshSeededSwimmersFromDataHubCache() {
       sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], rows);
       sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], rows);
       changed = true;
-      if(index%8===7)await new Promise(resolve=>setTimeout(resolve,0));
+      if(performance.now()-lastYield>6){await new Promise(resolve=>setTimeout(resolve,0));lastYield=performance.now();}
     }
     if (!changed) return;
     saveState();
@@ -1671,12 +1703,15 @@ function renderInsights(page,setup=false) {
 function readPersonalGoals(){try{const value=JSON.parse(localStorage.getItem('laneline-personal-goals')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch{return {};}}
 function renderMeetPlanner(sw){
   if(typeof LaneLineMeets==='undefined')return '';
-  const date=value=>new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  const upcoming=LaneLineMeets.meets.filter(meet=>meet.end>=new Date().toLocaleDateString('en-CA'));
-  return `<section class="meet-planner"><h3>Your next race days</h3><p class="insight-meta">${escapeHtml(sw.name)} · SCY plans · BCST calendar · Itineraries checked October 29, 2026. Coach review required; recommendations are not entries or confirmation of eligibility.</p>${upcoming.map((meet,i)=>{
+  const date=value=>value?new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'Not confirmed';
+  const upcoming=LaneLineMeets.meets.filter(meet=>meet.end>=new Date().toLocaleDateString('en-CA')).sort((a,b)=>Number(b.priority==='championship')-Number(a.priority==='championship')||a.start.localeCompare(b.start));
+  return `<section class="meet-planner"><h3>Your next race days</h3><p class="insight-meta">${escapeHtml(sw.name)} · SCY plans · Coach review required; recommendations are not entries or confirmation of eligibility.</p>${upcoming.map((meet,i)=>{
     const plan=LaneLineMeets.recommendations(meet,sw,appState.swimmers,verifiedStandardsData);
     const today=new Date().toISOString().slice(0,10),closed=meet.teamDeadline<today;
-    return `<details class="meet-option" ${i===0?'open':''}><summary><div><h4>${escapeHtml(meet.name)}</h4><small>${date(meet.start)} – ${date(meet.end)}</small></div><span class="meet-format">${escapeHtml(meet.format)}</span></summary><p>${escapeHtml(meet.location)}<br><small>${escapeHtml(meet.address)}</small></p><p class="meet-notice">BCST deadline: ${date(meet.teamDeadline)}${closed?' · Passed; ask your coach about availability.':''} · Host deadline: ${date(meet.hostDeadline)}. ${meet.id==='sockeye'?'Invitation required.':'Club assignment and event cuts required.'}</p><div class="meet-days">${plan.map(day=>`<section class="meet-day"><h5>${escapeHtml(day.name)}</h5><small>${date(day.date)}</small><ol>${day.choices.map(choice=>`<li><strong>${escapeHtml(choice.name)}</strong> <span class="time-val">${escapeHtml(choice.row.time)}</span><small>${escapeHtml(choice.reason)}${choice.cut?' Qualifying SCY cut: '+escapeHtml(choice.cut)+'.':''}</small></li>`).join('')||'<li>No verified qualifying saved time for these events. Ask your coach about bonus-event options.</li>'}</ol></section>`).join('')}</div><p class="insight-meta">${escapeHtml(meet.rules)}</p><div class="meet-links"><a href="${meet.url}" target="_blank" rel="noopener">BCST event</a><a href="${meet.document}" target="_blank" rel="noopener">Meet itinerary</a>${meet.cutsDocument?`<a href="${meet.cutsDocument}" target="_blank" rel="noopener">Official entry cuts</a>`:''}<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(meet.address)}" target="_blank" rel="noopener">Map</a></div></details>`;
+    const championship=meet.priority==='championship';
+    const notice=meet.schedulePending?'2026 day-by-day itinerary, finals format and entry deadlines are not yet verified. This is a priority shortlist, not a daily entry plan.':`BCST deadline: ${date(meet.teamDeadline)}${closed?' · Passed; ask your coach about availability.':''} · Host deadline: ${date(meet.hostDeadline)}. ${meet.id==='sockeye'?'Invitation required.':'Club assignment and event cuts required.'}`;
+    const days=plan.map(day=>`<section class="meet-day"><h5>${escapeHtml(day.name)}</h5><small>${day.date?date(day.date):escapeHtml(day.notice||'Day assignment pending')}</small><ol>${day.choices.map(choice=>`<li><strong>${escapeHtml(choice.name)}</strong> <span class="time-val">${escapeHtml(choice.row.time)}</span><small>${escapeHtml(choice.reason)}${choice.cut?' Published SCY cut: '+escapeHtml(choice.cut)+'.':''}</small></li>`).join('')||'<li>No saved times meet the published cuts for this plan. Confirm eligibility with your coach.</li>'}</ol></section>`).join('');
+    return `<details class="meet-option${championship?' championship-meet':''}" ${i===0?'open':''}><summary><div>${championship?'<span class="goal-stamp">Season priority</span>':''}<h4>${escapeHtml(meet.name)}</h4><small>${date(meet.start)} – ${date(meet.end)}</small></div><span class="meet-format">${escapeHtml(meet.format)}</span></summary><p>${escapeHtml(meet.location)}<br><small>${escapeHtml(meet.address)}</small></p><p class="meet-notice">${escapeHtml(notice)}</p><div class="meet-days">${days}</div><p class="insight-meta">${escapeHtml(meet.rules)}</p><div class="meet-links"><a href="${meet.url}" target="_blank" rel="noopener">BCST schedule</a>${meet.document?`<a href="${meet.document}" target="_blank" rel="noopener">Meet itinerary</a>`:`<a href="${meet.sourceUrl}" target="_blank" rel="noopener">Official meet calendar</a>`}${meet.cutsDocument?`<a href="${meet.cutsDocument}" target="_blank" rel="noopener">Official entry cuts</a>`:''}<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(meet.address)}" target="_blank" rel="noopener">Map</a></div></details>`;
   }).join('')||'<p class="insight-meta">No future meets in the verified itinerary list. Check the BCST calendar for newly published meets.</p>'}</section>`;
 }
 function renderYearlyStrengths(sw,course){
@@ -1694,20 +1729,40 @@ function renderYearlyStrengths(sw,course){
   if(history.length)selectYear(history[0]);
 }
 function drawStrokeDonut(type){
+  drawStrokeDonut.cleanup?.();
   const canvas=document.getElementById('stroke-donut');if(!canvas)return;
   const ctx=canvas.getContext('2d');if(!ctx)return;
-  const start=performance.now(),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const start=performance.now(),preference=matchMedia('(prefers-reduced-motion: reduce)');
+  let rotation=0,velocity=0,previousAngle=null,frame=0,last=start;
+  const schedule=()=>{if(!frame&&canvas.isConnected)frame=requestAnimationFrame(draw);};
+  const stop=()=>{if(frame)cancelAnimationFrame(frame);frame=0;};
+  const preferenceChanged=()=>{if(preference.matches){velocity=0;previousAngle=null;}schedule();};
+  preference.addEventListener('change',preferenceChanged);
+  drawStrokeDonut.cleanup=()=>{stop();preference.removeEventListener('change',preferenceChanged);};
+  canvas.addEventListener('pointermove',event=>{
+    if(preference.matches||event.pointerType==='touch')return;
+    const bounds=canvas.getBoundingClientRect();
+    const angle=Math.atan2(event.clientY-bounds.top-bounds.height/2,event.clientX-bounds.left-bounds.width/2);
+    if(previousAngle!==null){const delta=Math.atan2(Math.sin(angle-previousAngle),Math.cos(angle-previousAngle));rotation+=delta;velocity=Math.max(-.16,Math.min(.16,delta*.35));schedule();}
+    previousAngle=angle;
+  },{passive:true});
+  canvas.addEventListener('pointerleave',()=>{previousAngle=null;});
+  canvas.tabIndex=0;canvas.setAttribute('aria-label','Stroke strength distribution. Move around the ring to spin; arrow keys also spin. Values listed alongside the chart.');
+  canvas.addEventListener('keydown',event=>{if(!preference.matches&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();velocity=event.key==='ArrowLeft'?-.12:.12;schedule();}});
   function draw(now){
+    frame=0;
     if(!canvas.isConnected)return;
-    const progress=reduced?1:Math.min(1,(now-start)/650),ease=1-Math.pow(1-progress,3);
+    const step=Math.min(2,Math.max(.25,(now-last)/16.67));last=now;
+    if(!preference.matches){rotation+=velocity*step;velocity*=Math.pow(.94,step);}
+    const progress=preference.matches?1:Math.min(1,(now-start)/650),ease=1-Math.pow(1-progress,3);
     ctx.clearRect(0,0,460,460);ctx.lineWidth=62;
     ctx.beginPath();ctx.strokeStyle='#eef1f5';ctx.arc(230,230,175,0,Math.PI*2);ctx.stroke();
-    let angle=-Math.PI/2;
+    let angle=-Math.PI/2+rotation;
     for(const g of type.groups){if(!g.share)continue;const length=g.share*Math.PI*2*ease;ctx.beginPath();ctx.strokeStyle=g.color;ctx.arc(230,230,175,angle+0.012,angle+Math.max(0.012,length-0.012));ctx.stroke();angle+=length;}
     ctx.fillStyle='#0B1F3A';ctx.font='500 26px "DM Sans", sans-serif';ctx.textAlign='center';ctx.fillText('STROKE',230,225);ctx.fillText('STRENGTH',230,259);
-    if(progress<1)requestAnimationFrame(draw);
+    if(progress<1||(!preference.matches&&Math.abs(velocity)>.0005))schedule();
   }
-  requestAnimationFrame(draw);
+  schedule();
 }
 function personalGoalContext(index){
   const sw=appState.swimmers.find(s=>s.id===document.getElementById('goals-swimmer').value);
@@ -1832,7 +1887,11 @@ matchMedia('(max-width:620px)').addEventListener('change',()=>{
   if(sw)renderGrowthComparison(sw,document.getElementById('growth-event').value,document.getElementById('growth-course').value);
 });
 function groupGrowthRows(sw, course = 'SCY') {
-  return timeHistoryForSwimmer(sw)
+  if(!sw)return {};
+  const cache=groupGrowthRows.cache||(groupGrowthRows.cache=new WeakMap());
+  const existing=cache.get(sw);
+  if(existing?.history===sw.timeHistory&&existing?.bests===sw.bestTimes&&existing.courses.has(course))return existing.courses.get(course);
+  const result=timeHistoryForSwimmer(sw)
     .map(row => ({ ...row, seconds: parseRaceTime(row.time), dateValue: parseGrowthDate(row.date), event: normalizeGrowthEvent(row.event), course: normalizeCourse(row.course || row.event || '') }))
     .filter(row => row.course === course)
     .filter(row => Number.isFinite(row.seconds) && row.dateValue && row.event)
@@ -1841,6 +1900,8 @@ function groupGrowthRows(sw, course = 'SCY') {
       (groups[row.event] ||= []).push(row);
       return groups;
     }, {});
+  const entry=existing?.history===sw.timeHistory&&existing?.bests===sw.bestTimes?existing:{history:sw.timeHistory,bests:sw.bestTimes,courses:new Map()};
+  entry.courses.set(course,result);cache.set(sw,entry);return result;
 }
 
 function growthEventsForSwimmer(sw) {
@@ -2049,8 +2110,8 @@ function nextGoalText(best, latest, eventName) {
 }
 
 function renderGrowthChart(rows, options) {
-  const width = Math.max(720,Math.round(options.width||720));
-  const height = options.mode === 'all' ? (width>1000?460:390) : 320;
+  const width = Math.max(options.mode==='all'?360:720,Math.round(options.width||720));
+  const height = options.mode === 'all' ? (width>800?660:480) : 380;
   const pad = { left: 62, right: 24, top: 28, bottom: 48 };
   if (!rows.length) return '<div class="meet-empty">No dated rows available for this graph.</div>';
   const grouped = rows.reduce((groups, row) => {
@@ -2068,17 +2129,18 @@ function renderGrowthChart(rows, options) {
     return eventRows.map((row, index) => ({
       ...row,
       swimIndex: index + 1,
+      eventSwimCount:eventRows.length,
       growthSeconds: baseline - row.seconds,
       plotGrowth:options.percent?(baseline-row.seconds)/baseline*100:baseline-row.seconds,
       recordGrowth
     }));
   });
-  const maxSwimIndex = Math.max(1, ...growthRows.map(row => row.swimIndex));
   const xFor = row => {
     if (options.mode === 'event') {
       return pad.left + ((row.dateValue.getTime() - minDate) / Math.max(1, maxDate - minDate)) * (width - pad.left - pad.right);
     }
-    return pad.left + ((row.swimIndex - 1) / Math.max(1, maxSwimIndex - 1)) * (width - pad.left - pad.right);
+    const progress=row.eventSwimCount===1?1:(row.swimIndex-1)/(row.eventSwimCount-1);
+    return pad.left + progress * (width - pad.left - pad.right);
   };
   const scaleRows=options.selectedEvent?growthRows.filter(row=>row.event===options.selectedEvent):growthRows;
   const maxActualGrowth = Math.max(0, ...scaleRows.map(row => row.plotGrowth));
@@ -2115,12 +2177,12 @@ function renderGrowthChart(rows, options) {
       <line x1="${pad.left}" y1="${baselineY}" x2="${width - pad.right}" y2="${baselineY}" stroke="rgba(11,31,58,.12)"/>
       <line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
       <line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="rgba(11,31,58,.16)"/>
-      <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(minDate)) : 'Swim 1'}</text>
-      <text x="${width - pad.right - 78}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(maxDate)) : `Swim ${maxSwimIndex}`}</text>
+      <text x="${pad.left}" y="${height - 16}" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(minDate)) : 'First swim'}</text>
+      <text x="${width - pad.right}" y="${height - 16}" text-anchor="end" font-size="11" fill="#5A7089">${options.mode === 'event' ? formatGrowthDate(new Date(maxDate)) : 'Latest swim'}</text>
       <g clip-path="url(#growth-plot-${options.mode})">${lines}</g>
     </svg>
     ${options.mode === 'all' ? `<div class="growth-legend">${legend}</div>` : '<div class="growth-legend"><span><i style="background:var(--green)"></i>Dropped time</span><span><i style="background:var(--red)"></i>Added time</span></div>'}
-    <p class="growth-note">${options.mode === 'event' ? 'Seconds improved from first swim · Race date' : options.percent?'Improvement from first swim (%) · Swim number':'Seconds improved from first swim · Swim number'}${options.selectedEvent?' · Focus: '+escapeHtml(options.selectedEvent):''}</p>
+    <p class="growth-note">${options.mode === 'event' ? 'Seconds improved from first swim · Race date' : options.percent?'Improvement from first swim (%) · Each event spans first to latest swim':'Seconds improved from first swim · Each event spans first to latest swim'}${options.selectedEvent?' · Focus: '+escapeHtml(options.selectedEvent):''}</p>
   `;
 }
 

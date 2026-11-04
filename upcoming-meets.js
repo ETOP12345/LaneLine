@@ -41,8 +41,34 @@
       {date:'2026-11-21',name:'Saturday 10 & under · timed finals',min:10,max:10,limit:3,events:['50 Fly','200 IM','100 Back','50 Breast','100 Free']},
       {date:'2026-11-22',name:'Sunday 10 & under · timed finals',min:10,max:10,limit:3,events:['50 Back','200 Free','100 Fly','100 Breast','50 Free','100 IM']}
     ]
+  },{
+    id:'pns-champs',name:'PNS 14 & Under Short Course Championships',priority:'championship',
+    start:'2026-12-10',end:'2026-12-13',course:'SCY',
+    location:'Weyerhaeuser King County Aquatic Center',address:'650 SW Campus Drive, Federal Way, WA 98023',
+    url:'https://www.gomotionapp.com/team/onsbcst/page/team-info/2023-2024-competition-schedule',
+    document:null,cutsDocument:'https://www.pns.org/pnws2/UserFiles/Image/QuickUpload/2026-14u-sc-champs-standards_019804.pdf',
+    sourceUrl:'https://www.pns.org/pnws2/UserFiles/File/BODMinutes/2026-27-pns-meet-calendar_026536.pdf',
+    teamDeadline:null,hostDeadline:null,format:'Championship focus · session format pending',schedulePending:true,
+    rules:'Season-priority meet: focus on your strongest events, not experiments or nearby goal cuts. The six-event shortlist is a coaching recommendation, not a verified entry limit. Daily order, prelims/finals format, qualifying window, meet-day age, eligibility and entry limits must be confirmed from the 2026 announcement and your coach. Saved SCY times are checked against the published 2026 PNS Champs cuts.',
+    sessions:[]
   }];
+  function championshipRecommendations(meet,sw,swimmers,data){
+    const age=Number(sw.ageGroup);
+    if(!Number.isFinite(age)||age<9||age>14||sw.activePns===false||(sw.lsc&&sw.lsc!=='PN'))return [];
+    const standard=data?.meets?.find(item=>item.id==='pns-champs'&&String(item.edition)==='2026');
+    const ratings=I.strengths(sw,swimmers,'SCY',data||{});
+    const choices=ratings.map(rating=>{
+      const cut=standard?S.meetCut(standard,rating.row.event,sw):null;
+      if(!cut||S.centiseconds(rating.row.time)>S.centiseconds(cut))return null;
+      return {name:rating.row.event.replace(/ SCY$/i,''),event:S.eventKey(rating.row.event),row:rating.row,cut,rating,
+        reason:rating.total>1?`Championship strength: #${rating.rank} of ${rating.total} saved same-age peers; 13-14 benchmark #${rating.olderRank} of ${rating.olderTotal}.`:`Championship strength: ${rating.level} time; no same-age peer comparison available.`};
+    }).filter(Boolean).sort((a,b)=>I.comparePeerStrength(a.rating,b.rating)).slice(0,6)
+      .map((choice,index)=>({...choice,priority:index+1}));
+    return [{name:'Strongest events · priority order',date:null,limit:6,provisional:true,choices,
+      notice:standard?'Day assignments and final entries pending the 2026 itinerary.':'PNS Champs standards unavailable; no qualifying events can be confirmed.'}];
+  }
   function recommendations(meet,sw,swimmers,data){
+    if(meet.id==='pns-champs')return championshipRecommendations(meet,sw,swimmers,data);
     const age=Number(sw.ageGroup),ratings=I.strengths(sw,swimmers,'SCY',data);
     if(age<10||age>14)return [];
     const group=age<=10?10:age<=12?12:14,table=cuts[sw.division+'|'+group];

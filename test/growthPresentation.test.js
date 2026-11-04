@@ -1,0 +1,38 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+test('growth overview stretches each event to latest swim without altering the date chart',()=>{
+  const context=vm.createContext({chartPalette:['blue','red','green'],worldRecordSecondsForEvent:()=>20,escapeHtml:value=>String(value),escapeSvgText:value=>String(value),formatSignedGrowth:value=>`${value}s`,formatGrowthDate:date=>date.toISOString().slice(0,10)});
+  vm.runInContext(html.slice(html.indexOf('function renderGrowthChart('),html.indexOf('function normalizeGrowthEvent(')),context);
+  const row=(event,day,seconds)=>({event,dateValue:new Date(`2026-01-0${day}`),date:`2026-01-0${day}`,seconds,time:String(seconds)});
+  const rows=[row('50 Free SCY',1,35),row('50 Free SCY',3,30),row('100 Free SCY',1,75),row('100 Free SCY',2,72),row('100 Free SCY',4,70),row('200 Free SCY',2,150)];
+  const result=context.renderGrowthChart(rows,{mode:'all',width:1000,title:'Growth',percent:true});
+  assert.ok(result.includes('viewBox="0 0 1000 660"'));
+  const points=[...result.matchAll(/<circle[^>]*data-growth-event="([^"]+)"[^>]*cx="([^"]+)"/g)];
+  for(const event of ['50 Free SCY','100 Free SCY','200 Free SCY'])assert.equal(Number(points.filter(match=>match[1]===event).at(-1)[2]),976);
+  assert.ok(result.includes('First swim'));assert.ok(result.includes('Latest swim'));
+  const detail=context.renderGrowthChart(rows.filter(r=>r.event==='100 Free SCY'),{mode:'event',width:1000,title:'Detail'});
+  const detailPoints=[...detail.matchAll(/<circle[^>]*cx="([^"]+)"/g)];
+  assert.ok(Math.abs(Number(detailPoints[1][1])-(62+914/3))<.01);
+});
+test('stroke donut spins from pointer input, supports keyboard and stops for reduced motion',()=>{
+  const events={},queued=new Map(),arcs=[];let next=0,change;
+  const preference={matches:false,addEventListener:(name,fn)=>{change=fn;},removeEventListener(){}};
+  const ctx=new Proxy({arc(...args){arcs.push(args);}},{get:(target,key)=>target[key]||(()=>{})});
+  const canvas={isConnected:true,getContext:()=>ctx,getBoundingClientRect:()=>({left:0,top:0,width:460,height:460}),setAttribute(){},addEventListener:(name,fn)=>events[name]=fn};
+  const context=vm.createContext({document:{getElementById:()=>canvas},performance:{now:()=>0},matchMedia:()=>preference,requestAnimationFrame:fn=>{queued.set(++next,fn);return next;},cancelAnimationFrame:id=>queued.delete(id)});
+  vm.runInContext(html.slice(html.indexOf('function drawStrokeDonut('),html.indexOf('function personalGoalContext(')),context);
+  const flush=now=>{const tasks=[...queued.values()];queued.clear();tasks.forEach(fn=>fn(now));};
+  context.drawStrokeDonut({groups:[{share:1,color:'blue'}]});flush(650);
+  const initial=arcs.at(-1)[3];
+  events.pointermove({clientX:460,clientY:230,pointerType:'mouse'});
+  events.pointermove({clientX:230,clientY:460,pointerType:'mouse'});flush(680);
+  assert.notEqual(arcs.at(-1)[3],initial);
+  let prevented=false;events.keydown({key:'ArrowRight',preventDefault(){prevented=true;}});assert.ok(prevented);
+  preference.matches=true;change();flush(720);assert.equal(queued.size,0);
+  events.pointermove({clientX:0,clientY:230,pointerType:'mouse'});assert.equal(queued.size,0);
+  context.drawStrokeDonut.cleanup();
+});

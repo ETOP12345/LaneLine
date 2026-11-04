@@ -2,14 +2,20 @@
   if(typeof module==='object'&&module.exports) module.exports=factory(require('./standards-engine.js'));
   else root.LaneLineInsights=factory(root.LaneLineStandards);
 })(typeof globalThis==='object'?globalThis:this,function(S){
+  const bestRowCache=new WeakMap();
   function bestRows(sw,course){
+    const cached=bestRowCache.get(sw);
+    if(cached?.source===sw.bestTimes&&cached.length===(sw.bestTimes||[]).length&&cached.courses.has(course))return cached.courses.get(course);
     const rows=new Map();
     for(const row of sw.bestTimes||[]){
       const key=S.eventKey(row.event),time=S.centiseconds(row.time);
       if(!key.endsWith(' '+course.toLowerCase())||!Number.isFinite(time)||time<=0) continue;
       if(!rows.has(key)||time<S.centiseconds(rows.get(key).time)) rows.set(key,row);
     }
-    return [...rows.values()];
+    const result=[...rows.values()];
+    const entry=cached?.source===sw.bestTimes&&cached.length===(sw.bestTimes||[]).length?cached:{source:sw.bestTimes,length:(sw.bestTimes||[]).length,courses:new Map()};
+    entry.courses.set(course,result);bestRowCache.set(sw,entry);
+    return result;
   }
   function strengths(sw,swimmers,course,data){
     const seen=new Set([sw.usaSwimmingMemberId||sw.id]),byEvent=new Map();

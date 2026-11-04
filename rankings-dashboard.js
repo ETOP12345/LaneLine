@@ -95,7 +95,7 @@ function renderStrokes(){
   const rows=currentAll().map(r=>({r,event:r.events.find(e=>e.event===strokeEvent)})).filter(x=>x.event?.swim).sort((a,b)=>a.event.rank-b.event.rank||a.r.name.localeCompare(b.r.name));
   document.getElementById('strokeRankingTitle').textContent=(strokeEvent||'Stroke')+' · '+(DATA.course||'SCY')+' · '+state.ageGroup+' '+genderLabel();
   document.getElementById('strokeRankingCount').textContent=rows.length+' swimmers';
-  document.getElementById('strokeRankingBody').innerHTML=rows.length?rows.map(({r,event:e})=>'<tr><td><strong>#'+e.rank+'</strong></td><td><strong>'+esc(r.name)+'</strong><br><small>'+r.age+' years old</small></td><td>'+esc(r.team)+'</td><td class="stroke-time">'+esc(e.swim.time)+'</td><td><span class="pill">'+esc(e.swim.std||'N/A')+'</span></td><td>'+esc(e.swim.meet||'Meet unavailable')+'<br><small>'+fmtDate(e.swim.date)+'</small></td></tr>').join(''):'<tr><td colspan="6"><p class="empty">No saved times for this stroke and group.</p></td></tr>';
+  document.getElementById('strokeRankingBody').innerHTML=rows.length?rows.map(({r,event:e})=>'<tr><td><strong>#'+e.rank+'</strong></td><td><strong>'+esc(r.name)+'</strong><br><small>'+r.age+' years old</small></td><td>'+esc(r.team)+'</td><td class="stroke-time"><span>'+esc(e.swim.time)+'</span></td><td><span class="pill">'+esc(e.swim.std||'N/A')+'</span></td><td>'+esc(e.swim.meet||'Meet unavailable')+'<br><small>'+fmtDate(e.swim.date)+'</small></td></tr>').join(''):'<tr><td colspan="6"><p class="empty">No saved times for this stroke and group.</p></td></tr>';
 }
 const renderDashboard=render;
 const drawTeamTrend=renderTeamTrendChart,drawStrongTypes=renderStrongTypeChart,drawTeamDistribution=renderTeamDistribution;
@@ -146,6 +146,10 @@ th,td{padding:7px 8px}th{font-size:10px}td{font-size:12px;vertical-align:middle}
 .rules-panel{padding:8px 10px;font-size:12px}.rules-panel summary{cursor:pointer;font-weight:700;color:#175eae}.rules-panel ul{padding-left:18px;margin:8px 0 0}.rules-panel li{margin-bottom:5px}
 .team-chart-body{padding:10px}.team-row{padding:8px 0;gap:8px}.team-dist-body{padding:2px 10px}
 .relay-team{margin:7px 0}.relay-team summary{padding:10px;gap:8px;grid-template-columns:35px minmax(130px,1fr) 90px 140px}.relay-total{font-size:17px}.relay-roster{gap:8px;padding-top:2px}.relay-roster>span{font-size:12px}.relay-roster b{margin-bottom:2px;font-size:10px}.relay-legs{padding:10px;gap:10px}.relay-legs p{margin:5px 0}
+.stroke-time span,.relay-total,.event-link span:last-child{display:inline-block;transform-origin:center}
+@keyframes ranking-time-pop{0%,100%{scale:1}40%{scale:1.2}70%{scale:.96}}
+@media(hover:hover) and (pointer:fine){.stroke-time:hover span,.relay-total:hover,.event-link:hover span:last-child,.mini-row:hover>span:last-child>strong{animation:ranking-time-pop 420ms cubic-bezier(.22,1,.36,1)}}
+@media(prefers-reduced-motion:reduce){.stroke-time span,.relay-total,.event-link span:last-child,.mini-row>span:last-child>strong{animation:none!important;scale:1!important}}
 @media(min-width:1500px){.event-list{grid-template-columns:repeat(3,minmax(135px,1fr))}}
 @media(max-width:1150px){.content-grid{grid-template-columns:1fr}.event-list{grid-template-columns:repeat(3,minmax(135px,1fr))}}
 @media(max-width:700px){main{padding:8px}.controls{grid-template-columns:1fr 1fr}.field select{height:36px}.ranking-event-nav button{min-height:34px}.event-list{grid-template-columns:repeat(2,minmax(135px,1fr))}.relay-team summary{grid-template-columns:28px 1fr auto}.relay-legs{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

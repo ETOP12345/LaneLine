@@ -36,6 +36,32 @@ test('Sockeye plans keep 12-and-under in one session and use the younger schedul
   assert.equal(plan.length,2);assert.ok(plan.every(d=>d.name.includes('10 & under')&&d.choices.length<=4));
   assert.equal(M.recommendations(M.meets[0],{...sw,ageGroup:'15'},[sw],data).length,0);
 });
+test('PNS Champs prioritizes strongest cut-qualified events without inventing day assignments',()=>{
+  const meet=M.meets.find(m=>m.id==='pns-champs');
+  assert.equal(meet.start,'2026-12-10');assert.equal(meet.end,'2026-12-13');
+  assert.equal(meet.schedulePending,true);assert.equal(meet.teamDeadline,null);
+  const sw=person('me',12,[race('100 Breast','1:06.81'),race('200 Breast','2:24.95'),race('50 Breast','30.91'),race('200 IM','2:18.41'),race('400 IM','4:50.42'),race('500 Free','5:32.38'),race('100 Fly','1:07.17'),race('50 Free','50.00')]);
+  const [plan]=M.recommendations(meet,sw,[sw],data);
+  assert.equal(plan.date,null);assert.equal(plan.provisional,true);assert.equal(plan.choices.length,6);
+  assert.ok(plan.choices.every(c=>c.cut&&c.name!=='50 Free'));
+  assert.ok(plan.choices[0].name.includes('Breast'));
+  assert.equal(plan.choices[0].priority,1);
+  assert.equal(M.recommendations(meet,{...sw,ageGroup:'15'},[sw],data).length,0);
+  assert.equal(M.recommendations(meet,{...sw,activePns:false},[sw],data).length,0);
+  const [unavailable]=M.recommendations(meet,sw,[sw],{meets:[]});
+  assert.equal(unavailable.choices.length,0);assert.match(unavailable.notice,/unavailable/);
+});
+test('PNS Champs shortlists use correct boys and girls age-group cuts',()=>{
+  const S=require('../standards-engine'),meet=M.meets.find(m=>m.id==='pns-champs');
+  const standard=data.meets.find(m=>m.id==='pns-champs');
+  for(const division of ['boys','girls'])for(const age of [9,10,11,12,13,14]){
+    const sw={...person('me',age,[]),division};
+    const cut=S.meetCut(standard,'100 Breast SCY',sw);assert.ok(cut);
+    sw.bestTimes=[race('100 Breast',cut)];sw.timeHistory=sw.bestTimes;
+    const [plan]=M.recommendations(meet,sw,[sw],data);
+    assert.equal(plan.choices.length,1);assert.equal(plan.choices[0].cut,cut);
+  }
+});
 test('growth has an independent selectable legend, percent scale and date detail',()=>{
   const html=fs.readFileSync(require.resolve('../index.html'),'utf8');
   assert.ok(html.includes('class="growth-event-button"'));
@@ -61,7 +87,7 @@ test('growth renders one clickable selector per event, with percent and focused 
   const detail=context.renderGrowthChart(rows.slice(2),{mode:'event',title:'Breast'});
   assert.match(detail,/Race date/);assert.doesNotMatch(detail,/World record/);
   const wide=context.renderGrowthChart(rows,{mode:'all',width:1500,title:'Wide desktop'});
-  assert.match(wide,/viewBox="0 0 1500 460"/);
+  assert.match(wide,/viewBox="0 0 1500 660"/);
 });
 
 test('desktop layouts use side space with wide growth and two-column best times',()=>{
