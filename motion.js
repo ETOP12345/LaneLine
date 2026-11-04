@@ -134,6 +134,7 @@
   }
   function waterLanes(hero){
     if(!hero||!env.requestAnimationFrame)return;
+    if(hero.dataset?.poolCamera==='shared')return;
     const canvas=env.document.createElement('canvas'),ctx=canvas.getContext('2d');
     if(!ctx)return;
     canvas.className='banner-water';canvas.setAttribute('aria-hidden','true');hero.prepend(canvas);

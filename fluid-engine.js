@@ -1272,7 +1272,8 @@ return {
       gl.bindFramebuffer(gl.FRAMEBUFFER,buffer.fbo);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     }
     render(null);
-  }
+  },
+  dispose(){gl.getExtension('WEBGL_lose_context')?.loseContext();}
 };
 });
         
