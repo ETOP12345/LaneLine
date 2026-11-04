@@ -118,6 +118,7 @@ renderTeamTrendChart=function(){if(state.tab==='teams')drawTeamTrend()};
 renderStrongTypeChart=function(){if(state.tab==='teams')drawStrongTypes()};
 renderTeamDistribution=function(){if(state.tab==='teams')drawTeamDistribution()};
 function renderRelays(){
+  if(DATA.relaysPending){document.getElementById('relayResults').innerHTML='<p class="muted" role="status">Calculating relay lineups…</p>';return;}
   const division=document.getElementById('relayDivision').value||'boys',select=document.getElementById('relayEvent'),old=select.value;
   select.innerHTML=(DATA.relayEvents||[]).map(e=>'<option value="'+esc(e.id)+'">'+esc(e.label)+'</option>').join('');
   select.value=(DATA.relayEvents||[]).some(e=>e.id===old)?old:((DATA.relayEvents||[])[0]?.id||'');

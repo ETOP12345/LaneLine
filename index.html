@@ -1241,27 +1241,37 @@ function animatePerformanceView(root){
 }
 
 let rankingCourse='SCY';
-let rankingWorker=null,rankingRequest=0;
+let rankingWorker=null,rankingRequest=0,rankingSerial=0;
 const rankingCache=new Map(),rankingJobs=new Map();
 function renderRankings(){
   if(document.getElementById('zone-page')?.style.display==='none')return;
   const frame=document.getElementById('ranking-dashboard-frame');
   const swimmers=appState.swimmers.map(({id,usaSwimmingMemberId,name,team,ageGroup,division,lsc,activePns,bestTimes})=>({id,usaSwimmingMemberId,name,team,ageGroup,division,lsc,activePns,bestTimes}));
-  const signature=JSON.stringify(swimmers),standards=verifiedStandardsData,course=rankingCourse,id=++rankingRequest;
+  const signature=JSON.stringify(swimmers),standards=verifiedStandardsData,course=rankingCourse;
   const publish=data=>frame?.contentWindow?.postMessage({type:'laneline-ranking-data',data},location.origin);
   const cached=rankingCache.get(course);
-  if(cached?.signature===signature&&cached.standards===standards){publish(cached.data);return;}
+  if(cached?.signature===signature&&cached.standards===standards){
+    const pending=[...rankingJobs].find(([,job])=>job.course===course&&job.signature===signature&&job.standards===standards);
+    rankingRequest=pending?pending[0]:++rankingSerial;
+    publish(cached.data);return;
+  }
+  const pending=[...rankingJobs].find(([,job])=>job.course===course&&job.signature===signature&&job.standards===standards);
+  if(pending){rankingRequest=pending[0];return;}
+  const id=++rankingSerial;rankingRequest=id;
   const fallback=()=>setTimeout(()=>{if(id!==rankingRequest)return;const data=LaneLineRankingDashboard.data(swimmers,standards||{},course);rankingCache.set(course,{signature,standards,data});publish(data);},0);
   if(typeof Worker==='undefined'){fallback();return;}
   try{
     if(!rankingWorker){
       rankingWorker=new Worker('rankings-worker.js');
       rankingWorker.onmessage=event=>{
-        const job=rankingJobs.get(event.data.id);rankingJobs.delete(event.data.id);
+        const job=rankingJobs.get(event.data.id);
+        if(!event.data.partial)rankingJobs.delete(event.data.id);
         if(!job)return;
         if(event.data.error){job.fallback();return;}
-        rankingCache.set(job.course,{signature:job.signature,standards:job.standards,data:event.data.data});
-        if(event.data.id===rankingRequest)publish(event.data.data);
+        const data=event.data.relays?{...job.data,relays:event.data.relays,relaysPending:false}:event.data.data;
+        job.data=data;
+        rankingCache.set(job.course,{signature:job.signature,standards:job.standards,data});
+        if(event.data.id===rankingRequest)publish(data);
       };
       rankingWorker.onerror=()=>{rankingWorker.terminate();rankingWorker=null;const jobs=[...rankingJobs.values()];rankingJobs.clear();jobs.forEach(job=>job.fallback());};
     }

@@ -6,7 +6,7 @@
     const value=row.powerPoints??row.pp;
     return value!==null&&value!==undefined&&String(value).trim()!==''&&Number.isFinite(Number(value))&&Number(value)>=0?Number(value):null;
   }
-  function data(swimmers,standards,course){
+  function data(swimmers,standards,course,{includeRelays=true}={}){
     const groups={},eventOrder=new Set();
     for(const age of ['11-12','13-14'])for(const [gender,division] of [['M','boys'],['F','girls']]){
       const [min,max]=age.split('-').map(Number),seen=new Set();
@@ -22,11 +22,17 @@
         if(!eventRanks.has(key))eventRanks.set(key,[]);
         eventRanks.get(key).push(event.time);
       }
+      for(const [key,times] of eventRanks){
+        times.sort((a,b)=>a-b);
+        const ranks=new Map();
+        times.forEach((time,index)=>{if(!ranks.has(time))ranks.set(time,index+1);});
+        eventRanks.set(key,ranks);
+      }
       const rows=entries.map(entry=>{
         const compact=e=>{
           const event=e.row.event.replace(/ (SCY|LCM)$/i,''),cuts=S.motivationalCuts(standards,e.row.event,entry.sw);
           eventOrder.add(event);
-          return {event,rank:1+eventRanks.get(S.eventKey(e.row.event)).filter(t=>t<e.time).length,
+          return {event,rank:eventRanks.get(S.eventKey(e.row.event)).get(e.time),
             swim:{event,course,time:e.row.time,date:e.row.date,meet:e.row.meet,pp:powerPoints(e.row),std:cuts?['AAAA','AAA','AA','A','BB','B'].find(l=>e.time<=S.centiseconds(cuts[l]))||'Below B':'N/A'}};
         };
         const events=entry.events.map(compact).sort((a,b)=>a.rank-b.rank||a.event.localeCompare(b.event)),cuts={lcmAAA:0,scyAAA:0},ties=[];
@@ -45,15 +51,16 @@
       });
       const tieKey=r=>[r.complete,r.score,r.cuts.lcmAAA,r.cuts.scyAAA].join('|'),buckets=new Map();
       for(const row of rows){const key=tieKey(row);if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(row);}
+      const completePoints=new Set([...buckets].filter(([,rows])=>rows.every(r=>typeof r.pp==='number')).map(([key])=>key));
       const compare=(a,b)=>Number(b.complete)-Number(a.complete)||a.score-b.score||b.cuts.lcmAAA-a.cuts.lcmAAA||b.cuts.scyAAA-a.cuts.scyAAA||
-        (buckets.get(tieKey(a)).every(r=>typeof r.pp==='number')?b.pp-a.pp:0);
+        (completePoints.has(tieKey(a))?b.pp-a.pp:0);
       rows.sort((a,b)=>compare(a,b)||a.name.localeCompare(b.name));
       rows.forEach((r,i)=>{r.rank=i&&compare(rows[i-1],r)===0?rows[i-1].rank:i+1;r.status=r.rank<=12?'Top 12':r.rank<=14?'Top 14':'Ranked';r.previousRank=r.rank;r.rankDelta=0;});
       groups[age+'|'+gender]=rows;
     }
     return {source:'LaneLine saved PNS race histories (incomplete coverage)',lastUpdated:null,lastLoadedAt:new Date().toISOString(),
       generatedAt:new Date().toISOString(),ageGroups:['11-12','13-14'],defaultAgeGroup:'11-12',defaultGender:'M',
-      genders:[{value:'M',label:'Male'},{value:'F',label:'Female'}],eventOrder:[...eventOrder],groups,rankChanges:{},course,relays:Relays.boards(swimmers,course),relayEvents:Relays.events};
+      genders:[{value:'M',label:'Male'},{value:'F',label:'Female'}],eventOrder:[...eventOrder],groups,rankChanges:{},course,relays:includeRelays?Relays.boards(swimmers,course):{},relaysPending:!includeRelays,relayEvents:Relays.events};
   }
   function shell(html){
     const empty={groups:{},ageGroups:['11-12','13-14'],genders:[{value:'M',label:'Male'},{value:'F',label:'Female'}],defaultAgeGroup:'11-12',defaultGender:'M',eventOrder:[],source:'Waiting for LaneLine race histories'};
@@ -103,6 +110,7 @@ renderTeamTrendChart=function(){if(state.tab==='teams')drawTeamTrend()};
 renderStrongTypeChart=function(){if(state.tab==='teams')drawStrongTypes()};
 renderTeamDistribution=function(){if(state.tab==='teams')drawTeamDistribution()};
 function renderRelays(){
+  if(DATA.relaysPending){document.getElementById('relayResults').innerHTML='<p class="muted" role="status">Calculating relay lineups…</p>';return;}
   const division=document.getElementById('relayDivision').value||'boys',select=document.getElementById('relayEvent'),old=select.value;
   select.innerHTML=(DATA.relayEvents||[]).map(e=>'<option value="'+esc(e.id)+'">'+esc(e.label)+'</option>').join('');
   select.value=(DATA.relayEvents||[]).some(e=>e.id===old)?old:((DATA.relayEvents||[])[0]?.id||'');

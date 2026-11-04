@@ -2,6 +2,7 @@
   if(typeof module==='object'&&module.exports)module.exports=factory(require('./standards-engine'),require('./insights-engine'));
   else root.LaneLineRelays=factory(root.LaneLineStandards,root.LaneLineInsights);
 })(typeof globalThis==='object'?globalThis:this,function(S,I){
+  const bitCounts=[0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4];
   const events=[
     {id:'200-free',label:'200 Free Relay',distance:50,strokes:['Free','Free','Free','Free']},
     {id:'400-free',label:'400 Free Relay',distance:100,strokes:['Free','Free','Free','Free']},
@@ -20,7 +21,7 @@
       seen.add(id);
       const rows=I.bestRows(sw,course),legs=spec.strokes.map(stroke=>rows.find(r=>S.eventKey(r.event)===S.eventKey(spec.distance+' '+stroke+' '+course)));
       if(!teams.has(team))teams.set(team,[]);
-      teams.get(team).push({id,name:sw.name,division:sw.division,legs});
+      teams.get(team).push({id,name:sw.name,division:sw.division,legs,times:legs.map(row=>S.centiseconds(row?.time))});
     }
     const results=[];
     for(const [team,athletes] of teams){
@@ -31,10 +32,10 @@
       for(const athlete of remaining){
         const next=new Map(dp);
         for(const state of dp.values())for(let leg=0;leg<4;leg++){
-          const row=athlete.legs[leg],time=S.centiseconds(row?.time);
+          const row=athlete.legs[leg],time=athlete.times[leg];
           if(state.mask&(1<<leg)||!Number.isFinite(time)||time<=0)continue;
           const mask=state.mask|(1<<leg),boys=state.boys+(division==='mixed'&&athlete.division==='boys'?1:0);
-          const count=mask.toString(2).replace(/0/g,'').length;
+          const count=bitCounts[mask];
           if(division==='mixed'&&(boys>2||count-boys>2))continue;
           const total=state.total+time,key=mask+'|'+boys,previous=next.get(key);
           if(previous&&previous.total<=total)continue;

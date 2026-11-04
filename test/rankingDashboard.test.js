@@ -17,6 +17,28 @@ test('rankings reuses the original dashboard UI without old Zone data or selecti
 function six(id,time='1:00.00'){
   return {id,name:id,ageGroup:'12',division:'boys',bestTimes:['50 Free','100 Free','200 Free','50 Back','100 Back','200 Back'].map(event=>({event:event+' SCY',time}))};
 }
+
+test('fast initial rankings preserve scores while deferring relay calculations',()=>{
+  const swimmers=[six('A'),six('B','1:10.00')];
+  const initial=D.data(swimmers,standards,'SCY',{includeRelays:false});
+  const complete=D.data(swimmers,standards,'SCY');
+  assert.deepEqual(initial.groups,complete.groups);
+  assert.deepEqual(initial.relays,{});
+  assert.equal(initial.relaysPending,true);
+  assert.equal(complete.relaysPending,false);
+});
+
+test('worker publishes rankings before calculating and publishing relay lineups',()=>{
+  const messages=[],steps=[],relays={test:[]};
+  const self={postMessage(message){messages.push(message);steps.push(message.partial?'rankings':'relays');}};
+  const context=vm.createContext({self,importScripts(){},LaneLineRankingDashboard:{data(swimmers,standards,course,options){assert.equal(options.includeRelays,false);return {groups:{}};}},LaneLineRelays:{boards(){steps.push('calculate relays');return relays;}}});
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../rankings-worker.js'),'utf8'),context);
+  self.onmessage({data:{id:1,swimmers:[],standards:{},course:'SCY'}});
+  assert.deepEqual(steps,['rankings','calculate relays','relays']);
+  assert.equal(messages[0].partial,true);
+  assert.equal(messages[1].relays,relays);
+  assert.equal(messages[1].id,1);
+});
 test('overall uses six lowest event ranks and places partial swimmers after complete swimmers',()=>{
   const a=six('A'),c=six('C','1:10.00'),partial={...six('B','20.00'),bestTimes:[{event:'50 Free SCY',time:'20.00'}]};
   const rows=D.data([partial,c,a],standards,'SCY').groups['11-12|M'];
