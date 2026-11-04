@@ -94,25 +94,33 @@
 @media(max-width:620px){.main{padding-left:12px;padding-right:12px}.profiles-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.strength-grid{grid-template-columns:minmax(0,1fr)}.profiles-grid .profile-card{padding:18px 10px}}
 
 :root{--motion-ease:cubic-bezier(.22,1,.36,1)}
-.pool-intro{position:fixed;inset:0;z-index:1000;overflow:hidden;background:#0b1f3a;isolation:isolate;touch-action:pan-x}
+.pool-intro{position:fixed;inset:0;z-index:1000;overflow:hidden;background:#0b1f3a;isolation:isolate;touch-action:pan-y}
+.pool-scroll-space{height:30vh;pointer-events:none;overflow-anchor:none}
 .pool-intro-scene{position:absolute;inset:0;transform-origin:0 0}
 .pool-intro canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform-origin:50% 35%}
-.pool-intro canvas:not(.pool-intro-fluid){z-index:1}
-.pool-intro canvas.pool-intro-fluid{z-index:0;opacity:.85}
+.pool-intro canvas:not(.pool-intro-fluid){z-index:1;opacity:var(--pool-graphics-opacity,1)}
+.pool-intro canvas.pool-intro-fluid{z-index:0;opacity:calc(.85 * var(--pool-graphics-opacity,1))}
 .pool-intro-copy,.pool-intro-enter{z-index:2}
+.pool-intro-copy,.pool-intro-copy *,.hero>.hero-logo,.hero>h1,.hero>p{-webkit-user-select:none;user-select:none;-webkit-user-drag:none;cursor:default}
 .pool-intro-copy{position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%);text-align:center;pointer-events:none;color:#fff;text-shadow:0 2px 12px #0b1f3a,0 0 28px #0b1f3a}
 .pool-intro .hero-logo{margin-bottom:1.5rem}
-.pool-intro h1{font-family:'DM Sans',sans-serif;font-size:64px;font-weight:300;line-height:1.15;letter-spacing:0;margin:0 0 .5rem}
+.pool-intro .hero-wordmark{font-size:38px}
+.pool-intro h1{font-family:'DM Sans',sans-serif;font-size:100px;font-weight:300;line-height:1.15;letter-spacing:0;margin:0 0 .5rem}
 .pool-intro h1 .hl{color:var(--lane);font-weight:500}
 .pool-intro-copy>p{font-family:'DM Sans',sans-serif;font-size:16px;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto}
 .pool-intro-enter{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);display:flex;align-items:center;gap:20px;min-height:48px;padding:10px 20px;background:#0b1f3a;color:#e1f7ff;border:1px solid #a1e5ff;border-radius:6px;font:600 15px 'Manrope',sans-serif;white-space:nowrap;cursor:pointer;transition:background 180ms,box-shadow 180ms,opacity 180ms}
 .pool-intro-enter:hover{background:#174e71;box-shadow:0 0 0 4px rgba(162,225,250,.15)}
 .pool-intro-enter[hidden]{display:none}
+.pool-reopen{position:absolute;right:16px;bottom:12px;z-index:3;border:1px solid #72bdd6;border-radius:4px;padding:6px 10px;background:#0b1f3a;color:#d3f1ff;font:500 12px 'DM Sans',sans-serif;cursor:pointer}
+.pool-reopen:hover{background:#174e71}
+.pool-reopen:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.pool-reopen[hidden]{display:none}
 .pool-intro-enter:focus-visible{outline:3px solid #fff;outline-offset:5px}
 .pool-intro-enter>span{font-size:24px;animation:pool-enter-bob 2s ease-in-out infinite}
 @keyframes pool-enter-bob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
-@media(max-width:620px){.pool-intro h1{font-size:38px}.pool-intro-copy>p{font-size:14px}}
-@media(max-height:450px){.pool-intro-copy{top:43%}.pool-intro h1{font-size:32px}.pool-intro .hero-logo{margin-bottom:8px}.pool-intro-copy>p{font-size:13px}.pool-intro-enter{bottom:48px}}
+@media(max-width:1100px){.pool-intro h1{font-size:80px}}
+@media(max-width:620px){.pool-intro h1{font-size:56px}.pool-intro-copy>p{font-size:14px}}
+@media(max-height:450px){.pool-intro-copy{top:43%}.pool-intro h1{font-size:40px}.pool-intro .hero-logo{margin-bottom:8px}.pool-intro-copy>p{font-size:13px}.pool-intro-enter{bottom:48px}}
 @media(prefers-reduced-motion:reduce){.pool-intro-enter>span{animation:none}}
 
 /* Pool-rope boundaries repeat the banner motif without crossing data. */

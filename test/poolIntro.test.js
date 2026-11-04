@@ -2,72 +2,113 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const {lapPose}=require('../pool-intro')({});
+const {lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers}=require('../pool-intro')({});
 
-test('pool handoff moves and resizes the same surface without fading',()=>{
-  const {poolTransition}=require('../pool-intro')({});
-  const frame=poolTransition({left:0,top:56,width:1200,height:320},1200,800);
-  assert.equal(frame.transform,'translate(-300px,-384px) scale(1.5)');
-  assert.equal(frame.opacity,undefined);
+test('water moves nearby letters and swimmers, weakens across lanes, and settles',()=>{
+  const {waterDrift}=require('../pool-intro')({});
+  const impulse={x:500,y:300,dx:40,dy:20,time:100};
+  const near=waterDrift(510,310,1000,800,null,impulse,120);
+  const far=waterDrift(850,310,1000,800,null,impulse,120);
+  const settled=waterDrift(510,310,1000,800,null,impulse,10100);
+  assert.ok(near.x>0&&Math.abs(near.y)>0);
+  assert.ok(Math.abs(far.x)<near.x);
+  assert.ok(Math.abs(settled.x)<.01&&Math.abs(settled.y)<.01);
+  const flow=Array(13*17).fill(1000),strong=waterDrift(500,300,1000,800,flow,impulse,120);
+  assert.ok(Math.abs(strong.x)<=6&&Math.abs(strong.y)<=5);
+});
+
+test('fullscreen restores exactly two swimmers in every lane',()=>{
+  const lanes=new Map();
+  for(const swimmer of fullLaneSwimmers())lanes.set(swimmer.laneIndex,(lanes.get(swimmer.laneIndex)||0)+1);
+  assert.equal(lanes.size,18);assert.ok([...lanes.values()].every(count=>count===2));
+});
+
+test('magnetic settling picks the nearest end without pulling normal app scrolling',()=>{
+  assert.equal(snapDestination(100,720),0);
+  assert.equal(snapDestination(359,720),0);
+  assert.equal(snapDestination(360,720),720);
+  assert.equal(snapDestination(600,720),720);
+  for(const y of [0,.5,719.5,720,1000])assert.equal(snapDestination(y,720),null);
+  assert.equal(snapDestination(100,0),null);
+  assert.equal(snapDestination(100,240,true),240,'a small upward scroll stays in the banner');
+  assert.equal(snapDestination(60,240,true),0,'a deliberate upward scroll returns to fullscreen');
+  assert.equal(snapDestination(100,240,false),0,'forward snapping keeps its earlier threshold');
+});
+
+test('camera follows scroll reversibly with uniform scale and no fading',()=>{
+  const rect={left:0,right:1200,top:56,bottom:376,width:1200,height:320};
+  assert.equal(cameraAtProgress(0,rect,1200,800).transform,'translate(0px,0px) scale(1)');
+  const half=cameraAtProgress(.5,rect,1200,800);
+  assert.equal(half.transform,'translate(-150px,-192px) scale(1.25)');
+  assert.equal(half.clipPath,'inset(0px 0px 0px 0px)','pool ends remain in the wide frame during the camera move');
+  assert.equal(half.opacity,undefined);
+  assert.deepEqual(cameraAtProgress(.5,rect,1200,800),half);
+  assert.equal(cameraAtProgress(1,rect,1200,800).transform,poolTransition(rect,1200,800).transform);
+  assert.equal(cameraAtProgress(1,rect,1200,800).clipPath,'inset(56px 0px 424px 0px)');
+  assert.equal(cameraAtProgress(-2,rect,1200,800).zoom,1);
+  assert.equal(cameraAtProgress(2,rect,1200,800).zoom,1.5);
+});
+
+test('native scroll drives entry but fullscreen can only reopen with its button',()=>{
+  let now=0,nextFrame=0,draws=0,painted=0,fluidCreated=0,spacer;
+  const frames=new Map(),events={},layers=[],ctx=new Proxy({},{get:(_,key)=>key==='clearRect'?()=>{draws++;painted=0;}:key==='save'?()=>painted++:()=>{}});
+  const scene={style:{},prepend(){}},copy={style:{}},button={style:{},events:{},addEventListener(type,fn){this.events[type]=fn;}};
+  const reopenButton={events:{},addEventListener(type,fn){this.events[type]=fn;}};
+  const layer={style:{},setAttribute(){},querySelector(selector){return selector==='canvas'?{getContext:()=>ctx}:selector==='button'?button:selector==='.pool-reopen'?reopenButton:selector==='.pool-intro-copy'?copy:scene;},addEventListener(){}};
+  const hero={children:[],dataset:{},before(element){spacer=element;},append(element){this.layer=element;},querySelector(selector){return selector==='.hero-logo'?{outerHTML:'<div class="hero-logo">LaneLine</div>'}:selector==='h1'?{innerHTML:'LaneLine'}:{textContent:'Swim'};},getBoundingClientRect(){const top=56+parseFloat(spacer?.style.height||0)-env.scrollY;return {top,bottom:top+294,left:0,right:1000,width:1000,height:294};}};
+  const doc={hidden:false,body:{style:{overflow:''},append(element){layers.push(element);}},querySelector:()=>hero,addEventListener(){},createElement(tag){return tag==='section'?layer:{style:{},setAttribute(){},remove(){}};}};
+  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:0,performance:{now:()=>now},matchMedia:()=>({matches:false}),requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(type,fn){events[type]=fn;},scrollTo(options){this.scrollY=options.top;events.scroll();},LaneLineFluid:{createDeferred(surface,ready){fluidCreated++;ready({resize(){}});}}};
+  env.LaneLineMotion=require('../motion')(env);
+  function step(){const pending=[...frames];frames.clear();now+=20;for(const [,fn] of pending)fn(now);}
+  const intro=require('../pool-intro')(env);intro.init();
+  assert.equal(layers.length,1);assert.equal(fluidCreated,1);assert.equal(doc.body.style.overflow,'');
+  assert.equal(events.wheel,undefined,'native scrolling is not intercepted');
+  assert.equal(painted,36,'fullscreen has two swimmers per lane');
+  const distance=parseFloat(spacer.style.height);
+  assert.equal(distance,240,'the faster transition uses a short scroll distance');
+  env.scrollY=distance/2;events.scroll();step();
+  const midway=scene.style.transform,before=draws;
+  for(let i=0;i<5;i++)step();
+  assert.equal(scene.style.transform,midway,'camera stops exactly where scrolling stops');
+  assert.ok(draws>before,'water and swimmers remain live while camera is paused');
+  env.scrollY=distance;events.scroll();step();assert.equal(hero.layer,layer);
+  assert.equal(spacer.style.height,'0px','entry scroll runway is removed after entering the app');
+  const bannerCamera=scene.style.transform;
+  for(let i=0;i<600;i++)step();
+  assert.ok(painted<=3,'small banner returns to the sparse swimmer setting');
+  env.scrollY=distance/2;events.scroll();step();assert.equal(scene.style.transform,bannerCamera);
+  env.scrollY=0;events.scroll();events.scrollend();step();assert.equal(scene.style.transform,bannerCamera,'scrolling to the top cannot reopen fullscreen');
+  assert.equal(reopenButton.hidden,false);
+  reopenButton.events.click();step();assert.equal(scene.style.transform,'translate(0px,0px) scale(1)');
+  assert.equal(layers[1],layer,'explicit reopening keeps the same scene');
+  for(let i=0;i<3;i++)step();
+  assert.equal(painted,36,'returning to fullscreen restores two swimmers per lane');
+  assert.equal(fluidCreated,1);
+  env.scrollY=distance*.3;events.scrollend();step();assert.equal(env.scrollY,0,'scroll release snaps back to the opening');
+  env.scrollY=distance*.7;events.scrollend();step();assert.equal(hero.layer,layer,'scroll release snaps into the banner');
+});
+
+test('swimmers turn at both walls and remain inside the pool',()=>{
+  for(let time=0;time<120;time+=.013){const pose=lapPose(time,14,.23);assert.ok(pose.position>=0&&pose.position<=1);assert.ok(Number.isFinite(pose.angle));}
+  assert.equal(lapPose(.2,1).side,1);assert.equal(lapPose(.7,1).side,-1);
+  assert.equal(lapPose(.46,1).position,1);assert.equal(lapPose(.96,1).position,0);
+});
+
+test('turns touch, tuck, push off, and carry a streamline into the next length',()=>{
+  const touch=lapPose(.43,1,0,'breast'),tuck=lapPose(.46,1,0,'free'),push=lapPose(.485,1,0,'free');
+  assert.equal(touch.turnStage,'touch');assert.equal(touch.turnStyle,'open');
+  assert.equal(tuck.turnStage,'tuck');assert.equal(tuck.turnStyle,'flip');assert.ok(tuck.tuck>.8);
+  assert.equal(lapPose(.46,1,0,'fly').turnStyle,'open');
+  assert.equal(lapPose(.46,1,0,'back').turnStyle,'flip');
+  assert.equal(push.turnStage,'push');assert.ok(push.position<1);assert.equal(push.streamline,true);
+  assert.equal(lapPose(.51,1).streamline,true);
+  assert.ok(Math.abs(lapPose(.5-1e-7,1).position-lapPose(.5+1e-7,1).position)<.00001);
+});
+
+test('scroll camera is packaged without timed camera animations or scroll locks',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../pool-intro.js'),'utf8');
-  assert.doesNotMatch(source,/pool-intro-copy'\)\.animate\(\[\{opacity/);
-});
-
-test('zoom stays live and scroll-up reuses one scene and one fluid context',async()=>{
-  let now=0,layers=[],disposed=0,draws=0,nextFrame=0,paintedSwimmers=0;
-  const frames=new Map(),animations=[],preference={matches:false};
-  function animate(){let resolve;const finished=new Promise(done=>{resolve=done;});const result={finished,resolve,cancel(){}};animations.push(result);return result;}
-  const windowEvents={},documentEvents={},ctx=new Proxy({},{get:(_,key)=>key==='clearRect'?()=>{draws++;paintedSwimmers=0;}:key==='save'?()=>paintedSwimmers++:()=>{}});
-  const hero={inert:false,tagName:'DIV',dataset:{},children:[],append(layer){this.layer=layer;},querySelector(selector){return selector==='.hero-logo'?{outerHTML:'<div class="hero-logo">LaneLine</div>'}:selector==='h1'?{innerHTML:'LaneLine'}:{textContent:'Swim'};},getBoundingClientRect(){return {top:56,right:1000,bottom:350,left:0,width:1000,height:294};}};
-  const doc={hidden:false,activeElement:{tagName:'BODY'},body:{children:[hero],style:{overflow:''},append(layer){layers.push(layer);}},querySelector(){return hero;},getElementById(){return {focus(){}};},addEventListener(type,fn){documentEvents[type]=fn;},removeEventListener(){},createElement(tag){
-    if(tag==='canvas')return {setAttribute(){},remove(){}};
-    const button={events:{},style:{},focus(){},addEventListener(type,fn){this.events[type]=fn;}};
-    const canvas={getContext(){return ctx;}};
-    return {events:{},style:{},button,animate,setAttribute(){},removeAttribute(){},prepend(){},remove(){this.removed=true;},querySelector(selector){return selector==='canvas'?canvas:selector==='button'?button:{style:{},prepend(){},animate};},addEventListener(type,fn){this.events[type]=fn;}};
-  }};
-  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:0,performance:{now:()=>now},matchMedia:()=>preference,requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},scrollTo(){},addEventListener(type,fn){windowEvents[type]=fn;},removeEventListener(){},LaneLineFluid:{createDeferred(surface,ready){ready({resize(){},dispose(){disposed++;}});}}};
-  const intro=require('../pool-intro')(env);
-  intro.init();assert.equal(layers.length,1);assert.equal(hero.inert,true);
-  const first=layers[0];
-  const exiting=layers[0].button.events.click(),before=draws;
-  assert.equal(frames.size,1,'camera movement must not cancel the live pool frame');
-  const [id,tick]=frames.entries().next().value;frames.delete(id);now=20;tick(now);
-  assert.ok(draws>before,'the pool continues drawing during the zoom');
-  assert.equal(frames.size,1,'the next pool frame remains scheduled');
-  animations.forEach(animation=>animation.resolve());await exiting;
-  assert.equal(disposed,0);assert.equal(hero.layer,first);assert.equal(hero.inert,false);assert.equal(doc.body.style.overflow,'');
-  assert.ok(paintedSwimmers>3,'existing swimmers are not deleted at the camera handoff');
-  for(let step=0;step<200;step++){
-    const [id,tick]=frames.entries().next().value;frames.delete(id);now+=100;tick(now);
-  }
-  assert.ok(paintedSwimmers>=1&&paintedSwimmers<=3,'after existing swimmers leave, the banner returns to 2-3 swimmers');
-  preference.matches=true;
-  now+=2000;env.scrollY=100;windowEvents.wheel({deltaY:-30,preventDefault(){}});assert.equal(layers.length,1);
-  env.scrollY=0;windowEvents.wheel({deltaY:-30,preventDefault(){}});assert.equal(layers.length,2);assert.equal(layers[1],first);
-  layers[1].button.events.click();assert.equal(disposed,0);assert.equal(hero.layer,first);
-});
-
-test('opening pool keeps swimmers within the walls through full laps',()=>{
-  for(let time=0;time<120;time+=.013){
-    const pose=lapPose(time,14,.23);
-    assert.ok(pose.position>=0&&pose.position<=1);
-    assert.ok(pose.side>=-1&&pose.side<=1);
-    assert.ok(Number.isFinite(pose.angle));
-  }
-});
-test('swimmers turn at both walls and change sides for the return length',()=>{
-  const down=lapPose(.2,1),bottom=lapPose(.46,1),up=lapPose(.7,1),top=lapPose(.96,1);
-  assert.equal(down.side,1);assert.equal(up.side,-1);
-  assert.equal(bottom.position,1);assert.equal(top.position,0);
-  assert.ok(bottom.turn>.99);assert.ok(top.turn>.99);
-  assert.ok(Math.abs(bottom.angle-Math.PI*1.5)<.0001);
-});
-test('opening pool is separate and its script is available in deployments',()=>{
-  const index=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
-  const css=fs.readFileSync(path.join(__dirname,'../performance.css'),'utf8');
   const workflow=fs.readFileSync(path.join(__dirname,'../.github/workflows/deploy-laneline.yml'),'utf8');
-  assert.match(index,/src="pool-intro.js"/);
   assert.match(workflow,/pool-intro.js/);
-  assert.doesNotMatch(css,/\.hero\{min-height:calc\(100/);
-  assert.doesNotMatch(index,/class="hero-enter"/);
+  assert.doesNotMatch(source,/\.animate\(|preventDefault\(|overflow='hidden'/);
+  assert.match(source,/drawBannerSwimmer/);
 });

@@ -2,58 +2,79 @@
   if(typeof module==='object'&&module.exports)module.exports=factory;
   else factory(root).init();
 })(typeof globalThis==='object'?globalThis:this,function(env){
-  let active=false,reopenInstalled=false,lastClosed=-Infinity,reopenScene=null;
+  let initialized=false;
   const cameraZoom=1.5,laneCount=18;
+  function waterDrift(x,y,width,height,flow,impulse,now){
+    const column=Math.max(0,Math.min(12,Math.round((x/width-.04)*12/.92))),row=Math.max(0,Math.min(16,Math.round(y/height*16)));
+    let dx=(flow?.[column*17+row]||0)*.025,dy=0;
+    if(impulse){
+      const age=Math.max(0,now-impulse.time),distance=Math.hypot(x-impulse.x,y-impulse.y);
+      const attenuation=Math.pow(.62,Math.floor(Math.abs(x-impulse.x)/(width*.92/laneCount)));
+      const decay=Math.exp(-age/750)*attenuation,near=Math.max(0,1-distance/180);
+      dx+=impulse.dx*.12*near*decay;
+      dy+=impulse.dy*.08*near*decay+Math.sin((distance-age*.18)*.05)*3*Math.exp(-Math.abs(distance-age*.18)/110)*decay;
+    }
+    return {x:Math.max(-6,Math.min(6,dx)),y:Math.max(-5,Math.min(5,dy))};
+  }
+  function fullLaneSwimmers(){return Array.from({length:laneCount*2},(_,index)=>({index,laneIndex:Math.floor(index/2)}));}
+  function snapDestination(scroll,distance,fromBanner=false){
+    if(distance<=0||scroll<=1||scroll>=distance-1)return null;
+    return scroll<distance*(fromBanner ? .3 : .5)?0:distance;
+  }
   function poolTransition(target,width,height){
     const x=target.left+target.width/2-width*cameraZoom/2;
     const y=target.top+target.height/2-height*cameraZoom/2;
     return {transform:'translate('+x+'px,'+y+'px) scale('+cameraZoom+')'};
   }
-  function lapPose(seconds,duration,offset=0){
+  function cameraAtProgress(progress,target,width,height){
+    const p=Math.max(0,Math.min(1,progress)),eased=p*p*(3-2*p),zoom=1+(cameraZoom-1)*eased;
+    const x=(target.left+target.width/2-width*cameraZoom/2)*eased;
+    const y=(target.top+target.height/2-height*cameraZoom/2)*eased;
+    // Keep the wide camera aperture open while the pool ends move past it.
+    const cropStart=Math.max(0,(p-.7)/.3),crop=cropStart*cropStart*(3-2*cropStart);
+    return {transform:'translate('+x+'px,'+y+'px) scale('+zoom+')',
+      clipPath:'inset('+[target.top,width-target.right,height-target.bottom,target.left].map(n=>Math.max(0,n)*crop+'px').join(' ')+')',zoom};
+  }
+  function lapPose(seconds,duration,offset=0,stroke='free'){
     const p=((seconds/duration+offset)%1+1)%1;
-    if(p<.42)return {position:p/.42,angle:Math.PI,side:1,turn:0};
-    if(p<.5){const turn=(p-.42)/.08;return {position:1,angle:Math.PI+Math.PI*turn,side:Math.cos(Math.PI*turn),turn:Math.sin(Math.PI*turn)};}
-    if(p<.92)return {position:1-(p-.5)/.42,angle:0,side:-1,turn:0};
-    const turn=(p-.92)/.08;
-    return {position:0,angle:Math.PI*turn,side:-Math.cos(Math.PI*turn),turn:Math.sin(Math.PI*turn)};
+    if(p<.42)return {position:.06+.94*p/.42,angle:Math.PI,side:1,turn:0,streamline:p<.045};
+    if(p>=.5&&p<.92)return {position:.94*(1-(p-.5)/.42),angle:0,side:-1,turn:0,streamline:p<.545};
+    const bottom=p<.5,t=bottom?(p-.42)/.08:(p-.92)/.08;
+    const smooth=value=>{const n=Math.max(0,Math.min(1,value));return n*n*(3-2*n);};
+    const pivot=smooth((t-.18)/.54),push=smooth((t-.72)/.28);
+    return {position:bottom?1-.06*push:.06*push,angle:(bottom?Math.PI:0)+Math.PI*pivot,
+      side:(bottom?1:-1)*Math.cos(Math.PI*smooth(t)),turn:Math.sin(Math.PI*t),
+      turnStyle:stroke==='breast'||stroke==='fly'?'open':'flip',
+      turnStage:t<.18?'touch':t<.72?'tuck':'push',tuck:Math.sin(pivot*Math.PI),streamline:t>=.72};
   }
   function init(){
     const doc=env.document;
-    if(active||!doc||!doc.querySelector('.hero')||!env.requestAnimationFrame)return;
-    if(reopenScene){reopenScene();return;}
-    if(!reopenInstalled){
-      reopenInstalled=true;
-      const canReopen=()=>!active&&env.scrollY<=2&&env.performance.now()-lastClosed>1000;
-      env.addEventListener('wheel',event=>{if(event.deltaY< -12&&canReopen()){event.preventDefault();init();}},{passive:false});
-      let startY=null;
-      doc.addEventListener('touchstart',event=>{startY=canReopen()?event.touches[0]?.clientY:null;},{passive:true});
-      doc.addEventListener('touchend',event=>{if(startY!==null&&(event.changedTouches[0]?.clientY??startY)-startY>60&&canReopen())init();startY=null;},{passive:true});
-      doc.addEventListener('keydown',event=>{if(event.key==='PageUp'&&canReopen()&&!/INPUT|TEXTAREA|SELECT/.test(event.target.tagName)){event.preventDefault();init();}});
-    }
+    if(initialized||!doc||!doc.querySelector('.hero')||!env.requestAnimationFrame)return;
     const layer=doc.createElement('section');
     layer.className='pool-intro';
-    layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');
+    layer.setAttribute('role','region');
     layer.setAttribute('aria-labelledby','pool-intro-title');
     const hero=doc.querySelector('.hero');
     hero.dataset.poolCamera='shared';
-    layer.innerHTML='<div class="pool-intro-scene"><canvas aria-hidden="true"></canvas><div class="pool-intro-copy">'+hero.querySelector('.hero-logo').outerHTML+'<h1 id="pool-intro-title">'+hero.querySelector('h1').innerHTML+'</h1><p>'+hero.querySelector('p').textContent+'</p></div></div><button class="pool-intro-enter" type="button">Enter LaneLine <span aria-hidden="true">&darr;</span></button>';
+    layer.innerHTML='<div class="pool-intro-scene"><canvas aria-hidden="true"></canvas><div class="pool-intro-copy">'+hero.querySelector('.hero-logo').outerHTML+'<h1 id="pool-intro-title">'+hero.querySelector('h1').innerHTML+'</h1><p>'+hero.querySelector('p').textContent+'</p></div></div><button class="pool-intro-enter" type="button">Enter LaneLine <span aria-hidden="true">&darr;</span></button><button class="pool-reopen" type="button" title="Open fullscreen pool" hidden>Fullscreen</button>';
     const scene=layer.querySelector('.pool-intro-scene');
     layer.querySelector('.pool-intro-copy').style.transform='translateY(-50%) scale('+(1/cameraZoom)+')';
-    if(env.getComputedStyle)layer.querySelector('h1').style.fontSize=env.getComputedStyle(hero.querySelector('h1')).fontSize;
     const canvas=layer.querySelector('canvas'),ctx=canvas.getContext('2d');
     if(!ctx)return;
-    active=true;
+    initialized=true;
     for(const child of hero.children)child.style.visibility='hidden';
     const reduced=env.matchMedia('(prefers-reduced-motion: reduce)');
-    const priorFocus=doc.activeElement,priorOverflow=doc.body.style.overflow;
-    const siblings=[...doc.body.children].filter(el=>!['SCRIPT','STYLE','LINK'].includes(el.tagName)).map(el=>[el,el.inert]);
-    siblings.forEach(([el])=>{el.inert=true;});
-    doc.body.append(layer);doc.body.style.overflow='hidden';
-    env.scrollTo(0,0);
-    const button=layer.querySelector('button');button.focus({preventScroll:true});
-    let width=1,height=1,frame=0,last=-Infinity,closing=false,touchY=null,onscreen=true;
+    const spacer=doc.createElement('div');spacer.className='pool-scroll-space';spacer.setAttribute('aria-hidden','true');hero.before(spacer);
+    doc.body.append(layer);
+    const letters=env.LaneLineMotion?.prepareWaterLetters(layer.querySelector('.pool-intro-copy'),'h1,p,.hero-wordmark')||[];
+    const button=layer.querySelector('button');
+    const reopenButton=layer.querySelector('.pool-reopen');
+    let width=1,height=1,frame=0,last=-Infinity,closing=false,onscreen=true,active=true;
+    let scrollDistance=1,progress=0,cameraFrame=0,mountedInBanner=false,currentZoom=1,snapTimer=null,fromBanner=false;
+    let fullscreenLocked=false,reopening=false;
     let fluid=null,fluidUntil=0,pendingFluid=null,pressed=false,pointer=null,flow=null,lastFlow=-Infinity,disposed=false;
-    let swimmers=Array.from({length:laneCount*2},(_,index)=>({index,laneIndex:Math.floor(index/2)}));
+    let impulse=null;
+    let swimmers=fullLaneSwimmers();
     let lowDensity=false,swimmerNumber=laneCount*2,bannerHeight=1,drainBounds=null;
     const ropes=Array.from({length:laneCount+1},()=>Array.from({length:33},()=>({x:0,v:0})));
     if(env.LaneLineFluid?.createDeferred){
@@ -66,38 +87,34 @@
     const started=env.performance.now();
     function resize(){
       width=env.innerWidth;height=env.innerHeight;
+      scrollDistance=reduced.matches?0:Math.max(160,Math.min(280,height*.3));
+      spacer.style.height=(fullscreenLocked?0:scrollDistance)+'px';
       scene.style.width=width+'px';scene.style.height=height+'px';
       const dpr=Math.min(env.devicePixelRatio||1,1.25);
       canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
       fluid?.resize(width,height);
       ctx.setTransform(dpr,0,0,dpr,0,0);draw((env.performance.now()-started)/1000);
-      if(!active)fitBanner();
+      syncCamera();
+      measureLetters();
+    }
+    function measureLetters(){
+      if(!letters.length)return;
+      const bounds=scene.getBoundingClientRect();
+      for(const letter of letters){letter.element.style.transform='none';letter.x=letter.y=0;}
+      for(const letter of letters){
+        const rect=letter.element.getBoundingClientRect();
+        letter.baseX=(rect.left+rect.width/2-bounds.left)/currentZoom;letter.baseY=(rect.top+rect.height/2-bounds.top)/currentZoom;
+      }
+    }
+    function moveLetters(now){
+      for(const letter of letters){
+        const drift=waterDrift(letter.baseX,letter.baseY,width,height,flow,impulse,now);
+        letter.x+=(drift.x*1.9-letter.x)*.22;letter.y+=(drift.y*2.1-letter.y)*.22;
+        letter.element.style.transform='translate('+letter.x.toFixed(2)+'px,'+letter.y.toFixed(2)+'px) rotate('+(letter.x*.5).toFixed(2)+'deg)';
+      }
     }
     function swimmer(x,y,pose,stroke,seconds,index,scale){
-      ctx.save();ctx.globalAlpha=.7;ctx.translate(x,y);ctx.rotate(pose.angle);ctx.scale(scale,scale);
-      const phase=seconds*({free:8,back:7,breast:4,fly:6}[stroke])+index;
-      const skin=['#f5cba7','#bd8965','#915e48'][index%3];
-      const block=(x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),w,h);};
-      if(pose.turn>.25){
-        block(-3,-4,6,8,'#99dfff');block(-2,-7,4,3,skin);
-        block(-5,2,3,5,skin);block(2,2,3,5,skin);
-      }else{
-        block(-2,-9,4,3,'#a5e7ff');block(-2,-6,4,3,skin);
-        block(-3,-3,6,8,skin);block(-3,3,6,5,'#8cdcff');
-        if(index%2)block(-3,-2,6,6,'#8cdcff');
-        if(stroke==='breast'||stroke==='fly'){
-          const sweep=(Math.sin(phase)+1)/2,reach=stroke==='breast'?sweep*5:3+sweep*7;
-          for(const side of [-1,1]){
-            block(side<0?-4-reach:3,-7+sweep*5,2+reach,2,skin);
-            block(side<0?-3-sweep*3:1+sweep*3,8,2,6,skin);
-          }
-        }else{
-          const swing=Math.sin(phase)*6;
-          block(-5,-5+swing,2,8,skin);block(3,-5-swing,2,8,skin);
-          block(-3,8,2,7+(Math.sin(phase)>0?1:0),skin);block(1,8,2,7+(Math.sin(phase)<0?1:0),skin);
-        }
-      }
-      ctx.restore();
+      env.LaneLineMotion?.drawBannerSwimmer(ctx,{...pose,stroke,start:index*170,female:index%2===1,skin:['#f6cfa3','#c48d66','#8d5d46'][index%3],color:'#8cdcff'},x,y,seconds*1000,scale,pose.angle);
     }
     function draw(seconds){
       ctx.clearRect(0,0,width,height);
@@ -134,7 +151,7 @@
       const halfView=active?height/2:bannerHeight/(2*cameraZoom),view={top:height/2-halfView,bottom:height/2+halfView};
       if(lowDensity&&swimmers.length<2+(Math.floor(seconds/7)%2)){
         const index=swimmerNumber++,laneIndex=3+(index*5)%12;
-        swimmers.push({index,laneIndex,start:seconds,cruising:true,up:index%2===0,from:view.top-35,to:view.bottom+35});
+        swimmers.push({index,laneIndex,start:seconds,last:seconds,progress:0,cruising:true,up:index%2===0,from:view.top-35,to:view.bottom+35});
       }
       const remaining=[];
       for(const entry of swimmers){
@@ -143,17 +160,23 @@
         const secondsPaced=seconds+Math.sin(seconds*4+i)*pace;
         let pose,y;
         if(entry.cruising){
-          const duration={free:4.2,back:4.4,breast:5,fly:4.6}[stroke],progress=(seconds-entry.start)/duration;
+          const duration={free:4.2,back:4.4,breast:5,fly:4.6}[stroke];
+          const pace=env.LaneLineMotion?.bannerStrokePace(stroke,(seconds-entry.start)*1000)||1;
+          entry.progress+=Math.max(0,Math.min(.08,seconds-entry.last))*pace/duration;entry.last=seconds;
+          const progress=entry.progress;
           if(progress>1)continue;
           y=entry.up?entry.to-progress*(entry.to-entry.from):entry.from+progress*(entry.to-entry.from);
           pose={angle:entry.up?0:Math.PI,side:entry.up?-1:1,turn:0};
         }else{
-          pose=lapPose(secondsPaced,14+(laneIndex%4)*1.7,laneIndex*.061+(i%2)*.5);
+          pose=lapPose(secondsPaced,14+(laneIndex%4)*1.7,laneIndex*.061+(i%2)*.5,stroke);
           y=top+pose.position*(bottom-top);
           if(lowDensity&&(y<drainBounds.top-35||y>drainBounds.bottom+35))continue;
         }
         remaining.push(entry);
-        swimmer(edge+(laneIndex+.5)*lane+pose.side*lane*.16,y,pose,stroke,seconds,i,Math.max(.65,Math.min(1.65,lane/38)));
+        const x=edge+(laneIndex+.5)*lane+pose.side*lane*.16;
+        const drift=waterDrift(x,y,width,height,flow,impulse,env.performance.now());
+        entry.driftX=((entry.driftX||0)*.86+drift.x*.14);entry.driftY=((entry.driftY||0)*.86+drift.y*.14);
+        swimmer(x+entry.driftX,y+entry.driftY,{...pose,angle:pose.angle+entry.driftX*.012},stroke,seconds,i,Math.max(.65,Math.min(1.65,lane/38)));
       }
       swimmers=remaining;
       // Gutters and solid end walls make each turn visibly meet the pool edge.
@@ -178,68 +201,73 @@
           const forces=nodes.map((node,i)=>{
             const sample=flow?.[Math.round(index*12/laneCount)*17+Math.round(i/2)]||0;
             const dx=width*(.04+index*.92/laneCount)- (pointer?.x??-1000),dy=42+i*(height-84)/32-(pointer?.y??-1000);
-            const distance=Math.hypot(dx,dy),push=pressed&&distance<90?(pointer.dx*.04+(dx>0?.2:-.2))*Math.pow(1-distance/90,2):0;
-            return Math.max(-.6,Math.min(.6,sample*.002+push));
+            const distance=Math.hypot(dx,dy),push=pressed&&distance<105?(pointer.dx*.055+(dx>0?.26:-.26))*Math.pow(1-distance/105,2):0;
+            return Math.max(-.85,Math.min(.85,sample*.0028+push));
           });
           env.LaneLineMotion?.stepWaterRope(nodes,forces);
         });
-        draw((now-started)/1000);last=now;
+        draw((now-started)/1000);moveLetters(now);last=now;
       }
       frame=env.requestAnimationFrame(tick);
     }
     function visibility(){env.cancelAnimationFrame(frame);frame=0;if(!doc.hidden&&!reduced.matches&&(active||onscreen))frame=env.requestAnimationFrame(tick);}
-    function fitBanner(){
+    function syncCamera(){
+      const previouslyActive=active;
+      progress=fullscreenLocked?1:scrollDistance?Math.max(0,Math.min(1,env.scrollY/scrollDistance)):1;
+      if(progress>=1&&!fullscreenLocked&&!reopening){
+        fullscreenLocked=true;
+        const top=Math.max(0,env.scrollY-scrollDistance);
+        spacer.style.height='0px';
+        env.scrollTo({top,behavior:'instant'});
+      }
+      if(progress<=.001)reopening=false;
       const rect=hero.getBoundingClientRect();
-      bannerHeight=rect.height;
-      scene.style.transform=poolTransition({left:0,top:0,width:rect.width,height:rect.height},width,height).transform;
-    }
-    function cleanup(){
-      active=false;closing=false;lastClosed=env.performance.now();
-      // Keep the exact same canvas, simulation and text mounted as the small banner.
-      hero.append(layer);
-      Object.assign(layer.style,{position:'absolute',inset:'0',zIndex:'10',clipPath:'none'});
-      layer.removeAttribute('aria-modal');layer.removeAttribute('role');button.hidden=true;
-      fitBanner();doc.body.style.overflow=priorOverflow;
-      if(!lowDensity){
-        lowDensity=true;
-        drainBounds={top:height/2-bannerHeight/(2*cameraZoom),bottom:height/2+bannerHeight/(2*cameraZoom)};
+      if(progress>=1)fromBanner=true;else if(progress<=.001)fromBanner=false;
+      active=progress<1;closing=progress>0&&progress<1;bannerHeight=rect.height;
+      layer.style.setProperty?.('--pool-graphics-opacity',String(1-.45*progress*progress*(3-2*progress)));
+      if(progress<=.05&&lowDensity){swimmers=fullLaneSwimmers();lowDensity=false;drainBounds=null;}
+      if(active){
+        if(mountedInBanner){doc.body.append(layer);mountedInBanner=false;}
+        Object.assign(layer.style,{position:'fixed',inset:'0',zIndex:'1000'});
+        const target={left:rect.left,right:rect.right,width:rect.width,height:rect.height,top:rect.top+env.scrollY-scrollDistance,bottom:rect.bottom+env.scrollY-scrollDistance};
+        const camera=cameraAtProgress(progress,target,width,height);
+        scene.style.transform=camera.transform;layer.style.clipPath=camera.clipPath;currentZoom=camera.zoom;
+      }else{
+        if(!mountedInBanner){hero.append(layer);mountedInBanner=true;}
+        Object.assign(layer.style,{position:'absolute',inset:'0',zIndex:'10',clipPath:'none'});
+        scene.style.transform=poolTransition({left:0,top:0,width:rect.width,height:rect.height},width,height).transform;
+        currentZoom=cameraZoom;
+        if(!lowDensity){lowDensity=true;drainBounds={top:height/2-bannerHeight/(2*cameraZoom),bottom:height/2+bannerHeight/(2*cameraZoom)};}
       }
-      siblings.forEach(([el,inert])=>{el.inert=inert;});
-      (priorFocus?.tagName==='BODY'?doc.getElementById('ptab-best'):priorFocus)?.focus?.({preventScroll:true});
-      visibility();
+      button.hidden=progress>.85;button.style.opacity=String(Math.max(0,1-progress*4));
+      reopenButton.hidden=!fullscreenLocked;
+      if(active!==previouslyActive)visibility();
     }
-    reopenScene=async()=>{
-      if(active||closing)return;
-      const target=hero.getBoundingClientRect();active=true;closing=true;
-      siblings.forEach(([el])=>{el.inert=true;});
-      doc.body.append(layer);doc.body.style.overflow='hidden';
-      Object.assign(layer.style,{position:'fixed',inset:'0',zIndex:'1000'});
-      layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');
-      button.hidden=false;button.style.opacity='1';
-      const from=poolTransition(target,width,height),inset=[target.top,width-target.right,height-target.bottom,target.left].map(n=>Math.max(0,n)+'px').join(' ');
-      if(!reduced.matches&&layer.animate){
-        const options={duration:800,easing:'cubic-bezier(.4,0,.2,1)'};
-        const camera=scene.animate([from,{transform:'translate(0px,0px) scale(1)'}],options);
-        const crop=layer.animate([{clipPath:'inset('+inset+')'},{clipPath:'inset(0px)'}],options);
-        try{await Promise.all([camera.finished,crop.finished]);}catch{}
+    function scheduleCamera(){
+      if(env.setTimeout){
+        env.clearTimeout(snapTimer);
+        snapTimer=env.setTimeout(settleCamera,80);
       }
-      scene.style.transform='none';layer.style.clipPath='none';closing=false;button.focus({preventScroll:true});visibility();
-    };
-    async function enter(){
-      if(closing)return;closing=true;
-      const target=doc.querySelector('.hero').getBoundingClientRect();
-      if(reduced.matches||!layer.animate){cleanup();return;}
-      const inset=[Math.max(0,target.top),Math.max(0,width-target.right),Math.max(0,height-target.bottom),Math.max(0,target.left)];
-      const options={duration:800,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'};
-      // One camera transform keeps the water, ropes, swimmers and lettering together.
-      button.style.opacity='0';
-      const camera=scene.animate([{transform:'translate(0px,0px) scale(1)'},poolTransition(target,width,height)],options);
-      const animation=layer.animate([{clipPath:'inset(0px 0px 0px 0px)'},{clipPath:'inset('+inset.map(n=>n+'px').join(' ')+')'}],options);
-      try{await animation.finished;}catch{}finally{camera.cancel();animation.cancel();cleanup();}
+      if(cameraFrame)return;
+      cameraFrame=env.requestAnimationFrame(()=>{cameraFrame=0;syncCamera();});
     }
+    function settleCamera(){
+      env.clearTimeout?.(snapTimer);snapTimer=null;
+      if(fullscreenLocked||reopening)return;
+      const top=snapDestination(env.scrollY,scrollDistance,fromBanner);
+      if(top!==null)env.scrollTo({top,behavior:reduced.matches?'instant':'smooth'});
+    }
+    function enter(){env.scrollTo({top:scrollDistance,behavior:reduced.matches?'instant':'smooth'});}
     button.addEventListener('click',enter);
+    reopenButton.addEventListener('click',()=>{
+      if(!fullscreenLocked)return;
+      fullscreenLocked=false;reopening=true;
+      spacer.style.height=scrollDistance+'px';
+      env.scrollTo({top:env.scrollY+scrollDistance,behavior:'instant'});
+      env.scrollTo({top:0,behavior:reduced.matches?'instant':'smooth'});
+    });
     layer.addEventListener('pointerdown',event=>{
-      if(event.button!==0||reduced.matches||event.target.closest('button'))return;
+      if(event.button!==0||event.pointerType==='touch'||reduced.matches||event.target.closest('button'))return;
       pressed=true;pointer={...pointerPosition(event),dx:0};
       layer.setPointerCapture?.(event.pointerId);
     });
@@ -247,19 +275,19 @@
       if(!pressed||reduced.matches)return;
       const point=pointerPosition(event),dx=point.x-pointer.x,dy=point.y-pointer.y;
       pointer={...point,dx};
+      impulse={...point,dx,dy,time:env.performance.now()};
       pendingFluid={x:pointer.x/width,y:pointer.y/height,dx:(pendingFluid?.dx||0)+dx/width,dy:(pendingFluid?.dy||0)+dy/height};
     });
     const release=()=>{pressed=false;pointer=null;};
-    function pointerPosition(event){const bounds=scene.getBoundingClientRect(),zoom=active?1:cameraZoom;return {x:(event.clientX-bounds.left)/zoom,y:(event.clientY-bounds.top)/zoom};}
+    function pointerPosition(event){const bounds=scene.getBoundingClientRect();return {x:(event.clientX-bounds.left)/currentZoom,y:(event.clientY-bounds.top)/currentZoom};}
     layer.addEventListener('pointerup',release);layer.addEventListener('pointercancel',release);layer.addEventListener('lostpointercapture',release);
-    layer.addEventListener('wheel',event=>{if(active){event.preventDefault();if(event.deltaY>8)enter();}},{passive:false});
-    layer.addEventListener('keydown',event=>{if(!active)return;if(['Escape','Enter',' ','ArrowDown','PageDown'].includes(event.key)){event.preventDefault();enter();}else if(event.key==='Tab'){event.preventDefault();button.focus();}});
-    layer.addEventListener('touchstart',event=>{touchY=event.touches[0]?.clientY;},{passive:true});
-    layer.addEventListener('touchend',event=>{if(active&&touchY!==null&&touchY-(event.changedTouches[0]?.clientY??touchY)>35)enter();touchY=null;},{passive:true});
+    env.addEventListener('scroll',scheduleCamera,{passive:true});
+    env.addEventListener('scrollend',settleCamera,{passive:true});
     env.addEventListener('resize',resize);doc.addEventListener('visibilitychange',visibility);
     if(env.IntersectionObserver)new env.IntersectionObserver(entries=>{onscreen=entries[0].isIntersecting;visibility();}).observe(hero);
-    reduced.addEventListener?.('change',visibility);
+    reduced.addEventListener?.('change',()=>{resize();visibility();});
+    doc.fonts?.ready.then(measureLetters);
     resize();visibility();
   }
-  return {init,lapPose,poolTransition};
+  return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift};
 });

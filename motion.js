@@ -28,6 +28,55 @@
       up:(laneIndex+lap)%2===0,start:now,duration:{free:4200,breast:5000,fly:4600,back:4400}[stroke],
       progress:initial?laneIndex*.065:0,offset:0,v:0,boost:0};
   }
+  function drawBannerSwimmer(ctx,swimmer,x,y,now,scale,angle=swimmer.up?0:Math.PI){
+    ctx.save();ctx.globalAlpha=.7;ctx.translate(Math.round(x),Math.round(y));ctx.rotate(angle);
+    const pixel=(x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(x*scale,y*scale,w*scale,h*scale);};
+    const skin=swimmer.skin,cap=swimmer.color,suit=swimmer.color,phase=bannerStrokePhase(swimmer.stroke,now-swimmer.start);
+    if(swimmer.turnStage||swimmer.streamline){
+      if(swimmer.turnStage==='tuck'){
+        ctx.scale(1,1-(swimmer.tuck||0)*.4);
+        pixel(-2,-6,5,3,cap);pixel(-2,-3,5,3,skin);pixel(-3,0,6,5,suit);
+        pixel(-5,3,3,4,skin);pixel(3,3,3,4,skin);pixel(-4,6,4,2,skin);pixel(1,6,4,2,skin);
+        if(swimmer.turnStyle==='open'){pixel(-7,-5,5,2,skin);pixel(3,-2,5,2,skin);}
+        else{pixel(-4,-1,2,5,skin);pixel(3,-1,2,5,skin);}
+      }else{
+        pixel(-1,-7,3,3,cap);pixel(-1,-4,3,2,skin);pixel(-2,-2,5,7,skin);
+        pixel(-2,3,5,5,suit);pixel(-2,8,2,8,skin);pixel(1,8,2,8,skin);
+        if(swimmer.turnStage==='touch'&&swimmer.turnStyle==='flip'){
+          pixel(-4,-4,2,7,skin);pixel(3,-3,2,7,skin);
+        }else{pixel(-2,-15,2,13,skin);pixel(1,-15,2,13,skin);pixel(-1,-16,3,2,skin);}
+      }
+      ctx.restore();return;
+    }
+    pixel(-1,-7,3,2,cap);pixel(-2,-6,5,1,cap);pixel(-1,-5,3,2,skin);
+    pixel(-2,-2,5,6,skin);pixel(-1,4,3,4,suit);pixel(-2,5,5,2,suit);
+    if(swimmer.female){pixel(-2,0,5,6,suit);pixel(-2,-2,1,3,suit);pixel(2,-2,1,3,suit);}
+    if(swimmer.stroke==='back'){pixel(-1,-5,3,2,skin);pixel(-1,-5,1,1,'#174668');pixel(1,-5,1,1,'#174668');}
+    if(swimmer.stroke==='breast'||swimmer.stroke==='fly'){
+      for(const side of [-1,1]){
+        if(swimmer.stroke==='breast'){
+          if(phase===0||phase===3)pixel(side<0?-2:1,-14,2,11,skin);
+          else if(phase===1){pixel(side<0?-5:3,-7,3,2,skin);pixel(side<0?-6:5,-5,2,5,skin);}
+          else{pixel(side<0?-4:3,-1,2,4,skin);pixel(side<0?-3:1,-2,3,2,skin);}
+        }else{
+          const spread=[3,9,3,8][phase],reach=[-12,-3,5,-9][phase];
+          if(phase===0)pixel(side<0?-3:2,-12,2,10,skin);
+          else if(phase===2)pixel(side<0?-4:3,0,2,8,skin);
+          else{pixel(side<0?-spread:2,reach,spread-1,2,skin);pixel(side<0?-spread:spread,reach-2,2,3,skin);}
+        }
+      }
+    }else{
+      const arm=swimmer.stroke==='back'?[[-3,-8,-4,-10],[3,2,4,5],[-3,2,-4,5],[3,-8,4,-10]]:[[-3,-5,-5,-7],[3,1,5,3],[-3,1,-5,3],[3,-5,5,-7]];
+      for(const index of phase<2?[0,1]:[2,3]){const [ax,ay,bx,by]=arm[index];pixel(ax,ay,2,4,skin);pixel(bx,by,2,3,skin);}
+    }
+    if(swimmer.stroke==='breast'){
+      if(phase===1||phase===2){pixel(-4,8,2,4,skin);pixel(3,8,2,4,skin);pixel(-6,11,3,2,skin);pixel(4,11,3,2,skin);if(phase===2){pixel(-7,12,4,2,skin);pixel(4,12,4,2,skin);}}
+      else{pixel(-1,8,2,8,skin);pixel(1,8,2,8,skin);}
+    }else if(swimmer.stroke==='fly'){
+      const kick=phase%2?1:0;pixel(-1-kick,8,4,4,skin);pixel(-1,12,4,phase%2?3:5,skin);pixel(-2,phase%2?14:16,5,1,skin);
+    }else{pixel(-2,8,2,phase%2?7:6,skin);pixel(1,8,2,phase%2?6:7,skin);pixel(-3,phase%2?14:13,2,2,skin);pixel(2,phase%2?13:14,2,2,skin);}
+    ctx.restore();
+  }
   let observer,indicator,nav;
   function reduced(){return Boolean(preference?.matches);}
   function stop(element){
@@ -109,9 +158,9 @@
     for(const edge of waterLanePositions)if(edge>low&&edge<=high)crossed++;
     return Math.pow(.62,crossed);
   }
-  function prepareWaterLetters(hero){
+  function prepareWaterLetters(hero,selector='h1,p'){
     const doc=env.document;if(!doc.createDocumentFragment)return [];
-    for(const root of hero.querySelectorAll('h1,p')){
+    for(const root of hero.querySelectorAll(selector)){
       if(root.dataset.waterText)continue;root.dataset.waterText='true';
       const nodes=[];
       const collect=parent=>{for(const child of [...parent.childNodes]){if(child.nodeType===3)nodes.push(child);else if(child.nodeType===1)collect(child);}};
@@ -241,57 +290,7 @@
       for(const swimmer of swimmers){
         const progress=swimmer.progress;
         const x=swimmer.lane*width+swimmer.offset,y=swimmer.up?height+35-progress*(height+70):-35+progress*(height+70);
-        ctx.save();ctx.globalAlpha=.7;ctx.translate(Math.round(x),Math.round(y));if(!swimmer.up)ctx.rotate(Math.PI);
-        // Integer-sized blocks retain the sprite's crisp pixel-art silhouette.
-        const scale=bannerSwimmerScale(width);
-        const pixel=(x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(x*scale,y*scale,w*scale,h*scale);};
-        const skin=swimmer.skin,cap=swimmer.color,suit=swimmer.color;
-        const phase=bannerStrokePhase(swimmer.stroke,now-swimmer.start);
-        pixel(-1,-7,3,2,cap);pixel(-2,-6,5,1,cap);pixel(-1,-5,3,2,skin);
-        pixel(-2,-2,5,6,skin);pixel(-1,4,3,4,suit);pixel(-2,5,5,2,suit);
-        if(swimmer.female){pixel(-2,0,5,6,suit);pixel(-2,-2,1,3,suit);pixel(2,-2,1,3,suit);}
-        if(swimmer.stroke==='back'){pixel(-1,-5,3,2,skin);pixel(-1,-5,1,1,'#174668');pixel(1,-5,1,1,'#174668');}
-        if(swimmer.stroke==='breast'||swimmer.stroke==='fly'){
-          for(const side of [-1,1]){
-            if(swimmer.stroke==='breast'){
-              if(phase===0||phase===3){
-                pixel(side<0?-2:1,-14,2,11,skin);
-              }else if(phase===1){
-                pixel(side<0?-5:3,-7,3,2,skin);pixel(side<0?-6:5,-5,2,5,skin);
-              }else{
-                pixel(side<0?-4:3,-1,2,4,skin);pixel(side<0?-3:1,-2,3,2,skin);
-              }
-            }else{
-              const spread=[3,9,3,8][phase],reach=[-12,-3,5,-9][phase];
-              if(phase===0)pixel(side<0?-3:2,-12,2,10,skin);
-              else if(phase===2)pixel(side<0?-4:3,0,2,8,skin);
-              else{
-                pixel(side<0?-spread:2,reach,spread-1,2,skin);
-                pixel(side<0?-spread:spread,reach-2,2,3,skin);
-              }
-            }
-          }
-        }else{
-          const arm=swimmer.stroke==='back'?[[-3,-8,-4,-10],[3,2,4,5],[-3,2,-4,5],[3,-8,4,-10]]:
-            [[-3,-5,-5,-7],[3,1,5,3],[-3,1,-5,3],[3,-5,5,-7]];
-          for(const index of phase<2?[0,1]:[2,3]){
-            const [ax,ay,bx,by]=arm[index];pixel(ax,ay,2,4,skin);pixel(bx,by,2,3,skin);
-          }
-        }
-        if(swimmer.stroke==='breast'){
-          if(phase===1||phase===2){
-            pixel(-4,8,2,4,skin);pixel(3,8,2,4,skin);pixel(-6,11,3,2,skin);pixel(4,11,3,2,skin);
-            if(phase===2){pixel(-7,12,4,2,skin);pixel(4,12,4,2,skin);}
-          }else{pixel(-1,8,2,8,skin);pixel(1,8,2,8,skin);}
-        }else if(swimmer.stroke==='fly'){
-          const kick=phase%2?1:0;
-          pixel(-1-kick,8,4,4,skin);pixel(-1,12,4,phase%2?3:5,skin);
-          pixel(-2,phase%2?14:16,5,1,skin);
-        }else{
-          pixel(-2,8,2,phase%2?7:6,skin);pixel(1,8,2,phase%2?6:7,skin);
-          pixel(-3,phase%2?14:13,2,2,skin);pixel(2,phase%2?13:14,2,2,skin);
-        }
-        ctx.restore();
+        drawBannerSwimmer(ctx,swimmer,x,y,now,bannerSwimmerScale(width));
       }
     }
     function tick(now){
@@ -419,5 +418,5 @@
     };
     if(doc.readyState==='loading')doc.addEventListener('DOMContentLoaded',setup,{once:true});else setup();
   }
-  return {init,enter,reveal,updateTab,dialog,reduced,waterLanes,stepWaterRope,waterLetterTarget,laneTransmission,bannerSwimmer,bannerSwimmerScale,bannerStrokePhase,bannerStrokePace};
+  return {init,enter,reveal,updateTab,dialog,reduced,waterLanes,stepWaterRope,waterLetterTarget,laneTransmission,bannerSwimmer,bannerSwimmerScale,bannerStrokePhase,bannerStrokePace,drawBannerSwimmer,prepareWaterLetters};
 });
