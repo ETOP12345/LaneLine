@@ -93,6 +93,78 @@
 @media(max-width:620px){.main{padding-left:12px;padding-right:12px}.profiles-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.strength-grid{grid-template-columns:minmax(0,1fr)}.profiles-grid .profile-card{padding:18px 10px}}
 
 :root{--motion-ease:cubic-bezier(.22,1,.36,1)}
+/* Pool-rope boundaries repeat the banner motif without crossing data. */
+:root{--lane-rope:repeating-linear-gradient(90deg,#247ac0 0 12px,#b7e9f5 12px 15px,#3bb9d3 15px 27px,#e5f6fc 27px 30px)}
+.main .card-section{position:relative}
+.main .card-section:not(:last-child)::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--lane-rope);opacity:.6;pointer-events:none}
+.main .section-label::before{content:'';display:inline-block;width:30px;height:4px;margin-right:9px;vertical-align:middle;background:var(--lane-rope);border-radius:1px}
+.insights-surface{border-top:4px solid transparent;border-image:var(--lane-rope) 4}
+.year-history{border-bottom:3px solid transparent;border-image:var(--lane-rope) 3}
+.signature-event{border-left:5px solid transparent;border-image:repeating-linear-gradient(180deg,#1879d4 0 12px,#bce8fb 12px 16px) 5}
+.signature-event:nth-child(2){border-image:repeating-linear-gradient(180deg,#169caa 0 12px,#c7f0ec 12px 16px) 5}
+.meet-option{border-top:3px solid transparent;border-image:var(--lane-rope) 3}
+#ranking-dashboard-frame{border-top:4px solid transparent;border-image:var(--lane-rope) 4}
+.roster-scope{position:relative;padding-bottom:9px}
+.roster-scope::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--lane-rope);pointer-events:none}
+@media(min-width:1100px){
+  .growth-race{border-left:3px solid transparent;border-image:repeating-linear-gradient(180deg,#247ac0 0 12px,#c5ecf7 12px 16px,#3bb9d3 16px 28px,#e5f6fc 28px 32px) 3}
+}
+.roster-scope{margin:0 0 20px;display:inline-flex}
+.profile-card{position:relative}
+.favorite-swimmer{position:absolute;right:10px;top:10px;display:grid;place-items:center;width:34px;height:34px;background:#fff;border:1px solid #cbdff0;border-radius:6px;color:#587790;cursor:pointer;transition:background 180ms,color 180ms}
+.favorite-swimmer svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.6;fill:none}
+.favorite-swimmer[aria-pressed=true]{color:#086fc1;background:#e1f1ff}
+.favorite-swimmer[aria-pressed=true] svg{fill:#60b6f0}
+.roster-empty{grid-column:1/-1;padding:28px 0;color:#557591}
+.roster-empty p{margin-bottom:12px}
+/* Only these small accents loop; data surfaces animate once on entry. */
+.hero .lanes{opacity:1}
+.hero>:not(.lanes){position:relative;z-index:1}
+.hero .lane-line{top:-80px;bottom:-80px;width:4px;background:repeating-linear-gradient(to bottom,#49c9e5 0 14px,#175578 14px 20px,#a0e7f2 20px 24px,#175578 24px 30px);opacity:.24;animation:lane-rope-drift 7s ease-in-out infinite alternate;transition:opacity 400ms,box-shadow 400ms;box-shadow:0 0 0 1px rgba(100,216,245,.08)}
+.hero .lane-line:nth-child(2n){animation-direction:alternate-reverse;animation-duration:9s;animation-delay:-4s}
+.hero .lane-line:nth-child(3n){animation-duration:8s;animation-delay:-6s}
+.hero .lane-line.is-lit{opacity:.75;box-shadow:0 0 12px rgba(68,203,237,.3)}
+@keyframes lane-rope-drift{from{transform:translateY(-48px)}to{transform:translateY(48px)}}
+@media(max-width:620px){.hero .lane-line{width:3px;opacity:.18}}
+.page-tab svg{transition:transform 360ms var(--motion-ease),color 220ms}
+.page-tab.active svg{animation:tab-settle 500ms var(--motion-ease)}
+@keyframes tab-settle{0%{transform:translateY(3px) scale(.8)}55%{transform:translateY(-2px) scale(1.12)}100%{transform:none}}
+/* Small, slow icon loops leave chart marks and result text stationary. */
+.hero-logo-icon svg{animation:swim-icon-float 4.8s ease-in-out infinite;transform-origin:center}
+.hero-logo-icon svg path:nth-child(2){animation:swim-wave 3.2s ease-in-out infinite}
+@keyframes swim-icon-float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-4px) rotate(5deg)}}
+@keyframes swim-wave{0%,100%{transform:translateX(-1px);opacity:.45}50%{transform:translateX(1px);opacity:.85}}
+.page-tab.active svg{animation:nav-icon-float 4s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes nav-icon-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+#ptab-goals.active svg{animation:goal-icon-turn 14s linear infinite}
+@keyframes goal-icon-turn{to{transform:rotate(360deg)}}
+#ptab-goals.active svg circle:first-child{stroke-dasharray:18 4;transform-origin:center}
+#ptab-strengths.active svg{animation:strength-icon-rock 5s ease-in-out infinite}
+@keyframes strength-icon-rock{0%,75%,100%{transform:rotate(0)}82%{transform:rotate(-8deg)}90%{transform:rotate(6deg)}}
+#ptab-zone.active svg{animation:ranking-icon-rise 4.5s ease-in-out infinite}
+@keyframes ranking-icon-rise{0%,65%,100%{transform:translateY(0)}78%{transform:translateY(-3px)}88%{transform:translateY(1px)}}
+.favorite-swimmer[aria-pressed=true]:hover svg{animation:favorite-icon-turn 600ms var(--motion-ease)}
+@keyframes favorite-icon-turn{0%{transform:rotate(0) scale(1)}50%{transform:rotate(22deg) scale(1.15)}100%{transform:rotate(0) scale(1)}}
+.best-table tbody tr,.standards-table tbody tr{transition:background 220ms,box-shadow 260ms var(--motion-ease)}
+.course-toggle button[aria-pressed=true],.growth-event-button[aria-pressed=true]{box-shadow:0 2px 8px rgba(24,106,181,.12)}
+.peer-lane-fill,.race-track span{position:relative;overflow:hidden}
+.peer-lane-fill::after,.race-track span::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:lane-glint 1.2s var(--motion-ease) 350ms both;pointer-events:none}
+@keyframes lane-glint{to{transform:translateX(100%)}}
+.growth-chart circle{transition:r 180ms var(--motion-ease),stroke-width 180ms,opacity 180ms}
+.growth-chart circle:hover{r:5px}
+select,input{transition:border-color 200ms,background-color 200ms,box-shadow 240ms}
+details summary{transition:color 180ms,background-color 180ms}
+.motion-paused *,.motion-paused *::before,.motion-paused *::after{animation-play-state:paused!important}
+@media(hover:hover) and (pointer:fine){
+  .page-tab:hover svg{transform:translateY(-2px)}
+  .best-table tbody tr:hover{box-shadow:inset 3px 0 #2999e9}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(18,94,158,.2)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero .lane-line{animation:none;transform:none}
+  .page-tab:hover svg,.btn-primary:hover{transform:none}
+  .growth-chart circle:hover{r:revert-layer}
+}
 .page-tabs{position:relative;isolation:isolate}
 .page-tab{position:relative;z-index:1}
 .tab-motion-indicator{position:absolute;z-index:0;pointer-events:none;transform-origin:0 0;background:rgba(90,180,230,.12);border-bottom:2px solid var(--lane);box-sizing:border-box}
@@ -115,4 +187,63 @@ button:focus-visible,.profile-card:focus-within{outline:2px solid #2789dd;outlin
 @media(prefers-reduced-motion:reduce){
   .tab-motion-indicator{transition:none}
   .profile-card:hover,.signature-event:hover,.best-summary-card:hover,.year-option:hover,.peer-lane:hover,.profile-card:hover .swimmer-portrait>img{transform:none}
+}
+
+/* A more expressive, competition-day visual hierarchy. */
+:root{--race-blue:#0869dc;--race-coral:#ed6659;--race-yellow:#ffdb68}
+body{background:#edf5fc}
+.main{padding-top:30px;padding-bottom:48px}
+.main .section-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:800;color:#0869c6;letter-spacing:0}
+.insights-surface>h2,#profiles-page h2{font-family:'Manrope','DM Sans',sans-serif;font-size:30px!important;font-weight:800!important;line-height:1.25}
+.athlete-heading h2{font-family:'Manrope','DM Sans',sans-serif;font-size:30px;font-weight:800;color:#0b2d53}
+.athlete-portrait{border:3px solid #147ee1;box-shadow:5px 5px 0 #bdebf1}
+.page-tabs-wrap{box-shadow:0 5px 0 #d5e8f7}
+.page-tab{font-weight:650}
+.has-motion-indicator .page-tab.active,.page-tab.active{color:#075fc4;border-bottom-color:#ed6659}
+.tab-motion-indicator{background:#d8ecff;border-bottom:4px solid #ed6659}
+#best-page .best-summary{gap:16px;margin-bottom:26px}
+#best-page .best-summary-card{padding:22px 18px;text-align:left;border:0;border-radius:6px;background:#096ad8;box-shadow:4px 4px 0 #c0def8}
+#best-page .best-summary-card .label{font-family:'DM Sans',sans-serif;font-weight:700;font-size:11px;color:#e0efff;letter-spacing:0}
+#best-page .best-summary-card .value{font-family:'Manrope','DM Sans',sans-serif;font-weight:800;font-size:34px;color:#fff;line-height:1.4;overflow-wrap:anywhere}
+#best-page .best-summary-card:nth-child(2){background:#ffdf79;box-shadow:4px 4px 0 #f4c85c}
+#best-page .best-summary-card:nth-child(2) :is(.label,.value){color:#563e09}
+#best-page .best-summary-card:nth-child(3){background:#ffdfda;box-shadow:4px 4px 0 #eea79e}
+#best-page .best-summary-card:nth-child(3) :is(.label,.value){color:#8b3028}
+.best-table .time-val{font-size:20px;color:#073d7e}
+.best-table td:nth-child(2) .time-val{white-space:nowrap;overflow-wrap:normal;word-break:normal}
+.best-table td:nth-child(2){min-width:90px}
+.standard-pill.top{background:#0869d3;color:#fff;border:1px solid #0759b4;font-weight:800;box-shadow:2px 2px 0 #c3ddf8}
+.qual-chip{background:#d1f3ee;color:#0b625c;font-weight:650}
+.growth-photo{height:190px;border-bottom:6px solid #ed6659;object-position:center 48%}
+.growth-event-button{background:#e8f3ff;border-color:#b6d5ef;border-left-width:6px;font-weight:650}
+.growth-event-button[aria-pressed=true]{background:#0b64c9;color:#fff;border-color:#0753a9;box-shadow:3px 3px 0 #a9ccef}
+.growth-detail .section-label,.growth-race .section-label{font-size:14px;color:#0b3e73}
+.peer-lane.is-you{background:#fff0b9;outline:2px solid #dfaa25}
+.signature-event{background:#e0efff;padding:24px}
+.signature-event h3{font-weight:800;color:#0757b0}
+.signature-event strong{font-size:36px;color:#0757b0}
+.signature-event:nth-child(2){background:#e0f5ef}
+.signature-event:nth-child(2) :is(h3,strong){color:#086e67}
+.strength-grid .insight-row{border-bottom:2px solid #c9dff1}
+.goal-stamp{background:#ffdc70;color:#634700;font-weight:800;border-radius:4px}
+.goal-actions .btn-secondary{background:#0869d3;color:#fff;border-color:#0869d3;font-weight:700}
+.year-option[aria-pressed=true]{background:#0b63c7;color:#fff;border-color:#0b63c7;box-shadow:4px 4px 0 #b5d6f4}
+.meet-option summary h4{color:#0757ad;font-weight:800}
+.meet-format{background:#ffdf79;color:#61470d;font-weight:700}
+.profile-card{border:1px solid #c4dbee;border-top:4px solid #167bd7;box-shadow:3px 3px 0 #d8e8f6}
+.profile-card:has(.favorite-swimmer[aria-pressed=true]){border-top-color:#ee695a;background:#fff9f5}
+.profile-name{font-family:'Manrope','DM Sans',sans-serif;font-weight:800;color:#103a63}
+@media(min-width:1200px){
+  .best-table>tbody>tr{border-top:4px solid #126dd0;box-shadow:3px 3px 0 #d6e7f7;background:#fff}
+  .best-table>tbody>tr:nth-child(even){border-top-color:#ed6659;background:#fff}
+  .best-table>tbody>tr>td:first-child{background:#dcedff}
+  .best-table>tbody>tr:nth-child(even)>td:first-child{background:#ffede7}
+  .best-table .time-val{font-size:24px}
+}
+@media(max-width:620px){
+  .insights-surface>h2,#profiles-page h2,.athlete-heading h2{font-size:25px!important}
+  #best-page .best-summary-card{padding:16px}
+  #best-page .best-summary-card .value{font-size:28px}
+  .growth-photo{height:130px}
+  .signature-event strong{font-size:30px}
 }

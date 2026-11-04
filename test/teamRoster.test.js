@@ -70,7 +70,7 @@ test('shared history is not duplicated in browser storage but manual history sta
   const html=await fs.readFile(path.join(__dirname,'../index.html'),'utf8');
   const body=html.slice(html.indexOf('function persistedSwimmers('),html.indexOf('const ethanWangUsaSwimmingProfile'));
   const shared={key:'shared'},manual={key:'manual'};
-  const context={appState:{swimmers:[{usaSwimmingMemberId:'one',timeHistory:[shared,manual]}]},sharedHistoryKeys:new Map([['one',new Set(['shared'])]]),timeHistoryKey:r=>r.key};
+  const context={appState:{swimmers:[{id:'favorite',usaSwimmingMemberId:'one',timeHistory:[shared,manual]}]},swimmerFavorites:()=>new Set(['favorite']),sharedHistoryKeys:new Map([['one',new Set(['shared'])]]),timeHistoryKey:r=>r.key};
   vm.createContext(context);vm.runInContext(body,context);
   assert.equal(context.persistedSwimmers()[0].timeHistory.length,1);
   assert.equal(context.persistedSwimmers()[0].timeHistory[0].key,'manual');

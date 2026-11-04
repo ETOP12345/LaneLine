@@ -72,7 +72,10 @@
       .replaceAll('qualifying LCM time','saved time').replaceAll('LCM best times only','Selected course best times')
       .replace('+" · public"','').replaceAll("'+e.swim.pp+'","'+(e.swim.pp??'unavailable')+'");
     html=html.replace('Lineups are optimized separately for each relay.','A is the fastest lineup; B uses the remaining swimmers, and C uses those remaining after B. No swimmer appears twice in the same event. Different relay events are optimized independently.');
+    html=html.replace('data-tab="teams">Teams</button>','data-tab="teams">Teams</button><button id="strokesTab" class="tab-button" type="button" data-tab="strokes">Strokes</button>')
+      .replace('<section id="teamsView"','<section id="strokesView" class="view-panel"><div class="stroke-controls"><div class="field"><label for="rankingStroke">Stroke</label><select id="rankingStroke"><option value="Free">Freestyle</option><option value="Back">Backstroke</option><option value="Breast">Breaststroke</option><option value="Fly">Butterfly</option><option value="IM">Individual medley</option></select></div><nav id="strokeDistances" class="ranking-event-nav" aria-label="Stroke distances"></nav></div><section class="rank-panel"><div class="panel-head"><h2 id="strokeRankingTitle">Stroke rankings</h2><span id="strokeRankingCount"></span></div><div class="table-wrap"><table class="stroke-table"><thead><tr><th>Rank</th><th>Swimmer</th><th>Team</th><th>Best</th><th>National</th><th>Meet / Date</th></tr></thead><tbody id="strokeRankingBody"></tbody></table></div></section></section><section id="teamsView"');
     const bridge=`<style>.controls{grid-template-columns:130px 150px 140px minmax(220px,1fr)}.content-grid{grid-template-columns:minmax(0,1fr) 360px}table{min-width:700px}main{max-width:none}html,body{overflow:hidden}.ranking-event-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.ranking-event-nav button,.event-list .event-link{border:1px solid #92bce9;border-radius:6px;padding:7px 10px;background:#e9f3ff;color:#154f99;cursor:pointer}.ranking-event-nav button:hover,.event-list .event-link:hover{background:#d0e6ff;border-color:#2871c5}.ranking-event-nav button[aria-pressed="true"]{background:#175eae;color:#fff;border-color:#175eae}.ranking-event-nav button:focus-visible,.event-link:focus-visible{outline:3px solid #69aaff;outline-offset:2px}@media(max-width:1050px){.content-grid{grid-template-columns:1fr}}@media(max-width:700px){.controls{grid-template-columns:1fr 1fr}}</style><script>
+function pill(e){return '<button class="pill event-link" data-event="'+esc(e.event)+'" title="'+esc(e.event+' #'+e.rank+' · '+e.swim.time+' · '+fmtDate(e.swim.date)+' · '+(e.swim.meet||'Meet unavailable'))+'"><span>'+esc(e.event)+'</span><strong>#'+e.rank+'</strong><span>'+esc(e.swim.time)+'</span></button>'}
 function statusClass(s){return s==='Top 12'?'selected':s==='Top 14'?'alternate':'outside'}
 function reportHeight(){parent.postMessage({type:'laneline-ranking-height',height:Math.ceil(document.body.getBoundingClientRect().height)},location.origin)}
 function renderEventNav(){document.getElementById('rankingEventNav').innerHTML=DATA.eventOrder.map(event=>'<button type="button" data-event="'+esc(event)+'" aria-pressed="'+(state.detail.type==='event'&&state.detail.event===event)+'">'+esc(event)+'</button>').join('')}
@@ -82,6 +85,17 @@ function renderEvent(event){
   const rows=currentAll().map(r=>({r,d:r.events.find(e=>e.event===event)})).filter(x=>x.d?.swim).sort((a,b)=>a.d.rank-b.d.rank||a.r.name.localeCompare(b.r.name));
   document.getElementById('detailTitle').textContent=event+' Rankings';
   document.getElementById('detailBody').innerHTML='<div class="metric-grid"><div class="metric"><span class="label">Event</span><strong>'+esc(event)+'</strong><small>'+esc(DATA.course)+' · '+esc(state.ageGroup)+' · '+esc(genderLabel())+'</small></div><div class="metric"><span class="label">Swimmers</span><strong>'+rows.length+'</strong><small>All saved event results</small></div></div><h3>Event Ranking</h3><div class="mini-table">'+rows.map(x=>'<button type="button" class="mini-row swimmer-summary-row" data-name="'+esc(x.r.name)+'"><span><strong>#'+x.d.rank+' '+esc(x.r.name)+'</strong><small>'+esc(x.r.team)+'</small></span><span><strong>'+esc(x.d.swim.time)+'</strong><small>'+fmtDate(x.d.swim.date)+'</small></span></button><div class="mini-note">'+esc(x.d.swim.meet||'Meet unavailable')+' · '+esc(x.d.swim.std||'Standard unavailable')+'</div>').join('')+'</div>';
+}
+let strokeEvent='';
+function renderStrokes(){
+  const stroke=document.getElementById('rankingStroke').value||'Free';
+  const events=DATA.eventOrder.filter(event=>event.endsWith(' '+stroke)).sort((a,b)=>parseInt(a)-parseInt(b));
+  if(!events.includes(strokeEvent))strokeEvent=events[0]||'';
+  document.getElementById('strokeDistances').innerHTML=events.map(event=>'<button type="button" data-stroke-event="'+esc(event)+'" aria-pressed="'+(strokeEvent===event)+'">'+esc(event)+'</button>').join('');
+  const rows=currentAll().map(r=>({r,event:r.events.find(e=>e.event===strokeEvent)})).filter(x=>x.event?.swim).sort((a,b)=>a.event.rank-b.event.rank||a.r.name.localeCompare(b.r.name));
+  document.getElementById('strokeRankingTitle').textContent=(strokeEvent||'Stroke')+' · '+(DATA.course||'SCY')+' · '+state.ageGroup+' '+genderLabel();
+  document.getElementById('strokeRankingCount').textContent=rows.length+' swimmers';
+  document.getElementById('strokeRankingBody').innerHTML=rows.length?rows.map(({r,event:e})=>'<tr><td><strong>#'+e.rank+'</strong></td><td><strong>'+esc(r.name)+'</strong><br><small>'+r.age+' years old</small></td><td>'+esc(r.team)+'</td><td class="stroke-time">'+esc(e.swim.time)+'</td><td><span class="pill">'+esc(e.swim.std||'N/A')+'</span></td><td>'+esc(e.swim.meet||'Meet unavailable')+'<br><small>'+fmtDate(e.swim.date)+'</small></td></tr>').join(''):'<tr><td colspan="6"><p class="empty">No saved times for this stroke and group.</p></td></tr>';
 }
 const renderDashboard=render;
 const drawTeamTrend=renderTeamTrendChart,drawStrongTypes=renderStrongTypeChart,drawTeamDistribution=renderTeamDistribution;
@@ -95,7 +109,10 @@ function renderRelays(){
   const rows=DATA.relays?.[[state.ageGroup,division,select.value].join('|')]||[],fastest=rows.find(r=>r.complete)?.total;
   document.getElementById('relayResults').innerHTML='<h2>'+esc(state.ageGroup)+' '+esc(DATA.course)+' Team Rankings</h2>'+rows.map(r=>'<details class="relay-team"><summary><span class="relay-place">'+(r.rank?'#'+r.rank:'—')+'</span><strong>'+esc(r.team)+' '+esc(r.squad)+'</strong><span class="relay-total">'+(r.complete?esc(r.time):'Incomplete')+'</span><small>'+(r.complete?(r.total===fastest?'Fastest predicted':'+'+((r.total-fastest)/100).toFixed(2)+'s behind'):r.eligible+' eligible swimmers; no complete lineup')+'</small>'+(r.complete?'<span class="relay-roster">'+r.lineup.map((leg,i)=>'<span><b>Leg '+(i+1)+' · '+esc(leg.stroke)+'</b>'+esc(leg.name)+'</span>').join('')+'</span>':'')+'</summary>'+(r.complete?'<div class="relay-legs">'+r.lineup.map((leg,i)=>'<div><span class="label">Leg '+(i+1)+' · '+leg.distance+' '+esc(leg.stroke)+'</span><strong>'+esc(leg.name)+'</strong><p>'+esc(leg.division==='boys'?'Boy':'Girl')+' · '+esc(leg.time)+'</p><small>'+esc(leg.meet)+' · '+esc(leg.date||'Date unavailable')+'</small></div>').join('')+'</div>':'<p class="muted">Four different swimmers with matching-course event times are required'+(division==='mixed'?', including two boys and two girls':'')+'.</p>')+'</details>').join('')+(rows.length?'':'<p class="empty">No saved team swimmers match this age group and division.</p>');
 }
-render=function(){renderDashboard();renderEventNav();const relay=state.tab==='relays';document.getElementById('relaysTab').classList.toggle('active',relay);document.getElementById('relaysView').classList.toggle('active',relay);document.getElementById('rankingEventNav').style.display=relay?'none':'flex';document.getElementById('genderSelect').disabled=relay;document.getElementById('swimmerSelect').disabled=relay;if(relay)renderRelays()};
+render=function(){renderDashboard();renderEventNav();const relay=state.tab==='relays',strokes=state.tab==='strokes';document.getElementById('relaysTab').classList.toggle('active',relay);document.getElementById('relaysView').classList.toggle('active',relay);document.getElementById('strokesTab').classList.toggle('active',strokes);document.getElementById('strokesView').classList.toggle('active',strokes);document.getElementById('rankingEventNav').style.display=relay||strokes?'none':'flex';document.getElementById('genderSelect').disabled=relay;document.getElementById('swimmerSelect').disabled=relay||strokes;if(relay)renderRelays();if(strokes)renderStrokes()};
+
+document.getElementById('rankingStroke').addEventListener('change',()=>{renderStrokes();reportHeight()});
+document.getElementById('strokeDistances').addEventListener('click',event=>{const button=event.target.closest('[data-stroke-event]');if(button){strokeEvent=button.dataset.strokeEvent;renderStrokes();reportHeight()}});
 document.getElementById('relayDivision').addEventListener('change',()=>{renderRelays();reportHeight()});
 document.getElementById('relayEvent').addEventListener('change',()=>{renderRelays();reportHeight()});
 document.getElementById('rankingEventNav').addEventListener('click',event=>{const button=event.target.closest('[data-event]');if(button)openRankingEvent(button.dataset.event)});
@@ -106,7 +123,34 @@ parent.postMessage({type:'laneline-ranking-ready'},location.origin);
 </script>`;
     const relayStyles='<style>.relay-team{border:1px solid #c9dbef;background:#fff;margin:12px 0;border-radius:6px;overflow:hidden}.relay-team summary{display:grid;grid-template-columns:45px minmax(150px,1fr) 110px 160px;align-items:center;gap:12px;padding:16px;background:#edf5ff;cursor:pointer}.relay-team summary:hover{background:#dcecff}.relay-team[open] summary{border-bottom:1px solid #c9dbef}.relay-place{font-weight:700;color:#175eae}.relay-total{font-size:20px;font-variant-numeric:tabular-nums}.relay-legs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:18px}.relay-legs strong{display:block;overflow-wrap:anywhere}.relay-legs p{margin:8px 0}.relay-team>p{padding:16px}@media(max-width:750px){.relay-team summary{grid-template-columns:35px 1fr auto}.relay-team summary small{grid-column:2/-1}.relay-legs{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>';
     const rosterStyles='<style>.relay-roster{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-top:6px}.relay-roster>span{font-size:13px;overflow-wrap:anywhere;color:#1c4e7a}.relay-roster b{display:block;font-size:11px;color:#617b96;margin-bottom:4px}@media(max-width:750px){.relay-roster{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>';
-    return html.replace('</body>',relayStyles+rosterStyles+bridge+'</body>');
+    html=html.replace(/<section class="rules-panel"><h2>Ranking method<\/h2>([\s\S]*?)<\/section>/,'<details class="rules-panel"><summary>Ranking method</summary>$1</details>');
+    const compactStyles=`<style id="ranking-compact-styles">
+body{font-size:13px;line-height:1.4;letter-spacing:0}
+.stroke-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:10px}.stroke-controls .field{width:190px}.stroke-controls .ranking-event-nav{margin:0}.stroke-table{min-width:640px}.stroke-table tbody tr{cursor:default}.stroke-time{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;color:#175eae}
+header{padding:12px 16px}h1{font-size:20px}.eyebrow{font-size:10px;letter-spacing:0;margin-bottom:2px}
+main{padding:12px}.disclaimer{padding:7px 10px;margin-bottom:10px;font-size:12px}.disclaimer small{margin-top:2px;font-size:11px}
+.controls{grid-template-columns:90px 110px 110px minmax(180px,1fr);padding:8px;gap:8px;margin-bottom:8px}
+.field label{font-size:11px;margin-bottom:3px}.field select{height:34px;padding:0 8px;font-size:13px}
+.ranking-event-nav{gap:5px;margin-bottom:8px}.ranking-event-nav button{padding:4px 8px;min-height:30px;font-size:12px}
+.tabs{gap:6px;margin-bottom:10px}.tab-button{padding:6px 10px;font-size:12px;min-height:32px}
+.content-grid{grid-template-columns:minmax(0,1fr) 300px;gap:10px;margin-bottom:10px}
+.panel-head{padding:8px 10px;gap:8px}.panel-head h2{font-size:15px}.panel-head button{padding:5px 8px;font-size:12px}
+th,td{padding:7px 8px}th{font-size:10px}td{font-size:12px;vertical-align:middle}td small{font-size:11px}
+.rank-change{font-size:10px;margin-top:1px}.pill{min-height:20px;padding:1px 6px;font-size:10px}
+.event-list{display:grid;grid-template-columns:repeat(2,minmax(135px,1fr));gap:3px}
+.event-list .event-link{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:25px;padding:3px 5px;border-radius:4px;font-size:11px;white-space:nowrap}
+.event-list .event-link strong{color:#175eae}.event-list .event-link span:last-child{font-variant-numeric:tabular-nums}
+.detail-body{padding:10px}.metric-grid{gap:6px;margin-bottom:10px}.metric{padding:7px}.metric strong{font-size:17px}.label{font-size:10px;margin-bottom:2px}
+.detail-body h3{font-size:13px;margin:10px 0 5px}.swim-card{padding:7px 0}.swim-card h3{font-size:13px}.swim-meta{font-size:11px}
+.mini-row{padding:7px 0;gap:8px}.mini-note{font-size:11px;margin:-4px 0 5px;padding-bottom:5px}
+.rules-panel{padding:8px 10px;font-size:12px}.rules-panel summary{cursor:pointer;font-weight:700;color:#175eae}.rules-panel ul{padding-left:18px;margin:8px 0 0}.rules-panel li{margin-bottom:5px}
+.team-chart-body{padding:10px}.team-row{padding:8px 0;gap:8px}.team-dist-body{padding:2px 10px}
+.relay-team{margin:7px 0}.relay-team summary{padding:10px;gap:8px;grid-template-columns:35px minmax(130px,1fr) 90px 140px}.relay-total{font-size:17px}.relay-roster{gap:8px;padding-top:2px}.relay-roster>span{font-size:12px}.relay-roster b{margin-bottom:2px;font-size:10px}.relay-legs{padding:10px;gap:10px}.relay-legs p{margin:5px 0}
+@media(min-width:1500px){.event-list{grid-template-columns:repeat(3,minmax(135px,1fr))}}
+@media(max-width:1150px){.content-grid{grid-template-columns:1fr}.event-list{grid-template-columns:repeat(3,minmax(135px,1fr))}}
+@media(max-width:700px){main{padding:8px}.controls{grid-template-columns:1fr 1fr}.field select{height:36px}.ranking-event-nav button{min-height:34px}.event-list{grid-template-columns:repeat(2,minmax(135px,1fr))}.relay-team summary{grid-template-columns:28px 1fr auto}.relay-legs{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>`;
+    return html.replace('</body>',relayStyles+rosterStyles+bridge+compactStyles+'</body>');
   }
   return {data,shell};
 });

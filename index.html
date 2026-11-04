@@ -601,6 +601,10 @@ footer span{color:var(--lane)}
     <div class="field"><label for="profiles-search">Name</label><input type="search" id="profiles-search" oninput="renderProfilesPage()"/></div>
     <div class="field"><label for="profiles-team">Team</label><select id="profiles-team" onchange="renderProfilesPage()"><option value="">All teams</option><option>Bellevue Club Swim Team</option><option>Wave Aquatics</option><option>Pacific Dragons Swim Team</option><option>Olympic Cascade Aquatics</option></select></div>
   </div>
+  <div class="course-toggle roster-scope" role="group" aria-label="Swimmer roster">
+    <button type="button" id="roster-favorites" aria-pressed="true" onclick="setRosterScope('favorites')">Favorites</button>
+    <button type="button" id="roster-all" aria-pressed="false" onclick="setRosterScope('all')">All swimmers</button>
+  </div>
   <div class="profiles-grid" id="profiles-grid"></div>
 </div>
 
@@ -727,6 +731,17 @@ function loadState() {
   try {
     const saved = localStorage.getItem('laneline_state');
     if (saved) appState = { ...appState, ...JSON.parse(saved) };
+    const favorites=swimmerFavorites();
+    appState.swimmers=(Array.isArray(appState.swimmers)?appState.swimmers:[]).filter(sw=>favorites.has(sw.id));
+    // Remove legacy full-roster copies, including caches from signed-out accounts.
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(!key?.startsWith('ll_swimmers_'))continue;
+      try{
+        const rows=JSON.parse(localStorage.getItem(key));
+        if(Array.isArray(rows))localStorage.setItem(key,JSON.stringify(rows.filter(sw=>favorites.has(sw.id))));
+      }catch{}
+    }
   } catch(e) {}
 }
 function saveState() {
@@ -735,7 +750,8 @@ function saveState() {
 
 const sharedHistoryKeys = new Map();
 function persistedSwimmers() {
-  return appState.swimmers.map(sw => {
+  const favorites=swimmerFavorites();
+  return appState.swimmers.filter(sw=>favorites.has(sw.id)).map(sw => {
     const keys = sharedHistoryKeys.get(sw.usaSwimmingMemberId);
     if (!keys) return sw;
     return {...sw,timeHistory:(sw.timeHistory || []).filter(row => !keys.has(timeHistoryKey(row)))};
@@ -1275,7 +1291,7 @@ function signIn() {
   appState.user = { name: user.name, email: user.email };
   // Load their swimmers
   const swimmerData = localStorage.getItem('ll_swimmers_'+email);
-  if (swimmerData) appState.swimmers = JSON.parse(swimmerData);
+  if (swimmerData) JSON.parse(swimmerData).forEach(profile=>seedUsaSwimmingProfile(profile));
   refreshSeededSwimmersFromDataHubCache();
   saveState();
   updateNavAccount();
@@ -1292,7 +1308,6 @@ function createAccount() {
   if (pass.length < 8) { showSignupError('Password must be at least 8 characters.'); return; }
   localStorage.setItem('ll_user_'+email, JSON.stringify({ name, email, password: pass }));
   appState.user = { name, email };
-  appState.swimmers = [];
   saveState();
   updateNavAccount();
   renderProfilesPage();
@@ -1306,7 +1321,6 @@ function signOut() {
     localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
   }
   appState.user = null;
-  appState.swimmers = [];
   appState.selectedSwimmerId = null;
   saveState();
   updateNavAccount();
@@ -1384,6 +1398,8 @@ function saveSwimmer() {
   } else {
     appState.swimmers.push(sw);
   }
+  const favorites=swimmerFavorites();favorites.add(sw.id);
+  localStorage.setItem('laneline-favorite-swimmers',JSON.stringify([...favorites]));
   // Persist to account if signed in
   if (appState.user) {
     localStorage.setItem('ll_swimmers_'+appState.user.email, JSON.stringify(persistedSwimmers()));
@@ -1417,17 +1433,44 @@ function setManualSwimmerAge(id,value){
   if(appState.user)localStorage.setItem('ll_swimmers_'+appState.user.email,JSON.stringify(persistedSwimmers()));
   renderProfilesPage();renderBestTimesPicker();renderGrowthPickers();refreshStandardsViews();
 }
+let rosterScope='favorites';
+function swimmerFavorites(){
+  const favorites=new Set(['usas_9DCE8A4B52EF4A']);
+  try {const ids=JSON.parse(localStorage.getItem('laneline-favorite-swimmers')||'[]');if(Array.isArray(ids))ids.filter(id=>typeof id==='string').forEach(id=>favorites.add(id));}catch{}
+  return favorites;
+}
+function setRosterScope(scope){rosterScope=scope==='all'?'all':'favorites';renderProfilesPage();}
+function toggleSwimmerFavorite(id){
+  if(id==='usas_9DCE8A4B52EF4A')return;
+  const ids=swimmerFavorites();if(ids.has(id))ids.delete(id);else ids.add(id);
+  try{
+    localStorage.setItem('laneline-favorite-swimmers',JSON.stringify([...ids]));
+    saveState();
+    // Purge an unfavorited swimmer from every old account copy as well.
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);if(!key?.startsWith('ll_swimmers_'))continue;
+      try{const rows=JSON.parse(localStorage.getItem(key));if(Array.isArray(rows))localStorage.setItem(key,JSON.stringify(rows.filter(sw=>ids.has(sw.id))));}catch{}
+    }
+    if(appState.user)localStorage.setItem('ll_swimmers_'+appState.user.email,JSON.stringify(persistedSwimmers()));
+    renderProfilesPage();
+  }
+  catch{alert('Favorites could not be saved. Check browser storage.');}
+}
 function renderProfilesPage() {
   if(document.getElementById('profiles-page')?.style.display==='none')return;
   const grid = document.getElementById('profiles-grid');
   const search = (document.getElementById('profiles-search')?.value || '').trim().toLowerCase();
   const team = document.getElementById('profiles-team')?.value || '';
-  const swimmers = orderedSwimmers().filter(sw => (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
+  const favorites=swimmerFavorites();
+  document.getElementById('roster-favorites')?.setAttribute('aria-pressed',String(rosterScope==='favorites'));
+  document.getElementById('roster-all')?.setAttribute('aria-pressed',String(rosterScope==='all'));
+  const swimmers = orderedSwimmers().filter(sw => (rosterScope==='all'||favorites.has(sw.id)) && (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
   const count = document.getElementById('profiles-count');
-  if (count) count.textContent = `${swimmers.length} of ${appState.swimmers.length} swimmers`;
-  let html = '';
+  if (count) count.textContent = rosterScope==='favorites'?`${swimmers.length} favorites`:`${swimmers.length} swimmers`;
+  let html = swimmers.length?'':`<div class="roster-empty"><p>${rosterScope==='favorites'?'No favorites match.':'No swimmers match.'}</p>${rosterScope==='favorites'?'<button type="button" class="btn-secondary" onclick="setRosterScope(\'all\')">Browse swimmers</button>':''}</div>`;
   swimmers.forEach(sw => {
     html += `<div class="profile-card">
+      <button type="button" class="favorite-swimmer" data-favorite-swimmer="${escapeHtml(sw.id)}" ${sw.id==='usas_9DCE8A4B52EF4A'?'disabled':''} aria-label="${sw.id==='usas_9DCE8A4B52EF4A'?'Pinned favorite':favorites.has(sw.id)?'Unfavorite':'Favorite'} ${escapeHtml(sw.name)}" aria-pressed="${favorites.has(sw.id)}" title="${sw.id==='usas_9DCE8A4B52EF4A'?'Always favorited':favorites.has(sw.id)?'Remove favorite':'Add favorite'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg></button>
       ${swimmerPortrait(sw,'profile-avatar')}
       <div class="profile-name">${escapeHtml(sw.name)}</div>
       ${sw.activePns===false?`<div class="profile-tag">No longer active in PNS</div><div class="profile-meta">${escapeHtml(sw.rosterNote||'Saved results retained')}</div>`:''}
@@ -1447,6 +1490,7 @@ function renderProfilesPage() {
     Add swimmer
   </div>`;
   grid.innerHTML = html;
+  grid.querySelectorAll('[data-favorite-swimmer]').forEach(button=>button.addEventListener('click',()=>toggleSwimmerFavorite(button.dataset.favoriteSwimmer)));
   grid.querySelectorAll('[data-swimmer-age]').forEach(input=>input.addEventListener('change',()=>{if(!input.value||!input.checkValidity()){input.reportValidity();return;}setManualSwimmerAge(input.dataset.swimmerAge,input.value);}));
   grid.querySelectorAll('[data-age-reset]').forEach(button=>button.addEventListener('click',()=>setManualSwimmerAge(button.dataset.ageReset,null)));
   LaneLineMotion.reveal(grid);

@@ -34,3 +34,17 @@ test('reveals never animate hidden pages or queue hundreds of entrance effects',
   assert.ok(items.every(x=>!x.calls.length||x.calls[0].options.delay<=90));
   motion.reveal(root);assert.ok(items.every(x=>x.calls.length<=1));
 });
+test('observer entrances are bounded for large rosters and reserve staggered frames',()=>{
+  let observed=[];let callback;
+  const doc={readyState:'complete',hidden:false,documentElement:{classList:{toggle(){}}},querySelector:()=>null,addEventListener(){}};
+  const motion=createMotion({document:doc,matchMedia:()=>({matches:false}),IntersectionObserver:class{
+    constructor(fn){callback=fn;}observe(item){observed.push(item);}unobserve(){}
+  }});
+  motion.init();
+  const items=Array.from({length:500},element);
+  motion.reveal({querySelectorAll:()=>items});
+  assert.equal(observed.length,36);
+  callback([{isIntersecting:true,target:items[0]}]);
+  assert.equal(items[0].calls[0].options.fill,'backwards');
+  assert.equal(items[0].calls[0].options.duration,460);
+});
