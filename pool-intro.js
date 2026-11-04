@@ -53,6 +53,8 @@
     const button=layer.querySelector('button');button.focus({preventScroll:true});
     let width=1,height=1,frame=0,last=-Infinity,closing=false,touchY=null,onscreen=true;
     let fluid=null,fluidUntil=0,pendingFluid=null,pressed=false,pointer=null,flow=null,lastFlow=-Infinity,disposed=false;
+    let swimmers=Array.from({length:laneCount*2},(_,index)=>({index,laneIndex:Math.floor(index/2)}));
+    let lowDensity=false,swimmerNumber=laneCount*2,bannerHeight=1,drainBounds=null;
     const ropes=Array.from({length:laneCount+1},()=>Array.from({length:33},()=>({x:0,v:0})));
     if(env.LaneLineFluid?.createDeferred){
       const surface=doc.createElement('canvas');surface.className='pool-intro-fluid';surface.setAttribute('aria-hidden','true');scene.prepend(surface);
@@ -129,13 +131,31 @@
         ctx.strokeStyle=i%2?'#70d8e9':'#d0f2f7';ctx.lineWidth=5;ctx.stroke();
         ctx.setLineDash([1,16]);ctx.strokeStyle='rgba(255,255,255,.65)';ctx.lineWidth=6;ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;
       }
-      for(let i=0;i<laneCount*2;i++){
-        const laneIndex=Math.floor(i/2),stroke=['free','breast','back','fly'][laneIndex%4];
+      const halfView=active?height/2:bannerHeight/(2*cameraZoom),view={top:height/2-halfView,bottom:height/2+halfView};
+      if(lowDensity&&swimmers.length<2+(Math.floor(seconds/7)%2)){
+        const index=swimmerNumber++,laneIndex=3+(index*5)%12;
+        swimmers.push({index,laneIndex,start:seconds,cruising:true,up:index%2===0,from:view.top-35,to:view.bottom+35});
+      }
+      const remaining=[];
+      for(const entry of swimmers){
+        const i=entry.index,laneIndex=entry.laneIndex,stroke=['free','breast','back','fly'][laneIndex%4];
         const pace=stroke==='breast'?.07:stroke==='fly'?.035:0;
         const secondsPaced=seconds+Math.sin(seconds*4+i)*pace;
-        const pose=lapPose(secondsPaced,14+(laneIndex%4)*1.7,laneIndex*.061+(i%2)*.5);
-        swimmer(edge+(laneIndex+.5)*lane+pose.side*lane*.16,top+pose.position*(bottom-top),pose,stroke,seconds,i,Math.max(.65,Math.min(1.65,lane/38)));
+        let pose,y;
+        if(entry.cruising){
+          const duration={free:4.2,back:4.4,breast:5,fly:4.6}[stroke],progress=(seconds-entry.start)/duration;
+          if(progress>1)continue;
+          y=entry.up?entry.to-progress*(entry.to-entry.from):entry.from+progress*(entry.to-entry.from);
+          pose={angle:entry.up?0:Math.PI,side:entry.up?-1:1,turn:0};
+        }else{
+          pose=lapPose(secondsPaced,14+(laneIndex%4)*1.7,laneIndex*.061+(i%2)*.5);
+          y=top+pose.position*(bottom-top);
+          if(lowDensity&&(y<drainBounds.top-35||y>drainBounds.bottom+35))continue;
+        }
+        remaining.push(entry);
+        swimmer(edge+(laneIndex+.5)*lane+pose.side*lane*.16,y,pose,stroke,seconds,i,Math.max(.65,Math.min(1.65,lane/38)));
       }
+      swimmers=remaining;
       // Gutters and solid end walls make each turn visibly meet the pool edge.
       ctx.fillStyle='#173c57';ctx.fillRect(0,0,width,wall-8);ctx.fillRect(0,height-wall+8,width,wall-8);
       ctx.fillStyle='#163e56';ctx.fillRect(0,wall-8,width,8);ctx.fillRect(0,height-wall,width,8);
@@ -146,8 +166,8 @@
     }
     function tick(now){
       frame=0;
-      if(closing||doc.hidden||reduced.matches||(!active&&!onscreen))return;
-      if(now-last>=40){
+      if(doc.hidden||reduced.matches||(!active&&!onscreen))return;
+      if(now-last>=(closing?16:40)){
         const elapsed=Math.min(.06,(now-last)/1000||.04);
         if(pendingFluid&&fluid){fluid.splat(pendingFluid.x,pendingFluid.y,pendingFluid.dx,pendingFluid.dy);pendingFluid=null;fluidUntil=now+6000;}
         if(fluid&&now<fluidUntil){
@@ -167,9 +187,10 @@
       }
       frame=env.requestAnimationFrame(tick);
     }
-    function visibility(){env.cancelAnimationFrame(frame);frame=0;if(!closing&&!doc.hidden&&!reduced.matches&&(active||onscreen))frame=env.requestAnimationFrame(tick);}
+    function visibility(){env.cancelAnimationFrame(frame);frame=0;if(!doc.hidden&&!reduced.matches&&(active||onscreen))frame=env.requestAnimationFrame(tick);}
     function fitBanner(){
       const rect=hero.getBoundingClientRect();
+      bannerHeight=rect.height;
       scene.style.transform=poolTransition({left:0,top:0,width:rect.width,height:rect.height},width,height).transform;
     }
     function cleanup(){
@@ -179,6 +200,10 @@
       Object.assign(layer.style,{position:'absolute',inset:'0',zIndex:'10',clipPath:'none'});
       layer.removeAttribute('aria-modal');layer.removeAttribute('role');button.hidden=true;
       fitBanner();doc.body.style.overflow=priorOverflow;
+      if(!lowDensity){
+        lowDensity=true;
+        drainBounds={top:height/2-bannerHeight/(2*cameraZoom),bottom:height/2+bannerHeight/(2*cameraZoom)};
+      }
       siblings.forEach(([el,inert])=>{el.inert=inert;});
       (priorFocus?.tagName==='BODY'?doc.getElementById('ptab-best'):priorFocus)?.focus?.({preventScroll:true});
       visibility();
@@ -193,7 +218,7 @@
       button.hidden=false;button.style.opacity='1';
       const from=poolTransition(target,width,height),inset=[target.top,width-target.right,height-target.bottom,target.left].map(n=>Math.max(0,n)+'px').join(' ');
       if(!reduced.matches&&layer.animate){
-        const options={duration:950,easing:'cubic-bezier(.22,1,.36,1)'};
+        const options={duration:800,easing:'cubic-bezier(.4,0,.2,1)'};
         const camera=scene.animate([from,{transform:'translate(0px,0px) scale(1)'}],options);
         const crop=layer.animate([{clipPath:'inset('+inset+')'},{clipPath:'inset(0px)'}],options);
         try{await Promise.all([camera.finished,crop.finished]);}catch{}
@@ -201,11 +226,11 @@
       scene.style.transform='none';layer.style.clipPath='none';closing=false;button.focus({preventScroll:true});visibility();
     };
     async function enter(){
-      if(closing)return;closing=true;env.cancelAnimationFrame(frame);
+      if(closing)return;closing=true;
       const target=doc.querySelector('.hero').getBoundingClientRect();
       if(reduced.matches||!layer.animate){cleanup();return;}
       const inset=[Math.max(0,target.top),Math.max(0,width-target.right),Math.max(0,height-target.bottom),Math.max(0,target.left)];
-      const options={duration:950,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'};
+      const options={duration:800,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'};
       // One camera transform keeps the water, ropes, swimmers and lettering together.
       button.style.opacity='0';
       const camera=scene.animate([{transform:'translate(0px,0px) scale(1)'},poolTransition(target,width,height)],options);
