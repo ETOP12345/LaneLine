@@ -16,3 +16,13 @@ test('deployment includes frontend dependencies and does not require absent JS d
   assert.ok(workflow.includes('cp -R ui-media/.'));
   assert.ok(!workflow.includes('data/*.js'));
 });
+test('rankings is a real static page for branch deployments as well as Actions builds',()=>{
+  const page=fs.readFileSync(path.join(root,'rankings-dashboard.html'),'utf8');
+  const template=fs.readFileSync(path.join(root,'western-zone-dashboard/index.html'),'utf8');
+  assert.equal(page,require('../rankings-dashboard').shell(template));
+  assert.ok(page.includes('strokeRankingBody'));
+  assert.ok(page.includes('relayResults'));
+  assert.match(workflow,/node scripts\/build-rankings-page\.js _site\/rankings-dashboard\.html/);
+  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(index,/src="rankings-dashboard\.html"/);
+});
