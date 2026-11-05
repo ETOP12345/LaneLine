@@ -3,6 +3,25 @@
   else root.LaneLineInsights=factory(root.LaneLineStandards);
 })(typeof globalThis==='object'?globalThis:this,function(S){
   const bestRowCache=new WeakMap();
+  const raceLogCache=new WeakMap();
+  function raceLog(groups){
+    if(raceLogCache.has(groups))return raceLogCache.get(groups);
+    const result=[];
+    for(const [event,source] of Object.entries(groups)){
+      const rows=source.map(row=>({...row,event,cs:S.centiseconds(row.time),stamp:new Date(row.dateValue||row.date).getTime()})).filter(row=>Number.isFinite(row.cs)&&row.cs>0&&Number.isFinite(row.stamp)).sort((a,b)=>a.stamp-b.stamp);
+      if(!rows.length)continue;
+      const bestSaved=Math.min(...rows.map(row=>row.cs));
+      let previousDayBest=null;
+      for(let start=0;start<rows.length;){
+        let end=start+1;while(end<rows.length&&rows[end].stamp===rows[start].stamp)end++;
+        const day=rows.slice(start,end);
+        for(const row of day)result.push({...row,change:previousDayBest===null?null:(row.cs-previousDayBest)/100,isBestSaved:row.cs===bestSaved});
+        previousDayBest=Math.min(...day.map(row=>row.cs));start=end;
+      }
+    }
+    result.sort((a,b)=>b.stamp-a.stamp||a.event.localeCompare(b.event)||a.cs-b.cs);
+    raceLogCache.set(groups,result);return result;
+  }
   function bestRows(sw,course){
     const cached=bestRowCache.get(sw);
     if(cached?.source===sw.bestTimes&&cached.length===(sw.bestTimes||[]).length&&cached.courses.has(course))return cached.courses.get(course);
@@ -113,5 +132,5 @@
     if(![now,start,target].every(Number.isFinite)||start<=target) return null;
     return {met:now<=target,drop:Math.max(0,now-target)/100,progress:Math.max(0,Math.min(100,(start-now)/(start-target)*100))};
   }
-  return {bestRows,strengths,comparePeerStrength,signatureEvents,archetype,yearlyArchetypes,eventComparison,goalProgress};
+  return {bestRows,strengths,comparePeerStrength,signatureEvents,archetype,yearlyArchetypes,eventComparison,goalProgress,raceLog};
 });

@@ -4,6 +4,17 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers}=require('../pool-intro')({});
 
+test('large-screen rendering has a bounded pixel budget without changing aspect ratio',()=>{
+  const {canvasScale}=require('../pool-intro')({});
+  for(const [width,height,dpr] of [[3840,2160,2],[1920,1080,1.5],[1440,900,2],[390,844,3]]){
+    const scale=canvasScale(width,height,dpr);
+    assert.ok(width*scale<=1600&&height*scale<=1000);
+    assert.ok(scale<=dpr&&scale>0);
+    assert.ok(Math.abs((width*scale)/(height*scale)-width/height)<.000001);
+  }
+  assert.ok(canvasScale(1920,1080,2)**2/1.25**2<.5,'large displays draw less than half the prior pixels');
+});
+
 test('water moves nearby letters and swimmers, weakens across lanes, and settles',()=>{
   const {waterDrift}=require('../pool-intro')({});
   const impulse={x:500,y:300,dx:40,dy:20,time:100};
@@ -50,20 +61,25 @@ test('camera follows scroll reversibly with uniform scale and no fading',()=>{
 });
 
 test('native scroll drives entry but fullscreen can only reopen with its button',()=>{
-  let now=0,nextFrame=0,draws=0,painted=0,fluidCreated=0,spacer;
+  let now=0,nextFrame=0,draws=0,painted=0,fluidCreated=0,spacer,splats=0;
   const frames=new Map(),events={},layers=[],ctx=new Proxy({},{get:(_,key)=>key==='clearRect'?()=>{draws++;painted=0;}:key==='save'?()=>painted++:()=>{}});
-  const scene={style:{},prepend(){}},copy={style:{}},button={style:{},events:{},addEventListener(type,fn){this.events[type]=fn;}};
+  const scene={style:{},prepend(){},getBoundingClientRect(){return {left:0,top:0};}},copy={style:{}},button={style:{},events:{},addEventListener(type,fn){this.events[type]=fn;}};
   const reopenButton={events:{},addEventListener(type,fn){this.events[type]=fn;}};
-  const layer={style:{},setAttribute(){},querySelector(selector){return selector==='canvas'?{getContext:()=>ctx}:selector==='button'?button:selector==='.pool-reopen'?reopenButton:selector==='.pool-intro-copy'?copy:scene;},addEventListener(){}};
+  const layer={style:{},events:{},setAttribute(){},querySelector(selector){return selector==='canvas'?{getContext:()=>ctx}:selector==='button'?button:selector==='.pool-reopen'?reopenButton:selector==='.pool-intro-copy'?copy:scene;},addEventListener(type,fn){this.events[type]=fn;}};
   const hero={children:[],dataset:{},before(element){spacer=element;},append(element){this.layer=element;},querySelector(selector){return selector==='.hero-logo'?{outerHTML:'<div class="hero-logo">LaneLine</div>'}:selector==='h1'?{innerHTML:'LaneLine'}:{textContent:'Swim'};},getBoundingClientRect(){const top=56+parseFloat(spacer?.style.height||0)-env.scrollY;return {top,bottom:top+294,left:0,right:1000,width:1000,height:294};}};
   const doc={hidden:false,body:{style:{overflow:''},append(element){layers.push(element);}},querySelector:()=>hero,addEventListener(){},createElement(tag){return tag==='section'?layer:{style:{},setAttribute(){},remove(){}};}};
-  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:0,performance:{now:()=>now},matchMedia:()=>({matches:false}),requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(type,fn){events[type]=fn;},scrollTo(options){this.scrollY=options.top;events.scroll();},LaneLineFluid:{createDeferred(surface,ready){fluidCreated++;ready({resize(){}});}}};
+  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:0,performance:{now:()=>now},matchMedia:()=>({matches:false}),requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(type,fn){events[type]=fn;},scrollTo(options){this.scrollY=options.top;events.scroll();},LaneLineFluid:{createDeferred(surface,ready){fluidCreated++;ready({resize(){},splat(){splats++;},advance(){}});}}};
   env.LaneLineMotion=require('../motion')(env);
   function step(){const pending=[...frames];frames.clear();now+=20;for(const [,fn] of pending)fn(now);}
   const intro=require('../pool-intro')(env);intro.init();
   assert.equal(layers.length,1);assert.equal(fluidCreated,1);assert.equal(doc.body.style.overflow,'');
   assert.equal(events.wheel,undefined,'native scrolling is not intercepted');
   assert.equal(painted,36,'fullscreen has two swimmers per lane');
+  const mouse={button:0,pointerType:'mouse',clientX:500,clientY:300,target:{closest:()=>null}};
+  layer.events.pointerdown(mouse);layer.events.pointermove({...mouse,clientX:530,clientY:320});step();
+  assert.equal(splats,1,'dragging still feeds the fluid simulation');
+  layer.events.pointerup();layer.events.pointermove({...mouse,clientX:550});step();
+  assert.equal(splats,1,'hovering does not trigger fluid splats');
   const distance=parseFloat(spacer.style.height);
   assert.equal(distance,240,'the faster transition uses a short scroll distance');
   env.scrollY=distance/2;events.scroll();step();

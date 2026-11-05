@@ -1263,7 +1263,8 @@ return {
       {r:.11,g:.3,b:.42});
   },
   resize(width,height){
-    const w=Math.max(2,Math.min(1100,Math.round(width))),h=Math.max(2,Math.round(height*w/Math.max(1,width)));
+    const scale=Math.min(1,800/Math.max(1,width),640/Math.max(1,height));
+    const w=Math.max(2,Math.round(width*scale)),h=Math.max(2,Math.round(height*scale));
     if(canvas.width===w&&canvas.height===h)return;
     canvas.width=w;canvas.height=h;initFramebuffers();render(null);
   },

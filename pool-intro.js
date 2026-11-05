@@ -4,6 +4,7 @@
 })(typeof globalThis==='object'?globalThis:this,function(env){
   let initialized=false;
   const cameraZoom=1.5,laneCount=18;
+  function canvasScale(width,height,ratio=1){return Math.min(ratio,1.1,1600/Math.max(1,width),1000/Math.max(1,height));}
   function waterDrift(x,y,width,height,flow,impulse,now){
     const column=Math.max(0,Math.min(12,Math.round((x/width-.04)*12/.92))),row=Math.max(0,Math.min(16,Math.round(y/height*16)));
     let dx=(flow?.[column*17+row]||0)*.025,dy=0;
@@ -72,7 +73,7 @@
     let width=1,height=1,frame=0,last=-Infinity,closing=false,onscreen=true,active=true;
     let scrollDistance=1,progress=0,cameraFrame=0,mountedInBanner=false,currentZoom=1,snapTimer=null,fromBanner=false;
     let fullscreenLocked=false,reopening=false;
-    let fluid=null,fluidUntil=0,pendingFluid=null,pressed=false,pointer=null,flow=null,lastFlow=-Infinity,disposed=false;
+    let fluid=null,fluidUntil=0,pendingFluid=null,pressed=false,pointer=null,flow=null,lastFlow=-Infinity,lastFluidAdvance=-Infinity,disposed=false;
     let impulse=null;
     let swimmers=fullLaneSwimmers();
     let lowDensity=false,swimmerNumber=laneCount*2,bannerHeight=1,drainBounds=null;
@@ -90,7 +91,7 @@
       scrollDistance=reduced.matches?0:Math.max(160,Math.min(280,height*.3));
       spacer.style.height=(fullscreenLocked?0:scrollDistance)+'px';
       scene.style.width=width+'px';scene.style.height=height+'px';
-      const dpr=Math.min(env.devicePixelRatio||1,1.25);
+      const dpr=canvasScale(width,height,env.devicePixelRatio||1);
       canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
       fluid?.resize(width,height);
       ctx.setTransform(dpr,0,0,dpr,0,0);draw((env.performance.now()-started)/1000);
@@ -100,7 +101,7 @@
     function measureLetters(){
       if(!letters.length)return;
       const bounds=scene.getBoundingClientRect();
-      for(const letter of letters){letter.element.style.transform='none';letter.x=letter.y=0;}
+      for(const letter of letters){letter.element.style.transform='none';letter.lastTransform='none';letter.x=letter.y=0;}
       for(const letter of letters){
         const rect=letter.element.getBoundingClientRect();
         letter.baseX=(rect.left+rect.width/2-bounds.left)/currentZoom;letter.baseY=(rect.top+rect.height/2-bounds.top)/currentZoom;
@@ -110,7 +111,9 @@
       for(const letter of letters){
         const drift=waterDrift(letter.baseX,letter.baseY,width,height,flow,impulse,now);
         letter.x+=(drift.x*1.9-letter.x)*.22;letter.y+=(drift.y*2.1-letter.y)*.22;
-        letter.element.style.transform='translate('+letter.x.toFixed(2)+'px,'+letter.y.toFixed(2)+'px) rotate('+(letter.x*.5).toFixed(2)+'deg)';
+        if(Math.abs(letter.x)<.02)letter.x=0;if(Math.abs(letter.y)<.02)letter.y=0;
+        const transform=letter.x||letter.y?'translate('+letter.x.toFixed(1)+'px,'+letter.y.toFixed(1)+'px) rotate('+(letter.x*.5).toFixed(1)+'deg)':'none';
+        if(transform!==letter.lastTransform){letter.element.style.transform=transform;letter.lastTransform=transform;}
       }
     }
     function swimmer(x,y,pose,stroke,seconds,index,scale){
@@ -137,10 +140,10 @@
       }
       for(let i=0;i<=laneCount;i++){
         ctx.beginPath();
-        for(let y=wall;y<=height-wall;y+=6){
-          const fraction=(y-wall)/Math.max(1,height-wall*2),node=ropes[i][Math.min(32,Math.round(fraction*32))];
+        for(let point=0;point<33;point++){
+          const y=wall+point*(height-wall*2)/32,node=ropes[i][point];
           const x=edge+i*lane+Math.sin(y*.025+seconds*1.3+i)*1.2+node.x;
-          if(y===wall)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+          if(point===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
         }
         ctx.setLineDash([]);ctx.strokeStyle='rgba(0,12,30,.35)';ctx.lineWidth=8;ctx.stroke();
         ctx.strokeStyle='#167eaa';ctx.lineWidth=6;ctx.stroke();
@@ -190,12 +193,11 @@
     function tick(now){
       frame=0;
       if(doc.hidden||reduced.matches||(!active&&!onscreen))return;
-      if(now-last>=(closing?16:40)){
-        const elapsed=Math.min(.06,(now-last)/1000||.04);
+      if(now-last>=(closing?16:pressed||now<fluidUntil?32:50)){
         if(pendingFluid&&fluid){fluid.splat(pendingFluid.x,pendingFluid.y,pendingFluid.dx,pendingFluid.dy);pendingFluid=null;fluidUntil=now+6000;}
         if(fluid&&now<fluidUntil){
-          fluid.advance(elapsed);
-          if(now-lastFlow>250){flow=fluid.sampleRopes?.();lastFlow=now;}
+          if(now-lastFluidAdvance>=32){fluid.advance(Math.min(.033,(now-lastFluidAdvance)/1000));lastFluidAdvance=now;}
+          if(now-lastFlow>400){flow=fluid.sampleRopes?.();lastFlow=now;}
         }else flow=null;
         ropes.forEach((nodes,index)=>{
           const forces=nodes.map((node,i)=>{
@@ -289,5 +291,5 @@
     doc.fonts?.ready.then(measureLetters);
     resize();visibility();
   }
-  return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift};
+  return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift,canvasScale};
 });

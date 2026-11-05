@@ -319,6 +319,7 @@ footer span{color:var(--lane)}
     Lane<span>Line</span>
   </div>
   <div class="nav-right">
+    <button class="nav-account-btn quick-open" type="button" onclick="openQuickSwitch()" title="Quick search (Ctrl+K)" aria-label="Search swimmers and pages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5" stroke-linecap="round"/></svg><span>Search</span></button>
     <button class="nav-account-btn" onclick="openAccountModal()" id="nav-account-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span id="nav-account-label">Sign in</span>
@@ -542,6 +543,7 @@ footer span{color:var(--lane)}
       <div class="section-label">Race ladder</div>
       <div id="growth-comparison" aria-live="polite"></div>
     </div>
+    <section class="card-section growth-log"><div class="race-log-heading"><div><div class="section-label">Race log</div><p id="race-log-count" role="status"></p></div><div class="field"><label for="race-log-filter">Events</label><select id="race-log-filter" onchange="raceLogPage=0;renderGrowthRaceLog()"><option value="all">All events</option><option value="selected">Selected event</option></select></div></div><div id="growth-race-log"></div></section>
     <div class="card-section growth-advice">
       <div class="section-label">Suggestions</div>
       <div id="growth-suggestions"></div>
@@ -592,15 +594,16 @@ footer span{color:var(--lane)}
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
     <div>
       <h2 style="font-size:20px;font-weight:500">Swimmers</h2>
-      <p id="profiles-count" style="font-size:13px;color:var(--muted);margin-top:2px"></p>
+      <p id="profiles-count" role="status" style="font-size:13px;color:var(--muted);margin-top:2px"></p>
       <p id="roster-import-status" role="status" style="font-size:12px;color:var(--muted);margin-top:4px"></p>
     </div>
     <button class="btn-secondary" onclick="openAddSwimmerModal()">+ Add swimmer</button>
   </div>
   <div class="best-tools">
-    <div class="field"><label for="profiles-search">Name</label><input type="search" id="profiles-search" oninput="renderProfilesPage()"/></div>
+    <div class="field"><label for="profiles-search">Search swimmers</label><input type="search" id="profiles-search" placeholder="Name or team" oninput="scheduleRosterSearch()"/></div>
     <div class="field"><label for="profiles-team">Team</label><select id="profiles-team" onchange="renderProfilesPage()"><option value="">All teams</option><option>Bellevue Club Swim Team</option><option>Wave Aquatics</option><option>Pacific Dragons Swim Team</option><option>Olympic Cascade Aquatics</option></select></div>
   </div>
+  <button class="btn-ghost profile-filter-reset" id="profiles-reset" type="button" onclick="clearRosterFilters()" hidden>Clear filters</button>
   <div class="course-toggle roster-scope" role="group" aria-label="Swimmer roster">
     <button type="button" id="roster-favorites" aria-pressed="true" onclick="setRosterScope('favorites')">Favorites</button>
     <button type="button" id="roster-all" aria-pressed="false" onclick="setRosterScope('all')">All swimmers</button>
@@ -705,6 +708,7 @@ footer span{color:var(--lane)}
   </div>
 </div>
 
+<dialog id="quick-switch" class="quick-switch" aria-label="Quick search"><div class="quick-switch-top"><input id="quick-query" type="search" placeholder="Search swimmers or pages" aria-label="Search swimmers or pages" role="combobox" aria-controls="quick-results" aria-expanded="true" aria-autocomplete="list" autocomplete="off"/><button type="button" class="quick-close" onclick="document.getElementById('quick-switch').close()" aria-label="Close search" title="Close">&times;</button></div><div id="quick-results" role="listbox" aria-label="Search results"></div><p id="quick-empty" class="quick-empty" hidden>No matching swimmers or pages.</p></dialog>
 <script src="standards-engine.js"></script>
 <script src="insights-engine.js"></script>
 <script src="rankings-engine.js"></script>
@@ -721,7 +725,10 @@ let verifiedStandardsData = null;
 let standardsLoadError = '';
 const motivationalOrder = ["AAAA", "AAA", "AA", "A", "BB", "B"];
 const nationalStandardsDisplayOrder = ["BB", "A", "AA", "AAA", "AAAA"];
-let bestTimesCourse = 'SCY';
+let viewPreferences={};
+try{viewPreferences=LaneLineSwimmerUI.loadPreferences(localStorage);}catch{}
+function rememberView(patch){viewPreferences={...viewPreferences,...patch};try{LaneLineSwimmerUI.savePreferences(localStorage,viewPreferences);}catch{}}
+let bestTimesCourse = viewPreferences.bestCourse||'SCY';
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
@@ -1208,10 +1215,12 @@ loadVerifiedStandards();
 // Signed-in browser refreshes update the shared history cache separately.
 setInterval(refreshSeededSwimmersFromDataHubCache, 5 * 60 * 1000);
 window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
-window.addEventListener('DOMContentLoaded',()=>showPage('best'));
+window.addEventListener('DOMContentLoaded',()=>showPage(viewPreferences.tab||'best'));
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
   const tabOrder=['best','growth','strengths','goals','analysis','standards','zone','profiles'];
+  if(!tabOrder.includes(page))return;
+  rememberView({tab:page});
   const previous=tabOrder.find(p=>document.getElementById('ptab-'+p)?.classList.contains('active'));
   ['best','growth','standards','zone','profiles','analysis','strengths','goals'].forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
@@ -1240,6 +1249,49 @@ function animatePerformanceView(root){
   for(const badge of root.querySelectorAll('.standard-pill'))badge.dataset.level=badge.textContent.trim();
   LaneLineMotion.reveal(root);
 }
+
+let quickResults=[],quickSelected=0;
+function openQuickSwitch(){
+  const dialog=document.getElementById('quick-switch');
+  if(dialog.open)return;
+  document.getElementById('quick-query').value='';quickSelected=0;renderQuickSwitch();dialog.showModal();document.getElementById('quick-query').focus();
+}
+function renderQuickSwitch(){
+  quickResults=LaneLineSwimmerUI.quickItems(orderedSwimmers(),document.getElementById('quick-query').value,[...swimmerFavorites()]);
+  quickSelected=0;
+  document.getElementById('quick-results').innerHTML=quickResults.map((item,index)=>`<button type="button" role="option" tabindex="-1" id="quick-result-${index}" data-quick-index="${index}" aria-selected="${index===0}"><span>${escapeHtml(item.label)}</span><small>${escapeHtml(item.detail)}</small></button>`).join('');
+  document.getElementById('quick-results').scrollTop=0;
+  document.getElementById('quick-empty').hidden=quickResults.length>0;
+  highlightQuickSelection();
+}
+function highlightQuickSelection(){
+  document.querySelectorAll('[data-quick-index]').forEach((button,index)=>button.setAttribute('aria-selected',String(index===quickSelected)));
+  const input=document.getElementById('quick-query');
+  if(quickResults.length)input.setAttribute('aria-activedescendant','quick-result-'+quickSelected);else input.removeAttribute('aria-activedescendant');
+}
+function chooseQuickResult(index){
+  const item=quickResults[index];if(!item)return;
+  document.getElementById('quick-switch').close();
+  if(item.swimmerId)openSwimmerView(item.swimmerId,item.page);else showPage(item.page);
+  const poolEnter=document.querySelector('.pool-intro-enter');if(poolEnter&&!poolEnter.hidden)poolEnter.click();
+}
+window.addEventListener('DOMContentLoaded',()=>{
+  const dialog=document.getElementById('quick-switch'),input=document.getElementById('quick-query');
+  input.addEventListener('input',renderQuickSwitch);
+  input.addEventListener('keydown',event=>{
+    if((event.key==='ArrowDown'||event.key==='ArrowUp')&&quickResults.length){event.preventDefault();quickSelected=(quickSelected+(event.key==='ArrowDown'?1:-1)+quickResults.length)%quickResults.length;highlightQuickSelection();document.getElementById('quick-result-'+quickSelected).scrollIntoView({block:'nearest'});}
+    if(event.key==='Enter'){event.preventDefault();chooseQuickResult(quickSelected);}
+  });
+  document.getElementById('quick-results').addEventListener('click',event=>{const button=event.target.closest('[data-quick-index]');if(button)chooseQuickResult(Number(button.dataset.quickIndex));});
+  dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}});
+  document.addEventListener('keydown',event=>{
+    const typing=event.target.matches('input,textarea,select')||event.target.isContentEditable;
+    if(((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k')||(!typing&&event.key==='/')){
+      if(document.querySelector('.modal-overlay.open')||document.querySelector('dialog[open]')&&!dialog.open)return;
+      event.preventDefault();if(dialog.open)dialog.close();else openQuickSwitch();
+    }
+  });
+});
 
 let rankingCourse='SCY';
 let rankingWorker=null,rankingRequest=0,rankingSerial=0;
@@ -1499,6 +1551,19 @@ function toggleSwimmerFavorite(id){
   }
   catch{alert('Favorites could not be saved. Check browser storage.');}
 }
+let rosterSearchTimer;
+function scheduleRosterSearch(){clearTimeout(rosterSearchTimer);rosterSearchTimer=setTimeout(renderProfilesPage,120);}
+function clearRosterFilters(){
+  clearTimeout(rosterSearchTimer);
+  document.getElementById('profiles-search').value='';document.getElementById('profiles-team').value='';renderProfilesPage();
+}
+function openSwimmerView(id,page){
+  if(!['best','growth'].includes(page)||!appState.swimmers.some(sw=>sw.id===id))return;
+  showPage(page);
+  const select=document.getElementById(page+'-swimmer');select.value=id;
+  rememberView({[page==='best'?'bestSwimmer':'growthSwimmer']:id});
+  if(page==='best')renderBestTimes();else{renderGrowthPickers();renderGrowthPage();}
+}
 function renderProfilesPage() {
   if(document.getElementById('profiles-page')?.style.display==='none')return;
   const grid = document.getElementById('profiles-grid');
@@ -1507,10 +1572,11 @@ function renderProfilesPage() {
   const favorites=swimmerFavorites();
   document.getElementById('roster-favorites')?.setAttribute('aria-pressed',String(rosterScope==='favorites'));
   document.getElementById('roster-all')?.setAttribute('aria-pressed',String(rosterScope==='all'));
-  const swimmers = orderedSwimmers().filter(sw => (rosterScope==='all'||favorites.has(sw.id)) && (!team || sw.team === team) && sw.name.toLowerCase().includes(search));
+  const swimmers = orderedSwimmers().filter(sw => (rosterScope==='all'||favorites.has(sw.id)) && (!team || sw.team === team) && LaneLineSwimmerUI.matchesSearch(sw,search));
+  document.getElementById('profiles-reset').hidden=!search&&!team;
   const count = document.getElementById('profiles-count');
   if (count) count.textContent = rosterScope==='favorites'?`${swimmers.length} favorites`:`${swimmers.length} swimmers`;
-  let html = swimmers.length?'':`<div class="roster-empty"><p>${rosterScope==='favorites'?'No favorites match.':'No swimmers match.'}</p>${rosterScope==='favorites'?'<button type="button" class="btn-secondary" onclick="setRosterScope(\'all\')">Browse swimmers</button>':''}</div>`;
+  let html = swimmers.length?'':`<div class="roster-empty"><p>${rosterScope==='favorites'?'No favorites match.':'No swimmers match.'}</p>${search||team?'<button type="button" class="btn-secondary" onclick="clearRosterFilters()">Clear filters</button>':''}${rosterScope==='favorites'?'<button type="button" class="btn-secondary" onclick="setRosterScope(\'all\')">Browse swimmers</button>':''}</div>`;
   swimmers.forEach(sw => {
     html += `<div class="profile-card">
       <button type="button" class="favorite-swimmer" data-favorite-swimmer="${escapeHtml(sw.id)}" ${sw.id==='usas_9DCE8A4B52EF4A'?'disabled':''} aria-label="${sw.id==='usas_9DCE8A4B52EF4A'?'Pinned favorite':favorites.has(sw.id)?'Unfavorite':'Favorite'} ${escapeHtml(sw.name)}" aria-pressed="${favorites.has(sw.id)}" title="${sw.id==='usas_9DCE8A4B52EF4A'?'Always favorited':favorites.has(sw.id)?'Remove favorite':'Add favorite'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg></button>
@@ -1522,6 +1588,7 @@ function renderProfilesPage() {
       <div class="profile-age"><label>Age <input type="number" min="1" max="120" step="1" data-swimmer-age="${escapeHtml(sw.id)}" aria-label="Age for ${escapeHtml(sw.name)}" value="${LaneLineSwimmerUI.validAge(sw.ageGroup)?escapeHtml(sw.ageGroup):''}" title="${sw.manualAge?'Manual age':'Imported age'}"></label>${sw.manualAge?`<button type="button" class="btn-ghost" data-age-reset="${escapeHtml(sw.id)}" aria-label="Use imported age for ${escapeHtml(sw.name)}" title="Use imported age">↺</button>`:''}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
+      <div class="profile-quick-views"><button type="button" data-open-view="best" data-swimmer-id="${escapeHtml(sw.id)}">Best times</button><button type="button" data-open-view="growth" data-swimmer-id="${escapeHtml(sw.id)}">Growth</button></div>
       <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
         <button class="btn-ghost" style="font-size:12px" onclick="openAddSwimmerModal('${sw.id}')">Edit</button>
         <button class="btn-ghost" style="font-size:12px;color:var(--red)" onclick="deleteSwimmer('${sw.id}')">Remove</button>
@@ -1533,6 +1600,7 @@ function renderProfilesPage() {
     Add swimmer
   </div>`;
   grid.innerHTML = html;
+  grid.onclick=event=>{const button=event.target.closest('[data-open-view]');if(button)openSwimmerView(button.dataset.swimmerId,button.dataset.openView);};
   grid.querySelectorAll('[data-favorite-swimmer]').forEach(button=>button.addEventListener('click',()=>toggleSwimmerFavorite(button.dataset.favoriteSwimmer)));
   grid.querySelectorAll('[data-swimmer-age]').forEach(input=>input.addEventListener('change',()=>{if(!input.value||!input.checkValidity()){input.reportValidity();return;}setManualSwimmerAge(input.dataset.swimmerAge,input.value);}));
   grid.querySelectorAll('[data-age-reset]').forEach(button=>button.addEventListener('click',()=>setManualSwimmerAge(button.dataset.ageReset,null)));
@@ -1598,18 +1666,20 @@ function bestTimesForSwimmer(sw) {
 function renderBestTimesPicker() {
   const select = document.getElementById('best-swimmer');
   if (!select) return;
-  const previousValue = select.value;
+  const previousValue = select.value||viewPreferences.bestSwimmer;
   if (!appState.swimmers.length) {
     select.innerHTML = '<option value="">No swimmers saved</option>';
     return;
   }
   select.innerHTML = orderedSwimmers().map(sw => `<option value="${sw.id}">${escapeHtml(sw.name)}</option>`).join('');
   if (previousValue && appState.swimmers.some(sw => sw.id === previousValue)) select.value = previousValue;
-  select.onchange = () => renderBestTimes();
+  select.onchange = () => {rememberView({bestSwimmer:select.value});renderBestTimes();};
+  for(const course of ['SCY','LCM','SCM'])document.getElementById('best-course-'+course.toLowerCase())?.classList.toggle('active',course===bestTimesCourse);
 }
 
 function setBestTimesCourse(course) {
   bestTimesCourse = ['SCY','LCM','SCM'].includes(course) ? course : 'SCY';
+  rememberView({bestCourse:bestTimesCourse});
   document.getElementById('best-course-scy')?.classList.toggle('active', bestTimesCourse === 'SCY');
   document.getElementById('best-course-lcm')?.classList.toggle('active', bestTimesCourse === 'LCM');
   document.getElementById('best-course-scm')?.classList.toggle('active', bestTimesCourse === 'SCM');
@@ -1634,7 +1704,8 @@ function renderBestTimes() {
     return { ...t, peer, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(t,sw) };
   }).sort((a,b)=>a.peer&&b.peer?LaneLineInsights.comparePeerStrength(a.peer,b.peer):compareBestTimeRows(a,b));
   if (!rows.length) {
-    section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">${sw.name} has no ${bestTimesCourse} best times saved.</p><p style="font-size:13px">Switch course or edit the swimmer profile and add one time per line.</p></div>`;
+    const available=['SCY','LCM','SCM'].map(course=>({course,count:bestTimesForSwimmer(sw).filter(row=>normalizeCourse(row.course||row.event)===course).length})).filter(item=>item.count);
+    section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">No ${bestTimesCourse} results for ${escapeHtml(sw.name)}.</p><div class="empty-course-actions">${available.map(item=>`<button type="button" class="btn-secondary" onclick="setBestTimesCourse('${item.course}')">${item.course} <span>${item.count} events</span></button>`).join('')}</div></div>`;
     return;
   }
   section.innerHTML = `
@@ -1794,9 +1865,10 @@ function renderGrowthPickers() {
   const courseSelect = document.getElementById('growth-course');
   const eventSelect = document.getElementById('growth-event');
   if (!swimmerSelect || !courseSelect || !eventSelect) return;
-  const previousSwimmer = swimmerSelect.value;
-  const previousCourse = courseSelect.value || 'SCY';
-  const previousEvent = eventSelect.value;
+  const restore=!swimmerSelect.dataset.viewRestored;
+  const previousSwimmer = restore?(viewPreferences.growthSwimmer||swimmerSelect.value):swimmerSelect.value;
+  const previousCourse = (restore?viewPreferences.growthCourse:null)||courseSelect.value||'SCY';
+  const previousEvent = (restore?viewPreferences.growthEvent:null)||eventSelect.value;
   swimmerSelect.innerHTML = appState.swimmers.length ? orderedSwimmers().map(sw => `<option value="${sw.id}">${escapeHtml(sw.name)}</option>`).join('') : '<option value="">No swimmers saved</option>';
   if (previousSwimmer && appState.swimmers.some(sw => sw.id === previousSwimmer)) swimmerSelect.value = previousSwimmer;
   courseSelect.value = previousCourse === 'LCM' ? 'LCM' : 'SCY';
@@ -1805,17 +1877,41 @@ function renderGrowthPickers() {
   const events = Object.keys(groups).sort((a, b) => a.localeCompare(b));
   eventSelect.innerHTML = events.length ? events.map(event => `<option value="${event}">${event} (${groups[event].length})</option>`).join('') : '<option value="">No dated events</option>';
   if (previousEvent && events.includes(previousEvent)) eventSelect.value = previousEvent;
+  swimmerSelect.dataset.viewRestored='true';
+  const rememberGrowth=()=>rememberView({growthSwimmer:swimmerSelect.value,growthCourse:courseSelect.value,growthEvent:eventSelect.value});
   swimmerSelect.onchange = () => {
     renderGrowthPickers();
+    rememberGrowth();
     renderGrowthPage();
   };
   courseSelect.onchange = () => {
     renderGrowthPickers();
+    rememberGrowth();
     renderGrowthPage();
   };
-  eventSelect.onchange = () => {document.getElementById('growth-main-chart').dataset.highlightEvent=eventSelect.value;renderGrowthPage();};
+  eventSelect.onchange = () => {rememberGrowth();document.getElementById('growth-main-chart').dataset.highlightEvent=eventSelect.value;renderGrowthPage();};
 }
 
+let raceLogPage=0,raceLogContext='';
+function renderGrowthRaceLog(){
+  const holder=document.getElementById('growth-race-log'),count=document.getElementById('race-log-count');
+  if(!holder||!count)return;
+  const sw=appState.swimmers.find(sw=>sw.id===document.getElementById('growth-swimmer').value)||appState.swimmers[0];
+  const course=document.getElementById('growth-course').value==='LCM'?'LCM':'SCY',event=document.getElementById('growth-event').value;
+  const context=[sw?.id,course,event,document.getElementById('race-log-filter').value].join('|');
+  if(context!==raceLogContext){raceLogPage=0;raceLogContext=context;}
+  const all=sw?LaneLineInsights.raceLog(groupGrowthRows(sw,course)):[];
+  const rows=document.getElementById('race-log-filter').value==='selected'?all.filter(row=>row.event===event):all;
+  const pageSize=12,pages=Math.max(1,Math.ceil(rows.length/pageSize));raceLogPage=Math.max(0,Math.min(pages-1,raceLogPage));
+  count.textContent=rows.length+' saved races · '+course;
+  if(!rows.length){holder.innerHTML='<p class="meet-empty">No dated race results saved for this selection.</p>';return;}
+  holder.innerHTML=`<div class="table-scroll"><table class="times-table race-log-table"><thead><tr><th>Date</th><th>Event</th><th>Time</th><th title="Compared with the fastest saved swim on the previous race day for this event">Change</th><th>Meet</th></tr></thead><tbody>${rows.slice(raceLogPage*pageSize,(raceLogPage+1)*pageSize).map(row=>`<tr><td>${escapeHtml(new Date(row.stamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}))}</td><td><button type="button" class="event-link" data-log-event="${escapeHtml(row.event)}">${escapeHtml(row.event)}</button></td><td><span class="time-val">${escapeHtml(row.time)}</span>${row.isBestSaved?'<span class="log-best" title="Fastest time in the saved history for this event">Best saved</span>':''}</td><td><span class="log-change" data-direction="${row.change===null?'none':row.change<0?'drop':row.change>0?'add':'same'}">${row.change===null?'—':(row.change>0?'+':'')+row.change.toFixed(2)+'s'}</span></td><td>${escapeHtml(row.meet||'Meet unavailable')}</td></tr>`).join('')}</tbody></table></div><div class="race-log-pager"><span>${raceLogPage*pageSize+1}–${Math.min(rows.length,(raceLogPage+1)*pageSize)} of ${rows.length}</span><div><button type="button" data-log-page="-1" title="Previous races" aria-label="Previous races" ${raceLogPage===0?'disabled':''}>&lsaquo;</button><button type="button" data-log-page="1" title="More races" aria-label="More races" ${raceLogPage===pages-1?'disabled':''}>&rsaquo;</button></div></div>`;
+  holder.onclick=event=>{
+    const page=event.target.closest('[data-log-page]'),race=event.target.closest('[data-log-event]');
+    if(page&&!page.disabled){raceLogPage+=Number(page.dataset.logPage);renderGrowthRaceLog();}
+    if(race)selectGrowthEvent(race.dataset.logEvent);
+  };
+}
 function renderGrowthPage() {
   const swimmerSelect = document.getElementById('growth-swimmer');
   const courseSelect = document.getElementById('growth-course');
@@ -1826,6 +1922,7 @@ function renderGrowthPage() {
   if (!swimmerSelect || !courseSelect || !eventSelect || !main || !detail || !suggestions) return;
   const sw = appState.swimmers.find(s => s.id === swimmerSelect.value) || appState.swimmers[0];
   const course = courseSelect.value === 'LCM' ? 'LCM' : 'SCY';
+  renderGrowthRaceLog();
   if (!sw) {
     document.getElementById('growth-comparison').textContent='Select a swimmer to compare best times.';
     main.innerHTML = '<div class="meet-empty">Add a swimmer with dated times to see growth.</div>';

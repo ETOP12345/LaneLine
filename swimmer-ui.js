@@ -4,6 +4,33 @@
   else root.LaneLineSwimmerUI=api;
 })(typeof globalThis==='object'?globalThis:this,function(){
   const collator=new Intl.Collator('en',{sensitivity:'base',numeric:true});
+  function searchable(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();}
+  function matchesSearch(swimmer,query){
+    const team=searchable(swimmer.team),aliases=[['bellevue club','bcst'],['wave aquatics','wave'],['pacific dragons','pdst'],['olympic cascade','oca']].filter(([name])=>team.includes(name)).map(([,code])=>code);
+    const text=searchable([swimmer.name,swimmer.team,swimmer.teamCode,swimmer.ageGroup,swimmer.division,...aliases].join(' '));
+    return searchable(query).split(' ').filter(Boolean).every(word=>text.includes(word));
+  }
+  function cleanPreferences(value){
+    if(!value||typeof value!=='object'||Array.isArray(value))return {};
+    const result={};
+    for(const key of ['bestSwimmer','growthSwimmer','growthEvent'])if(typeof value[key]==='string'&&value[key].length<=160)result[key]=value[key];
+    if(['best','growth','strengths','goals','analysis','standards','zone','profiles'].includes(value.tab))result.tab=value.tab;
+    if(['SCY','LCM','SCM'].includes(value.bestCourse))result.bestCourse=value.bestCourse;
+    if(['SCY','LCM'].includes(value.growthCourse))result.growthCourse=value.growthCourse;
+    return result;
+  }
+  function loadPreferences(storage){try{return cleanPreferences(JSON.parse(storage.getItem('laneline-view-preferences')||'{}'));}catch{return {};}}
+  function quickItems(swimmers,query,favorites=[]){
+    const tabs=[['best','Best times'],['growth','Growth'],['strengths','Strengths'],['goals','Goals'],['standards','Time standards'],['zone','Rankings'],['profiles','Swimmers'],['analysis','Video analysis']];
+    const favoriteIds=new Set(favorites),term=String(query||'').trim();
+    const pages=tabs.filter(([,name])=>matchesSearch({name},term)).map(([page,label])=>({page,label,detail:'Page'}));
+    const people=swimmers.filter(sw=>term?matchesSearch(sw,term):favoriteIds.has(sw.id)).slice(0,6).flatMap(sw=>[
+      {page:'best',swimmerId:sw.id,label:sw.name,detail:'Best times'+(sw.team?' · '+sw.team:'')},
+      {page:'growth',swimmerId:sw.id,label:sw.name,detail:'Growth'+(sw.team?' · '+sw.team:'')}
+    ]);
+    return (term?[...pages,...people]:[...people.slice(0,6),...pages]).slice(0,16);
+  }
+  function savePreferences(storage,value){try{storage.setItem('laneline-view-preferences',JSON.stringify(cleanPreferences(value)));return true;}catch{return false;}}
   function nameParts(swimmer){
     const parts=String(swimmer.name||'').trim().split(/\s+/);
     return [swimmer.familyName||parts.pop()||'',swimmer.givenName||parts.join(' ')];
@@ -27,5 +54,5 @@
     if(!validAge(value))throw new Error('Age must be a whole number from 1 to 120.');
     return {...swimmer,sourceAgeGroup:swimmer.sourceAgeGroup??swimmer.ageGroup,ageGroup:String(Number(value)),manualAge:String(Number(value))};
   }
-  return {ordered,nameParts,validAge,importedAge,setAge};
+  return {ordered,nameParts,validAge,importedAge,setAge,matchesSearch,loadPreferences,savePreferences,quickItems};
 });
