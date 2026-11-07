@@ -230,7 +230,7 @@ input[type="text"],input[type="password"],input[type="email"],select,textarea{ba
 nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.nav-logo{color:#fff}.nav-account-btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.18)}.nav-account-btn:hover{background:rgba(255,255,255,.18)}
 .hero{background:var(--navy);padding:4.5rem 2rem;display:block}.hero-logo{margin-bottom:1.5rem}.hero-logo-icon{width:52px;height:52px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}.hero-logo-icon svg{width:30px;height:30px}.hero-wordmark{font-size:26px;color:#fff}.hero-wordmark span{color:var(--lane)}.hero h1{display:block;color:#fff;font-size:56px;font-weight:300;line-height:1.15}.hero h1 strong{color:#fff}.hero h1 .hl{color:var(--lane);font-weight:500}.hero p{display:block;color:rgba(255,255,255,.5);font-size:16px}
 .page-tabs-wrap{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.page-tabs{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));overflow:visible;padding:0 12px;max-width:1400px}.page-tab{min-width:0;max-width:none;white-space:normal;padding:12px 5px;color:rgba(255,255,255,.68);font-size:12px;gap:5px;line-height:1.3}.page-tab svg{flex-shrink:0}.page-tab.active{background:rgba(75,172,224,.12);color:#fff;border-bottom-color:var(--lane)}.page-tab:not(.active):hover{background:rgba(255,255,255,.06);color:#fff}.main{padding-top:1.25rem}
-.page-tabs{grid-template-columns:repeat(8,minmax(0,1fr))}
+.page-tabs{grid-template-columns:repeat(9,minmax(0,1fr))}
 @media(max-width:1000px){.page-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.page-tab{padding:10px 5px}}
 @media(max-width:560px){.hero{padding:3rem 1rem}.hero h1{font-size:32px}.page-tabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 6px}.page-tab{font-size:11px;min-height:40px;padding:8px 3px}.page-tab svg{width:13px;height:13px}}
 .comparison-summary{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.comparison-summary span{padding:4px 9px;border-radius:4px;font-size:12px;background:#edf4fc;color:#365a79}.comparison-summary span:first-child{background:#e8efff;color:#245fbd}
@@ -356,6 +356,7 @@ footer span{color:var(--lane)}
     </button>
     <button class="page-tab" id="ptab-strengths" onclick="showPage('strengths')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 8 3-3m0 0 3 3M6 5v14m5-7 3-3m0 0 3 3m-3-3v10m5-3 2-2m0 0 2 2m-2-2v5" stroke-linecap="round" stroke-linejoin="round"/></svg>Strengths</button>
     <button class="page-tab" id="ptab-goals" onclick="showPage('goals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Goals</button>
+    <button class="page-tab" id="ptab-training" onclick="showPage('training')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="14" r="8"/><path d="M9 2h6m-3 0v4m6 0 2-2m-8 6v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tests / Training</button>
     <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 10l4.5-2.5v9L15 14m-9 3h7a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Video analysis
@@ -494,6 +495,7 @@ footer span{color:var(--lane)}
           </div>
         </div>
         <button class="btn-secondary" onclick="renderBestTimes()">Load bests</button>
+        <button class="btn-secondary export-bests" id="best-export" type="button" onclick="exportBestTimes()" title="Export best times as CSV" aria-label="Export best times as CSV" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <label style="display:flex;align-items:center;gap:7px;font-size:12px;margin-top:10px"><input type="checkbox" id="show-all-targets" onchange="renderBestTimes()"/>All target drops</label>
     </div>
@@ -506,6 +508,61 @@ footer span{color:var(--lane)}
 <!-- ══ GROWTH PAGE ══ -->
 <div id="strengths-page" style="display:none"><section class="insights-surface"><div class="section-label">Your competitive edge</div><h2>Strengths</h2><div id="strengths-controls" class="standards-toolbar"></div><div id="strengths-results" aria-live="polite"></div></section></div>
 <div id="goals-page" style="display:none"><section class="insights-surface"><div class="section-label">One finish at a time</div><h2>Personal goals</h2><div id="goals-controls" class="standards-toolbar"></div><div id="goals-results" aria-live="polite"></div></section></div>
+<div id="training-page" style="display:none"><section class="insights-surface training-surface"><div class="section-label">Sharpen your race-day skills</div><h2>Tests / Training</h2>
+  <div class="arcade-options"><span>Poolside Arcade</span><label><input type="checkbox" id="training-sound" checked/> Sound</label></div>
+  <div class="training-tabs" role="tablist" aria-label="Training activities"><button id="training-tab-reaction" type="button" role="tab" data-training-view="reaction" aria-controls="training-reaction" aria-selected="true">Start reaction</button><button id="training-tab-quiz" type="button" role="tab" data-training-view="quiz" aria-controls="training-quiz" aria-selected="false" tabindex="-1">Swim quiz</button><button id="training-tab-pace" type="button" role="tab" data-training-view="pace" aria-controls="training-pace" aria-selected="false" tabindex="-1">Pace clock</button><button id="training-tab-splits" type="button" role="tab" data-training-view="splits" aria-controls="training-splits" aria-selected="false" tabindex="-1">Split Sprint</button><button id="training-tab-medley" type="button" role="tab" data-training-view="medley" aria-controls="training-medley" aria-selected="false" tabindex="-1">Medley Builder</button><button id="training-tab-turn" type="button" role="tab" data-training-view="turn" aria-controls="training-turn" aria-selected="false" tabindex="-1">Flip Turn</button></div>
+  <section id="training-reaction" class="training-panel reaction-challenge" role="tabpanel" aria-labelledby="training-tab-reaction">
+    <div class="reaction-console">
+      <div class="reaction-start">
+        <p id="reaction-status" role="status">Ready</p>
+        <button id="reaction-pad" type="button" data-phase="idle" aria-label="Start reaction challenge; activate again when the signal says Go">Begin</button>
+        <button id="reaction-replay" class="arcade-utility" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 1 9 9"/><path d="M3 17v-5h5"/></svg>Replay dive</button>
+      </div>
+      <div class="reaction-results">
+        <div class="reaction-stats"><div><span>Best</span><strong id="reaction-best">—</strong></div><div><span>Last</span><strong id="reaction-last">—</strong></div><div><span>Average</span><strong id="reaction-average">—</strong></div></div>
+        <div class="reaction-recent-heading"><span>Last five attempts</span><button id="reaction-clear" type="button" title="Clear reaction results" aria-label="Clear reaction results" disabled>&#8634;</button></div>
+        <ol id="reaction-recent" class="reaction-history" aria-label="Recent reaction times, newest first"></ol>
+        <p id="reaction-empty">No attempts yet</p>
+      </div>
+    </div>
+  </section>
+  <section id="training-quiz" class="training-panel arcade-game" role="tabpanel" aria-labelledby="training-tab-quiz" hidden>
+    <div class="arcade-console">
+      <div class="training-game-heading"><p id="quiz-progress" class="arcade-round" role="status"></p><div class="training-score"><span>Score <strong id="quiz-score">0 / 5</strong></span><span>Best <strong id="quiz-best">0 / 5</strong></span></div></div>
+      <h4 id="quiz-question" tabindex="-1"></h4><div id="quiz-options" class="quiz-options"></div>
+      <p id="quiz-feedback" class="quiz-feedback" role="status"></p>
+      <div class="arcade-actions"><a id="quiz-source" target="_blank" rel="noopener" hidden>Reference</a><button id="quiz-next" type="button" class="btn-secondary" disabled>Next question</button></div>
+    </div>
+  </section>
+  <section id="training-pace" class="training-panel arcade-game" role="tabpanel" aria-labelledby="training-tab-pace" hidden>
+    <div class="arcade-console pace-layout">
+      <div class="field"><label for="pace-target">Target (seconds)</label><input id="pace-target" type="number" min="0.5" max="120" step="0.1" value="5" inputmode="decimal"/><div id="pace-presets" class="pace-presets" role="group" aria-label="Pace targets"></div></div>
+      <div><p id="pace-status" role="status">Ready</p><button id="pace-pad" type="button" aria-label="Start or stop the hidden pace clock">Start</button></div>
+      <div class="reaction-stats"><div><span>Elapsed</span><strong id="pace-elapsed">—</strong></div><div><span>Closest error</span><strong id="pace-best">—</strong></div></div>
+      <div class="pace-history"><p>Last five attempts</p><ol id="pace-recent" aria-label="Recent timing errors for this target, newest first"></ol><p id="pace-empty">No attempts at this target yet</p></div>
+    </div>
+  </section>
+  <section id="training-splits" class="training-panel arcade-game" role="tabpanel" aria-labelledby="training-tab-splits" hidden>
+    <div class="arcade-console">
+      <div class="training-game-heading"><p id="splits-progress" class="arcade-round" role="status"></p><div class="training-score"><span>Score <strong id="splits-score">0 / 5</strong></span><span>Best <strong id="splits-best">0 / 5</strong></span></div></div>
+      <h4 id="splits-question" class="split-question" tabindex="-1"></h4><div id="splits-options" class="quiz-options"></div>
+      <p id="splits-feedback" class="quiz-feedback" role="status"></p>
+      <div class="arcade-actions"><a id="splits-source" hidden>Reference</a><button id="splits-next" type="button" class="btn-secondary" disabled>Next question</button></div>
+    </div>
+  </section>
+  <section id="training-medley" class="training-panel arcade-game" role="tabpanel" aria-labelledby="training-tab-medley" hidden>
+    <div class="arcade-console">
+      <div class="training-game-heading"><p id="medley-status" class="arcade-round" role="status"></p><div class="field"><label for="medley-mode">Event</label><select id="medley-mode"><option value="im">Individual medley</option><option value="relay">Medley relay</option></select></div></div>
+      <div class="medley-layout"><ol id="medley-order" class="medley-order" aria-label="Stroke order"></ol><div class="medley-score"><div class="reaction-stats"><div><span>Moves</span><strong id="medley-moves">0</strong></div><div><span>Best</span><strong id="medley-best">—</strong></div></div><button id="medley-new" class="btn-secondary" type="button">New puzzle</button><a href="https://www.usaswimming.org/about-usas/governance/rules-policies" target="_blank" rel="noopener">Stroke order reference</a></div></div>
+    </div>
+  </section>
+  <section id="training-turn" class="training-panel arcade-game" role="tabpanel" aria-labelledby="training-tab-turn" hidden>
+    <div class="arcade-console turn-console">
+      <div><p id="turn-status" class="arcade-round" role="status">Ready</p><button id="turn-pad" class="btn-secondary" type="button">Begin</button></div>
+      <dl class="turn-scores"><div><dt>Tuck</dt><dd id="turn-tuck">&mdash;</dd></div><div><dt>Push</dt><dd id="turn-push">&mdash;</dd></div><div><dt>Score / 100</dt><dd id="turn-score">&mdash;</dd></div><div><dt>Best</dt><dd id="turn-best">&mdash;</dd></div></dl>
+    </div>
+  </section>
+</section></div>
 <div id="growth-page" style="display:none">
   <div class="card">
     <div class="card-section">
@@ -543,7 +600,8 @@ footer span{color:var(--lane)}
       <div class="section-label">Race ladder</div>
       <div id="growth-comparison" aria-live="polite"></div>
     </div>
-    <section class="card-section growth-log"><div class="race-log-heading"><div><div class="section-label">Race log</div><p id="race-log-count" role="status"></p></div><div class="field"><label for="race-log-filter">Events</label><select id="race-log-filter" onchange="raceLogPage=0;renderGrowthRaceLog()"><option value="all">All events</option><option value="selected">Selected event</option></select></div></div><div id="growth-race-log"></div></section>
+    <section class="card-section growth-calendar"><div class="race-log-heading"><div><div class="section-label">Race calendar</div><p id="race-calendar-count" role="status"></p></div><div class="field"><label for="race-calendar-year">Year</label><select id="race-calendar-year" onchange="raceLogDay='';raceLogPage=0;renderGrowthRaceLog()"></select></div></div><div id="race-calendar" class="race-calendar-months"></div></section>
+    <section class="card-section growth-log"><div class="race-log-heading"><div><div class="section-label">Race log</div><p id="race-log-count" role="status"></p><button id="race-log-clear-day" type="button" class="btn-ghost" onclick="raceLogDay='';raceLogPage=0;renderGrowthRaceLog()" hidden>All dates</button></div><div class="field"><label for="race-log-filter">Events</label><select id="race-log-filter" onchange="raceLogPage=0;renderGrowthRaceLog()"><option value="all">All events</option><option value="selected">Selected event</option></select></div></div><div id="growth-race-log"></div></section>
     <div class="card-section growth-advice">
       <div class="section-label">Suggestions</div>
       <div id="growth-suggestions"></div>
@@ -718,6 +776,9 @@ footer span{color:var(--lane)}
 <script src="swimmer-ui.js"></script>
 <script src="fluid-engine.js"></script>
 <script src="motion.js"></script>
+<script src="training-arcade.js"></script>
+<script src="reaction-game.js"></script>
+<script src="training-games.js"></script>
 <script src="pool-intro.js"></script>
 <script>
 const motivationalStandards = {};
@@ -729,6 +790,7 @@ let viewPreferences={};
 try{viewPreferences=LaneLineSwimmerUI.loadPreferences(localStorage);}catch{}
 function rememberView(patch){viewPreferences={...viewPreferences,...patch};try{LaneLineSwimmerUI.savePreferences(localStorage,viewPreferences);}catch{}}
 let bestTimesCourse = viewPreferences.bestCourse||'SCY';
+let bestTimesExport=null;
 // ─── LOCAL STORAGE STATE ─────────────────────────────────
 let appState = {
   user: null, // { name, email }
@@ -1218,14 +1280,16 @@ window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 window.addEventListener('DOMContentLoaded',()=>showPage(viewPreferences.tab||'best'));
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
-  const tabOrder=['best','growth','strengths','goals','analysis','standards','zone','profiles'];
+  const tabOrder=['best','growth','strengths','goals','training','analysis','standards','zone','profiles'];
   if(!tabOrder.includes(page))return;
+  if(page!=='training'){window.LaneLineReaction?.reset();window.LaneLineTraining?.reset();}
   rememberView({tab:page});
   const previous=tabOrder.find(p=>document.getElementById('ptab-'+p)?.classList.contains('active'));
-  ['best','growth','standards','zone','profiles','analysis','strengths','goals'].forEach(p => {
+  tabOrder.forEach(p => {
     document.getElementById(p+'-page').style.display = p === page ? 'block' : 'none';
     document.getElementById('ptab-'+p).classList.toggle('active', p === page);
   });
+  if(page==='training')window.LaneLineArcade?.refresh();else window.LaneLineArcade?.stop();
   if (page === 'best') {
     renderBestTimesPicker();
     renderBestTimes();
@@ -1254,7 +1318,7 @@ let quickResults=[],quickSelected=0;
 function openQuickSwitch(){
   const dialog=document.getElementById('quick-switch');
   if(dialog.open)return;
-  document.getElementById('quick-query').value='';quickSelected=0;renderQuickSwitch();dialog.showModal();document.getElementById('quick-query').focus();
+  document.getElementById('quick-query').value='';quickSelected=0;renderQuickSwitch();dialog.showModal();LaneLineMotion.dialog(dialog);document.getElementById('quick-query').focus();
 }
 function renderQuickSwitch(){
   quickResults=LaneLineSwimmerUI.quickItems(orderedSwimmers(),document.getElementById('quick-query').value,[...swimmerFavorites()]);
@@ -1686,10 +1750,30 @@ function setBestTimesCourse(course) {
   renderBestTimes();
 }
 
+function exportBestTimes(){
+  if(!bestTimesExport)return;
+  const {swimmer,rows,course}=bestTimesExport;
+  const blob=new Blob([LaneLineSwimmerUI.bestTimesCsv(swimmer,rows,course)],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob),link=document.createElement('a');
+  link.href=url;link.download=(swimmer.name||'swimmer').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')+'-'+course+'-best-times.csv';
+  document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function renderPBSpotlight(sw,course){
+  const record=LaneLineInsights.personalBestSpotlight(groupGrowthRows(sw,course));
+  if(!record)return '';
+  return `<section class="pb-spotlight" aria-label="Personal-best spotlight"><div class="pb-ribbon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 3h8v7a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4M12 14v5m-4 2h8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="pb-copy"><div class="section-label">Personal-best spotlight</div><h3>${(-record.change).toFixed(2)}s faster</h3><p><strong>${escapeHtml(record.event)}</strong> · ${escapeHtml(record.time)}</p><small>${escapeHtml(record.meet||'Saved race')} · ${escapeHtml(record.date||'')}</small></div><div class="pb-actions"><button type="button" class="pb-celebrate" onclick="celebrateSwim(this)" title="Celebrate this saved personal best">Celebrate</button><span class="pb-feedback" role="status"></span></div></section>`;
+}
+function celebrateSwim(button){
+  if(button.dataset.celebrating)return;
+  button.dataset.celebrating='true';LaneLineMotion.celebrate(button);
+  const feedback=button.parentElement.querySelector('.pb-feedback');feedback.textContent='Nice swim!';
+  setTimeout(()=>{delete button.dataset.celebrating;if(feedback.isConnected)feedback.textContent='';},1400);
+}
 function renderBestTimes() {
   const section = document.getElementById('best-results-section');
   const select = document.getElementById('best-swimmer');
   if (!section || !select) return;
+  bestTimesExport=null;document.getElementById('best-export').disabled=true;
   const sw = appState.swimmers.find(s => s.id === select.value) || appState.swimmers[0];
   if (!sw) {
     section.innerHTML = '<div class="meet-empty">Add a swimmer profile with best times, then load this tab.</div>';
@@ -1703,6 +1787,7 @@ function renderBestTimes() {
     const peer=peerRatings.find(r=>normalizeEventKey(r.row.event)===normalizeEventKey(t.event));
     return { ...t, peer, pnsTier, nationalStandard, standard: pnsTier, nextDropSeconds: nextAchievement.dropSeconds, nextDrop: nextAchievement.label, qualifies: qualifyingMeets(t,sw) };
   }).sort((a,b)=>a.peer&&b.peer?LaneLineInsights.comparePeerStrength(a.peer,b.peer):compareBestTimeRows(a,b));
+  if(rows.length){bestTimesExport={swimmer:sw,course:bestTimesCourse,rows};document.getElementById('best-export').disabled=false;}
   if (!rows.length) {
     const available=['SCY','LCM','SCM'].map(course=>({course,count:bestTimesForSwimmer(sw).filter(row=>normalizeCourse(row.course||row.event)===course).length})).filter(item=>item.count);
     section.innerHTML = `<div class="meet-empty"><p style="font-weight:500;margin-bottom:6px">No ${bestTimesCourse} results for ${escapeHtml(sw.name)}.</p><div class="empty-course-actions">${available.map(item=>`<button type="button" class="btn-secondary" onclick="setBestTimesCourse('${item.course}')">${item.course} <span>${item.count} events</span></button>`).join('')}</div></div>`;
@@ -1710,6 +1795,7 @@ function renderBestTimes() {
   }
   section.innerHTML = `
     ${renderAthleteHeading(sw)}
+    ${renderPBSpotlight(sw,bestTimesCourse)}
     ${!verifiedStandardsData ? standardsLoadStatus() : ''}
     <div class="best-summary">
       <div class="best-summary-card"><div class="label">Swimmer</div><div class="value" style="font-size:20px">${sw.name}</div></div>
@@ -1892,18 +1978,39 @@ function renderGrowthPickers() {
   eventSelect.onchange = () => {rememberGrowth();document.getElementById('growth-main-chart').dataset.highlightEvent=eventSelect.value;renderGrowthPage();};
 }
 
-let raceLogPage=0,raceLogContext='';
+let raceLogPage=0,raceLogContext='',raceLogDay='',raceCalendarContext='',raceCalendarRows=null,raceCalendarDrawKey='';
+function renderRaceCalendar(rows,context){
+  const holder=document.getElementById('race-calendar'),select=document.getElementById('race-calendar-year'),count=document.getElementById('race-calendar-count');
+  const years=[...new Set(rows.map(row=>new Date(row.stamp).getFullYear()))].sort((a,b)=>b-a);
+  const previous=context===raceCalendarContext?Number(select.value):null;
+  if(context!==raceCalendarContext)raceLogDay='';
+  raceCalendarContext=context;
+  const options=years.map(year=>`<option value="${year}">${year}</option>`).join('');
+  if(select.innerHTML!==options)select.innerHTML=options;
+  if(years.length)select.value=String(years.includes(previous)?previous:years[0]);
+  select.disabled=!years.length;
+  if(!years.length){holder.innerHTML='<p class="meet-empty">No dated races saved.</p>';count.textContent='0 race days';raceCalendarRows=null;return;}
+  const year=Number(select.value),key=[context,year,raceLogDay].join('|');
+  if(raceCalendarRows===rows&&raceCalendarDrawKey===key)return;
+  raceCalendarRows=rows;raceCalendarDrawKey=key;
+  const months=LaneLineInsights.raceCalendar(rows,year),days=months.flatMap(month=>month.days),races=days.reduce((sum,day)=>sum+day.count,0);
+  count.textContent=days.filter(day=>day.count).length+' race days · '+races+' saved races';
+  holder.innerHTML=months.map(month=>`<div class="calendar-month"><h3>${escapeHtml(month.label)}</h3><div class="calendar-weekdays" aria-hidden="true">${['S','M','T','W','T','F','S'].map(day=>'<span>'+day+'</span>').join('')}</div><div class="calendar-days">${Array.from({length:month.offset},()=>'<span class="calendar-padding" aria-hidden="true"></span>').join('')}${month.days.map(day=>{const label=new Date(year,month.month,day.day).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+' · '+day.count+' saved races';return day.count?`<button type="button" class="calendar-day" data-level="${day.level}" data-race-day="${day.key}" aria-pressed="${raceLogDay===day.key}" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}"></button>`:`<span class="calendar-day" data-level="0" aria-hidden="true"></span>`;}).join('')}</div></div>`).join('');
+  holder.onclick=event=>{const day=event.target.closest('[data-race-day]');if(day){raceLogDay=raceLogDay===day.dataset.raceDay?'':day.dataset.raceDay;raceLogPage=0;renderGrowthRaceLog();}};
+}
 function renderGrowthRaceLog(){
   const holder=document.getElementById('growth-race-log'),count=document.getElementById('race-log-count');
   if(!holder||!count)return;
   const sw=appState.swimmers.find(sw=>sw.id===document.getElementById('growth-swimmer').value)||appState.swimmers[0];
   const course=document.getElementById('growth-course').value==='LCM'?'LCM':'SCY',event=document.getElementById('growth-event').value;
-  const context=[sw?.id,course,event,document.getElementById('race-log-filter').value].join('|');
-  if(context!==raceLogContext){raceLogPage=0;raceLogContext=context;}
   const all=sw?LaneLineInsights.raceLog(groupGrowthRows(sw,course)):[];
-  const rows=document.getElementById('race-log-filter').value==='selected'?all.filter(row=>row.event===event):all;
+  renderRaceCalendar(all,[sw?.id,course].join('|'));
+  const context=[sw?.id,course,event,document.getElementById('race-log-filter').value,raceLogDay].join('|');
+  if(context!==raceLogContext){raceLogPage=0;raceLogContext=context;}
+  const rows=all.filter(row=>(document.getElementById('race-log-filter').value!=='selected'||row.event===event)&&(!raceLogDay||LaneLineInsights.dayKey(row.stamp)===raceLogDay));
   const pageSize=12,pages=Math.max(1,Math.ceil(rows.length/pageSize));raceLogPage=Math.max(0,Math.min(pages-1,raceLogPage));
-  count.textContent=rows.length+' saved races · '+course;
+  count.textContent=rows.length+' saved races · '+course+(raceLogDay?' · '+raceLogDay:'');
+  document.getElementById('race-log-clear-day').hidden=!raceLogDay;
   if(!rows.length){holder.innerHTML='<p class="meet-empty">No dated race results saved for this selection.</p>';return;}
   holder.innerHTML=`<div class="table-scroll"><table class="times-table race-log-table"><thead><tr><th>Date</th><th>Event</th><th>Time</th><th title="Compared with the fastest saved swim on the previous race day for this event">Change</th><th>Meet</th></tr></thead><tbody>${rows.slice(raceLogPage*pageSize,(raceLogPage+1)*pageSize).map(row=>`<tr><td>${escapeHtml(new Date(row.stamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}))}</td><td><button type="button" class="event-link" data-log-event="${escapeHtml(row.event)}">${escapeHtml(row.event)}</button></td><td><span class="time-val">${escapeHtml(row.time)}</span>${row.isBestSaved?'<span class="log-best" title="Fastest time in the saved history for this event">Best saved</span>':''}</td><td><span class="log-change" data-direction="${row.change===null?'none':row.change<0?'drop':row.change>0?'add':'same'}">${row.change===null?'—':(row.change>0?'+':'')+row.change.toFixed(2)+'s'}</span></td><td>${escapeHtml(row.meet||'Meet unavailable')}</td></tr>`).join('')}</tbody></table></div><div class="race-log-pager"><span>${raceLogPage*pageSize+1}–${Math.min(rows.length,(raceLogPage+1)*pageSize)} of ${rows.length}</span><div><button type="button" data-log-page="-1" title="Previous races" aria-label="Previous races" ${raceLogPage===0?'disabled':''}>&lsaquo;</button><button type="button" data-log-page="1" title="More races" aria-label="More races" ${raceLogPage===pages-1?'disabled':''}>&rsaquo;</button></div></div>`;
   holder.onclick=event=>{
@@ -1931,7 +2038,7 @@ function renderGrowthPage() {
     return;
   }
   const groups = groupGrowthRows(sw, course);
-  document.getElementById('growth-athlete-heading').innerHTML=renderAthleteHeading(sw);
+  document.getElementById('growth-athlete-heading').innerHTML=renderAthleteHeading(sw)+renderPBSpotlight(sw,course);
   const events = Object.keys(groups);
   if (!events.length) {
     document.getElementById('growth-comparison').textContent='No comparable event history for this course.';
@@ -2304,8 +2411,7 @@ function worldRecordSecondsForEvent(eventName, swimmerSeconds) {
 }
 
 function parseGrowthDate(value) {
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
+  return LaneLineInsights.raceDate(value);
 }
 
 function formatGrowthDate(date) {

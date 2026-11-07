@@ -4,11 +4,39 @@
 })(typeof globalThis==='object'?globalThis:this,function(S){
   const bestRowCache=new WeakMap();
   const raceLogCache=new WeakMap();
+  const spotlightCache=new WeakMap();
+  function raceDate(value){
+    const iso=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value));
+    const date=iso?new Date(Number(iso[1]),Number(iso[2])-1,Number(iso[3])):new Date(value);
+    if(!Number.isFinite(date.getTime())||iso&&(date.getFullYear()!==Number(iso[1])||date.getMonth()!==Number(iso[2])-1||date.getDate()!==Number(iso[3])))return null;
+    return date;
+  }
+  function dayKey(value){const date=new Date(value);return Number.isFinite(date.getTime())?[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-'):'';}
+  function raceCalendar(rows,year){
+    if(!Number.isInteger(year)||year<1900||year>2100)return [];
+    const counts=new Map();
+    for(const row of rows){const key=dayKey(row.stamp);if(key.startsWith(year+'-'))counts.set(key,(counts.get(key)||0)+1);}
+    return Array.from({length:12},(_,month)=>{
+      const start=new Date(year,month,1),length=new Date(year,month+1,0).getDate();
+      const days=Array.from({length:length},(_,index)=>{const date=new Date(year,month,index+1),key=dayKey(date),count=counts.get(key)||0;return {key,day:index+1,count,level:Math.min(4,count)};});
+      return {month,label:start.toLocaleDateString('en-US',{month:'short'}),offset:start.getDay(),days};
+    });
+  }
+  function personalBestSpotlight(groups){
+    if(spotlightCache.has(groups))return spotlightCache.get(groups);
+    const history=raceLog(groups);
+    for(const row of history){
+      if(!row.isBestSaved)continue;
+      const previous=history.filter(r=>r.event===row.event&&r.stamp<row.stamp).reduce((best,r)=>Math.min(best,r.cs),Infinity);
+      if(Number.isFinite(previous)&&row.cs<previous){const record={...row,change:(row.cs-previous)/100};spotlightCache.set(groups,record);return record;}
+    }
+    spotlightCache.set(groups,null);return null;
+  }
   function raceLog(groups){
     if(raceLogCache.has(groups))return raceLogCache.get(groups);
     const result=[];
     for(const [event,source] of Object.entries(groups)){
-      const rows=source.map(row=>({...row,event,cs:S.centiseconds(row.time),stamp:new Date(row.dateValue||row.date).getTime()})).filter(row=>Number.isFinite(row.cs)&&row.cs>0&&Number.isFinite(row.stamp)).sort((a,b)=>a.stamp-b.stamp);
+      const rows=source.map(row=>({...row,event,cs:S.centiseconds(row.time),stamp:raceDate(row.date||row.dateValue)?.getTime()})).filter(row=>Number.isFinite(row.cs)&&row.cs>0&&Number.isFinite(row.stamp)).sort((a,b)=>a.stamp-b.stamp);
       if(!rows.length)continue;
       const bestSaved=Math.min(...rows.map(row=>row.cs));
       let previousDayBest=null;
@@ -132,5 +160,5 @@
     if(![now,start,target].every(Number.isFinite)||start<=target) return null;
     return {met:now<=target,drop:Math.max(0,now-target)/100,progress:Math.max(0,Math.min(100,(start-now)/(start-target)*100))};
   }
-  return {bestRows,strengths,comparePeerStrength,signatureEvents,archetype,yearlyArchetypes,eventComparison,goalProgress,raceLog};
+  return {bestRows,strengths,comparePeerStrength,signatureEvents,archetype,yearlyArchetypes,eventComparison,goalProgress,raceLog,raceCalendar,dayKey,raceDate,personalBestSpotlight};
 });

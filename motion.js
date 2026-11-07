@@ -78,6 +78,22 @@
     ctx.restore();
   }
   let observer,indicator,nav;
+  let celebrationActive=false;
+  function celebrate(anchor){
+    if(celebrationActive||reduced()||!env.document?.createElement||!anchor?.getBoundingClientRect)return false;
+    celebrationActive=true;
+    const bounds=anchor.getBoundingClientRect(),colors=['#268bdf','#ed7067','#ffd363','#6cc9bd'];
+    const animations=[];
+    for(let index=0;index<14;index++){
+      const piece=env.document.createElement('span');piece.className='swim-celebration';piece.setAttribute('aria-hidden','true');
+      Object.assign(piece.style,{left:bounds.left+bounds.width/2+'px',top:bounds.top+bounds.height/2+'px',background:colors[index%colors.length]});
+      env.document.body.append(piece);
+      const angle=index*Math.PI*2/14,distance=45+(index%4)*14;
+      const animation=piece.animate?.([{transform:'translate(0,0) rotate(0deg)',opacity:1},{transform:'translate('+Math.cos(angle)*distance+'px,'+(Math.sin(angle)*distance-30)+'px) rotate('+(index*41)+'deg)',opacity:0}],{duration:550+(index%3)*65,easing:'cubic-bezier(.15,.6,.4,1)',fill:'forwards'});
+      animations.push((animation?.finished||Promise.resolve()).catch(()=>{}).then(()=>piece.remove()));
+    }
+    Promise.all(animations).finally(()=>{celebrationActive=false;});return true;
+  }
   function reduced(){return Boolean(preference?.matches);}
   function stop(element){
     const previous=running.get(element);
@@ -418,5 +434,5 @@
     };
     if(doc.readyState==='loading')doc.addEventListener('DOMContentLoaded',setup,{once:true});else setup();
   }
-  return {init,enter,reveal,updateTab,dialog,reduced,waterLanes,stepWaterRope,waterLetterTarget,laneTransmission,bannerSwimmer,bannerSwimmerScale,bannerStrokePhase,bannerStrokePace,drawBannerSwimmer,prepareWaterLetters};
+  return {init,enter,reveal,updateTab,dialog,reduced,waterLanes,stepWaterRope,waterLetterTarget,laneTransmission,bannerSwimmer,bannerSwimmerScale,bannerStrokePhase,bannerStrokePace,drawBannerSwimmer,prepareWaterLetters,celebrate};
 });

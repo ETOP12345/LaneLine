@@ -18,6 +18,9 @@ const handleVideoAnalysis = createVideoAnalysisRouter();
 const compressedPublicFiles=new Map();
 
 const publicFiles = {
+  "/training-arcade.js": { path:path.join(__dirname,"training-arcade.js"), type:"text/javascript; charset=utf-8" },
+  "/training-games.js": { path:path.join(__dirname,"training-games.js"), type:"text/javascript; charset=utf-8" },
+  "/reaction-game.js": { path:path.join(__dirname,"reaction-game.js"), type:"text/javascript; charset=utf-8" },
   "/pool-intro.js": { path:path.join(__dirname,"pool-intro.js"), type:"text/javascript; charset=utf-8" },
   "/rankings-worker.js": { path:path.join(__dirname,"rankings-worker.js"), type:"text/javascript; charset=utf-8" },
   "/relay-engine.js": { path:path.join(__dirname,"relay-engine.js"), type:"text/javascript; charset=utf-8" },

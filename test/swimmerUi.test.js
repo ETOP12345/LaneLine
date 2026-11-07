@@ -2,6 +2,16 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const ui=require('../swimmer-ui');
 
+test('best-times CSV escapes quotes, delimiters, newlines and spreadsheet formulas',()=>{
+  const csv=ui.bestTimesCsv({name:'Ethan "E" Wang',team:'=HYPERLINK("bad")'},[{event:'100 Free SCY',time:'58.84',meet:'Fall, Classic\nFinals',date:'2026-10-04'}],'SCY');
+  assert.ok(csv.startsWith('\uFEFF"Swimmer"'));
+  assert.ok(csv.includes('"Ethan ""E"" Wang"'));
+  assert.ok(csv.includes('"\'=HYPERLINK(""bad"")"'));
+  assert.ok(csv.includes('"Fall, Classic\nFinals"'));
+  assert.ok(csv.includes('"SCY","58.84"'));
+  assert.equal(ui.bestTimesCsv({name:'Ethan'},[],'SCY').split('\r\n').length,1);
+});
+
 test('quick search finds swimmer views and pages with bounded favorite-first results',()=>{
   const swimmers=[{id:'a',name:'Ethan Wang',team:'Bellevue Club Swim Team'},{id:'b',name:'Iris Wang',team:'Pacific Dragons Swim Team'}];
   assert.deepEqual(ui.quickItems(swimmers,'ethan bcst').map(row=>row.page),['best','growth']);

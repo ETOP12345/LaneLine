@@ -14,14 +14,23 @@
     if(!value||typeof value!=='object'||Array.isArray(value))return {};
     const result={};
     for(const key of ['bestSwimmer','growthSwimmer','growthEvent'])if(typeof value[key]==='string'&&value[key].length<=160)result[key]=value[key];
-    if(['best','growth','strengths','goals','analysis','standards','zone','profiles'].includes(value.tab))result.tab=value.tab;
+    if(['best','growth','strengths','goals','training','analysis','standards','zone','profiles'].includes(value.tab))result.tab=value.tab;
     if(['SCY','LCM','SCM'].includes(value.bestCourse))result.bestCourse=value.bestCourse;
     if(['SCY','LCM'].includes(value.growthCourse))result.growthCourse=value.growthCourse;
     return result;
   }
   function loadPreferences(storage){try{return cleanPreferences(JSON.parse(storage.getItem('laneline-view-preferences')||'{}'));}catch{return {};}}
+  function bestTimesCsv(swimmer,rows,course){
+    const cell=value=>{
+      let text=String(value??'');
+      if(/^[\s]*[=+\-@\t\r]/.test(text))text="'"+text;
+      return '"'+text.replace(/"/g,'""')+'"';
+    };
+    const data=[['Swimmer','Team','Event','Course','Best time','Meet','Date'],...rows.map(row=>[swimmer.name,swimmer.team,row.event,course,row.time,row.meet,row.date])];
+    return '\uFEFF'+data.map(row=>row.map(cell).join(',')).join('\r\n');
+  }
   function quickItems(swimmers,query,favorites=[]){
-    const tabs=[['best','Best times'],['growth','Growth'],['strengths','Strengths'],['goals','Goals'],['standards','Time standards'],['zone','Rankings'],['profiles','Swimmers'],['analysis','Video analysis']];
+    const tabs=[['best','Best times'],['growth','Growth'],['strengths','Strengths'],['goals','Goals'],['training','Tests / Training'],['standards','Time standards'],['zone','Rankings'],['profiles','Swimmers'],['analysis','Video analysis']];
     const favoriteIds=new Set(favorites),term=String(query||'').trim();
     const pages=tabs.filter(([,name])=>matchesSearch({name},term)).map(([page,label])=>({page,label,detail:'Page'}));
     const people=swimmers.filter(sw=>term?matchesSearch(sw,term):favoriteIds.has(sw.id)).slice(0,6).flatMap(sw=>[
@@ -54,5 +63,5 @@
     if(!validAge(value))throw new Error('Age must be a whole number from 1 to 120.');
     return {...swimmer,sourceAgeGroup:swimmer.sourceAgeGroup??swimmer.ageGroup,ageGroup:String(Number(value)),manualAge:String(Number(value))};
   }
-  return {ordered,nameParts,validAge,importedAge,setAge,matchesSearch,loadPreferences,savePreferences,quickItems};
+  return {ordered,nameParts,validAge,importedAge,setAge,matchesSearch,loadPreferences,savePreferences,quickItems,bestTimesCsv};
 });

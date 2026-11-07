@@ -1,6 +1,20 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const createMotion=require('../motion');
+
+test('celebrations are bounded, clean up their particles and respect reduced motion',async()=>{
+  const pieces=[],finish=[];
+  const document={body:{append(piece){pieces.push(piece);}},createElement(){return {style:{},setAttribute(){},remove(){this.removed=true;},animate(){return {finished:new Promise(resolve=>finish.push(resolve))};}};}};
+  const anchor={getBoundingClientRect:()=>({left:20,top:30,width:80,height:36})};
+  const motion=createMotion({document,matchMedia:()=>({matches:false})});
+  assert.equal(motion.celebrate(anchor),true);assert.equal(pieces.length,14);
+  assert.equal(motion.celebrate(anchor),false,'rapid clicks never stack particle bursts');
+  finish.forEach(resolve=>resolve());await new Promise(resolve=>setImmediate(resolve));
+  assert.ok(pieces.every(piece=>piece.removed));
+  assert.equal(motion.celebrate(anchor),true,'the control works again after cleanup');
+  const calm=createMotion({document,matchMedia:()=>({matches:true})});
+  assert.equal(calm.celebrate(anchor),false);
+});
 test('all twelve banner lanes have mixed strokes and appropriately sized sprites',()=>{
   const {bannerSwimmer,bannerSwimmerScale}=createMotion({});
   const swimmers=Array.from({length:12},(_,lane)=>bannerSwimmer(lane,0,100,true));
