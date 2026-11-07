@@ -50,7 +50,8 @@
   }
   function init(){
     const doc=env.document;
-    if(initialized||!doc||!doc.querySelector('.hero')||!env.requestAnimationFrame)return;
+    if(initialized||!doc||!doc.querySelector('.hero')||!env.requestAnimationFrame||
+      new URLSearchParams(env.location?.search||'').get('skipIntro')==='1')return;
     const layer=doc.createElement('section');
     layer.className='pool-intro';
     layer.setAttribute('role','region');
@@ -63,12 +64,14 @@
     const canvas=layer.querySelector('canvas'),ctx=canvas.getContext('2d');
     if(!ctx)return;
     initialized=true;
+    const history=env.history,scrollRestoration=history?.scrollRestoration;
+    if(scrollRestoration)history.scrollRestoration='manual';
     for(const child of hero.children)child.style.visibility='hidden';
     const reduced=env.matchMedia('(prefers-reduced-motion: reduce)');
     const spacer=doc.createElement('div');spacer.className='pool-scroll-space';spacer.setAttribute('aria-hidden','true');hero.before(spacer);
     doc.body.append(layer);
     const letters=env.LaneLineMotion?.prepareWaterLetters(layer.querySelector('.pool-intro-copy'),'h1,p,.hero-wordmark')||[];
-    const button=layer.querySelector('button');
+    const button=layer.querySelector('.pool-intro-enter');
     const reopenButton=layer.querySelector('.pool-reopen');
     let width=1,height=1,frame=0,last=-Infinity,closing=false,onscreen=true,active=true;
     let scrollDistance=1,progress=0,cameraFrame=0,mountedInBanner=false,currentZoom=1,snapTimer=null,fromBanner=false;
@@ -88,7 +91,7 @@
     const started=env.performance.now();
     function resize(){
       width=env.innerWidth;height=env.innerHeight;
-      scrollDistance=reduced.matches?0:Math.max(160,Math.min(280,height*.3));
+      scrollDistance=Math.round(Math.max(160,Math.min(280,height*.3)));
       spacer.style.height=(fullscreenLocked?0:scrollDistance)+'px';
       scene.style.width=width+'px';scene.style.height=height+'px';
       const dpr=canvasScale(width,height,env.devicePixelRatio||1);
@@ -213,15 +216,22 @@
       frame=env.requestAnimationFrame(tick);
     }
     function visibility(){env.cancelAnimationFrame(frame);frame=0;if(!doc.hidden&&!reduced.matches&&(active||onscreen))frame=env.requestAnimationFrame(tick);}
+    function lockBanner(){
+      fullscreenLocked=true;
+      reopening=false;
+      env.clearTimeout?.(snapTimer);snapTimer=null;
+      if(scrollRestoration)history.scrollRestoration=scrollRestoration;
+    }
     function syncCamera(){
       const previouslyActive=active;
       progress=fullscreenLocked?1:scrollDistance?Math.max(0,Math.min(1,env.scrollY/scrollDistance)):1;
-      if(progress>=1&&!fullscreenLocked&&!reopening){
-        fullscreenLocked=true;
-        const top=Math.max(0,env.scrollY-scrollDistance);
-        spacer.style.height='0px';
-        env.scrollTo({top,behavior:'instant'});
+      let entryScroll=null;
+      if(!fullscreenLocked&&!reopening&&env.scrollY>=scrollDistance-1){
+        progress=1;
+        entryScroll=Math.max(0,env.scrollY-scrollDistance);
+        lockBanner();
       }
+      if(reduced.matches&&!fullscreenLocked)progress=0;
       if(progress<=.001)reopening=false;
       const rect=hero.getBoundingClientRect();
       if(progress>=1)fromBanner=true;else if(progress<=.001)fromBanner=false;
@@ -235,14 +245,16 @@
         const camera=cameraAtProgress(progress,target,width,height);
         scene.style.transform=camera.transform;layer.style.clipPath=camera.clipPath;currentZoom=camera.zoom;
       }else{
-        if(!mountedInBanner){hero.append(layer);mountedInBanner=true;}
         Object.assign(layer.style,{position:'absolute',inset:'0',zIndex:'10',clipPath:'none'});
+        if(!mountedInBanner){hero.append(layer);mountedInBanner=true;}
+        if(fullscreenLocked)spacer.style.height='0px';
         scene.style.transform=poolTransition({left:0,top:0,width:rect.width,height:rect.height},width,height).transform;
         currentZoom=cameraZoom;
         if(!lowDensity){lowDensity=true;drainBounds={top:height/2-bannerHeight/(2*cameraZoom),bottom:height/2+bannerHeight/(2*cameraZoom)};}
       }
-      button.hidden=progress>.85;button.style.opacity=String(Math.max(0,1-progress*4));
+      button.hidden=!active;button.style.opacity=String(1-progress*.4);
       reopenButton.hidden=!fullscreenLocked;
+      if(entryScroll!==null)env.scrollTo({top:entryScroll,behavior:'instant'});
       if(active!==previouslyActive)visibility();
     }
     function scheduleCamera(){
@@ -259,8 +271,16 @@
       const top=snapDestination(env.scrollY,scrollDistance,fromBanner);
       if(top!==null)env.scrollTo({top,behavior:reduced.matches?'instant':'smooth'});
     }
-    function enter(){env.scrollTo({top:scrollDistance,behavior:reduced.matches?'instant':'smooth'});}
+    function enter(){
+      if(fullscreenLocked)return;
+      // Explicit entry docks the overlay before asking the browser to scroll.
+      lockBanner();
+      syncCamera();
+      env.scrollTo({top:0,behavior:'instant'});
+      doc.querySelector('.page-tab.active')?.focus?.({preventScroll:true});
+    }
     button.addEventListener('click',enter);
+    layer.addEventListener('keydown',event=>{if(event.key==='Escape')enter();});
     reopenButton.addEventListener('click',()=>{
       if(!fullscreenLocked)return;
       fullscreenLocked=false;reopening=true;
@@ -289,6 +309,8 @@
     if(env.IntersectionObserver)new env.IntersectionObserver(entries=>{onscreen=entries[0].isIntersecting;visibility();}).observe(hero);
     reduced.addEventListener?.('change',()=>{resize();visibility();});
     doc.fonts?.ready.then(measureLetters);
+    // A restored dashboard scroll position must not skip the opening pool.
+    if(env.scrollY!==0)env.scrollTo({top:0,behavior:'instant'});
     resize();visibility();
   }
   return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift,canvasScale};

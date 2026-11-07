@@ -61,17 +61,22 @@ test('camera follows scroll reversibly with uniform scale and no fading',()=>{
 });
 
 test('native scroll drives entry but fullscreen can only reopen with its button',()=>{
-  let now=0,nextFrame=0,draws=0,painted=0,fluidCreated=0,spacer,splats=0;
-  const frames=new Map(),events={},layers=[],ctx=new Proxy({},{get:(_,key)=>key==='clearRect'?()=>{draws++;painted=0;}:key==='save'?()=>painted++:()=>{}});
+  let now=0,nextFrame=0,draws=0,painted=0,fluidCreated=0,spacer,splats=0,blockedScroll=false,focused=false,prefersReduced=true;
+  const frames=new Map(),timers=new Map(),events={},layers=[],ctx=new Proxy({},{get:(_,key)=>key==='clearRect'?()=>{draws++;painted=0;}:key==='save'?()=>painted++:()=>{}});
   const scene={style:{},prepend(){},getBoundingClientRect(){return {left:0,top:0};}},copy={style:{}},button={style:{},events:{},addEventListener(type,fn){this.events[type]=fn;}};
   const reopenButton={events:{},addEventListener(type,fn){this.events[type]=fn;}};
-  const layer={style:{},events:{},setAttribute(){},querySelector(selector){return selector==='canvas'?{getContext:()=>ctx}:selector==='button'?button:selector==='.pool-reopen'?reopenButton:selector==='.pool-intro-copy'?copy:scene;},addEventListener(type,fn){this.events[type]=fn;}};
+  const layer={style:{},events:{},setAttribute(){},querySelector(selector){return selector==='canvas'?{getContext:()=>ctx}:selector==='.pool-intro-enter'?button:selector==='.pool-reopen'?reopenButton:selector==='.pool-intro-copy'?copy:scene;},addEventListener(type,fn){this.events[type]=fn;}};
   const hero={children:[],dataset:{},before(element){spacer=element;},append(element){this.layer=element;},querySelector(selector){return selector==='.hero-logo'?{outerHTML:'<div class="hero-logo">LaneLine</div>'}:selector==='h1'?{innerHTML:'LaneLine'}:{textContent:'Swim'};},getBoundingClientRect(){const top=56+parseFloat(spacer?.style.height||0)-env.scrollY;return {top,bottom:top+294,left:0,right:1000,width:1000,height:294};}};
-  const doc={hidden:false,body:{style:{overflow:''},append(element){layers.push(element);}},querySelector:()=>hero,addEventListener(){},createElement(tag){return tag==='section'?layer:{style:{},setAttribute(){},remove(){}};}};
-  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:0,performance:{now:()=>now},matchMedia:()=>({matches:false}),requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},addEventListener(type,fn){events[type]=fn;},scrollTo(options){this.scrollY=options.top;events.scroll();},LaneLineFluid:{createDeferred(surface,ready){fluidCreated++;ready({resize(){},splat(){splats++;},advance(){}});}}};
+  const doc={hidden:false,body:{style:{overflow:''},append(element){layers.push(element);}},querySelector:selector=>selector==='.page-tab.active'?{focus(){focused=true;}}:hero,addEventListener(){},createElement(tag){return tag==='section'?layer:{style:{},setAttribute(){},remove(){}};}};
+  const env={document:doc,innerWidth:1000,innerHeight:800,scrollY:480,history:{scrollRestoration:'auto'},performance:{now:()=>now},matchMedia:()=>({get matches(){return prefersReduced;},addEventListener(type,fn){events['motion-'+type]=fn;}}),requestAnimationFrame(fn){frames.set(++nextFrame,fn);return nextFrame;},cancelAnimationFrame(id){frames.delete(id);},setTimeout(fn,delay){timers.set(++nextFrame,{fn,delay});return nextFrame;},clearTimeout(id){timers.delete(id);},addEventListener(type,fn){events[type]=fn;},scrollTo(options){if(blockedScroll)return;this.scrollY=options.top;events.scroll();},LaneLineFluid:{createDeferred(surface,ready){fluidCreated++;ready({resize(){},splat(){splats++;},advance(){}});}}};
   env.LaneLineMotion=require('../motion')(env);
   function step(){const pending=[...frames];frames.clear();now+=20;for(const [,fn] of pending)fn(now);}
   const intro=require('../pool-intro')(env);intro.init();
+  assert.equal(env.scrollY,0,'loading resets the restored dashboard position');
+  assert.equal(env.history.scrollRestoration,'manual');
+  assert.equal(layer.style.position,'fixed','reduced motion still starts fullscreen');
+  assert.equal(button.hidden,false);
+  prefersReduced=false;events['motion-change']();
   assert.equal(layers.length,1);assert.equal(fluidCreated,1);assert.equal(doc.body.style.overflow,'');
   assert.equal(events.wheel,undefined,'native scrolling is not intercepted');
   assert.equal(painted,36,'fullscreen has two swimmers per lane');
@@ -87,7 +92,8 @@ test('native scroll drives entry but fullscreen can only reopen with its button'
   for(let i=0;i<5;i++)step();
   assert.equal(scene.style.transform,midway,'camera stops exactly where scrolling stops');
   assert.ok(draws>before,'water and swimmers remain live while camera is paused');
-  env.scrollY=distance;events.scroll();step();assert.equal(hero.layer,layer);
+  env.scrollY=distance-1;events.scroll();step();assert.equal(hero.layer,layer,'a one-pixel scroll rounding gap does not block entry');
+  assert.equal(env.history.scrollRestoration,'auto','dashboard restores normal browser scroll behavior');
   assert.equal(spacer.style.height,'0px','entry scroll runway is removed after entering the app');
   const bannerCamera=scene.style.transform;
   for(let i=0;i<600;i++)step();
@@ -102,6 +108,19 @@ test('native scroll drives entry but fullscreen can only reopen with its button'
   assert.equal(fluidCreated,1);
   env.scrollY=distance*.3;events.scrollend();step();assert.equal(env.scrollY,0,'scroll release snaps back to the opening');
   env.scrollY=distance*.7;events.scrollend();step();assert.equal(hero.layer,layer,'scroll release snaps into the banner');
+  reopenButton.events.click();step();assert.equal(button.hidden,false);
+  blockedScroll=true;button.events.click();
+  assert.equal(button.hidden,true,'Enter completes synchronously without any scroll movement');
+  assert.equal(layer.style.position,'absolute');
+  assert.equal(spacer.style.height,'0px');
+  assert.equal(focused,true,'explicit entry moves keyboard focus into the dashboard');
+});
+test('the direct dashboard URL never mounts the fullscreen intro',()=>{
+  const env={location:{search:'?skipIntro=1'},requestAnimationFrame(){},document:{
+    querySelector(){return {};},
+    createElement(){assert.fail('the intro must not create an overlay on the direct URL');}
+  }};
+  require('../pool-intro')(env).init();
 });
 
 test('swimmers turn at both walls and remain inside the pool',()=>{
