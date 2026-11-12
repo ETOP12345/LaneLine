@@ -4,6 +4,13 @@
 })(typeof globalThis==='object'?globalThis:this,function(env){
   let initialized=false;
   const cameraZoom=1.5,laneCount=18;
+  const smoothstep=value=>value*value*(3-2*value);
+  function poolPresentation(progress,laneWidth){
+    const wide=1-smoothstep(Math.max(0,Math.min(1,progress)));
+    const bannerScale=Math.max(.65,Math.min(1.65,laneWidth/38));
+    const wideScale=Math.max(bannerScale,Math.min(2.35,laneWidth*.04,bannerScale*1.42));
+    return {wide,swimmerScale:bannerScale+(wideScale-bannerScale)*wide,swimmerOpacity:.7+.3*wide};
+  }
   function canvasScale(width,height,ratio=1){return Math.min(ratio,1.1,1600/Math.max(1,width),1000/Math.max(1,height));}
   function waterDrift(x,y,width,height,flow,impulse,now){
     const column=Math.max(0,Math.min(12,Math.round((x/width-.04)*12/.92))),row=Math.max(0,Math.min(16,Math.round(y/height*16)));
@@ -28,7 +35,7 @@
     return {transform:'translate('+x+'px,'+y+'px) scale('+cameraZoom+')'};
   }
   function cameraAtProgress(progress,target,width,height){
-    const p=Math.max(0,Math.min(1,progress)),eased=p*p*(3-2*p),zoom=1+(cameraZoom-1)*eased;
+    const p=Math.max(0,Math.min(1,progress)),eased=smoothstep(p),zoom=1+(cameraZoom-1)*eased;
     const x=(target.left+target.width/2-width*cameraZoom/2)*eased;
     const y=(target.top+target.height/2-height*cameraZoom/2)*eased;
     // Keep the wide camera aperture open while the pool ends move past it.
@@ -119,12 +126,13 @@
         if(transform!==letter.lastTransform){letter.element.style.transform=transform;letter.lastTransform=transform;}
       }
     }
-    function swimmer(x,y,pose,stroke,seconds,index,scale){
-      env.LaneLineMotion?.drawBannerSwimmer(ctx,{...pose,stroke,start:index*170,female:index%2===1,skin:['#f6cfa3','#c48d66','#8d5d46'][index%3],color:'#8cdcff'},x,y,seconds*1000,scale,pose.angle);
+    function swimmer(x,y,pose,stroke,seconds,index,presentation){
+      env.LaneLineMotion?.drawBannerSwimmer(ctx,{...pose,stroke,start:index*170,female:index%2===1,skin:['#f6cfa3','#c48d66','#8d5d46'][index%3],color:'#8cdcff',opacity:presentation.swimmerOpacity},x,y,seconds*1000,presentation.swimmerScale,pose.angle);
     }
     function draw(seconds){
       ctx.clearRect(0,0,width,height);
       const edge=width*.04,wall=42,lane=width*.92/laneCount;
+      const presentation=poolPresentation(progress,lane);
       const top=wall+30,bottom=height-wall-30;
       ctx.lineWidth=1;
       for(let row=0;row<10;row++){
@@ -182,7 +190,7 @@
         const x=edge+(laneIndex+.5)*lane+pose.side*lane*.16;
         const drift=waterDrift(x,y,width,height,flow,impulse,env.performance.now());
         entry.driftX=((entry.driftX||0)*.86+drift.x*.14);entry.driftY=((entry.driftY||0)*.86+drift.y*.14);
-        swimmer(x+entry.driftX,y+entry.driftY,{...pose,angle:pose.angle+entry.driftX*.012},stroke,seconds,i,Math.max(.65,Math.min(1.65,lane/38)));
+        swimmer(x+entry.driftX,y+entry.driftY,{...pose,angle:pose.angle+entry.driftX*.012},stroke,seconds,i,presentation);
       }
       swimmers=remaining;
       // Gutters and solid end walls make each turn visibly meet the pool edge.
@@ -196,7 +204,7 @@
     function tick(now){
       frame=0;
       if(doc.hidden||reduced.matches||(!active&&!onscreen))return;
-      if(now-last>=(closing?16:pressed||now<fluidUntil?32:50)){
+      if(now-last>=(closing?16:active||pressed||now<fluidUntil?32:50)){
         if(pendingFluid&&fluid){fluid.splat(pendingFluid.x,pendingFluid.y,pendingFluid.dx,pendingFluid.dy);pendingFluid=null;fluidUntil=now+6000;}
         if(fluid&&now<fluidUntil){
           if(now-lastFluidAdvance>=32){fluid.advance(Math.min(.033,(now-lastFluidAdvance)/1000));lastFluidAdvance=now;}
@@ -236,7 +244,9 @@
       const rect=hero.getBoundingClientRect();
       if(progress>=1)fromBanner=true;else if(progress<=.001)fromBanner=false;
       active=progress<1;closing=progress>0&&progress<1;bannerHeight=rect.height;
-      layer.style.setProperty?.('--pool-graphics-opacity',String(1-.45*progress*progress*(3-2*progress)));
+      const wide=1-smoothstep(progress);
+      layer.style.setProperty?.('--pool-wide',String(wide));
+      layer.style.setProperty?.('--pool-graphics-opacity',String(.55+.45*wide));
       if(progress<=.05&&lowDensity){swimmers=fullLaneSwimmers();lowDensity=false;drainBounds=null;}
       if(active){
         if(mountedInBanner){doc.body.append(layer);mountedInBanner=false;}
@@ -290,6 +300,7 @@
     });
     layer.addEventListener('pointerdown',event=>{
       if(event.button!==0||event.pointerType==='touch'||reduced.matches||event.target.closest('button'))return;
+      measureLetters();
       pressed=true;pointer={...pointerPosition(event),dx:0};
       layer.setPointerCapture?.(event.pointerId);
     });
@@ -313,5 +324,5 @@
     if(env.scrollY!==0)env.scrollTo({top:0,behavior:'instant'});
     resize();visibility();
   }
-  return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift,canvasScale};
+  return {init,lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,waterDrift,canvasScale,poolPresentation};
 });

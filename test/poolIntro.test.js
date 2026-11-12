@@ -2,7 +2,18 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const {lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers}=require('../pool-intro')({});
+const {lapPose,poolTransition,cameraAtProgress,snapDestination,fullLaneSwimmers,poolPresentation}=require('../pool-intro')({});
+
+test('fullscreen swimmers are more visible and ease back to the original banner sizing',()=>{
+  for(const lane of [18,36,68,140]){
+    const wide=poolPresentation(0,lane),half=poolPresentation(.5,lane),banner=poolPresentation(1,lane);
+    assert.ok(wide.swimmerScale>half.swimmerScale&&half.swimmerScale>banner.swimmerScale);
+    assert.equal(banner.swimmerScale,Math.max(.65,Math.min(1.65,lane/38)));
+    assert.ok(wide.swimmerScale<=2.35);
+    assert.deepEqual([wide.wide,half.wide,banner.wide],[1,.5,0]);
+    assert.deepEqual([wide.swimmerOpacity,half.swimmerOpacity,banner.swimmerOpacity],[1,.85,.7]);
+  }
+});
 
 test('large-screen rendering has a bounded pixel budget without changing aspect ratio',()=>{
   const {canvasScale}=require('../pool-intro')({});

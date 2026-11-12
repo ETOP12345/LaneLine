@@ -129,6 +129,45 @@ test('page motion is directional, quick and interruptible',()=>{
   motion.enter(page,1);
   assert.equal(page.calls[0].cancelled,true);
   assert.equal(page.calls[1].frames[0].transform,'translateX(14px)');
+  const next=element();next.querySelectorAll=()=>[];
+  motion.enter(next,-1);
+  assert.equal(page.calls[1].cancelled,true);
+});
+test('growth motion only runs on selection changes and respects reduced motion',()=>{
+  const preference={matches:false};
+  const motion=createMotion({matchMedia:()=>preference});
+  const marks=element(),scoreboard=element();
+  const chart={querySelector:selector=>selector.includes('clip-path')?marks:scoreboard};
+  motion.chart(chart,'swimmer/scy/50 free');
+  motion.chart(chart,'swimmer/scy/50 free');
+  assert.equal(marks.calls.length,1);
+  assert.equal(scoreboard.calls.length,1);
+  motion.chart(chart,'swimmer/scy/100 free');
+  assert.equal(marks.calls[0].cancelled,true);
+  preference.matches=true;
+  motion.chart(chart,'swimmer/lcm/100 free');
+  assert.equal(marks.calls.length,2);
+});
+test('the tab highlight retargets from its current position and stays still on layout updates',()=>{
+  const tab=left=>({offsetLeft:left,offsetTop:0,offsetWidth:80,offsetHeight:40});
+  let active=tab(0),left=0;
+  const indicator={...element(),style:{},setAttribute(){},getBoundingClientRect:()=>({left,top:0,width:80,height:40})};
+  const nav={querySelector:()=>active,prepend(){},classList:{add(){}},
+    clientLeft:0,clientTop:0,scrollLeft:0,scrollTop:0,getBoundingClientRect:()=>({left:0,top:0})};
+  const doc={readyState:'complete',documentElement:{classList:{toggle(){}}},addEventListener(){},
+    querySelector:selector=>selector==='.page-tabs'?nav:null,createElement:()=>indicator};
+  const motion=createMotion({document:doc});
+  motion.init();
+  assert.equal(indicator.calls.length,0);
+  active=tab(80);
+  motion.updateTab();
+  left=45;active=tab(160);
+  motion.updateTab();
+  assert.equal(indicator.calls[0].cancelled,true);
+  assert.equal(indicator.calls[1].frames[0].transform,'translate(-115px,0px) scale(1,1)');
+  assert.equal(indicator.style.left,'160px');
+  motion.updateTab();
+  assert.equal(indicator.calls.length,2);
 });
 test('reduced motion performs no animations',()=>{
   const motion=createMotion({matchMedia:()=>({matches:true})});

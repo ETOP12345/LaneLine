@@ -35,6 +35,10 @@ function swimmerFront(canvas,lane){
   for(let row=34;row<174;row++)for(let x=0;x<512;x++)if(canvas.pixels[row*512+x]===skin)left=Math.min(left,x);
   return left;
 }
+function regionHas(canvas,x,y,width,height,color){
+  for(let row=y;row<y+height;row++)if(canvas.pixels.subarray(row*512+x,row*512+x+width).includes(color))return true;
+  return false;
+}
 test('all activities render labeled pixel art, with occupied lanes in the race scenes',()=>{
   const f=fixture();
   for(const [id,panel] of f.panels){
@@ -80,15 +84,15 @@ test('reaction frames the starting blocks close up and launches swimmers down an
   const f=fixture(),canvas=f.panels.get('training-reaction').canvas;
   assert.ok(swimmerFront(canvas,3)-swimmerFront(canvas,0)>85,'starting blocks recede across the lanes');
   assert.equal(canvas.pixels[173*512+256],0xa6bdc9,'only a narrow strip of near deck is visible');
-  assert.equal(canvas.pixels[41*512+371],0x142f55,'goggles are on the left edge of the side profile');
-  assert.equal(canvas.pixels[35*512+376],0xe4f6fa,'the ready pose has a cap highlight');
-  assert.equal(canvas.pixels[76*512+466],0x142f55,'the nearest swimmer appears larger and still faces left');
-  assert.equal(canvas.pixels[145*512+472],0xd59a74,'the near swimmer stands on the starting block');
+  assert.ok(regionHas(canvas,372,34,5,5,0x173752),'goggles are on the left edge of the side profile');
+  assert.ok(regionHas(canvas,375,29,7,5,0xe4f6fa),'the ready pose has a cap highlight');
+  assert.ok(regionHas(canvas,466,65,9,9,0x173752),'the nearest swimmer appears larger and still faces left');
+  assert.ok(regionHas(canvas,461,142,16,4,0xd59a74),'the near swimmer stands on the starting block');
   assert.equal(canvas.pixels[146*512+472],0xedf6f7,'the platform starts directly beneath their feet');
   assert.equal(canvas.pixels[55*512+305],0xedf6f7,'the starter stands on the far deck left of lane 1');
   f.arcade.update('reaction',{phase:'waiting'});f.advance(200);
   const playerOnBlock=swimmerFront(canvas,1);
-  assert.equal(canvas.pixels[99*512+396],0xedbb93,'the player grips the front of the block in the set pose');
+  assert.ok(regionHas(canvas,392,96,10,5,0xedbb93),'the player grips the front of the block in the set pose');
   assert.equal(canvas.pixels[41*512+290],0xa6eddd,'the starter raises the signal');
   assert.equal(canvas.pixels[46*512+270],0xffd36a,'the poolside light is amber on Set');
   f.arcade.update('reaction',{phase:'go'});f.advance(300);
@@ -123,16 +127,38 @@ test('reaction keeps lane 2 framed even after a late start',()=>{
     assert.ok(playerX>230&&playerX<=onBlock,'lane 2 stays in frame throughout the dive');
   }
 });
-test('pace clock hides elapsed time and shows the error marker after stopping',()=>{
+test('pace clock keeps the swimmer moving without revealing elapsed time, then shows the stop result',()=>{
   const f=fixture(),canvas=f.panels.get('training-pace').canvas;f.arcade.select('pace');
   const last={elapsed:5100,error:100};
   f.arcade.update('pace',{phase:'running',target:5,last});const pixels=canvas.pixels.slice();
-  f.advance(700);assert.deepEqual(canvas.pixels,pixels);
+  f.advance(700);assert.notDeepEqual(canvas.pixels,pixels);
+  const inProgress=canvas.pixels.slice();
+  f.advance(5300);assert.notDeepEqual(canvas.pixels,inProgress);
+  assert.ok(f.frames.size>0,'swimming continues past the target');
   assert.ok(canvas.texts.includes('CLOCK HIDDEN'));assert.ok(!canvas.texts.includes('5.10s'));
   f.arcade.update('pace',{phase:'result',target:5,last});
   assert.ok(canvas.texts.includes('5.10s'));
-  f.advance(1400);
+  const beforeGlide=swimmerFront(canvas,1);
+  f.advance(6000);
+  assert.ok(swimmerFront(canvas,1)<beforeGlide,'the swimmer glides left after Stop');
   assert.equal(canvas.pixels[130*512+262],0xffaf84,'the marker moves to the late side of the target');
+  f.advance(6600);
+  assert.equal(f.frames.size,0,'animation stops after the result settles');
+});
+test('quiz swims to each earned checkpoint and does not advance on a missed answer',()=>{
+  const f=fixture(),canvas=f.panels.get('training-quiz').canvas;
+  f.arcade.select('quiz');
+  f.arcade.update('quiz',{index:0,score:1,chosen:1,question:{answer:1}});
+  const launch=swimmerFront(canvas,1);
+  f.advance(340);assert.ok(swimmerFront(canvas,1)<launch-20);
+  f.advance(680);const checkpoint=swimmerFront(canvas,1);
+  assert.ok(checkpoint<launch-60);
+  f.arcade.update('quiz',{index:1,score:1,chosen:0,question:{answer:1}});
+  f.advance(1200);assert.equal(swimmerFront(canvas,1),checkpoint);
+  const still=fixture(true);still.arcade.select('pace');
+  still.arcade.update('pace',{phase:'running',target:5});
+  assert.equal(still.frames.size,0);
+  assert.ok(still.panels.get('training-pace').canvas.texts.includes('CLOCK HIDDEN'));
 });
 test('the redesigned scenes reflect quiz answers, split progress, and medley order',()=>{
   const f=fixture(),state={index:0,score:1,chosen:1,question:{answer:1}};

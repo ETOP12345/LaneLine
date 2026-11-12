@@ -2031,6 +2031,8 @@ function renderGrowthPage() {
   const course = courseSelect.value === 'LCM' ? 'LCM' : 'SCY';
   renderGrowthRaceLog();
   if (!sw) {
+    LaneLineMotion.chart(main,'');
+    LaneLineMotion.chart(detail,'');
     document.getElementById('growth-comparison').textContent='Select a swimmer to compare best times.';
     main.innerHTML = '<div class="meet-empty">Add a swimmer with dated times to see growth.</div>';
     detail.innerHTML = '';
@@ -2041,6 +2043,8 @@ function renderGrowthPage() {
   document.getElementById('growth-athlete-heading').innerHTML=renderAthleteHeading(sw)+renderPBSpotlight(sw,course);
   const events = Object.keys(groups);
   if (!events.length) {
+    LaneLineMotion.chart(main,'');
+    LaneLineMotion.chart(detail,'');
     document.getElementById('growth-comparison').textContent='No comparable event history for this course.';
     main.innerHTML = `<div class="meet-empty">${sw.name} needs dated ${course} time rows before growth can be graphed.</div>`;
     detail.innerHTML = '';
@@ -2049,7 +2053,8 @@ function renderGrowthPage() {
   }
   const selectedEvent = eventSelect.value && groups[eventSelect.value] ? eventSelect.value : events[0];
   const selectedForHighlight = main.dataset.highlightEvent && groups[main.dataset.highlightEvent] ? main.dataset.highlightEvent : '';
-  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', width:main.clientWidth, title: `${sw.name} ${course} growth by event`, selectedEvent: selectedForHighlight, percent:document.getElementById('growth-scale').value==='percent' });
+  const percent=document.getElementById('growth-scale').value==='percent';
+  main.innerHTML = renderGrowthChart(events.flatMap(event => groups[event].map(row => ({ ...row, event }))), { mode: 'all', width:main.clientWidth, title: `${sw.name} ${course} growth by event`, selectedEvent: selectedForHighlight, percent });
   const selectedRows = groups[selectedEvent].map(row => ({ ...row, event: selectedEvent }));
   renderGrowthComparison(sw,selectedEvent,course);
   const historyNote = selectedRows.length < 2
@@ -2061,12 +2066,8 @@ function renderGrowthPage() {
   suggestions.innerHTML = renderGrowthSuggestions(sw, selectedEvent, course, selectedRows);
   attachGrowthChartInteractions('growth-main-chart');
   attachGrowthChartInteractions('growth-event-chart');
-  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
-    for(const line of detail.querySelectorAll('g[data-growth-event] line[stroke-width="3"]')){
-      const length=line.getTotalLength();
-      if(length>0)line.animate([{strokeDasharray:`${length} ${length}`,strokeDashoffset:length},{strokeDasharray:`${length} ${length}`,strokeDashoffset:0}],{duration:450,easing:'ease-out'});
-    }
-  }
+  LaneLineMotion.chart(main,JSON.stringify([sw.id,course,percent]));
+  LaneLineMotion.chart(detail,JSON.stringify([sw.id,course,selectedEvent]));
 }
 let growthResizeTimer;
 window.addEventListener('resize',()=>{

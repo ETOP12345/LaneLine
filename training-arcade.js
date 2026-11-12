@@ -66,12 +66,6 @@
       const left=Math.round(x-(dx+w)*scale),top=Math.round(y+dy*scale);
       ctx.fillStyle=color;ctx.fillRect(left,top,Math.round(x-dx*scale)-left,Math.round(y+(dy+h)*scale)-top);
     };
-    const limb=(points,color,width)=>{
-      for(let i=1;i<points.length;i++){
-        const [x0,y0]=points[i-1],[x1,y1]=points[i],steps=Math.max(Math.abs(x1-x0),Math.abs(y1-y0),1);
-        for(let step=0;step<=steps;step++)box(x0+(x1-x0)*step/steps,y0+(y1-y0)*step/steps,width,width,color);
-      }
-    };
     if(pose==='launch'){
       // All limbs follow the same pitched axis from pointed toes to stacked hands.
       const strip=(from,to,top,height,color)=>{
@@ -83,10 +77,10 @@
       };
       strip(-30,-25,-1,3,skin);strip(-27,-9,-3,6,skin);
       strip(-25,-11,1,1,'#875340');
-      strip(-13,-2,-4,8,'#142f55');strip(-12,-3,-3,2,'#365975');
+      strip(-13,-2,-4,8,'#244d6d');strip(-12,-3,-3,2,'#52738e');
       strip(-3,8,-4,8,skin);strip(5,12,-4,7,skin);strip(-2,8,-3,2,'#efbc99');
       strip(10,16,-3,7,skin);strip(9,16,-4,4,cap);
-      strip(13,16,0,2,'#142f55');
+      strip(13,16,0,1.5,'#173752');
       strip(7,24,-5,4,skin);strip(10,25,-2,3,skin);
       strip(11,24,-2,1,'#875340');strip(23,28,-4,4,skin);
       strip(9,23,-5,1,'#efbc99');
@@ -107,46 +101,55 @@
       else{box(-2,-7+bob,8,2,skin);box(-3,-5+bob,3,3,skin);}
       return;
     }
-    const [shade,shine]=skinTones[lane],suit='#142f55',seam='#52738e';
-    const crouch=pose==='set';
-    const detail=(dx,dy,w,h,color)=>{
+    drawBlockSwimmer(ctx,x,y,lane,scale,pose==='set');
+  }
+  function drawBlockSwimmer(ctx,x,y,lane,scale,set){
+    const {skin,cap}=lanes[lane], [shade,light]=skinTones[lane];
+    const suit='#244d6d',goggles='#173752';
+    // Rasterize rounded silhouettes on the canvas pixel grid, including tapered limbs.
+    const shape=(left,top,right,bottom,color,inside)=>{
       ctx.fillStyle=color;
-      ctx.fillRect(Math.round((x-(dx+w)*scale)*3)/3,Math.round((y+dy*scale)*3)/3,w*scale,h*scale);
+      for(let py=Math.floor((y+top*scale)*3);py<Math.ceil((y+bottom*scale)*3);py++){
+        let first=null,last=null;
+        for(let px=Math.floor((x-right*scale)*3);px<Math.ceil((x-left*scale)*3);px++){
+          if(!inside((x-(px+.5)/3)/scale,((py+.5)/3-y)/scale))continue;
+          if(first===null)first=px;
+          last=px;
+        }
+        if(first!==null)ctx.fillRect(first/3,py/3,(last-first+1)/3,1/3);
+      }
     };
-    // Ready and set share the same platform baseline, with the rear foot on the wedge in set.
-    if(crouch){
-      limb([[-6,-15],[-7,-8],[-9,-5]],shade,4);box(-10,-4,4,2,shade);
-      limb([[-3,-15],[2,-9],[1,-3]],skin,4);box(1,-2,7,2,skin);
-      box(3,-8,1,5,shine);box(3,-2,4,1,shine);
-      box(-8,-19,9,7,suit);box(-7,-17,7,1,seam);
-      limb([[-1,-18],[3,-18],[7,-15]],skin,6);
-      limb([[5,-15],[7,-8],[8,-3]],shade,3);
-      limb([[5,-15],[6,-9],[8,-3]],skin,3);box(8,-2,3,2,skin);
-      limb([[-1,-18],[4,-17],[6,-15]],shine,1);
-      detail(-6,-15,3,1/3,'#7898b2');detail(3,-10,1.5,1/3,shade);
-      detail(-7,-18,5,.6,'#315577');detail(-1,-13,2,.6,shade);
-      detail(2,-17,3,.6,shine);detail(7,-9,.6,3,shine);
-    }else{
-      box(-6,-13,4,11,shade);box(-6,-2,6,2,shade);
-      box(0,-13,4,12,skin);box(0,-2,7,2,skin);
-      box(2,-10,1,7,shine);box(3,-2,3,1,shine);
-      box(-6,-17,10,6,suit);box(-5,-16,8,1,seam);box(-4,-13,1,2,seam);
-      box(-5,-23,9,7,skin);box(-5,-22,2,5,shade);
-      limb([[1,-22],[3,-17],[2,-13]],shade,3);
-      limb([[2,-22],[4,-17],[3,-13]],skin,2);box(3,-21,1,4,shine);
-      detail(-3,-20,2.5,1/3,shade);detail(-1,-15,2.5,1/3,'#7898b2');
-      detail(-4,-23,6,.6,shine);detail(-4,-18,4,.7,shade);
-      detail(-4,-12,1,6,skin);detail(1,-9,2,.6,shade);
-    }
-    const head=crouch?7:0,top=crouch?-21:-31;
-    box(head-2,top+7,5,3,shade);
-    box(head-3,top+1,8,7,skin);box(head+4,top+4,2,3,skin);
-    box(head-4,top+1,3,5,cap);box(head-2,top,6,4,cap);
-    box(head-1,top,4,1,'#e4f6fa');
-    box(head-2,top+4,7,1,suit);box(head+3,top+4,3,2,suit);
-    box(head+4,top+4,1,1,'#a5e6f3');box(head+3,top+7,2,1,shade);
-    detail(head-1,top+2,3,1/3,'#e4f6fa');detail(head+2,top+6,1,1/3,shine);
-    detail(head-2,top+3,.7,2,shade);detail(head+1,top+5,.6,.8,shine);
+    const oval=([cx,cy],rx,ry,color)=>shape(cx-rx,cy-ry,cx+rx,cy+ry,color,
+      (u,v)=>((u-cx)/rx)**2+((v-cy)/ry)**2<=1);
+    const segment=([ax,ay],[bx,by],a,b,color)=>{
+      const dx=bx-ax,dy=by-ay,length=dx*dx+dy*dy,r=Math.max(a,b);
+      shape(Math.min(ax,bx)-r,Math.min(ay,by)-r,Math.max(ax,bx)+r,Math.max(ay,by)+r,color,(u,v)=>{
+        const t=clamp(((u-ax)*dx+(v-ay)*dy)/length);
+        return (u-ax-t*dx)**2+(v-ay-t*dy)**2<=mix(a,b,t)**2;
+      });
+    };
+    const hip=set?[-5,-19]:[-1,-16],shoulder=set?[4,-16]:[0,-24];
+    const head=set?[8,-16.5]:[1,-29],knee=set?[3,-10]:[.5,-9],ankle=set?[2,-2]:[1.5,-2];
+    const farKnee=set?[-7,-10]:[-4,-9],farAnkle=set?[-9,-5]:[-4,-2];
+    const elbow=set?[5.5,-8]:[.5,-17],hand=set?[8.5,-1.5]:[2,-12];
+    segment(hip,farKnee,2.5,1.6,shade);segment(farKnee,farAnkle,1.6,1,shade);
+    oval([farAnkle[0]+1,farAnkle[1]+.7],2.4,1.15,shade);
+    segment(hip,knee,2.6,1.7,skin);segment(knee,ankle,1.7,1,skin);
+    oval([ankle[0]+1.5,-1.05],2.7,1.05,skin);
+    segment(hip,knee,2.8,2.05,suit);
+    segment(hip,shoulder,3.1,3.5,skin);
+    segment([hip[0]-.6,hip[1]-1],[shoulder[0]-1,shoulder[1]-1.9],.7,.75,light);
+    segment(shoulder,[head[0]-.8,head[1]+1.6],1.8,1.5,skin);
+    segment([shoulder[0]-1,shoulder[1]], [elbow[0]-1.3,elbow[1]+.2],1.3,1,shade);
+    segment(shoulder,elbow,1.55,1.15,skin);segment(elbow,hand,1.15,.75,skin);
+    oval(hand,1.15,1.1,skin);
+    oval(head,3.25,3.75,skin);
+    oval([head[0]+2.7,head[1]+.5],.8,.85,skin);
+    oval([head[0]-.55,head[1]-1.5],3.05,2.65,cap);
+    oval([head[0]-.8,head[1]-3.1],1.65,.48,'#e4f6fa');
+    segment([head[0]-2.15,head[1]-.25],[head[0]+1.65,head[1]-.1],.32,.38,goggles);
+    oval([head[0]+1.95,head[1]-.05],1.05,.75,goggles);
+    oval([head[0]+2.25,head[1]-.27],.38,.25,'#b9e5ef');
   }
   function drawStartingBlock(rect,text,x,y,scale,lane){
     const block=(dx,dy,w,h,color)=>rect(x+dx*scale,y+dy*scale,w*scale,h*scale,color);
@@ -196,11 +199,11 @@
   }
   function drawReactionDeck(rect,foreground,pan){
     if(!foreground){
-      rect(0,34,512,48,'#4a6a81');
+      rect(0,34,512,48,'#65889b');
       rect(0,38,512,2,'#779caf');
       for(let x=(14+pan)%64-64;x<512;x+=64){
-        rect(x,47,51,35,'#365972');rect(x+3,50,45,28,'#80b1c3');
-        rect(x+3,69,45,9,'#6b9cb0');rect(x+24,50,2,28,'#567d94');
+        rect(x,47,51,35,'#4e7187');rect(x+3,50,45,28,'#a4c9d5');
+        rect(x+3,69,45,9,'#87b3c4');rect(x+24,50,2,28,'#638da2');
         rect(x+4,51,42,1,'#b6d4de');rect(x+9,53,2,13,'#99c8d6');
         rect(x+29,53,2,13,'#99c8d6');rect(x+3,63,45,1,'#567d94');
         rect(x+2,79,47,2,'#294d69');
@@ -219,51 +222,68 @@
     rect(0,172,512,2,'#a6bdc9');
     for(let x=(12+pan)%36;x<512;x+=36)rect(x,172,1,2,'#7e9aab');
   }
-  function drawQuizBoard(rect,text,state,elapsed){
-    rect(0,0,512,192,'#162d32');
-    for(let y=8;y<192;y+=18){rect(0,y,512,1,'#29434a');for(let x=y%36;x<512;x+=48)rect(x,y,1,18,'#29434a');}
-    rect(46,20,420,152,'#0c2027');rect(46,20,420,3,'#69b5a5');
-    rect(54,28,404,136,'#1d3b42');
-    rect(54,160,404,1,'#477179');rect(56,30,400,.5,'#477179');
-    for(const x of [57,452])for(const y of [31,156]){rect(x,y,3,3,'#76989a');rect(x+.5,y+.5,2,.5,'#c7dbd4');}
-    text('SWIM QUIZ',74,54,'#e8f5ff',20);
-    text('POOL CLUB',357,51,'#9dd9c7',12);
-    const score=state.score||0,index=state.index||0,answered=state.chosen!=null;
-    const missed=answered&&state.chosen!==state.question?.answer;
-    for(let i=0;i<5;i++){
-      const active=!state.complete&&i===index,bump=active&&missed?Math.sin(elapsed*.05)*5*(1-clamp(elapsed/420)):0;
-      const x=75+74*i+bump;
-      rect(x,72,62,52,active?(missed?'#ec9b87':'#f1c670'):'#43636c');
-      rect(x+2,74,58,48,i<score?'#266d63':'#112b31');
-      rect(x+3,75,56,1,i<score?'#62b7a1':'#31525a');
-      for(let tick=0;tick<7;tick++)rect(x+7+tick*8,114,3,.5,i<score?'#62b7a1':'#31525a');
-      text(i<score?'+1':'0'+(i+1),x+14,104,i<score?'#b0f3d6':active?'#f1c670':'#92b2b7',19);
+  function drawPracticeLane(rect,top,height,drift=0){
+    rect(0,top,512,height,'#137fac');
+    rect(0,top+height*.5,512,2,'#17698f');
+    for(let x=drift%38-38;x<512;x+=38){
+      rect(x+4,top+13,13,1,'#5ab6cf');rect(x+22,top+height-15,8,1,'#389cc0');
     }
-    const verdict=state.complete?'ROUND COMPLETE':answered?(state.chosen===state.question?.answer?'CORRECT':'MISSED'):'QUESTION '+(index+1)+' / 5';
-    text(verdict,75,148,'#e8f5ff',13);text('BEST '+(state.best||0)+' / 5',345,148,'#9dd9c7',12);
+    for(const y of [top,top+height-4]){
+      rect(0,y,512,4,'#236286');
+      for(let x=0;x<512;x+=12)rect(x,y+1,8,2,x<48||x>464?'#f3ae9f':'#c7e9ee');
+    }
   }
-  function drawPaceBoard(rect,text,state,elapsed){
-    rect(0,0,512,192,'#202e41');
-    for(let x=0;x<512;x+=16){rect(x,0,1,192,'#293e52');rect(x,20,9,2,'#4b6174');}
-    rect(60,24,392,144,'#112334');rect(60,24,392,3,'#a18ac4');
-    rect(70,35,372,122,'#253a4f');
-    rect(72,36,368,1,'#4b607a');rect(72,155,368,1,'#0c1a29');
-    for(const x of [74,434])for(const y of [40,149]){rect(x,y,4,3,'#72869a');rect(x+1,y+1,2,.5,'#233649');}
-    text('PACE CLOCK',88,57,'#e7dcf9',15);
+  function drawPracticeSplash(rect,x,y,progress){
+    const p=clamp(progress),fade=Math.sin(Math.PI*p);
+    for(let i=0;i<9;i++){
+      const offset=10+i*3+20*p,rise=(5+i%3*3)*fade;
+      rect(x+offset,y-rise+(i%2)*7,2+i%3,1+i%2,i%2?'#ddf8fa':'#91d6e8');
+    }
+  }
+  function drawQuizBoard(ctx,rect,text,state,elapsed){
+    rect(0,0,512,192,'#153845');
+    const total=state.total||5,score=state.score||0,index=state.index||0,answered=state.chosen!=null;
+    const missed=answered&&state.chosen!==state.question?.answer;
+    const sprint=answered&&!missed&&!state.complete&&score>0;
+    const progress=ease(clamp(elapsed/680)),stride=sprint?score-1+progress:score;
+    const step=350/total,x=438-step*stride;
+    drawPracticeLane(rect,58,83);
+    for(let i=1;i<=total;i++){
+      const marker=438-i*step,cleared=i<=stride+.001;
+      const next=i===score+1&&!state.complete;
+      rect(marker-1,62,2,75,cleared?'#91d9c0':next&&missed?'#f3ae9f':'#5aafc7');
+      rect(marker-8,64,16,14,cleared?'#266d63':'#245670');
+      text(i,marker-3,75,cleared?'#c8ffdf':'#e9f6fc',10);
+    }
+    if(sprint&&progress<1)drawPracticeSplash(rect,x,105,clamp(elapsed/680));
+    const stumble=missed&&!state.complete?Math.sin(elapsed*.025)*3*(1-clamp(elapsed/400)):0;
+    pixelSwimmer(ctx,x+stumble,108,sprint&&progress<1?elapsed*1.65:0,player,'free',sprint&&progress<1?'swim':'dive',1.65);
+    text('SWIM QUIZ',28,37,'#e8f5ff',20);
+    text(score+' / '+total+' CHECKPOINTS',322,36,'#b7e8da',12);
+    const verdict=state.complete?'ROUND COMPLETE':answered?(missed?'MISSED':'CORRECT'):'QUESTION '+(index+1)+' / '+total;
+    text(verdict,28,173,missed&&!state.complete?'#ffc5b7':'#e8f5ff',13);
+    text('BEST '+(state.best||0)+' / '+total,388,173,'#b7e8da',12);
+  }
+  function drawPaceBoard(ctx,rect,text,state,elapsed){
+    rect(0,0,512,192,'#25394d');
     const running=state.phase==='running',result=state.phase==='result'?state.last:null;
-    text('TARGET '+(state.target??5)+'s',323,57,'#e7dcf9',12);
-    rect(88,66,336,51,'#101c2b');
-    for(let y=68;y<116;y+=3)rect(90,y,332,.5,'#18293b');
-    const clock=result?(result.elapsed/1000).toFixed(2)+'s':running?'--.--':'0.00s';
-    text(clock,109,102,result?'#c5f1dc':'#ffe29f',29);
-    text(result?'STOPPED':running?'CLOCK HIDDEN':'READY',305,94,'#bfafdb',12);
+    const glide=result?ease(clamp(elapsed/420)):0;
+    drawPracticeLane(rect,48,74,running?elapsed*.06:0);
+    const swimmerX=running?256+Math.sin(elapsed*.0019)*6:result?256-34*glide:305;
+    if(running)drawPracticeSplash(rect,swimmerX,91,(elapsed%550)/550);
+    if(result&&glide<1)drawPracticeSplash(rect,swimmerX,91,clamp(elapsed/420));
+    pixelSwimmer(ctx,swimmerX,87,running?elapsed:0,player,'free',running?'swim':'dive',1.7);
+    text('PACE CLOCK',28,31,'#e8f5ff',16);
+    text('TARGET '+(state.target??5)+'s',380,30,'#d9eefb',12);
+    text(result?'STOPPED':running?'CLOCK HIDDEN':'READY',28,166,'#d9eefb',12);
+    text(result?(result.elapsed/1000).toFixed(2)+'s':running?'--.--':'0.00s',357,174,result?'#c5f1dc':'#ffe29f',24);
     if(result){
       const marker=clamp(.5+result.error/Math.max(1000,state.target*1000)*ease(clamp(elapsed/450)));
       rect(90,133,332,4,'#526680');rect(255,128,2,14,'#eef6ff');
       for(let x=90;x<=422;x+=16.6)rect(x,137,1,3,'#8498ad');
       rect(90+330*marker,129,4,12,result.error?'#ffaf84':'#a6eddd');
       text('EARLY',90,151,'#bfafdb',10);text('LATE',398,151,'#bfafdb',10);
-    }else text('BEST '+(state.best==null?'--':state.best+' ms'),89,145,'#bfafdb',12);
+    }else text('BEST '+(state.best==null?'--':state.best+' ms'),28,145,'#b7d1e6',12);
   }
   function drawTurnSwimmer(rect,x,y,angle,pose,{facingLeft=false,scale=1,farArm,profile=1}={}){
     const [shoulder,hip,head,knee,ankle,elbow,hand]=pose;
@@ -421,8 +441,8 @@
     }
     if(name==='quiz'||name==='pace'){
       const pace=name==='pace';
-      (pace?drawPaceBoard:drawQuizBoard)(rect,text,state,elapsed);
-      canvas.setAttribute('aria-label',pace?'Poolside pace clock':'Swim quiz scoreboard');
+      (pace?drawPaceBoard:drawQuizBoard)(ctx,rect,text,state,elapsed);
+      canvas.setAttribute('aria-label',pace?'Pace clock pool lane':'Swim quiz checkpoint sprint');
       return;
     }
     rect(0,0,512,192,'#15334c');rect(0,0,512,34,'#365975');
@@ -551,6 +571,7 @@
   function stop(){env.cancelAnimationFrame?.(frame);frame=0;}
   function animationDuration(){
     const phase=states.get(selected)?.phase;
+    if(selected==='pace'&&phase==='running')return Infinity;
     return selected==='reaction'&&(phase==='go'||phase==='result'||phase==='falseStart')?reactionRun:burstDuration;
   }
   function animate(now){
@@ -560,7 +581,7 @@
     if(now-last>=34||elapsed>=duration){draw(selected,states.get(selected)||{},elapsed);last=now;}
     if(elapsed<duration&&!reduced())frame=env.requestAnimationFrame(animate);
   }
-  function refresh(){stop();if(selected==='turn')return;start=env.performance?.now?.()||0;last=-Infinity;draw(selected,states.get(selected)||{},reduced()?animationDuration():0);if(visible()&&!reduced())frame=env.requestAnimationFrame(animate);}
+  function refresh(){stop();if(selected==='turn')return;start=env.performance?.now?.()||0;last=-Infinity;const duration=animationDuration();draw(selected,states.get(selected)||{},reduced()&&Number.isFinite(duration)?duration:0);if(visible()&&!reduced())frame=env.requestAnimationFrame(animate);}
   function update(name,state){
     const previous=states.get(name);states.set(name,state);
     if(name==='splits')scoreOrigins.set(name,state.score>(previous?.score||0)?previous?.score||0:state.score||0);
