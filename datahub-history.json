@@ -57,6 +57,30 @@
       "course": "SCM"
     },
     {
+      "event": "100 Breast SCY",
+      "time": "1:09.20",
+      "meet": "2026 PN CSC Fall Classic",
+      "date": "10/04/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "100 Free SCY",
+      "time": "58.84",
+      "meet": "2026 PN CSC Fall Classic",
+      "date": "10/04/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "400 IM SCY",
+      "time": "4:50.42",
+      "meet": "2026 PN CSC Fall Classic",
+      "date": "10/04/2026",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
       "event": "200 IM SCY",
       "time": "2:18.41",
       "meet": "2026 PN CSC Fall Classic",
@@ -85,30 +109,6 @@
       "time": "5:32.38",
       "meet": "2026 PN CSC Fall Classic",
       "date": "10/03/2026",
-      "source": "USA Swimming",
-      "course": "SCY"
-    },
-    {
-      "event": "100 Breast SCY",
-      "time": "1:09.20",
-      "meet": "2026 PN CSC Fall Classic",
-      "date": "10/04/2026",
-      "source": "USA Swimming",
-      "course": "SCY"
-    },
-    {
-      "event": "100 Free SCY",
-      "time": "58.84",
-      "meet": "2026 PN CSC Fall Classic",
-      "date": "10/04/2026",
-      "source": "USA Swimming",
-      "course": "SCY"
-    },
-    {
-      "event": "400 IM SCY",
-      "time": "4:50.42",
-      "meet": "2026 PN CSC Fall Classic",
-      "date": "10/04/2026",
       "source": "USA Swimming",
       "course": "SCY"
     },
@@ -145,11 +145,35 @@
       "course": "SCY"
     },
     {
+      "event": "200 Breast LCM",
+      "time": "2:51.84",
+      "meet": "2026 SR Western Zone Age Group Championships",
+      "date": "08/08/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "100 Breast LCM",
+      "time": "1:19.07",
+      "meet": "2026 SR Western Zone Age Group Championships",
+      "date": "08/07/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "200 IM LCM",
+      "time": "2:39.32",
+      "meet": "2026 SR Western Zone Age Group Championships",
+      "date": "08/06/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
       "event": "50 Fly LCM",
       "time": "34.79",
       "meet": "2026 Western Zone Age Group Championships",
       "date": "08/05/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -157,7 +181,7 @@
       "time": "36.09",
       "meet": "2026 Western Zone Age Group Championships",
       "date": "08/05/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -165,7 +189,7 @@
       "time": "2:37.48",
       "meet": "2026 Western Zone Age Group Championships",
       "date": "08/05/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -173,7 +197,7 @@
       "time": "5:37.50",
       "meet": "2026 Western Zone Age Group Championships",
       "date": "08/05/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -181,7 +205,39 @@
       "time": "2:50.77",
       "meet": "2026 Western Zone Age Group Championships",
       "date": "08/05/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "50 Breast LCM",
+      "time": "36.90",
+      "meet": "2026 SR Western Zone Age Group Championships",
+      "date": "08/05/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "50 Breast LCM",
+      "time": "36.90",
+      "meet": "2026 PN 12&U Long Course Championships",
+      "date": "07/25/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "100 Breast LCM",
+      "time": "1:19.64",
+      "meet": "2026 PN 12&U Long Course Championships",
+      "date": "07/24/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "200 IM LCM",
+      "time": "2:38.96",
+      "meet": "2026 PN 12&U Long Course Championships",
+      "date": "07/24/2026",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -189,7 +245,7 @@
       "time": "1:18.85",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -197,7 +253,7 @@
       "time": "2:38.76",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -205,7 +261,7 @@
       "time": "2:49.28",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -213,7 +269,7 @@
       "time": "5:34.66",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -221,7 +277,7 @@
       "time": "2:52.89",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -229,7 +285,7 @@
       "time": "36.52",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -237,7 +293,23 @@
       "time": "32.34",
       "meet": "2026 PN LC 12 U Championships Approved",
       "date": "07/23/2026",
-      "source": "ScoreMeUp",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "200 Breast LCM",
+      "time": "2:52.43",
+      "meet": "2026 PN 12&U Long Course Championships",
+      "date": "07/23/2026",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "200 Fly LCM",
+      "time": "3:07.19",
+      "meet": "2026 PN 12&U Long Course Championships",
+      "date": "07/23/2026",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -245,7 +317,7 @@
       "time": "35.08",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/12/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -253,7 +325,7 @@
       "time": "1:21.95",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/12/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -261,7 +333,7 @@
       "time": "2:54.10",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/12/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -269,7 +341,7 @@
       "time": "36.62",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/11/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -277,7 +349,7 @@
       "time": "2:39.38",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/11/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -285,7 +357,7 @@
       "time": "2:54.37",
       "meet": "2026 PN OCA Last Chance Invitational",
       "date": "07/11/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -293,7 +365,7 @@
       "time": "32.92",
       "meet": "2026 PN IST June Invitational",
       "date": "06/14/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -301,7 +373,7 @@
       "time": "36.99",
       "meet": "2026 PN IST June Invitational",
       "date": "06/14/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -309,7 +381,7 @@
       "time": "1:17.45",
       "meet": "2026 PN IST June Invitational",
       "date": "06/14/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -317,7 +389,7 @@
       "time": "2:55.23",
       "meet": "2026 PN IST June Invitational",
       "date": "06/14/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -325,7 +397,7 @@
       "time": "35.03",
       "meet": "2026 PN IST June Invitational",
       "date": "06/13/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -333,7 +405,7 @@
       "time": "1:22.71",
       "meet": "2026 PN IST June Invitational",
       "date": "06/13/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -341,7 +413,7 @@
       "time": "2:40.67",
       "meet": "2026 PN IST June Invitational",
       "date": "06/13/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -349,7 +421,7 @@
       "time": "2:57.15",
       "meet": "2026 PN IST June Invitational",
       "date": "06/13/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -357,7 +429,7 @@
       "time": "2:46.66",
       "meet": "2026 PN VAST Summer Sprints",
       "date": "06/07/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -365,7 +437,7 @@
       "time": "5:39.21",
       "meet": "2026 PN VAST Summer Sprints",
       "date": "06/07/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -373,7 +445,7 @@
       "time": "37.44",
       "meet": "2026 PN VAST Summer Sprints",
       "date": "06/06/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -381,7 +453,7 @@
       "time": "1:20.92",
       "meet": "2026 PN VAST Summer Sprints",
       "date": "06/06/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -389,7 +461,7 @@
       "time": "2:38.62",
       "meet": "2026 PN VAST Summer Sprints",
       "date": "06/06/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -397,7 +469,7 @@
       "time": "34.33",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/17/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -405,7 +477,7 @@
       "time": "1:10.19",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/17/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -413,7 +485,7 @@
       "time": "2:29.00",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/17/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -421,7 +493,7 @@
       "time": "32.71",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/16/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -429,7 +501,7 @@
       "time": "1:17.62",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/16/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -437,7 +509,7 @@
       "time": "1:21.66",
       "meet": "2026 PN IST Springtime Madness Long Course Challenge",
       "date": "05/16/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -445,7 +517,7 @@
       "time": "37.66",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/03/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -453,7 +525,7 @@
       "time": "1:17.48",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/03/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -461,7 +533,7 @@
       "time": "2:54.71",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/03/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -469,7 +541,7 @@
       "time": "2:43.09",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/02/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -477,7 +549,7 @@
       "time": "3:01.93",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/02/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -485,7 +557,7 @@
       "time": "5:19.02",
       "meet": "2026 CAN Rapids West Coast Open",
       "date": "05/02/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -493,7 +565,7 @@
       "time": "34.02",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/22/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -501,7 +573,7 @@
       "time": "1:07.84",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/22/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -509,7 +581,7 @@
       "time": "2:25.61",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/21/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -517,7 +589,7 @@
       "time": "2:32.90",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/21/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -525,7 +597,7 @@
       "time": "2:34.57",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/21/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -533,7 +605,7 @@
       "time": "1:12.80",
       "meet": "2026 PN Northwest Region Age Group Championships",
       "date": "03/20/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -541,7 +613,7 @@
       "time": "34.19",
       "meet": "2026 PN PDST Pentathlon and Last Chance Invitational",
       "date": "03/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -549,7 +621,7 @@
       "time": "2:35.39",
       "meet": "2026 PN PDST Pentathlon and Last Chance Invitational",
       "date": "03/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -557,7 +629,7 @@
       "time": "30.60",
       "meet": "2026 PN IST Winter Invitational",
       "date": "02/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -565,7 +637,7 @@
       "time": "35.26",
       "meet": "2026 PN IST Winter Invitational",
       "date": "02/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -573,7 +645,7 @@
       "time": "2:16.65",
       "meet": "2026 PN IST Winter Invitational",
       "date": "02/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -581,7 +653,7 @@
       "time": "5:10.55",
       "meet": "2026 PN IST Winter Invitational",
       "date": "02/08/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -589,7 +661,7 @@
       "time": "33.56",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/25/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -597,7 +669,7 @@
       "time": "2:24.57",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/25/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -605,7 +677,7 @@
       "time": "2:29.00",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/25/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -613,7 +685,7 @@
       "time": "32.48",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/24/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -621,7 +693,7 @@
       "time": "1:08.42",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/24/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -629,7 +701,7 @@
       "time": "1:11.17",
       "meet": "2026 PN PDST Winter Invitational",
       "date": "01/24/2026",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -637,7 +709,7 @@
       "time": "33.75",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -645,7 +717,7 @@
       "time": "34.90",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -653,7 +725,7 @@
       "time": "1:03.23r",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -661,7 +733,7 @@
       "time": "2:16.06",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -669,7 +741,7 @@
       "time": "2:36.62",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -677,7 +749,7 @@
       "time": "2:37.54",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -685,7 +757,7 @@
       "time": "5:58.95",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -693,7 +765,7 @@
       "time": "1:13.82",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -701,7 +773,7 @@
       "time": "1:14.41",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -709,7 +781,7 @@
       "time": "5:07.58",
       "meet": "2025 PN 14&Under Short Course Championships",
       "date": "12/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -717,7 +789,7 @@
       "time": "33.41",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -725,7 +797,7 @@
       "time": "1:03.94",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -733,7 +805,7 @@
       "time": "2:45.78",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -741,7 +813,7 @@
       "time": "30.14",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/22/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -749,7 +821,7 @@
       "time": "1:11.43",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/22/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -757,7 +829,7 @@
       "time": "1:14.10",
       "meet": "2025 PN November Age Group Invitational, Division 1",
       "date": "11/22/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -765,7 +837,7 @@
       "time": "2:29.63",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/19/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -773,7 +845,7 @@
       "time": "2:41.92",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/19/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -781,7 +853,7 @@
       "time": "6:02.69",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/19/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -789,7 +861,7 @@
       "time": "1:17.09",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/18/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -797,7 +869,7 @@
       "time": "2:17.36",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/18/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -805,7 +877,7 @@
       "time": "5:21.76",
       "meet": "2025 PN VAST Fall Classic Invitational",
       "date": "10/18/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -813,7 +885,7 @@
       "time": "30.29",
       "meet": "2025 PN OCA John Walker Invitational",
       "date": "10/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -821,7 +893,7 @@
       "time": "34.71",
       "meet": "2025 PN OCA John Walker Invitational",
       "date": "10/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -829,7 +901,7 @@
       "time": "35.31",
       "meet": "2025 PN OCA John Walker Invitational",
       "date": "10/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -837,7 +909,7 @@
       "time": "36.93",
       "meet": "2025 PN OCA John Walker Invitational",
       "date": "10/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -845,7 +917,7 @@
       "time": "1:11.43",
       "meet": "2025 PN OCA John Walker Invitational",
       "date": "10/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -853,7 +925,7 @@
       "time": "43.00",
       "meet": "2025 PN 12&U Long Course Championships",
       "date": "07/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -861,7 +933,7 @@
       "time": "1:28.84",
       "meet": "2025 PN 12&U Long Course Championships",
       "date": "07/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -869,7 +941,7 @@
       "time": "6:14.95",
       "meet": "2025 PN 12&U Long Course Championships",
       "date": "07/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -877,7 +949,7 @@
       "time": "3:17.11",
       "meet": "2025 PN 12&U Long Course Championships",
       "date": "07/24/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -885,7 +957,7 @@
       "time": "3:22.20",
       "meet": "2025 PN 12&U Long Course Championships",
       "date": "07/24/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -893,7 +965,7 @@
       "time": "39.63",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -901,7 +973,7 @@
       "time": "2:41.45",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -909,7 +981,7 @@
       "time": "3:09.98",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/13/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -917,7 +989,7 @@
       "time": "45.30",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -925,7 +997,7 @@
       "time": "1:32.88",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -933,7 +1005,7 @@
       "time": "3:03.66",
       "meet": "2025 PN OCA July Jamboree Invitational",
       "date": "07/12/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -941,7 +1013,7 @@
       "time": "42.30",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -949,7 +1021,7 @@
       "time": "1:19.32",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -957,7 +1029,7 @@
       "time": "2:49.95",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -965,7 +1037,7 @@
       "time": "44.95",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/28/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -973,7 +1045,7 @@
       "time": "1:30.38",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/28/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -981,7 +1053,7 @@
       "time": "1:34.30",
       "meet": "2025 PN SMAC Summer Classic Invitational",
       "date": "06/28/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -989,7 +1061,7 @@
       "time": "35.40",
       "meet": "2025 PN IST June Invitational",
       "date": "06/15/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -997,7 +1069,7 @@
       "time": "6:19.81",
       "meet": "2025 PN IST June Invitational",
       "date": "06/15/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1005,7 +1077,7 @@
       "time": "40.41",
       "meet": "2025 PN IST June Invitational",
       "date": "06/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1013,7 +1085,7 @@
       "time": "3:23.16",
       "meet": "2025 PN IST June Invitational",
       "date": "06/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1021,7 +1093,7 @@
       "time": "5:48.55",
       "meet": "2025 PN IST June Invitational",
       "date": "06/14/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1029,7 +1101,7 @@
       "time": "3:13.51",
       "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1037,7 +1109,7 @@
       "time": "3:26.62",
       "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1045,7 +1117,7 @@
       "time": "41.89",
       "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
       "date": "05/31/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1053,7 +1125,7 @@
       "time": "43.51",
       "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
       "date": "05/31/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1061,7 +1133,7 @@
       "time": "1:37.83",
       "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
       "date": "05/31/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1069,7 +1141,7 @@
       "time": "1:24.90",
       "meet": "2025 PN IST Sockeye Springtime Madness",
       "date": "05/18/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1077,7 +1149,7 @@
       "time": "1:48.18",
       "meet": "2025 PN IST Sockeye Springtime Madness",
       "date": "05/18/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1085,7 +1157,7 @@
       "time": "47.17",
       "meet": "2025 CAN West Coast Open",
       "date": "05/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1093,7 +1165,7 @@
       "time": "1:37.23",
       "meet": "2025 CAN West Coast Open",
       "date": "05/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1101,7 +1173,7 @@
       "time": "3:22.67",
       "meet": "2025 CAN West Coast Open",
       "date": "05/04/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1109,7 +1181,7 @@
       "time": "35.72",
       "meet": "2025 CAN West Coast Open",
       "date": "05/03/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1117,7 +1189,7 @@
       "time": "41.87",
       "meet": "2025 CAN West Coast Open",
       "date": "05/03/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1125,7 +1197,7 @@
       "time": "3:07.29",
       "meet": "2025 CAN West Coast Open",
       "date": "05/03/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1133,7 +1205,7 @@
       "time": "32.92",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/30/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1141,7 +1213,7 @@
       "time": "1:19.81",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/30/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1149,7 +1221,7 @@
       "time": "1:26.70",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/30/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1157,7 +1229,7 @@
       "time": "37.61",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1165,7 +1237,7 @@
       "time": "1:11.75",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1173,7 +1245,7 @@
       "time": "1:23.19",
       "meet": "2025 PN Spring Finale, Division 2",
       "date": "03/29/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1181,7 +1253,7 @@
       "time": "41.27",
       "meet": "Northwest Region Age Group Championships",
       "date": "03/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1189,7 +1261,7 @@
       "time": "2:28.02",
       "meet": "Northwest Region Age Group Championships",
       "date": "03/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1197,7 +1269,7 @@
       "time": "2:45.05",
       "meet": "Northwest Region Age Group Championships",
       "date": "03/22/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1205,7 +1277,7 @@
       "time": "40.59",
       "meet": "2025 PN PDST Pentathlon and Last Chance Meet",
       "date": "03/09/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1213,7 +1285,7 @@
       "time": "3:03.35",
       "meet": "2025 PN PDST Pentathlon and Last Chance Meet",
       "date": "03/09/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1221,7 +1293,7 @@
       "time": "1:18.58",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1229,7 +1301,7 @@
       "time": "1:18.93",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1237,7 +1309,7 @@
       "time": "1:26.84",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1245,7 +1317,7 @@
       "time": "1:27.81",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1253,7 +1325,7 @@
       "time": "2:28.04",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1261,7 +1333,7 @@
       "time": "2:29.31",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1269,7 +1341,7 @@
       "time": "40.46",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1277,7 +1349,7 @@
       "time": "40.88",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1285,7 +1357,7 @@
       "time": "2:44.72",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1293,7 +1365,7 @@
       "time": "2:44.91",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1301,7 +1373,7 @@
       "time": "3:02.58",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1309,7 +1381,7 @@
       "time": "3:05.21",
       "meet": "2025 PN CSC Mystery Meet",
       "date": "03/01/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1317,7 +1389,7 @@
       "time": "33.90",
       "meet": "2025 PN SRST Champs Qualifier",
       "date": "02/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1325,7 +1397,7 @@
       "time": "39.23",
       "meet": "2025 PN SRST Champs Qualifier",
       "date": "02/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1333,7 +1405,7 @@
       "time": "1:25.57",
       "meet": "2025 PN SRST Champs Qualifier",
       "date": "02/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1341,7 +1413,7 @@
       "time": "1:28.09",
       "meet": "2025 PN SRST Champs Qualifier",
       "date": "02/23/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1349,7 +1421,7 @@
       "time": "2:33.59",
       "meet": "2025 PN OCA John Walker Classic",
       "date": "02/02/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1357,7 +1429,7 @@
       "time": "1:10.37",
       "meet": "2025 PN PDST Winter Invitational",
       "date": "01/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1365,7 +1437,7 @@
       "time": "2:50.12",
       "meet": "2025 PN PDST Winter Invitational",
       "date": "01/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1373,7 +1445,7 @@
       "time": "2:56.56",
       "meet": "2025 PN PDST Winter Invitational",
       "date": "01/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1381,7 +1453,7 @@
       "time": "3:03.30",
       "meet": "2025 PN PDST Winter Invitational",
       "date": "01/26/2025",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1389,7 +1461,7 @@
       "time": "42.55",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1397,7 +1469,7 @@
       "time": "42.56",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1405,7 +1477,7 @@
       "time": "1:20.84",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1413,7 +1485,7 @@
       "time": "1:29.29",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1421,7 +1493,7 @@
       "time": "39.09",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/14/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1429,7 +1501,7 @@
       "time": "1:31.65",
       "meet": "2024 PN 14&U Short Course Championships",
       "date": "12/13/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1437,7 +1509,7 @@
       "time": "32.70",
       "meet": "2024 PN Fall Divisionals, Division 1",
       "date": "12/08/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1445,7 +1517,7 @@
       "time": "39.97",
       "meet": "2024 PN Fall Divisionals, Division 1",
       "date": "12/08/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1453,7 +1525,7 @@
       "time": "40.84",
       "meet": "2024 PN Fall Divisionals, Division 1",
       "date": "12/08/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1461,7 +1533,7 @@
       "time": "43.52",
       "meet": "2024 PN Fall Divisionals, Division 1",
       "date": "12/08/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1469,7 +1541,7 @@
       "time": "1:23.47",
       "meet": "2024 PN Fall Divisionals, Division 1",
       "date": "12/08/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1477,7 +1549,7 @@
       "time": "40.79",
       "meet": "2024 PN November AGI, Division 1",
       "date": "11/23/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1485,7 +1557,7 @@
       "time": "1:23.93",
       "meet": "2024 PN November AGI, Division 1",
       "date": "11/23/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1493,7 +1565,7 @@
       "time": "1:32.03",
       "meet": "2024 PN November AGI, Division 1",
       "date": "11/23/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1501,7 +1573,7 @@
       "time": "1:26.47",
       "meet": "2024 PN WAVE Rocktober Invitational",
       "date": "10/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1509,7 +1581,7 @@
       "time": "1:31.24",
       "meet": "2024 PN WAVE Rocktober Invitational",
       "date": "10/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1517,7 +1589,7 @@
       "time": "2:52.18",
       "meet": "2024 PN WAVE Rocktober Invitational",
       "date": "10/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1525,7 +1597,7 @@
       "time": "36.24",
       "meet": "2024 PN IST Sockeye Sprints",
       "date": "09/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1533,7 +1605,7 @@
       "time": "46.29",
       "meet": "2024 PN IST Sockeye Sprints",
       "date": "09/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1541,7 +1613,7 @@
       "time": "1:28.54",
       "meet": "2024 PN IST Sockeye Sprints",
       "date": "09/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1549,7 +1621,7 @@
       "time": "49.21",
       "meet": "2024 PN 14&U Long Course Champs",
       "date": "07/27/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1557,7 +1629,7 @@
       "time": "44.66",
       "meet": "2024 PN 14&U Long Course Champs",
       "date": "07/26/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1565,7 +1637,7 @@
       "time": "1:47.49",
       "meet": "2024 PN 14&U Long Course Champs",
       "date": "07/26/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1573,7 +1645,7 @@
       "time": "36.29",
       "meet": "2024 PN PDST July Summer Splash Invitational",
       "date": "07/14/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1581,7 +1653,7 @@
       "time": "41.57",
       "meet": "2024 PN PDST July Summer Splash Invitational",
       "date": "07/14/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1589,7 +1661,7 @@
       "time": "1:35.51",
       "meet": "2024 PN PDST July Summer Splash Invitational",
       "date": "07/14/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1597,7 +1669,7 @@
       "time": "49.42",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/30/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1605,7 +1677,7 @@
       "time": "49.94",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/30/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1613,7 +1685,7 @@
       "time": "1:51.40",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/30/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1621,7 +1693,7 @@
       "time": "42.54",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1629,7 +1701,7 @@
       "time": "52.13",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1637,7 +1709,7 @@
       "time": "1:47.50",
       "meet": "2024 PN SMAC Summer Classic Invitational",
       "date": "06/29/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1645,7 +1717,7 @@
       "time": "53.12",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/16/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1653,7 +1725,7 @@
       "time": "1:56.53",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/16/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1661,7 +1733,7 @@
       "time": "3:40.54",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/16/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1669,7 +1741,7 @@
       "time": "1:34.03",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1677,7 +1749,7 @@
       "time": "1:53.82",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1685,7 +1757,7 @@
       "time": "3:22.09",
       "meet": "2024 PN UPAC Cannonball Classic",
       "date": "06/15/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1693,7 +1765,7 @@
       "time": "48.13",
       "meet": "2024 PN IST Sockeye Springtime Madness",
       "date": "05/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1701,7 +1773,7 @@
       "time": "48.79",
       "meet": "2024 PN IST Sockeye Springtime Madness",
       "date": "05/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1709,7 +1781,7 @@
       "time": "1:52.88",
       "meet": "2024 PN IST Sockeye Springtime Madness",
       "date": "05/19/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1717,7 +1789,7 @@
       "time": "41.52r",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/03/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1725,7 +1797,7 @@
       "time": "1:37.54",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/03/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1733,7 +1805,7 @@
       "time": "1:40.67",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/03/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1741,7 +1813,7 @@
       "time": "40.00",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/02/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1749,7 +1821,7 @@
       "time": "42.80",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/02/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1757,7 +1829,7 @@
       "time": "45.28",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/02/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1765,7 +1837,7 @@
       "time": "46.67",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/02/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1773,7 +1845,15 @@
       "time": "1:33.63",
       "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
       "date": "03/02/2024",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Free SCY",
+      "time": "45.77",
+      "meet": "2024 PN PDST Winter Invitational",
+      "date": "01/27/2024",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1781,7 +1861,7 @@
       "time": "38.52",
       "meet": "2023 PN Fall Divisionals, Division 1",
       "date": "12/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1789,7 +1869,7 @@
       "time": "47.46",
       "meet": "2023 PN Fall Divisionals, Division 1",
       "date": "12/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1797,7 +1877,7 @@
       "time": "47.50",
       "meet": "2023 PN Fall Divisionals, Division 1",
       "date": "12/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1805,7 +1885,7 @@
       "time": "48.72",
       "meet": "2023 PN Fall Divisionals, Division 1",
       "date": "12/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1813,7 +1893,7 @@
       "time": "1:37.26",
       "meet": "2023 PN Fall Divisionals, Division 1",
       "date": "12/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1821,7 +1901,7 @@
       "time": "46.92",
       "meet": "2023 PN November AGI, Division 1",
       "date": "11/19/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1829,7 +1909,7 @@
       "time": "49.00",
       "meet": "2023 PN November AGI, Division 1",
       "date": "11/19/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1837,7 +1917,7 @@
       "time": "44.83",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "10/01/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1845,7 +1925,7 @@
       "time": "49.48",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "10/01/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1853,7 +1933,7 @@
       "time": "1:35.30",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "10/01/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1861,7 +1941,7 @@
       "time": "39.76",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "09/30/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1869,7 +1949,7 @@
       "time": "1:47.55",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "09/30/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1877,7 +1957,7 @@
       "time": "3:31.15",
       "meet": "2023 PN OCA Fall Invitational",
       "date": "09/30/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1885,7 +1965,7 @@
       "time": "50.46",
       "meet": "2023 PN MET Short Course Summer Classic",
       "date": "07/22/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1893,7 +1973,7 @@
       "time": "1:34.28",
       "meet": "2023 PN MET Short Course Summer Classic",
       "date": "07/22/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1901,7 +1981,7 @@
       "time": "1:35.60",
       "meet": "2023 PN MET Short Course Summer Classic",
       "date": "07/22/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1909,7 +1989,7 @@
       "time": "56.86",
       "meet": "2023 PN MET Cannonball Classic",
       "date": "06/25/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1917,7 +1997,7 @@
       "time": "1:52.17",
       "meet": "2023 PN MET Cannonball Classic",
       "date": "06/25/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1925,7 +2005,7 @@
       "time": "2:17.59",
       "meet": "2023 PN MET Cannonball Classic",
       "date": "06/25/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1933,7 +2013,7 @@
       "time": "45.50",
       "meet": "2023 PN OCA June Jamboree",
       "date": "06/11/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1941,7 +2021,7 @@
       "time": "46.11",
       "meet": "2023 PN OCA June Jamboree",
       "date": "06/11/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1949,7 +2029,7 @@
       "time": "49.45",
       "meet": "2023 PN OCA June Jamboree",
       "date": "06/11/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -1957,7 +2037,7 @@
       "time": "45.69",
       "meet": "2023 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1965,7 +2045,7 @@
       "time": "52.14",
       "meet": "2023 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1973,7 +2053,7 @@
       "time": "56.65",
       "meet": "2023 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1981,7 +2061,7 @@
       "time": "1:45.77",
       "meet": "2023 PN VAST Summer Sprints and Distance Challenge",
       "date": "06/03/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1989,7 +2069,7 @@
       "time": "51.28",
       "meet": "2023 PN IST Sockeye Springtime Madness",
       "date": "05/21/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -1997,7 +2077,7 @@
       "time": "52.55",
       "meet": "2023 PN IST Sockeye Springtime Madness",
       "date": "05/21/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -2005,7 +2085,7 @@
       "time": "2:01.54",
       "meet": "2023 PN IST Sockeye Springtime Madness",
       "date": "05/21/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -2013,7 +2093,7 @@
       "time": "49.09",
       "meet": "2023 PN MET Daffodil Classic",
       "date": "03/05/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2021,7 +2101,7 @@
       "time": "1:39.59",
       "meet": "2023 PN MET Daffodil Classic",
       "date": "03/05/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2029,7 +2109,15 @@
       "time": "1:52.21",
       "meet": "2023 PN MET Daffodil Classic",
       "date": "03/05/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Fly SCY",
+      "time": "53.95",
+      "meet": "2023 PN MET Daffodil Classic",
+      "date": "03/05/2023",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2037,7 +2125,7 @@
       "time": "1:35.99",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/29/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2045,7 +2133,7 @@
       "time": "1:45.02",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/29/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2053,7 +2141,7 @@
       "time": "1:51.50",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/29/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2061,7 +2149,7 @@
       "time": "1:55.75",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/29/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2069,7 +2157,7 @@
       "time": "44.10",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/28/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2077,7 +2165,7 @@
       "time": "53.06",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/28/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2085,7 +2173,15 @@
       "time": "53.74",
       "meet": "2023 PN Winter Challenge, Division 3",
       "date": "01/28/2023",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Fly SCY",
+      "time": "51.50",
+      "meet": "2023 PN Winter Challenge, Division 3",
+      "date": "01/28/2023",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2093,7 +2189,79 @@
       "time": "45.22",
       "meet": "2022 PN Fall Divisionals, Division 2",
       "date": "12/04/2022",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "25 Free SCY",
+      "time": "20.69",
+      "meet": "2022 PN Fall Divisionals, Division 2",
+      "date": "12/04/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "25 Fly SCY",
+      "time": "23.94",
+      "meet": "2022 PN Fall Divisionals, Division 2",
+      "date": "12/04/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "25 Back SCY",
+      "time": "24.15",
+      "meet": "2022 PN Fall Divisionals, Division 2",
+      "date": "12/04/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "25 Breast SCY",
+      "time": "27.22",
+      "meet": "2022 PN Fall Divisionals, Division 2",
+      "date": "12/04/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Free SCY",
+      "time": "47.64",
+      "meet": "2022 PN 14&U October Challenge, Division 4",
+      "date": "10/02/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Fly SCY",
+      "time": "51.89",
+      "meet": "2022 PN 14&U October Challenge, Division 4",
+      "date": "10/02/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "50 Back SCY",
+      "time": "55.54",
+      "meet": "2022 PN 14&U October Challenge, Division 4",
+      "date": "10/02/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "100 Free SCY",
+      "time": "1:46.63",
+      "meet": "2022 PN 14&U October Challenge, Division 4",
+      "date": "10/01/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
+    },
+    {
+      "event": "100 IM SCY",
+      "time": "1:57.91",
+      "meet": "2022 PN 14&U October Challenge, Division 4",
+      "date": "10/01/2022",
+      "source": "USA Swimming",
       "course": "SCY"
     },
     {
@@ -2101,7 +2269,15 @@
       "time": "55.68",
       "meet": "2022 PN MET-SEAL LCM Cannonbal",
       "date": "06/12/2022",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
+      "course": "LCM"
+    },
+    {
+      "event": "50 Fly LCM",
+      "time": "1:09.11",
+      "meet": "2022 PN MET-SEAL LCM Cannonbal",
+      "date": "06/12/2022",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -2109,7 +2285,7 @@
       "time": "51.46",
       "meet": "2022 PN MET-SEAL LCM Cannonbal",
       "date": "06/11/2022",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
     },
     {
@@ -2117,8 +2293,16 @@
       "time": "1:07.46",
       "meet": "2022 PN MET-SEAL LCM Cannonbal",
       "date": "06/11/2022",
-      "source": "USA Swimming Data Hub",
+      "source": "USA Swimming",
       "course": "LCM"
+    },
+    {
+      "event": "50 Breast SCY",
+      "time": "1:07.50",
+      "meet": "2022 PN PDST January Invitatio",
+      "date": "01/30/2022",
+      "source": "USA Swimming",
+      "course": "SCY"
     }
   ],
   "529E741DB1114E": [
@@ -14567,6 +14751,22 @@
   ],
   "F889DA85F5164C": [
     {
+      "event": "1650 Free SCY",
+      "time": "19:46.96",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:02.57",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "50 Breast SCY",
       "time": "32.15",
       "meet": "2026 PN VAST Fall Classic",
@@ -17088,6 +17288,22 @@
     }
   ],
   "9C37DAB7527E4C": [
+    {
+      "event": "1650 Free SCY",
+      "time": "20:20.47",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:22.43",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "100 Fly SCY",
       "time": "1:07.10",
@@ -26022,6 +26238,22 @@
     }
   ],
   "50B74871BCBF63": [
+    {
+      "event": "1650 Free SCY",
+      "time": "20:43.48",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:31.38",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "100 Free SCY",
       "time": "57.68",
@@ -52021,6 +52253,22 @@
   ],
   "C44F095812E04C": [
     {
+      "event": "1650 Free SCY",
+      "time": "20:14.51",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:18.81",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "100 Back SCY",
       "time": "1:09.96",
       "meet": "2026 PN VAST Fall Classic",
@@ -60796,6 +61044,22 @@
     }
   ],
   "902003076CE742": [
+    {
+      "event": "1650 Free SCY",
+      "time": "21:31.00",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "13:12.54",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "50 Back SCY",
       "time": "34.37",
@@ -75113,6 +75377,30 @@
   ],
   "0EEE07E508FD46": [
     {
+      "event": "1650 Free SCY",
+      "time": "21:02.37",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "500 Free SCY",
+      "time": "6:13.01",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:41.71",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "100 Free SCY",
       "time": "1:02.99",
       "meet": "2026 PN VAST Fall Classic",
@@ -78908,6 +79196,30 @@
     }
   ],
   "A0961C31BB724D": [
+    {
+      "event": "1650 Free SCY",
+      "time": "20:40.61",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "500 Free SCY",
+      "time": "6:09.48",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:27.79",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "100 Free SCY",
       "time": "1:05.82",
@@ -170422,6 +170734,22 @@
     }
   ],
   "E3E4F1341FCF47": [
+    {
+      "event": "1650 Free SCY",
+      "time": "20:02.59",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:08.66",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "100 Back SCY",
       "time": "1:08.96",
@@ -361045,6 +361373,22 @@
   ],
   "9B7E35B3028042": [
     {
+      "event": "1650 Free SCY",
+      "time": "19:23.97",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "11:42.78",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "50 Breast SCY",
       "time": "33.29",
       "meet": "2026 PN VAST Fall Classic",
@@ -480760,6 +481104,22 @@
     }
   ],
   "5F3857DA86D840": [
+    {
+      "event": "1650 Free SCY",
+      "time": "18:53.57",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "11:23.56",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
     {
       "event": "200 IM SCY",
       "time": "2:26.43",
@@ -667603,6 +667963,22 @@
   ],
   "EB20B58A35F240": [
     {
+      "event": "1650 Free SCY",
+      "time": "21:08.71",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:45.29",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "100 Free SCY",
       "time": "1:00.77",
       "meet": "2026 PN VAST Fall Classic",
@@ -791372,6 +791748,22 @@
   ],
   "EC1BE8F0943749": [
     {
+      "event": "1650 Free SCY",
+      "time": "17:01.13",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "10:16.81",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "100 Free SCY",
       "time": "51.27",
       "meet": "2026 PN VAST Fall Classic",
@@ -819159,6 +819551,22 @@
   "41BA4D7EA632E0": [],
   "65F5FACD209440": [
     {
+      "event": "1650 Free SCY",
+      "time": "20:55.02",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "12:43.06",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
       "event": "100 Free SCY",
       "time": "57.42",
       "meet": "2026 PN VAST Fall Classic",
@@ -828589,7 +828997,24 @@
       "course": "SCY"
     }
   ],
-  "C18E753BD3D845": [],
+  "C18E753BD3D845": [
+    {
+      "event": "1650 Free SCY",
+      "time": "19:10.33",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    },
+    {
+      "event": "1000 Free SCY",
+      "time": "11:32.35",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    }
+  ],
   "8F2F844D85E24D": [
     {
       "event": "100 Free SCY",
@@ -949255,7 +949680,16 @@
   "A315938FE3B049": [],
   "16D70E8E7CD34D": [],
   "0D4208EF862A4D": [],
-  "B1C97D6865BA4F": [],
+  "B1C97D6865BA4F": [
+    {
+      "event": "500 Free SCY",
+      "time": "6:24.53",
+      "meet": "2026 PN WAVE Fall Distance Open - Approved",
+      "date": "11/06/2026",
+      "source": "Swim Standards",
+      "course": "SCY"
+    }
+  ],
   "BE8ED741139048": [],
   "4796DE23CF9B42": [],
   "E262E36F38AC4E": [

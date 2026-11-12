@@ -1,16 +1,15 @@
 {
   "status": "manual",
-  "checkedAt": "2026-11-02T15:43:41.215Z",
+  "checkedAt": "2026-11-11T20:27:06.888Z",
   "swimmers": {
     "9DCE8A4B52EF4A": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-11T20:27:06.888Z",
       "lastSuccessAt": null,
-      "savedRows": 265,
+      "lastImportedAt": "2026-11-11T20:27:06.888Z",
+      "savedRows": 288,
       "newestSwim": "10/25/2026",
-      "verifiedRows": 7,
-      "note": "Seven new swims verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "529E741DB1114E": {
       "status": "failed",
@@ -4071,9 +4070,9 @@
     },
     "646769CD5C6244": {
       "status": "manual",
-      "checkedAt": "2026-11-02T15:42:32.630Z",
+      "checkedAt": "2026-11-11T20:27:06.888Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-11-02T15:42:32.630Z",
+      "lastImportedAt": "2026-11-11T20:27:06.888Z",
       "savedRows": 455,
       "newestSwim": "10/17/2025",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
