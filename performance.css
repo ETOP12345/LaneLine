@@ -38,7 +38,7 @@
 @media(prefers-reduced-motion:reduce){.peer-lane-fill{animation:none}.growth-event-button{transition:none}}
 
 /* Desktop workspaces use the available width, independent of the header. */
-.main{max-width:1800px;width:100%;padding-left:32px;padding-right:32px;box-sizing:border-box}
+.main{max-width:1920px;width:100%;padding-inline:20px;box-sizing:border-box}
 .main>:is(#best-page,#growth-page,#standards-page,#strengths-page,#goals-page,#profiles-page,#zone-page,#analysis-page){width:100%;margin-left:0;transform:none;min-width:0}
 .profiles-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
 .profiles-grid .profile-card{min-width:0;padding:22px 16px}
@@ -63,7 +63,7 @@
 .best-table th:nth-child(1){width:22%}.best-table th:nth-child(2){width:11%}.best-table th:nth-child(3){width:13%}.best-table th:nth-child(4){width:10%}.best-table th:nth-child(5){width:28%}.best-table th:nth-child(6){width:16%}
 @media(min-width:1100px){
   #growth-page>.card{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,1fr)}
-  #growth-page>.card>.card-section{min-width:0;padding:26px 28px}
+  #growth-page>.card>.card-section{min-width:0;padding:18px 20px}
   #growth-page>.card>.card-section:first-child,.growth-overview,.growth-advice{grid-column:1/-1}
   .growth-race{border-left:1px solid #d7e8f8}
   .growth-photo{height:180px}
@@ -386,7 +386,22 @@ button:focus-visible,.profile-card:focus-within{outline:2px solid #2789dd;outlin
 /* A more expressive, competition-day visual hierarchy. */
 :root{--race-blue:#0869dc;--race-coral:#ed6659;--race-yellow:#ffdb68}
 body{background:#edf5fc}
-.main{padding-top:30px;padding-bottom:48px}
+.main{padding-top:18px;padding-bottom:28px}
+.main .card{margin-bottom:14px}
+.main .card-section,.main .insights-surface{padding:16px 20px}
+.main .standards-toolbar,.main .growth-toolbar{margin-bottom:12px}
+#standards-page .standards-filters .standards-toolbar{margin-bottom:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#standards-page .standards-grid{display:grid;gap:10px;align-items:start}
+#standards-page .standards-table :is(th,td){padding:8px 10px}
+#standards-page .standards-grid-paired th:last-child{width:38%}
+@media(min-width:720px){
+  #standards-page .standards-filters .standards-toolbar{grid-template-columns:minmax(0,1fr) minmax(0,.65fr) minmax(0,2fr) minmax(0,.75fr)}
+  #standards-page .standards-grid-paired{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+}
+@media(max-width:620px){
+  .main{padding-top:12px;padding-bottom:20px}
+  .main .card-section,.main .insights-surface{padding:12px}
+}
 .main .section-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:800;color:#0869c6;letter-spacing:0}
 .insights-surface>h2,#profiles-page h2{font-family:'Manrope','DM Sans',sans-serif;font-size:30px!important;font-weight:800!important;line-height:1.25}
 .athlete-heading h2{font-family:'Manrope','DM Sans',sans-serif;font-size:30px;font-weight:800;color:#0b2d53}

@@ -93,9 +93,40 @@ test('growth renders one clickable selector per event, with percent and focused 
 test('desktop layouts use side space with wide growth and two-column best times',()=>{
   const css=fs.readFileSync(require.resolve('../performance.css'),'utf8');
   const html=fs.readFileSync(require.resolve('../index.html'),'utf8');
-  assert.match(css,/\.main\{max-width:1800px;width:100%/);
+  assert.match(css,/\.main\{max-width:1920px;width:100%/);
   assert.match(css,/\.best-table>tbody\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
   assert.match(css,/\.profiles-grid\{grid-template-columns:repeat\(auto-fill,minmax\(230px,1fr\)\)/);
   assert.ok(html.includes('width:main.clientWidth'));
   assert.ok(html.includes('card-section growth-race'));
+});
+
+test('meet standards split into balanced tables without dropping events',()=>{
+  const html=fs.readFileSync(require.resolve('../index.html'),'utf8');
+  const section={};
+  const values={'standards-meet':'test'};
+  const context={
+    document:{getElementById:id=>id==='standards-results'?section:{value:values[id]}},
+    verifiedStandardsData:{meets:[{id:'test',label:'Test',edition:'2026',cuts:{
+      'boys|12|50 free scy':{},'boys|12|100 free scy':{},'boys|12|200 free scy':{}
+    }}],motivationalSource:{edition:'2026'}},
+    motivationalStandards:{'boys|12|50 free scy':{}},
+    nationalStandardsDisplayOrder:['A','AAAA'],
+    LaneLineStandards:{meetCut:()=> '1:00.00'},
+    motivationalCutsFor:()=>({A:'1:00.00',AAAA:'50.00'}),
+    parseStandardsEvent:event=>({stroke:'free',distance:parseInt(event,10)}),
+    escapeHtml:String,formatStandardsEvent:String,animatePerformanceView(){}
+  };
+  vm.runInNewContext(html.slice(html.indexOf('function renderStandardsPage()'),html.indexOf('function classifyTime('))+'\nrenderStandardsPage();',context);
+  const bodies=[...section.innerHTML.matchAll(/<tbody>(.*?)<\/tbody>/gs)].map(([,body])=>body);
+  assert.deepEqual(bodies.map(body=>[...body.matchAll(/<tr>/g)].length),[2,1]);
+  assert.match(bodies[0],/50 free scy.*100 free scy/);
+  assert.match(bodies[1],/200 free scy/);
+  context.verifiedStandardsData.meets[0].cuts={};
+  vm.runInNewContext(html.slice(html.indexOf('function renderStandardsPage()'),html.indexOf('function classifyTime('))+'\nrenderStandardsPage();',context);
+  assert.match(section.innerHTML,/No published direct cuts/);
+  assert.doesNotMatch(section.innerHTML,/<table/);
+  values['standards-meet']='motivational';
+  vm.runInNewContext(html.slice(html.indexOf('function renderStandardsPage()'),html.indexOf('function classifyTime('))+'\nrenderStandardsPage();',context);
+  assert.equal([...section.innerHTML.matchAll(/<table/g)].length,1);
+  assert.match(section.innerHTML,/Nat\. AAAA/);
 });

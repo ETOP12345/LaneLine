@@ -612,7 +612,7 @@ footer span{color:var(--lane)}
 <!-- ══ TIME STANDARDS PAGE ══ -->
 <div id="standards-page" style="display:none">
   <div class="card">
-    <div class="card-section">
+    <div class="card-section standards-filters">
       <div class="section-label">Time standards</div>
       <div class="standards-toolbar">
         <div class="field">
@@ -628,10 +628,6 @@ footer span{color:var(--lane)}
             <option value="10">10</option><option value="11">11</option><option value="12" selected>12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option>
           </select>
         </div>
-      </div>
-    </div>
-    <div class="card-section">
-      <div class="standards-toolbar">
         <div class="field"><label for="standards-meet">Standard</label><select id="standards-meet" onchange="renderStandardsPage()"><option value="motivational">National motivational</option></select></div>
         <div class="field"><label for="standards-course">Course</label><select id="standards-course" onchange="renderStandardsPage()"><option>SCY</option><option>LCM</option><option>SCM</option></select></div>
       </div>
@@ -2551,10 +2547,14 @@ function renderStandardsPage() {
     return x.stroke.localeCompare(y.stroke)||x.distance-y.distance;
   });
   const columns = meet ? ['Cut'] : nationalStandardsDisplayOrder.map(label => 'Nat. '+label);
+  const split = Math.ceil(rows.length / 2);
+  const groups = meet && rows.length > 1 ? [rows.slice(0,split),rows.slice(split)] : [rows];
+  const tables = rows.length ? groups.map((group,index)=>`
+    <table class="times-table standards-table" aria-label="${groups.length > 1 ? 'Meet cuts, part '+(index+1) : meet ? 'Meet cuts' : 'National motivational cuts'}"><thead><tr><th scope="col">Event</th>${columns.map(label=>`<th scope="col">${label}</th>`).join('')}</tr></thead>
+    <tbody>${group.map(row=>`<tr><td>${formatStandardsEvent(row.event)}</td>${(meet ? [row.cuts.cut] : nationalStandardsDisplayOrder.map(label=>row.cuts[label])).map(value=>`<td><span class="time-val">${value || 'Not offered'}</span></td>`).join('')}</tr>`).join('')}</tbody></table>`).join('') : '';
   section.innerHTML = `<h3 class="standards-course-title">${escapeHtml(meet?.label || 'National Motivational')} · ${escapeHtml(source.edition)} · ${course}</h3>
     ${meet?.reference ? '<p class="standards-warning">Prior-edition reference only. Upcoming regional standards are not published on the PNS standards page.</p>' : ''}
-    <table class="times-table standards-table"><thead><tr><th>Event</th>${columns.map(label=>`<th>${label}</th>`).join('')}</tr></thead>
-    <tbody>${rows.map(row=>`<tr><td>${formatStandardsEvent(row.event)}</td>${(meet ? [row.cuts.cut] : nationalStandardsDisplayOrder.map(label=>row.cuts[label])).map(value=>`<td><span class="time-val">${value || 'Not offered'}</span></td>`).join('')}</tr>`).join('')}</tbody></table>
+    ${tables ? `<div class="table-scroll standards-grid${groups.length > 1 ? ' standards-grid-paired' : ''}">${tables}</div>` : ''}
     ${!rows.length ? '<p>No published direct cuts for this selection.</p>' : ''}
     ${meet?.note ? `<p class="source-note">${escapeHtml(meet.note)}</p>` : ''}
     <p class="source-note">Time comparisons only; meet age, qualifying-period, membership, and entry rules still apply.
