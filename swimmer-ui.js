@@ -13,7 +13,10 @@
   function cleanPreferences(value){
     if(!value||typeof value!=='object'||Array.isArray(value))return {};
     const result={};
-    for(const key of ['bestSwimmer','growthSwimmer','growthEvent'])if(typeof value[key]==='string'&&value[key].length<=160)result[key]=value[key];
+    const validId=id=>typeof id==='string'&&id.length>0&&id.length<=160;
+    const swimmerId=[value.swimmerId,...(value.tab==='growth'?[value.growthSwimmer,value.bestSwimmer]:[value.bestSwimmer,value.growthSwimmer])].find(validId);
+    if(swimmerId)result.swimmerId=swimmerId;
+    if(typeof value.growthEvent==='string'&&value.growthEvent.length<=160)result.growthEvent=value.growthEvent;
     if(['best','growth','strengths','goals','training','analysis','standards','zone','profiles'].includes(value.tab))result.tab=value.tab;
     if(['SCY','LCM','SCM'].includes(value.bestCourse))result.bestCourse=value.bestCourse;
     if(['SCY','LCM'].includes(value.growthCourse))result.growthCourse=value.growthCourse;
@@ -33,10 +36,9 @@
     const tabs=[['best','Best times'],['growth','Growth'],['strengths','Strengths'],['goals','Goals'],['training','Tests / Training'],['standards','Time standards'],['zone','Rankings'],['profiles','Swimmers'],['analysis','Video analysis']];
     const favoriteIds=new Set(favorites),term=String(query||'').trim();
     const pages=tabs.filter(([,name])=>matchesSearch({name},term)).map(([page,label])=>({page,label,detail:'Page'}));
-    const people=swimmers.filter(sw=>term?matchesSearch(sw,term):favoriteIds.has(sw.id)).slice(0,6).flatMap(sw=>[
-      {page:'best',swimmerId:sw.id,label:sw.name,detail:'Best times'+(sw.team?' · '+sw.team:'')},
-      {page:'growth',swimmerId:sw.id,label:sw.name,detail:'Growth'+(sw.team?' · '+sw.team:'')}
-    ]);
+    const people=swimmers.filter(sw=>term?matchesSearch(sw,term):favoriteIds.has(sw.id)).slice(0,6).map(sw=>(
+      {page:'profiles',swimmerId:sw.id,label:sw.name,detail:'Swimmers'+(sw.team?' · '+sw.team:'')}
+    ));
     return (term?[...pages,...people]:[...people.slice(0,6),...pages]).slice(0,16);
   }
   function savePreferences(storage,value){try{storage.setItem('laneline-view-preferences',JSON.stringify(cleanPreferences(value)));return true;}catch{return false;}}
@@ -63,5 +65,8 @@
     if(!validAge(value))throw new Error('Age must be a whole number from 1 to 120.');
     return {...swimmer,sourceAgeGroup:swimmer.sourceAgeGroup??swimmer.ageGroup,ageGroup:String(Number(value)),manualAge:String(Number(value))};
   }
-  return {ordered,nameParts,validAge,importedAge,setAge,matchesSearch,loadPreferences,savePreferences,quickItems,bestTimesCsv};
+  function selectedSwimmer(swimmers,id){
+    return swimmers.find(sw=>sw.id===id)||swimmers.find(sw=>sw.id==='usas_9DCE8A4B52EF4A')||swimmers[0];
+  }
+  return {ordered,nameParts,validAge,importedAge,setAge,matchesSearch,loadPreferences,savePreferences,quickItems,selectedSwimmer,bestTimesCsv};
 });

@@ -14,7 +14,7 @@ test('best-times CSV escapes quotes, delimiters, newlines and spreadsheet formul
 
 test('quick search finds swimmer views and pages with bounded favorite-first results',()=>{
   const swimmers=[{id:'a',name:'Ethan Wang',team:'Bellevue Club Swim Team'},{id:'b',name:'Iris Wang',team:'Pacific Dragons Swim Team'}];
-  assert.deepEqual(ui.quickItems(swimmers,'ethan bcst').map(row=>row.page),['best','growth']);
+  assert.deepEqual(ui.quickItems(swimmers,'ethan bcst').map(row=>row.page),['profiles']);
   assert.equal(ui.quickItems(swimmers,'rankings')[0].page,'zone');
   assert.equal(ui.quickItems(swimmers,'',['b'])[0].swimmerId,'b');
   assert.deepEqual(ui.quickItems(swimmers,'no such swimmer'),[]);
@@ -34,10 +34,20 @@ test('roster search matches names and team codes in any order',()=>{
 
 test('view preferences round trip without storing swimmer data or unknown fields',()=>{
   const data=new Map(),storage={getItem:key=>data.get(key),setItem:(key,value)=>data.set(key,value)};
-  const settings={tab:'growth',bestCourse:'LCM',bestSwimmer:'ethan',growthSwimmer:'ethan',growthCourse:'SCY',growthEvent:'100 Fly SCY'};
+  const settings={tab:'growth',bestCourse:'LCM',swimmerId:'ethan',growthCourse:'SCY',growthEvent:'100 Fly SCY'};
   assert.equal(ui.savePreferences(storage,{...settings,swimmers:[{name:'Private',bestTimes:[]}],password:'not-saved'}),true);
   assert.deepEqual(ui.loadPreferences(storage),settings);
   assert.doesNotMatch([...data.values()][0],/Private|password|bestTimes/);
+});
+
+test('one swimmer selection survives reloads and migrates old per-tab selections',()=>{
+  const swimmers=[{id:'other'},{id:'usas_9DCE8A4B52EF4A'},{id:'growth'}];
+  const legacy={tab:'growth',growthSwimmer:'growth',bestSwimmer:'other'};
+  const restore=preferences=>ui.loadPreferences({getItem:()=>JSON.stringify(preferences)});
+  assert.deepEqual(restore(legacy),{tab:'growth',swimmerId:'growth'});
+  assert.equal(ui.selectedSwimmer(swimmers,restore({...legacy,swimmerId:'other'}).swimmerId),swimmers[0]);
+  assert.equal(ui.selectedSwimmer(swimmers,'removed'),swimmers[1]);
+  assert.equal(ui.selectedSwimmer([],null),undefined);
 });
 
 test('view preferences ignore corrupt data and invalid options',()=>{
