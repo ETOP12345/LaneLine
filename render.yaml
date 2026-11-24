@@ -11,25 +11,9 @@ services:
         value: production
       - key: OPENAI_API_KEY
         sync: false
-      - key: OPENAI_VISION_MODEL
-        value: gpt-5.6-terra
-      - key: OPENAI_REASONING_EFFORT
-        value: medium
-      - key: OPENAI_IMAGE_DETAIL
-        value: high
+      - key: OPENAI_ANALYSIS_MODEL
+        value: gpt-6.1-sol
       - key: APP_ACCESS_CODE
         sync: false
       - key: SESSION_SECRET
         generateValue: true
-      - key: MAX_CONCURRENT_ANALYSES
-        value: "1"
-      - key: FRAME_SAMPLE_FPS
-        value: "6"
-      - key: MAX_CANDIDATE_FRAMES
-        value: "360"
-      - key: MAX_ANALYSIS_FRAMES
-        value: "30"
-      - key: VIDEO_MAX_SIZE_MB
-        value: "100"
-      - key: VIDEO_MAX_DURATION_SECONDS
-        value: "60"

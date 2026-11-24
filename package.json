@@ -9,8 +9,5 @@
     "dev": "node server.js 5180",
     "test": "node --test",
     "check": "node -c server.js && node -c videoAnalysis.js && node --test"
-  },
-  "dependencies": {
-    "busboy": "^1.6.0"
   }
 }

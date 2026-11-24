@@ -18,6 +18,10 @@ const handleVideoAnalysis = createVideoAnalysisRouter();
 const compressedPublicFiles=new Map();
 
 const publicFiles = {
+  "/favorite-refresh.js": { path:path.join(__dirname,"favorite-refresh.js"), type:"text/javascript; charset=utf-8" },
+  "/video-analysis-client.js": { path:path.join(__dirname,"video-analysis-client.js"), type:"text/javascript; charset=utf-8" },
+  "/imx-imr-data.json": { path:path.join(__dirname,"imx-imr-data.json"), type:"application/json; charset=utf-8" },
+  "/imx-imr.js": { path:path.join(__dirname,"imx-imr.js"), type:"text/javascript; charset=utf-8" },
   "/training-arcade.js": { path:path.join(__dirname,"training-arcade.js"), type:"text/javascript; charset=utf-8" },
   "/training-games.js": { path:path.join(__dirname,"training-games.js"), type:"text/javascript; charset=utf-8" },
   "/reaction-game.js": { path:path.join(__dirname,"reaction-game.js"), type:"text/javascript; charset=utf-8" },

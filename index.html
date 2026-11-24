@@ -230,7 +230,7 @@ input[type="text"],input[type="password"],input[type="email"],select,textarea{ba
 nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.nav-logo{color:#fff}.nav-account-btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.18)}.nav-account-btn:hover{background:rgba(255,255,255,.18)}
 .hero{background:var(--navy);padding:4.5rem 2rem;display:block}.hero-logo{margin-bottom:1.5rem}.hero-logo-icon{width:52px;height:52px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}.hero-logo-icon svg{width:30px;height:30px}.hero-wordmark{font-size:26px;color:#fff}.hero-wordmark span{color:var(--lane)}.hero h1{display:block;color:#fff;font-size:56px;font-weight:300;line-height:1.15}.hero h1 strong{color:#fff}.hero h1 .hl{color:var(--lane);font-weight:500}.hero p{display:block;color:rgba(255,255,255,.5);font-size:16px}
 .page-tabs-wrap{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.page-tabs{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));overflow:visible;padding:0 12px;max-width:1400px}.page-tab{min-width:0;max-width:none;white-space:normal;padding:12px 5px;color:rgba(255,255,255,.68);font-size:12px;gap:5px;line-height:1.3}.page-tab svg{flex-shrink:0}.page-tab.active{background:rgba(75,172,224,.12);color:#fff;border-bottom-color:var(--lane)}.page-tab:not(.active):hover{background:rgba(255,255,255,.06);color:#fff}.main{padding-top:1.25rem}
-.page-tabs{grid-template-columns:repeat(9,minmax(0,1fr))}
+.page-tabs{grid-template-columns:repeat(10,minmax(0,1fr))}
 @media(max-width:1000px){.page-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.page-tab{padding:10px 5px}}
 @media(max-width:560px){.hero{padding:3rem 1rem}.hero h1{font-size:32px}.page-tabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 6px}.page-tab{font-size:11px;min-height:40px;padding:8px 3px}.page-tab svg{width:13px;height:13px}}
 .comparison-summary{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.comparison-summary span{padding:4px 9px;border-radius:4px;font-size:12px;background:#edf4fc;color:#365a79}.comparison-summary span:first-child{background:#e8efff;color:#245fbd}
@@ -240,36 +240,7 @@ nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)}.nav-log
 /* ERROR */
 .error-box{display:none;background:var(--red-bg);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--radius);padding:12px 14px;margin-top:1rem}
 .error-box p{font-size:13px;color:var(--red)}
-.analysis-results{display:flex;flex-direction:column;gap:1.25rem}
-.analysis-summary{background:linear-gradient(135deg,var(--navy),#174f70);color:#fff;border-radius:var(--radius);padding:1.25rem}
-.analysis-summary h2{font-size:20px;font-weight:500;line-height:1.35;margin-bottom:.8rem}
-.analysis-summary p{font-size:14px;line-height:1.6;color:rgba(255,255,255,.82)}
-.analysis-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:1rem}
-.analysis-meta-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:99px;background:rgba(255,255,255,.12);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.03em;color:#fff}
-.analysis-block-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--navy);margin-bottom:.65rem}
-.analysis-block-title span{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:50%;background:var(--foam);color:var(--pool);font-size:12px}
-.analysis-strength-list{display:grid;gap:8px}
-.analysis-strength{display:flex;gap:10px;align-items:flex-start;background:var(--green-bg);color:var(--green);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5}
-.analysis-strength::before{content:'✓';font-weight:500;flex-shrink:0}
-.analysis-improvement-list{display:flex;flex-direction:column;gap:14px}
-.analysis-improvement-card{display:grid;grid-template-columns:minmax(220px,.9fr) minmax(0,1.1fr);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:0 5px 18px rgba(11,31,58,.06)}
-.analysis-frame{position:relative;min-height:190px;background:var(--navy);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.analysis-frame img{width:100%;height:100%;position:absolute;inset:0;object-fit:contain}
-.analysis-frame-placeholder{font-size:12px;color:rgba(255,255,255,.7);padding:1rem;text-align:center}
-.analysis-frame-time{position:absolute;left:10px;bottom:10px;background:rgba(11,31,58,.88);color:#fff;padding:4px 8px;border-radius:99px;font-family:'DM Mono',monospace;font-size:10px;z-index:1}
-.analysis-improvement-body{padding:1rem 1.1rem;display:flex;flex-direction:column;gap:10px}
-.analysis-priority{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--pool)}
-.analysis-improvement-body h4{font-size:16px;font-weight:500;color:var(--navy);line-height:1.35}
-.analysis-copy{font-size:13px;line-height:1.55;color:var(--ink)}
-.analysis-copy strong{display:block;margin-bottom:2px;color:var(--muted);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
-.analysis-cue{background:var(--foam);border-left:3px solid var(--pool);border-radius:0 7px 7px 0;padding:9px 10px;font-size:13px;color:var(--pool);line-height:1.45}
-.analysis-drill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.analysis-drill{border:0.5px solid var(--border);border-radius:8px;padding:12px;background:var(--chalk)}
-.analysis-drill h4{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:6px}
-.analysis-drill p{font-size:12px;line-height:1.5;color:var(--ink)}
-.analysis-drill-purpose{margin-top:7px!important;color:var(--muted)!important;font-style:italic}
-.analysis-safety{font-size:11px;line-height:1.5;color:var(--muted);border-top:0.5px solid var(--border);padding-top:1rem}
-@media(max-width:620px){.analysis-improvement-card{grid-template-columns:1fr}.analysis-frame{min-height:210px}}
+
 
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,31,58,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
@@ -355,6 +326,7 @@ footer span{color:var(--lane)}
       Growth
     </button>
     <button class="page-tab" id="ptab-strengths" onclick="showPage('strengths')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 8 3-3m0 0 3 3M6 5v14m5-7 3-3m0 0 3 3m-3-3v10m5-3 2-2m0 0 2 2m-2-2v5" stroke-linecap="round" stroke-linejoin="round"/></svg>Strengths</button>
+    <button class="page-tab" id="ptab-imx" onclick="showPage('imx')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 20V10h4v10m2 0V4h4v16m2 0v-7h4v7M2 20h20"/></svg>IMX / IMR</button>
     <button class="page-tab" id="ptab-goals" onclick="showPage('goals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Goals</button>
     <button class="page-tab" id="ptab-training" onclick="showPage('training')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="14" r="8"/><path d="M9 2h6m-3 0v4m6 0 2-2m-8 6v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tests / Training</button>
     <button class="page-tab" id="ptab-analysis" onclick="showPage('analysis')">
@@ -424,54 +396,21 @@ footer span{color:var(--lane)}
 
 <!-- ══ VIDEO ANALYSIS PAGE ══ -->
 <div id="analysis-page" style="display:none">
-  <div class="card">
-    <div class="card-section">
-      <div class="section-label">Video analysis</div>
-      <div class="meet-disclaimer"><p><strong>Timestamped technique feedback:</strong> choose a short swimming clip, select the stroke, and identify which lane or swimmer to analyze. The video and extracted frames are processed temporarily, then deleted after analysis.</p></div>
-      <p class="source-note" id="analysis-runtime-status">Checking the analysis server…</p>
-      <div class="fields-grid" id="analysis-access-section" style="display:none;margin:14px 0">
-        <div class="field">
-          <label for="analysis-access-code">Shared access code</label>
-          <input type="password" id="analysis-access-code" autocomplete="current-password" placeholder="Enter the LaneLine access code" onkeydown="if(event.key==='Enter') unlockVideoAnalysis()" />
-        </div>
-        <div class="field" style="justify-content:end">
-          <button class="btn-primary" type="button" onclick="unlockVideoAnalysis()">Unlock video analysis</button>
-        </div>
-      </div>
-      <div id="analysis-workflow-section">
-      <div class="fields-grid" style="margin:14px 0">
-        <div class="field full">
-          <label for="analysis-video-file">Swimming video clip</label>
-          <input type="file" id="analysis-video-file" name="video" accept="video/mp4,video/quicktime,video/webm" onchange="updateVideoAnalysisFormState()" />
-          <p class="source-note">Current MVP limits: MP4, MOV, or WebM; up to 60 seconds and 100 MB; one swimmer preferred; 480p or better. Clear, non-duplicate frames are selected automatically.</p>
-        </div>
-        <div class="field">
-          <label for="analysis-stroke">Stroke</label>
-          <select id="analysis-stroke" name="strokeType">
-            <option value="freestyle">Freestyle</option>
-            <option value="backstroke">Backstroke</option>
-            <option value="breaststroke">Breaststroke</option>
-            <option value="butterfly">Butterfly</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="analysis-focus-note">Swimmer focus note <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-          <textarea id="analysis-focus-note" name="focusNote" rows="3" maxlength="300" placeholder="e.g. Focus on the swimmer in lane 4 wearing a blue cap."></textarea>
-          <p class="source-note">Use visible details such as lane, cap color, or position. Do not include a swimmer's full name.</p>
-        </div>
-        <div class="field full">
-          <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" id="analysis-consent" name="consent" onchange="updateVideoAnalysisFormState()" /> I understand this tool provides educational swim feedback and should not replace a certified coach, medical professional, or lifeguard.</label>
-        </div>
-      </div>
-      <button class="btn-primary" id="analysis-start-btn" type="button" onclick="submitVideoAnalysis()" disabled>Analyze swim video</button>
-      </div>
-      <div class="error-box" id="analysis-message-box"><p id="analysis-message-text"></p></div>
+  <section class="video-surface">
+    <header class="video-heading"><div><div class="section-label">Technique review</div><h2>Video analysis</h2></div><span id="video-model">GPT-6.1 Sol</span></header>
+    <section id="video-access" hidden><form id="video-access-form" class="video-access-form"><div class="field"><label for="video-code">Family access code</label><input id="video-code" type="password" autocomplete="current-password" required></div><button class="btn-secondary" type="submit">Unlock</button></form></section>
+    <div class="video-layout">
+      <video id="video-preview" controls playsinline preload="metadata" hidden aria-label="Selected swimming video"></video>
+      <form id="video-form">
+        <div class="field"><label for="video-file">Swimming clip</label><input id="video-file" type="file" accept="video/mp4,video/quicktime,video/webm" required></div>
+        <div class="field"><label for="video-question">Swimmer and question</label><textarea id="video-question" rows="5" maxlength="2000" placeholder="Lane 2, blue cap. What can I improve in my breaststroke?"></textarea></div>
+        <label class="video-consent"><input id="video-consent" type="checkbox"> Send sampled images to OpenAI for educational technique feedback. I have permission to share this clip.</label>
+        <div class="video-actions"><button id="video-start" class="btn-primary" type="submit" disabled>Analyze clip</button><button id="video-cancel" class="btn-secondary" type="button" hidden>Cancel</button></div>
+      </form>
     </div>
-    <div class="card-section" id="analysis-result-section" style="display:none">
-      <div class="section-label">Technique recommendations</div>
-      <div id="analysis-result-content" class="analysis-results"></div>
-    </div>
-  </div>
+    <p id="video-status" role="status" aria-live="polite"></p>
+    <section id="video-result" class="video-response" hidden><h3>Coach's notes</h3><div id="video-answer"></div></section>
+  </section>
 </div>
 
 <!-- ══ BEST TIMES PAGE ══ -->
@@ -502,6 +441,7 @@ footer span{color:var(--lane)}
 
 <!-- ══ GROWTH PAGE ══ -->
 <div id="strengths-page" style="display:none"><section class="insights-surface"><div class="section-label">Your competitive edge</div><h2>Strengths</h2><div id="strengths-controls" class="standards-toolbar"></div><div id="strengths-results" aria-live="polite"></div></section></div>
+<div id="imx-page" style="display:none"><section id="imx-results" class="insights-surface" aria-live="polite"></section></div>
 <div id="goals-page" style="display:none"><section class="insights-surface"><div class="section-label">One finish at a time</div><h2>Personal goals</h2><div id="goals-controls" class="standards-toolbar"></div><div id="goals-results" aria-live="polite"></div></section></div>
 <div id="training-page" style="display:none"><section class="insights-surface training-surface"><div class="section-label">Sharpen your race-day skills</div><h2>Tests / Training</h2>
   <div class="arcade-options"><span>Poolside Arcade</span><label><input type="checkbox" id="training-sound" checked/> Sound</label></div>
@@ -757,6 +697,9 @@ footer span{color:var(--lane)}
 <dialog id="quick-switch" class="quick-switch" aria-label="Quick search"><div class="quick-switch-top"><input id="quick-query" type="search" placeholder="Search swimmers or pages" aria-label="Search swimmers or pages" role="combobox" aria-controls="quick-results" aria-expanded="true" aria-autocomplete="list" autocomplete="off"/><button type="button" class="quick-close" onclick="document.getElementById('quick-switch').close()" aria-label="Close search" title="Close">&times;</button></div><div id="quick-results" role="listbox" aria-label="Search results"></div><p id="quick-empty" class="quick-empty" hidden>No matching swimmers or pages.</p></dialog>
 <script src="standards-engine.js"></script>
 <script src="insights-engine.js"></script>
+<script src="imx-imr.js"></script>
+<script src="video-analysis-client.js"></script>
+<script src="favorite-refresh.js"></script>
 <script src="rankings-engine.js"></script>
 <script src="relay-engine.js"></script>
 <script src="rankings-dashboard.js"></script>
@@ -1060,13 +1003,6 @@ function seedUsaSwimmingProfile(profile) {
   }
 }
 
-async function refreshSeededSwimmersFromUsaSwimming() {
-  for(const [index,profile] of seededUsaSwimmingProfiles.entries()){
-    if(index)await new Promise(resolve=>setTimeout(resolve,15000));
-    if(await refreshSwimmerBestTimes(profile)==='blocked')break;
-  }
-}
-
 let historyRefreshJob=null,lastHistoryRefresh=0,historyCacheWorker=null;
 const sharedFileVersions=new Map();
 async function fetchChangedSharedJson(url){
@@ -1111,6 +1047,7 @@ async function refreshSharedSwimmerCache() {
     const statusResponse = await fetch('datahub-refresh-status.json', { cache: 'no-store' });
     if (statusResponse.ok) {
       const status = await statusResponse.json();
+      for(const sw of appState.swimmers){if(!swimmerFavorites().has(sw.id))continue;const check=status.swimmers?.[sw.usaSwimmingMemberId];if(check)favoriteTimeChecks.reconcile(sw.id,check.lastImportedAt||check.lastSuccessAt);}
       const label = document.getElementById('swimmer-refresh-status');
       if (label) label.textContent = status.status === 'updated'
         ? `USA Swimming checked ${new Date(status.checkedAt).toLocaleString()}`
@@ -1150,26 +1087,30 @@ async function refreshSwimmerFromUsaSwimming(memberId) {
   await refreshSwimmerBestTimes(sw);
 }
 
-async function refreshSwimmerBestTimes(profile) {
+async function refreshSwimmerBestTimes(profile,signal) {
   const sw = appState.swimmers.find(s =>
     (profile.id && s.id === profile.id) ||
     (profile.usaSwimmingMemberId && s.usaSwimmingMemberId === profile.usaSwimmingMemberId) ||
     (profile.swimcloudId && s.swimcloudId === profile.swimcloudId)
   );
-  if (!sw) return;
+  if (!sw || !swimmerFavorites().has(sw.id) || signal?.aborted) return 'canceled';
   const incomingRows = [];
   const historyRows = [];
+  let checked=false;
   try {
     if (sw.usaSwimmingMemberId) {
-      const historyResponse = await fetch(`/api/usa-swimming/time-history?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      const historyResponse = await fetch(`/api/usa-swimming/time-history?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store',signal });
       if([401,403,429,503].includes(historyResponse.status))return 'blocked';
       if (historyResponse.ok) {
         const historyData = await historyResponse.json();
+        checked=Array.isArray(historyData.timeHistory);
         if (Array.isArray(historyData.timeHistory)) historyRows.push(...historyData.timeHistory);
       }
-      const response = historyRows.length ? null : await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store' });
+      const response = historyRows.length ? null : await fetch(`/api/usa-swimming/best-times?memberId=${encodeURIComponent(sw.usaSwimmingMemberId)}`, { cache: 'no-store',signal });
+      if(response&&[401,403,429,503].includes(response.status))return 'blocked';
       if (response?.ok) {
         const data = await response.json();
+        checked=checked||Array.isArray(data.bestTimes);
         if (Array.isArray(data.bestTimes)) incomingRows.push(...data.bestTimes);
       }
     }
@@ -1177,10 +1118,12 @@ async function refreshSwimmerBestTimes(profile) {
     console.warn('USA Swimming refresh skipped:', error);
   }
   try {
+    if (signal?.aborted||!swimmerFavorites().has(sw.id))return 'canceled';
     if (sw.swimcloudId) {
-      const response = await fetch(`/api/swimcloud/best-times?profile=${encodeURIComponent(sw.swimcloudId)}`, { cache: 'no-store' });
+      const response = await fetch(`/api/swimcloud/best-times?profile=${encodeURIComponent(sw.swimcloudId)}`, { cache: 'no-store',signal });
       if (response.ok) {
         const data = await response.json();
+        checked=checked||Array.isArray(data.bestTimes);
         if (Array.isArray(data.bestTimes)) {
           incomingRows.push(...data.bestTimes);
           historyRows.push(...data.bestTimes);
@@ -1190,6 +1133,7 @@ async function refreshSwimmerBestTimes(profile) {
   } catch (error) {
     console.warn('Swimcloud refresh skipped:', error);
   }
+  if(signal?.aborted||!swimmerFavorites().has(sw.id)||!appState.swimmers.some(row=>row.id===sw.id))return 'canceled';
   if (incomingRows.length || historyRows.length) {
     sw.timeHistory = mergeTimeHistoryRows(sw.timeHistory || sw.bestTimes || [], [...historyRows, ...incomingRows]);
     sw.bestTimes = mergeBestTimeRows(sw.bestTimes || [], [...historyRows, ...incomingRows]);
@@ -1203,6 +1147,7 @@ async function refreshSwimmerBestTimes(profile) {
     if (document.getElementById('growth-page')?.style.display !== 'none') renderGrowthPage();
     refreshOpenInsights();
   }
+  return incomingRows.length||historyRows.length?'updated':checked?'checked':'failed';
 }
 
 function mergeBestTimeRows(existingRows, incomingRows) {
@@ -1250,13 +1195,13 @@ function timeHistoryKey(row) {
 }
 
 // ─── INIT ─────────────────────────────────────────────────
+const favoriteTimeChecks=LaneLineFavoriteRefresh.create({storage:localStorage,isFavorite:id=>swimmerFavorites().has(id),getSwimmer:id=>appState.swimmers.find(sw=>sw.id===id),refresh:refreshSwimmerBestTimes,onChange:()=>renderProfilesPage()});
 loadState();
 seedUsaSwimmingProfiles();
 updateNavAccount();
 renderProfilesPage();
 renderBestTimesPicker();
 renderGrowthPickers();
-loadVideoAnalysisConfig();
 refreshSeededSwimmersFromDataHubCache();
 loadVerifiedStandards();
 // Signed-in browser refreshes update the shared history cache separately.
@@ -1265,7 +1210,7 @@ window.addEventListener('focus', refreshSeededSwimmersFromDataHubCache);
 window.addEventListener('DOMContentLoaded',()=>showPage(viewPreferences.tab||'best'));
 // ─── PAGE NAV ─────────────────────────────────────────────
 function showPage(page) {
-  const tabOrder=['best','growth','strengths','goals','training','analysis','standards','zone','profiles'];
+  const tabOrder=['best','growth','strengths','imx','goals','training','analysis','standards','zone','profiles'];
   if(!tabOrder.includes(page))return;
   if(page!=='training'){window.LaneLineReaction?.reset();window.LaneLineTraining?.reset();}
   rememberView({tab:page});
@@ -1280,12 +1225,14 @@ function showPage(page) {
     renderBestTimes();
   }
   if (page === 'strengths' || page === 'goals') renderInsights(page);
+  if (page === 'imx') {LaneLineIMX.mount(document.getElementById('imx-results'),selectedSwimmer(),appState.swimmers);LaneLineIMX.load().then(()=>{if(document.getElementById('imx-page').style.display!=='none')LaneLineIMX.mount(document.getElementById('imx-results'),selectedSwimmer(),appState.swimmers);});}
   if (page === 'growth') {
     renderGrowthPickers();
     renderGrowthPage();
   }
   if (page === 'zone') renderRankings();
-  if (page === 'analysis') loadVideoAnalysisConfig();
+  if (page === 'analysis') LaneLineVideo.open();
+  else LaneLineVideo.cancel();
   if (page === 'standards') renderStandardsPage();
   if (page === 'profiles') renderProfilesPage();
   LaneLineMotion.updateTab();
@@ -1542,7 +1489,7 @@ function saveSwimmer() {
   } else {
     appState.swimmers.push(sw);
   }
-  const favorites=swimmerFavorites();favorites.add(sw.id);
+  const favorites=swimmerFavorites(),newFavorite=!favorites.has(sw.id);favorites.add(sw.id);
   localStorage.setItem('laneline-favorite-swimmers',JSON.stringify([...favorites]));
   // Persist to account if signed in
   if (appState.user) {
@@ -1552,7 +1499,7 @@ function saveSwimmer() {
   renderProfilesPage();
   renderBestTimesPicker();
   renderGrowthPickers();
-  if (sw.swimcloudId || sw.usaSwimmingMemberId) refreshSwimmerBestTimes(sw);
+  if (newFavorite&&(sw.swimcloudId || sw.usaSwimmingMemberId)) requestFavoriteTimeCheck(sw.id);
   closeModal('add-swimmer-modal');
 }
 
@@ -1595,9 +1542,17 @@ function toggleSwimmerFavorite(id){
     }
     if(appState.user)localStorage.setItem('ll_swimmers_'+appState.user.email,JSON.stringify(persistedSwimmers()));
     renderProfilesPage();
+    if(ids.has(id))requestFavoriteTimeCheck(id);else favoriteTimeChecks.remove(id);
   }
   catch{alert('Favorites could not be saved. Check browser storage.');}
 }
+function requestFavoriteTimeCheck(id){favoriteTimeChecks.request(id);}
+function favoriteTimeCheckLabel(id){
+  const item=favoriteTimeChecks.status(id);if(!item)return '';
+  const labels={queued:'Time check queued',checking:'Checking times...',waiting:'Waiting for a signed-in Data Hub check',updated:'Times checked',checked:'Times checked',failed:'Time check unavailable'};
+  return labels[item.status]||'';
+}
+window.addEventListener('DOMContentLoaded',()=>favoriteTimeChecks.resume());
 let rosterSearchTimer;
 function scheduleRosterSearch(){clearTimeout(rosterSearchTimer);rosterSearchTimer=setTimeout(renderProfilesPage,120);}
 function clearRosterFilters(){
@@ -1647,6 +1602,7 @@ function renderProfilesPage() {
       <div class="profile-age"><label>Age <input type="number" min="1" max="120" step="1" data-swimmer-age="${escapeHtml(sw.id)}" aria-label="Age for ${escapeHtml(sw.name)}" value="${LaneLineSwimmerUI.validAge(sw.ageGroup)?escapeHtml(sw.ageGroup):''}" title="${sw.manualAge?'Manual age':'Imported age'}"></label>${sw.manualAge?`<button type="button" class="btn-ghost" data-age-reset="${escapeHtml(sw.id)}" aria-label="Use imported age for ${escapeHtml(sw.name)}" title="Use imported age">↺</button>`:''}</div>
       ${sw.stroke ? `<div class="profile-tag">${sw.stroke}</div>` : ''}
       ${bestTimesForSwimmer(sw).length ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">${bestTimesForSwimmer(sw).length} best time${bestTimesForSwimmer(sw).length===1?'':'s'} saved</div>` : ''}
+      ${favorites.has(sw.id)?`<p class="favorite-check-status" role="status">${escapeHtml(favoriteTimeCheckLabel(sw.id))}</p><button type="button" class="btn-ghost" data-check-favorite="${escapeHtml(sw.id)}">Check times</button>`:''}
       <button type="button" class="profile-select btn-secondary" data-select-swimmer="${escapeHtml(sw.id)}" aria-pressed="${sw.id===selected?.id}" aria-label="Select ${escapeHtml(sw.name)}">${sw.id===selected?.id?'Selected':'Select swimmer'}</button>
       <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
         <button class="btn-ghost" style="font-size:12px" onclick="openAddSwimmerModal('${sw.id}')">Edit</button>
@@ -1661,6 +1617,7 @@ function renderProfilesPage() {
   grid.innerHTML = html;
   grid.onclick=event=>{const button=event.target.closest('[data-select-swimmer]');if(button)selectSwimmer(button.dataset.selectSwimmer);};
   grid.querySelectorAll('[data-favorite-swimmer]').forEach(button=>button.addEventListener('click',()=>toggleSwimmerFavorite(button.dataset.favoriteSwimmer)));
+  grid.querySelectorAll('[data-check-favorite]').forEach(button=>button.addEventListener('click',()=>requestFavoriteTimeCheck(button.dataset.checkFavorite)));
   grid.querySelectorAll('[data-swimmer-age]').forEach(input=>input.addEventListener('change',()=>{if(!input.value||!input.checkValidity()){input.reportValidity();return;}setManualSwimmerAge(input.dataset.swimmerAge,input.value);}));
   grid.querySelectorAll('[data-age-reset]').forEach(button=>button.addEventListener('click',()=>setManualSwimmerAge(button.dataset.ageReset,null)));
   LaneLineMotion.reveal(grid);
@@ -2675,233 +2632,7 @@ function formatDrop(seconds) {
   return `${minutes}:${remainder}`;
 }
 
-// ─── VIDEO ANALYSIS DRAFT ─────────────────────────────────
-function escapeVideoAnalysisHtml(value) {
-  return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-}
 
-async function readVideoAnalysisJson(response) {
-  const contentType = response.headers.get('content-type') || '';
-  if (!contentType.toLowerCase().includes('application/json')) {
-    throw new Error(`Video analysis server returned an unexpected response (${response.status || 'network error'}). Use https://laneline.onrender.com for video analysis.`);
-  }
-  return response.json();
-}
-
-let videoAnalysisConfig = null;
-
-async function loadVideoAnalysisConfig() {
-  const status = document.getElementById('analysis-runtime-status');
-  try {
-    const [configResponse, sessionResponse] = await Promise.all([
-      fetch('/api/video-analysis/config', { cache: 'no-store' }),
-      fetch('/api/video-analysis/session', { cache: 'no-store' })
-    ]);
-    const [config, session] = await Promise.all([
-      readVideoAnalysisJson(configResponse),
-      readVideoAnalysisJson(sessionResponse)
-    ]);
-    if (!configResponse.ok || !sessionResponse.ok) throw new Error('Video analysis server is unavailable.');
-    videoAnalysisConfig = config;
-    if (status) {
-      status.textContent = `${config.model} · clips up to ${config.maxVideoDurationSeconds}s · ${config.frameSampleFps} fps extraction · up to ${config.maxAnalysisFrames} clear, distinct frames${config.openaiEnabled ? '' : ' · demo mode until OPENAI_API_KEY is configured'}`;
-    }
-    const locked = Boolean(config.accessRequired && !session.authorized);
-    setVideoAnalysisAccessState(locked);
-    if (!locked) resumeVideoAnalysis();
-  } catch (error) {
-    if (status) status.textContent = error.message;
-    setVideoAnalysisMessage(error.message);
-  }
-}
-
-function setVideoAnalysisAccessState(locked) {
-  const accessSection = document.getElementById('analysis-access-section');
-  const workflowSection = document.getElementById('analysis-workflow-section');
-  if (accessSection) accessSection.style.display = locked ? 'grid' : 'none';
-  if (workflowSection) workflowSection.style.display = locked ? 'none' : 'block';
-  if (locked) document.getElementById('analysis-access-code')?.focus();
-}
-
-async function unlockVideoAnalysis() {
-  const input = document.getElementById('analysis-access-code');
-  const accessCode = input?.value || '';
-  try {
-    const response = await fetch('/api/video-analysis/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accessCode })
-    });
-    const data = await readVideoAnalysisJson(response);
-    if (!response.ok) throw new Error(data.error || 'Could not unlock video analysis.');
-    if (input) input.value = '';
-    setVideoAnalysisAccessState(false);
-    setVideoAnalysisMessage('Video analysis unlocked for this browser.');
-    updateVideoAnalysisFormState();
-  } catch (error) {
-    setVideoAnalysisMessage(error.message);
-  }
-}
-
-function handleVideoAnalysisUnauthorized(message) {
-  clearTimeout(activeVideoAnalysisTimer);
-  setVideoAnalysisAccessState(true);
-  setVideoAnalysisMessage(message || 'Enter the LaneLine access code to continue.');
-}
-
-function resumeVideoAnalysis() {
-  const id = sessionStorage.getItem('lanelineActiveAnalysisId');
-  if (id) pollVideoAnalysis(id);
-}
-
-function updateVideoAnalysisFormState() {
-  const file = document.getElementById('analysis-video-file')?.files?.[0];
-  const consent = document.getElementById('analysis-consent')?.checked;
-  const startButton = document.getElementById('analysis-start-btn');
-  if (!startButton) return;
-  startButton.disabled = !(file && consent);
-}
-
-let activeVideoAnalysisTimer = null;
-
-async function submitVideoAnalysis() {
-  const file = document.getElementById('analysis-video-file')?.files?.[0];
-  const consent = document.getElementById('analysis-consent')?.checked;
-  if (!file || !consent) return;
-  resetVideoAnalysisResult();
-  setVideoAnalysisMessage('Uploading video for analysis…');
-  document.getElementById('analysis-start-btn').disabled = true;
-  const formData = new FormData();
-  formData.append('video', file);
-  formData.append('strokeType', document.getElementById('analysis-stroke')?.value || 'freestyle');
-  formData.append('focusNote', document.getElementById('analysis-focus-note')?.value || '');
-  formData.append('consent', 'true');
-  try {
-    const response = await fetch('/api/video-analysis', { method: 'POST', body: formData });
-    const data = await readVideoAnalysisJson(response);
-    if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
-    if (!response.ok) throw new Error(data.error || 'Upload failed.');
-    sessionStorage.setItem('lanelineActiveAnalysisId', data.id);
-    pollVideoAnalysis(data.id);
-  } catch (error) {
-    updateVideoAnalysisFormState();
-    setVideoAnalysisMessage(error.message);
-  }
-}
-
-async function pollVideoAnalysis(id) {
-  clearTimeout(activeVideoAnalysisTimer);
-  try {
-    const response = await fetch(`/api/video-analysis/${id}`);
-    const data = await readVideoAnalysisJson(response);
-    if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
-    if (response.status === 404) {
-      sessionStorage.removeItem('lanelineActiveAnalysisId');
-      updateVideoAnalysisFormState();
-      return;
-    }
-    if (!response.ok) throw new Error(data.error || 'Could not check analysis status.');
-    setVideoAnalysisMessage(data.stage || data.status);
-    if (data.status === 'completed') {
-      await loadVideoAnalysisResult(id);
-      return;
-    }
-    if (data.status === 'failed') throw new Error(data.error || 'Analysis failed.');
-    activeVideoAnalysisTimer = setTimeout(() => pollVideoAnalysis(id), 1500);
-  } catch (error) {
-    updateVideoAnalysisFormState();
-    setVideoAnalysisMessage(error.message);
-  }
-}
-
-async function loadVideoAnalysisResult(id) {
-  const response = await fetch(`/api/video-analysis/${id}/result`);
-  const data = await readVideoAnalysisJson(response);
-  if (response.status === 401) return handleVideoAnalysisUnauthorized(data.error);
-  if (!response.ok) throw new Error(data.error || 'Could not load analysis result.');
-  const result = data.result || {};
-  const resultSection = document.getElementById('analysis-result-section');
-  const resultContent = document.getElementById('analysis-result-content');
-  if (!resultSection || !resultContent) return;
-  const strengths = Array.isArray(result.strengths) ? result.strengths : [];
-  const improvements = Array.isArray(result.improvements) ? result.improvements : [];
-  const drills = Array.isArray(result.drills) ? result.drills : [];
-  const frames = Array.isArray(data.frames) ? data.frames : [];
-  const confidence = Math.round(Math.max(0, Math.min(1, Number(result.confidence) || 0)) * 100);
-  resultSection.style.display = 'block';
-  resultContent.innerHTML = `
-    <div class="analysis-summary">
-      <h2>Your swim analysis</h2>
-      <p>${escapeVideoAnalysisHtml(result.summary || 'Analysis complete.')}</p>
-      <div class="analysis-meta">
-        <span class="analysis-meta-chip">Stroke · ${escapeVideoAnalysisHtml(result.detected_stroke || '—')}</span>
-        <span class="analysis-meta-chip">View · ${escapeVideoAnalysisHtml(result.detected_camera_angle || '—')}</span>
-        <span class="analysis-meta-chip">Confidence · ${confidence}%</span>
-        <span class="analysis-meta-chip">Frames · ${frames.length || result.frame_count || 0}</span>
-      </div>
-    </div>
-    ${strengths.length ? `<section><h3 class="analysis-block-title"><span>✓</span>What looks good</h3><div class="analysis-strength-list">${strengths.map(item => `<div class="analysis-strength">${escapeVideoAnalysisHtml(item)}</div>`).join('')}</div></section>` : ''}
-    ${improvements.length ? `<section><h3 class="analysis-block-title"><span>→</span>What to improve</h3><div class="analysis-improvement-list">${improvements.map((item, index) => renderVideoImprovement(item, frames, index)).join('')}</div></section>` : ''}
-    ${drills.length ? `<section><h3 class="analysis-block-title"><span>↻</span>Recommended drills</h3><div class="analysis-drill-grid">${drills.map(renderVideoDrill).join('')}</div></section>` : ''}
-    <p class="analysis-safety">${escapeVideoAnalysisHtml(result.safety_notice || '')}</p>
-  `;
-  setVideoAnalysisMessage('Recommendations ready.');
-  resultSection.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
-}
-
-function resetVideoAnalysisResult() {
-  const resultSection = document.getElementById('analysis-result-section');
-  const resultContent = document.getElementById('analysis-result-content');
-  if (resultSection) resultSection.style.display = 'none';
-  if (resultContent) resultContent.innerHTML = '';
-  sessionStorage.removeItem('lanelineActiveAnalysisId');
-}
-
-function renderVideoImprovement(item, frames, index) {
-  if (!item || typeof item !== 'object') return `<div class="analysis-improvement-card"><div class="analysis-improvement-body">${escapeVideoAnalysisHtml(item || '')}</div></div>`;
-  const seconds = Number(item.timestamp_seconds);
-  const timestamp = Number.isFinite(seconds) ? `${seconds.toFixed(2)}s` : 'Visible frame';
-  const frame = closestAnalysisFrame(frames, seconds);
-  const imageUrl = safeAnalysisImageUrl(frame?.imageUrl);
-  return `<article class="analysis-improvement-card">
-    <div class="analysis-frame">
-      ${imageUrl ? `<img src="${imageUrl}" alt="Selected video frame near ${escapeVideoAnalysisHtml(timestamp)}" />` : '<div class="analysis-frame-placeholder">The supporting frame is unavailable for this result.</div>'}
-      <span class="analysis-frame-time">${escapeVideoAnalysisHtml(timestamp)}</span>
-    </div>
-    <div class="analysis-improvement-body">
-      <div class="analysis-priority">Priority ${index + 1}</div>
-      <h4>${escapeVideoAnalysisHtml(item.cue || 'Technique cue')}</h4>
-      <p class="analysis-copy"><strong>What the frame shows</strong>${escapeVideoAnalysisHtml(item.observation || 'No visible observation provided.')}</p>
-      ${item.impact ? `<p class="analysis-copy"><strong>Why it matters</strong>${escapeVideoAnalysisHtml(item.impact)}</p>` : ''}
-      <div class="analysis-cue"><strong>Try this:</strong> ${escapeVideoAnalysisHtml(item.cue || 'Review this position with your coach.')}</div>
-    </div>
-  </article>`;
-}
-
-function renderVideoDrill(item) {
-  if (!item || typeof item !== 'object') return `<div class="analysis-drill"><p>${escapeVideoAnalysisHtml(item || '')}</p></div>`;
-  return `<article class="analysis-drill"><h4>${escapeVideoAnalysisHtml(item.name || 'Drill')}</h4><p>${escapeVideoAnalysisHtml(item.instructions || '')}</p>${item.purpose ? `<p class="analysis-drill-purpose">Why: ${escapeVideoAnalysisHtml(item.purpose)}</p>` : ''}</article>`;
-}
-
-function closestAnalysisFrame(frames, timestampSeconds) {
-  const available = (Array.isArray(frames) ? frames : []).filter(frame => safeAnalysisImageUrl(frame?.imageUrl));
-  if (!available.length) return null;
-  if (!Number.isFinite(timestampSeconds)) return available[0];
-  return available.reduce((nearest, frame) => Math.abs(Number(frame.timestampSeconds) - timestampSeconds) < Math.abs(Number(nearest.timestampSeconds) - timestampSeconds) ? frame : nearest, available[0]);
-}
-
-function safeAnalysisImageUrl(value) {
-  const url = String(value || '');
-  return /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(url) ? url : '';
-}
-
-function setVideoAnalysisMessage(message) {
-  const messageBox = document.getElementById('analysis-message-box');
-  const messageText = document.getElementById('analysis-message-text');
-  if (!messageBox || !messageText) return;
-  messageText.textContent = message;
-  messageBox.style.display = 'block';
-}
 
 // ─── MEET FINDER ──────────────────────────────────────────
 function searchMeet() {

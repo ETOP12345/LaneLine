@@ -20,21 +20,23 @@ function mergeRows(saved, fresh) {
   return [...merged.values()].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
-async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHistory,
+async function refresh({ directory = root, memberIds = [], fetchHistory = fetchUsaSwimmingTimeHistory,
   requestDelayMs = fetchHistory === fetchUsaSwimmingTimeHistory ? 15000 : 0,
   pause = ms => new Promise(resolve => setTimeout(resolve,ms)) } = {}) {
   const historyPath = path.join(directory, 'datahub-history.json');
   const statusPath = path.join(directory, 'datahub-refresh-status.json');
   const histories = JSON.parse(await fs.readFile(historyPath, 'utf8'));
+  const selected=[...new Set(memberIds)].filter(id=>Object.hasOwn(histories,id));
+  if(!selected.length){console.log('No requested favorite swimmer IDs; no external time checks were made.');return 0;}
   const checkedAt = new Date().toISOString();
   let previous = {};
   try { previous = JSON.parse(await fs.readFile(statusPath, 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
-  const swimmers = {};
+  const swimmers = {...previous.swimmers};
   let failures = 0;
   let stopReason='';
   let attempted=0;
-  for (const memberId of Object.keys(histories)) {
+  for (const memberId of selected) {
     if(stopReason){
       swimmers[memberId]={...previous.swimmers?.[memberId],status:'deferred',savedRows:histories[memberId].length,
         note:'Refresh deferred after upstream authentication or rate-limit response. Saved history was preserved.'};
@@ -78,6 +80,8 @@ async function refresh({ directory = root, fetchHistory = fetchUsaSwimmingTimeHi
 
 module.exports = { refresh, mergeRows, validRow };
 if (require.main === module) {
-  refresh().then(failures => { process.exitCode = failures ? 1 : 0; })
+  const flag=process.argv.indexOf('--members');
+  const memberIds=String(flag>=0?process.argv[flag+1]||'':process.env.FAVORITE_MEMBER_IDS||'').split(',').map(id=>id.trim()).filter(Boolean);
+  refresh({memberIds}).then(failures => { process.exitCode = failures ? 1 : 0; })
     .catch(error => { console.error(error.message); process.exitCode = 1; });
 }

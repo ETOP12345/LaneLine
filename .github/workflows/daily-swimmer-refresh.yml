@@ -2,6 +2,11 @@ name: Daily LaneLine swimmer refresh
 
 on:
   workflow_dispatch:
+    inputs:
+      member_ids:
+        description: 'Requested favorite swimmer member IDs, comma-separated'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -23,11 +28,12 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: Refresh all swimmer histories
+      - name: Refresh requested favorite histories
         id: refresh
         continue-on-error: true
         env:
           USA_SWIMMING_AUTHORIZATION: ${{ secrets.USA_SWIMMING_AUTHORIZATION }}
+          FAVORITE_MEMBER_IDS: ${{ inputs.member_ids }}
         run: node scripts/refresh-swimmer-history.js
       - name: Publish histories and refresh status
         run: |

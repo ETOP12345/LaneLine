@@ -5,7 +5,7 @@ const vm=require('node:vm');
 const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
 function fixture(value){
   const saved=new Map([['laneline-favorite-swimmers',value]]);
-  const context=vm.createContext({localStorage:{getItem:key=>saved.get(key),setItem:(key,value)=>saved.set(key,value)},saveState(){},appState:{user:null},renderProfilesPage(){},alert(){}});
+  const context=vm.createContext({favoriteTimeChecks:{request(){},remove(){}},window:{addEventListener(){}},LaneLineFavoriteRefresh:require('../favorite-refresh'),refreshSwimmerBestTimes:async()=>{},localStorage:{getItem:key=>saved.get(key),setItem:(key,value)=>saved.set(key,value)},saveState(){},appState:{user:null,swimmers:[]},renderProfilesPage(){},alert(){}});
   vm.runInContext(html.slice(html.indexOf("let rosterScope='favorites'"),html.indexOf('function renderProfilesPage()')),context);
   return {context,saved};
 }
@@ -32,7 +32,7 @@ test('local storage migrates to favorites only without filtering the in-memory c
     ['ll_swimmers_old-account',JSON.stringify(swimmers)]
   ]);
   const storage={getItem:key=>saved.get(key),setItem:(key,value)=>saved.set(key,value),key:i=>[...saved.keys()][i],get length(){return saved.size;}};
-  const context=vm.createContext({localStorage:storage,renderProfilesPage(){},alert(message){throw Error(message);}});
+  const context=vm.createContext({favoriteTimeChecks:{request(){},remove(){}},window:{addEventListener(){}},LaneLineFavoriteRefresh:require('../favorite-refresh'),refreshSwimmerBestTimes:async()=>{},localStorage:storage,renderProfilesPage(){},alert(message){throw Error(message);}});
   vm.runInContext(html.slice(html.indexOf('let appState ='),html.indexOf('const ethanWangUsaSwimmingProfile')),context);
   vm.runInContext(html.slice(html.indexOf("let rosterScope='favorites'"),html.indexOf('function renderProfilesPage()')),context);
   vm.runInContext('loadState();saveState();',context);

@@ -57,7 +57,7 @@ test('expanded PNS scope verifies ages 10-14, any PN team, and current-age A cut
 });
 test('same-name swimmers with separate member IDs are not combined',async()=>{
   const html=await fs.readFile(path.join(__dirname,'../index.html'),'utf8');
-  const body=html.slice(html.indexOf('function seedUsaSwimmingProfile('),html.indexOf('async function refreshSeededSwimmersFromUsaSwimming('));
+  const body=html.slice(html.indexOf('function seedUsaSwimmingProfile('),html.indexOf('let historyRefreshJob='));
   const existing={id:'old',name:'Alex Wang',team:'Bellevue Club Swim Team',usaSwimmingMemberId:'first',bestTimes:[]};
   const context={appState:{swimmers:[existing]},mergeBestTimeRows:(a,b)=>a.concat(b),mergeTimeHistoryRows:(a,b)=>a.concat(b)};
   vm.createContext(context);vm.runInContext(body,context);

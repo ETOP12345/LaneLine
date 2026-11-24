@@ -1,12 +1,14 @@
 # LaneLine swimmer refresh
 
-The Western Zone job does not update personal histories. The separate **Daily LaneLine swimmer refresh** job reads every member ID in `datahub-history.json`, fetches all courses, merges every swim into that file, and records per-swimmer results in `datahub-refresh-status.json`. Best Times and Growth consume the same cache. The site reloads that cache on startup, account login, window focus, and every five minutes.
+The Western Zone job does not update personal histories. Personal time checks are requested by adding a favorite or pressing that favorite's **Check times** command. Browsing or selecting static swimmers does not contact external time sources. Rankings and relays retain the full shared roster. The separate manual **Daily LaneLine swimmer refresh** workflow requires an explicit comma-separated list of requested favorite member IDs; it no longer walks the whole history file. Best Times and Growth consume the same saved cache. Reloading that shared local cache on startup, login, focus, or every five minutes is not an external USA Swimming check.
 
 ## Access requirement
 
 USA Swimming currently denies anonymous API requests with HTTP 403. Signing into the Data Hub in a local browser does not authenticate GitHub Actions. The job supports a repository Actions secret named `USA_SWIMMING_AUTHORIZATION` containing the full Authorization header for an authorized USA Swimming API session. No password or token belongs in source control. Authentication may require additional service-approved access; a header alone has not yet been verified against this account. An expired or rejected session will fail visibly, not report stale times as a successful update.
 
-Run `node scripts/refresh-swimmer-history.js` locally, or select **Run workflow** in GitHub Actions. Review the per-swimmer status before calling the refresh successful. A failed request preserves existing history and the previous successful-check timestamp. Successful results from other swimmers are still saved.
+Run `node scripts/refresh-swimmer-history.js --members ID1,ID2` with the requested favorite member IDs, or provide those IDs to **Run workflow** in GitHub Actions. No IDs means no external checks. Review per-swimmer status before calling the refresh successful. A failed request preserves existing history and the previous successful-check timestamp. Successful results from other requested swimmers are still saved.
+
+When API access is unavailable, each favorite's local request remains visibly pending for the signed-in browser importer. Favoriting does not let an ordinary web page borrow another tab's authentication. The browser automation remains paused until explicitly resumed, and its prompt now limits checks to requested favorites. A verified import newer than the request clears that favorite's pending status after the shared cache reloads.
 
 ## Hosting
 
