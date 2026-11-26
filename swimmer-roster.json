@@ -17,152 +17,242 @@
         {
           "event": "50 Back SCY",
           "time": "32.23",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "36.28r",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:09.04",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:16.83",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:26.01",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:51.50",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "35.58",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "40.70",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN SSCD Autumn Open",
+          "date": "10/04/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Breast SCY",
           "time": "1:18.13",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2025 PN 14&Under Short Course Championships",
+          "date": "12/12/2025",
+          "course": "SCY"
         },
         {
-          "event": "100 Breast LCM",
-          "time": "1:32.29",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "2:48.96",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:23.19",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "32.84",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "38.97",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:14.91",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:26.76",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly SCY",
-          "time": "3:00.33",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "28.11",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "32.32",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "1:02.56",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:12.09",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:20.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:41.20",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free LCM",
-          "time": "5:24.78",
-          "source": "USA Swimming"
+          "event": "200 Back SCY",
+          "time": "2:26.01",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
           "event": "500 Free SCY",
           "time": "5:50.37",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/16/2026",
+          "course": "SCY"
         },
         {
-          "event": "1650 Free SCY",
-          "time": "20:36.43",
-          "source": "USA Swimming"
+          "event": "50 Breast SCY",
+          "time": "35.58",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "2:48.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:09.04",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
           "event": "100 IM SCY",
           "time": "1:10.62",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:33.18",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN SSCD Autumn Open",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free SCY",
+          "time": "28.11",
+          "source": "USA Swimming",
+          "meet": "2026 PN SSCD Autumn Open",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "1:02.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN BISC Season-Opening Blue & Gold Meet",
+          "date": "09/13/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "36.28r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "40.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:51.50",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:16.83",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:32.29",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/12/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:24.78",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/10/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:23.19",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:12.09",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/12/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:26.76",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/11/2026",
+          "course": "LCM"
         },
         {
           "event": "200 IM LCM",
           "time": "2:59.96",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/11/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "32.32",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:14.91",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 2",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "32.84",
+          "source": "USA Swimming",
+          "meet": "2025 PN 14&Under Short Course Championships",
+          "date": "12/13/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "1650 Free SCY",
+          "time": "20:36.43",
+          "source": "USA Swimming",
+          "meet": "2025 PN 14&Under Short Course Championships",
+          "date": "12/14/2025",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:27.51",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "3:00.33",
+          "source": "USA Swimming",
+          "meet": "2026 PN BISC Bluefin Invitational",
+          "date": "02/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:20.46",
+          "source": "USA Swimming",
+          "meet": "2026 PN BISC Bluefin Invitational",
+          "date": "01/31/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:41.20",
+          "source": "USA Swimming",
+          "meet": "2025 PN 12&U Long Course Championships",
+          "date": "07/26/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "38.97",
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC  Summer Classic Invitational",
+          "date": "06/29/2025",
+          "course": "LCM"
         }
       ],
       "importMode": "best-times-only",
@@ -354,159 +444,252 @@
       "usaSwimmingMemberId": "85CE6F1B287141",
       "bestTimes": [
         {
-          "event": "25 Back SCY",
-          "time": "25.16",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "30.37",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
           "event": "50 Back SCY",
           "time": "33.57r",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2025 PN 14&Under Short Course Championships",
+          "date": "12/12/2025",
+          "course": "SCY"
         },
         {
-          "event": "50 Back LCM",
-          "time": "38.09",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:11.41",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:23.03",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:30.17",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:58.85",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "25 Breast SCY",
-          "time": "30.25",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "41.64",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "46.01",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:26.71",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast LCM",
-          "time": "1:42.60",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "3:16.20",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "25 Fly SCY",
-          "time": "29.91",
-          "source": "USA Swimming"
+          "event": "100 Fly SCY",
+          "time": "1:19.66",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "50 Fly SCY",
           "time": "33.55",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
-          "event": "50 Fly LCM",
-          "time": "38.89",
-          "source": "USA Swimming"
+          "event": "100 Back SCY",
+          "time": "1:11.41",
+          "source": "USA Swimming",
+          "meet": "2026 PN PRO June Intrasquad",
+          "date": "06/21/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 Fly SCY",
-          "time": "1:21.38",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:32.56",
-          "source": "USA Swimming"
+          "event": "200 Breast SCY",
+          "time": "3:09.02",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Fly SCY",
-          "time": "3:12.09",
-          "source": "USA Swimming"
+          "time": "2:58.15",
+          "source": "USA Swimming",
+          "meet": "2026 PN BAST October Meet",
+          "date": "10/23/2026",
+          "course": "SCY"
         },
         {
-          "event": "25 Free SCY",
-          "time": "20.68",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "30.37",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "33.98",
-          "source": "USA Swimming"
+          "event": "100 Breast SCY",
+          "time": "1:26.71",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Free SCY",
           "time": "1:06.89",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:14.83",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:29.34",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:48.38",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "500 Free SCY",
-          "time": "6:45.03",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 IM SCY",
-          "time": "1:15.03",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/11/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:42.19",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/11/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:15.03",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/10/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:29.34",
+          "source": "USA Swimming",
+          "meet": "2025 PN PRO June Intrasquad",
+          "date": "06/13/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "41.64",
+          "source": "USA Swimming",
+          "meet": "2026 PN BAST Season Kick-Off Sprint",
+          "date": "09/25/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "38.09",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:58.85",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "33.98",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:23.03",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
         },
         {
           "event": "200 IM LCM",
           "time": "3:06.17",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:14.83",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "46.01",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Summer Classic",
+          "date": "06/27/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:30.17",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/22/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:52.61",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN PRO June Intrasquad",
+          "date": "06/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:48.38",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/07/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:32.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/06/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:42.60",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/06/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "38.89",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "6:45.03",
+          "source": "USA Swimming",
+          "meet": "2025 PN PRO June Intrasquad",
+          "date": "06/14/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Free SCY",
+          "time": "20.68",
+          "source": "USA Swimming",
+          "meet": "2022 PN PRO Fall Kick-Off Intrasquad Meet",
+          "date": "10/08/2022",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Back SCY",
+          "time": "25.16",
+          "source": "USA Swimming",
+          "meet": "2022 PN PRO Fall Kick-Off Intrasquad Meet",
+          "date": "10/08/2022",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Fly SCY",
+          "time": "29.91",
+          "source": "USA Swimming",
+          "meet": "2022 PN PRO Fall Kick-Off Intrasquad Meet",
+          "date": "10/08/2022",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Breast SCY",
+          "time": "30.25",
+          "source": "USA Swimming",
+          "meet": "2022 PN PRO Fall Kick-Off Intrasquad Meet",
+          "date": "10/08/2022",
+          "course": "SCY"
         }
       ],
       "importMode": "best-times-only",
@@ -1243,6 +1426,283 @@
       "inclusion": "National motivational A or faster, current age"
     },
     {
+      "id": "usas_03A64F943FE144",
+      "name": "Alex Wang",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "usaSwimmingMemberId": "03A64F943FE144",
+      "bestTimes": [
+        {
+          "event": "50 Free SCY",
+          "time": "26.36",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 1",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:03.66",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:04.58",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 1",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "28.58",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "57.02",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 1",
+          "date": "11/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM SCY",
+          "time": "2:23.16",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "5:32.54",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 1",
+          "date": "11/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "400 Free SCM",
+          "time": "4:58.25",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC Pumpkin 400",
+          "date": "10/18/2026",
+          "course": "SCM"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "2:20.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "400 IM SCY",
+          "time": "5:00.60",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/16/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:27.79",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "2:45.07",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:06.67",
+          "source": "USA Swimming",
+          "meet": "2026 BC 48th Annual Blue & Orange Meet",
+          "date": "09/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:16.35",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 3",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "30.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/02/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:10.51",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly LCM",
+          "time": "2:40.71",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:00.50",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "2:38.54",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:05.71",
+          "source": "USA Swimming",
+          "meet": "2026 SR Western Zone Age Group Championships",
+          "date": "08/05/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 IM LCM",
+          "time": "5:40.80",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "32.44",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:21.64",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "41.63",
+          "source": "USA Swimming",
+          "meet": "2025 PN IST June Invitational",
+          "date": "06/15/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:23.06",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:30.35",
+          "source": "USA Swimming",
+          "meet": "2025 PN 12&U Long Course Championships",
+          "date": "07/25/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "39.22",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "1500 Free LCM",
+          "time": "20:25.86",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/28/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:59.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:07.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back SCY",
+          "time": "32.55",
+          "source": "USA Swimming",
+          "meet": "2026 PN BISC Bluefin Invitational",
+          "date": "02/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "35.47",
+          "source": "USA Swimming",
+          "meet": "2026 PN BISC Bluefin Invitational",
+          "date": "01/31/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:20.44",
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC  Summer Classic Invitational",
+          "date": "06/28/2025",
+          "course": "LCM"
+        }
+      ],
+      "importMode": "best-times-only",
+      "lsc": "PN",
+      "inclusion": "Existing verified swimmer"
+    },
+    {
       "id": "usas_49A1ADA64D6445",
       "name": "Alyson Gao",
       "ageGroup": "9",
@@ -1274,133 +1734,211 @@
       "bestTimes": [
         {
           "event": "50 Back SCY",
-          "time": "35.78",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "42.65",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:22.21",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:41.86",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "3:25.14",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "36.63",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "41.70",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:22.07",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast LCM",
-          "time": "1:34.08",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "3:04.53",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:35.52",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "34.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "38.23",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:30.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:40.51",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "31.10",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "35.41",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "1:11.70",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:23.42",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:40.63",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "3:04.96",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free SCM",
-          "time": "6:32.90",
-          "source": "USA Swimming"
+          "time": "34.14",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 1",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "100 IM SCY",
           "time": "1:16.43",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 IM SCY",
-          "time": "2:55.29",
-          "source": "USA Swimming"
+          "event": "100 Breast SCY",
+          "time": "1:22.07",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 IM LCM",
-          "time": "3:19.84",
-          "source": "USA Swimming"
+          "event": "400 Free SCM",
+          "time": "6:32.90",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC Pumpkin 400",
+          "date": "10/18/2026",
+          "course": "SCM"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:40.63",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "34.06",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "6:07.51",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free SCY",
+          "time": "31.10",
+          "source": "USA Swimming",
+          "meet": "2026 BC 48th Annual Blue & Orange Meet",
+          "date": "09/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "36.63",
+          "source": "USA Swimming",
+          "meet": "2026 BC 48th Annual Blue & Orange Meet",
+          "date": "09/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "41.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "38.23",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/26/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:34.08",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "3:04.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/12/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "3:25.14",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/12/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "35.41",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:40.51",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/11/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "3:19.84",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA Last Chance Invitational",
+          "date": "07/11/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "42.65",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:35.52",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:23.42",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "1:11.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN Spring Showdown, Division 2",
+          "date": "03/28/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "3:04.53",
+          "source": "USA Swimming",
+          "meet": "2026 PN Spring Showdown, Division 2",
+          "date": "03/28/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:22.21",
+          "source": "USA Swimming",
+          "meet": "2026 PN UPAC 5th Annual February Fly-In Invitational",
+          "date": "02/14/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM SCY",
+          "time": "2:55.29",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Winter Invitational",
+          "date": "01/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:30.06",
+          "source": "USA Swimming",
+          "meet": "2026 PN KING Beast IMX/IMR Invitational",
+          "date": "01/31/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:41.86",
+          "source": "USA Swimming",
+          "meet": "2025 PN OCA July Jamboree Invitational",
+          "date": "07/12/2025",
+          "course": "LCM"
         }
       ],
       "importMode": "best-times-only",
@@ -3776,179 +4314,284 @@
       "usaSwimmingMemberId": "BE64BE02DA3141",
       "bestTimes": [
         {
-          "event": "50 Back SCY",
-          "time": "38.47",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "25.42",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
-          "event": "50 Back LCM",
-          "time": "43.41",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:10.36",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCM",
-          "time": "1:39.51",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:24.25",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:26.28",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:58.16",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "34.82",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "37.39",
-          "source": "USA Swimming"
+          "event": "100 Fly SCY",
+          "time": "1:05.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Breast SCY",
           "time": "1:12.42",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 ST ASC Bob Thompson Open",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 Breast LCM",
-          "time": "1:22.78",
-          "source": "USA Swimming"
+          "event": "50 Breast SCY",
+          "time": "32.88",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM SCY",
+          "time": "2:24.48",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Breast SCY",
-          "time": "2:40.02",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCM",
-          "time": "3:49.11",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:01.99",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "28.20",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "34.26",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:11.21",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:35.21",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly SCY",
-          "time": "2:46.35",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly LCM",
-          "time": "3:42.18",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "25.97",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "29.44",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "57.86",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:05.76",
-          "source": "USA Swimming"
+          "time": "2:37.30",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Free SCY",
           "time": "2:07.85",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 ST ASC Bob Thompson Open",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 Free SCM",
-          "time": "3:29.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:39.21",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free LCM",
-          "time": "5:40.09",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "500 Free SCY",
-          "time": "6:00.43",
-          "source": "USA Swimming"
+          "event": "50 Fly SCY",
+          "time": "28.20",
+          "source": "USA Swimming",
+          "meet": "2026 ST ASC Bob Thompson Open",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
           "event": "1650 Free SCY",
-          "time": "22:15.23",
-          "source": "USA Swimming"
+          "time": "20:51.12",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Speedo November Invitational",
+          "date": "11/06/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 IM SCY",
-          "time": "1:08.50",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 IM SCY",
-          "time": "2:29.52",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 IM LCM",
-          "time": "2:41.54",
-          "source": "USA Swimming"
+          "event": "100 Free SCY",
+          "time": "57.86",
+          "source": "USA Swimming",
+          "meet": "2026 ST ASC Bob Thompson Open",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:12.30",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 ST ASC Bob Thompson Open",
+          "date": "10/16/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:26.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Seize the Day Invitational",
+          "date": "03/07/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "29.44",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:22.78",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "37.39",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "2:41.54",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:05.76",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:01.99",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:08.50",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Final Summer Splash Invitational",
+          "date": "07/12/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "6:00.43",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Final Summer Splash Invitational",
+          "date": "07/11/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "34.26",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/21/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:24.25",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/20/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly LCM",
+          "time": "3:42.18",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/20/2026",
+          "course": "LCM"
         },
         {
           "event": "400 IM LCM",
           "time": "6:04.94",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/19/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:10.36",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Take a Chance Invitational",
+          "date": "05/09/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:39.21",
+          "source": "USA Swimming",
+          "meet": "2025 IE VS Starlight Open",
+          "date": "06/21/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:58.16",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/26/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:40.09",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "2:46.35",
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Seize the Day Invitational",
+          "date": "03/07/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:35.21",
+          "source": "USA Swimming",
+          "meet": "2025 IE VS Starlight Open",
+          "date": "06/22/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "43.41",
+          "source": "USA Swimming",
+          "meet": "2025 IE VS Starlight Open",
+          "date": "06/21/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back SCY",
+          "time": "38.47",
+          "source": "USA Swimming",
+          "meet": "2024 PN BBST November Invitational",
+          "date": "11/03/2024",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCM",
+          "time": "1:39.51",
+          "source": "USA Swimming",
+          "meet": "2024 PN TAC Spring Thunderbird Invitational",
+          "date": "06/02/2024",
+          "course": "SCM"
+        },
+        {
+          "event": "200 Free SCM",
+          "time": "3:29.22",
+          "source": "USA Swimming",
+          "meet": "2024 PN TAC Spring Thunderbird Invitational",
+          "date": "06/02/2024",
+          "course": "SCM"
+        },
+        {
+          "event": "200 Breast SCM",
+          "time": "3:49.11",
+          "source": "USA Swimming",
+          "meet": "2024 PN TAC Spring Thunderbird Invitational",
+          "date": "06/02/2024",
+          "course": "SCM"
         }
       ],
       "importMode": "best-times-only",
@@ -4190,103 +4833,163 @@
       "bestTimes": [
         {
           "event": "50 Back SCY",
-          "time": "33.01",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "36.49",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:11.28",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:35.19",
-          "source": "USA Swimming"
+          "time": "32.45",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Distance Plus Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
         },
         {
           "event": "50 Breast SCY",
-          "time": "37.10",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "41.54",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:20.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCM",
-          "time": "1:42.68",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "2:53.40",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:20.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "33.33",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "28.86",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "32.14",
-          "source": "USA Swimming"
+          "time": "36.23",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Distance Plus Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Free SCY",
           "time": "1:03.36",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCM",
-          "time": "1:28.78",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:10.73",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN PDST Pentathlon and Last Chance Invitational",
+          "date": "03/07/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Free SCY",
-          "time": "2:21.16",
-          "source": "USA Swimming"
+          "time": "2:19.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Distance Plus Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 IM SCY",
-          "time": "1:14.05",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "28.86",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 IM SCM",
-          "time": "1:36.65",
-          "source": "USA Swimming"
+          "event": "100 Back SCY",
+          "time": "1:11.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN MMSC Marlins Fall Invitational",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "33.33",
+          "source": "USA Swimming",
+          "meet": "2026 PN MMSC Marlins Fall Invitational",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:20.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:35.19",
+          "source": "USA Swimming",
+          "meet": "2026 PN MMSC Marlins Fall Invitational",
+          "date": "10/17/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:37.94",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "2:53.40",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC Fall Classic",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "36.49",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:10.73",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "32.14",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "41.54",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:20.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:14.05",
+          "source": "USA Swimming",
+          "meet": "2026 PN CSC February Mini Meet",
+          "date": "02/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCM",
+          "time": "1:28.78",
+          "source": "USA Swimming",
+          "meet": "2025 PN CSC September Shakeout Intrasquad",
+          "date": "09/20/2025",
+          "course": "SCM"
+        },
+        {
+          "event": "100 IM SCM",
+          "time": "1:36.65",
+          "source": "USA Swimming",
+          "meet": "2025 PN CSC September Shakeout Intrasquad",
+          "date": "09/20/2025",
+          "course": "SCM"
+        },
+        {
+          "event": "100 Breast SCM",
+          "time": "1:42.68",
+          "source": "USA Swimming",
+          "meet": "2025 PN CSC September Shakeout Intrasquad",
+          "date": "09/20/2025",
+          "course": "SCM"
         }
       ],
       "importMode": "best-times-only",
@@ -6159,148 +6862,235 @@
       "bestTimes": [
         {
           "event": "50 Back SCY",
-          "time": "33.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "37.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:08.63",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:20.77",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:28.69",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:58.77",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "35.52",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "41.93",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:14.24",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast LCM",
-          "time": "1:30.76",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "2:39.22",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:11.64",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "31.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "37.18",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:09.74",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:23.96",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly LCM",
-          "time": "3:19.86",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "28.52",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "32.28",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "1:01.45",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:11.96",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:16.96",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:37.64",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free LCM",
-          "time": "5:43.78",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "500 Free SCY",
-          "time": "6:15.47",
-          "source": "USA Swimming"
+          "time": "33.06",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 4",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "100 IM SCY",
           "time": "1:08.66",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Sockeye Sprints",
+          "date": "09/27/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:14.24",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/20/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:28.57",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 IM LCM",
-          "time": "2:55.34",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN BBST Seize the Day Invitational",
+          "date": "03/07/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:22.42",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN IST January Invitational",
+          "date": "01/25/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:09.74",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Fall Open",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:16.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "2:39.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "1:01.45",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Fall Open",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free SCY",
+          "time": "28.52",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Sockeye Sprints",
+          "date": "09/27/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "35.52",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Sockeye Sprints",
+          "date": "09/27/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "31.06",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Sockeye Sprints",
+          "date": "09/26/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:08.63",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Sockeye Sprints",
+          "date": "09/26/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:30.76",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "41.93",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/02/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:20.77",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:11.64",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/02/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "37.18",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/29/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "2:55.34",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST June Invitational",
+          "date": "06/13/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:43.78",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST June Invitational",
+          "date": "06/13/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "32.28",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:23.96",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:37.64",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:11.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly LCM",
+          "time": "3:19.86",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:58.77",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/29/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "37.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:28.69",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "6:15.47",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Winter Invitational",
+          "date": "02/07/2026",
+          "course": "SCY"
         }
       ],
       "importMode": "best-times-only",
@@ -8483,6 +9273,283 @@
       "team": "Olympic Cascade Aquatics",
       "usaSwimmingMemberId": "F160727C8C0D4A",
       "bestTimes": [],
+      "lsc": "PN",
+      "inclusion": "National motivational A or faster, current age"
+    },
+    {
+      "id": "usas_7EFADA7A593345",
+      "name": "Jayden Sun",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "usaSwimmingMemberId": "7EFADA7A593345",
+      "bestTimes": [
+        {
+          "event": "50 Back SCY",
+          "time": "29.11",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 2",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:08.18",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 2",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:17.32",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "58.33",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM SCY",
+          "time": "2:17.99",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 2",
+          "date": "11/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "2:50.02",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 2",
+          "date": "11/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "5:53.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 2",
+          "date": "11/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:09.55",
+          "source": "USA Swimming",
+          "meet": "2026 JUNE BLOCK PARTY",
+          "date": "06/12/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "400 IM SCY",
+          "time": "4:49.05",
+          "source": "USA Swimming",
+          "meet": "2026 PN PAC The Q Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:00.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "35.22",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:08.85",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free SCY",
+          "time": "26.79",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "29.67",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "2:28.55",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "1650 Free SCY",
+          "time": "20:06.74",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:07.93",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "1000 Free SCY",
+          "time": "12:14.41",
+          "source": "USA Swimming",
+          "meet": "2026 PN OCA John Walker Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "2:41.80",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/19/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "33.17r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:10.64r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:31.65",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "40.40",
+          "source": "USA Swimming",
+          "meet": "2026 IE TCCC Tri-City Invitational",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:13.72",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/15/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "33.94",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:09.30",
+          "source": "USA Swimming",
+          "meet": "2026 IE TCCC Tri-City Invitational",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "31.24",
+          "source": "USA Swimming",
+          "meet": "2026 IE TCCC Tri-City Invitational",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:17.46",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:30.24",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly LCM",
+          "time": "2:55.85",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:11.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:33.75",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/26/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 IM LCM",
+          "time": "5:48.83",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Spring Showers Long Course Challenge",
+          "date": "04/24/2026",
+          "course": "LCM"
+        }
+      ],
+      "importMode": "best-times-only",
       "lsc": "PN",
       "inclusion": "National motivational A or faster, current age"
     },
@@ -10783,144 +11850,228 @@
       "usaSwimmingMemberId": "374BAEA4EF144C",
       "bestTimes": [
         {
-          "event": "50 Back SCY",
-          "time": "37.45",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "38.36",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:11.68",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:25.17",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:34.48",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:56.79",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "40.37",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "46.60",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:25.67",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast LCM",
-          "time": "1:39.26",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "3:12.18",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:37.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "33.93",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "37.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:18.80",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:28.88",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "27.83",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "31.59",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "1:02.27",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:10.29",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:14.75",
-          "source": "USA Swimming"
+          "event": "400 Free LCM",
+          "time": "5:15.61",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
         },
         {
           "event": "200 Free LCM",
           "time": "2:31.46",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/17/2026",
+          "course": "LCM"
         },
         {
-          "event": "400 Free LCM",
-          "time": "5:15.61",
-          "source": "USA Swimming"
+          "event": "100 Free LCM",
+          "time": "1:10.29",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
         },
         {
-          "event": "500 Free SCY",
-          "time": "5:55.04",
-          "source": "USA Swimming"
+          "event": "200 Back LCM",
+          "time": "2:56.79",
+          "source": "USA Swimming",
+          "meet": "2025 PN 12&U Long Course Championships",
+          "date": "07/26/2025",
+          "course": "LCM"
         },
         {
-          "event": "100 IM SCY",
-          "time": "1:14.42",
-          "source": "USA Swimming"
+          "event": "50 Back LCM",
+          "time": "38.36",
+          "source": "USA Swimming",
+          "meet": "2025 PN IST Sockeye Springtime Madness",
+          "date": "05/18/2025",
+          "course": "LCM"
         },
         {
-          "event": "200 IM SCY",
-          "time": "2:40.37",
-          "source": "USA Swimming"
+          "event": "50 Free LCM",
+          "time": "31.59",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:28.88",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/31/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "46.60",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/30/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:25.17",
+          "source": "USA Swimming",
+          "meet": "2025 PN OCA July Jamboree Invitational",
+          "date": "07/12/2025",
+          "course": "LCM"
         },
         {
           "event": "200 IM LCM",
           "time": "3:05.05",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC  Summer Classic Invitational",
+          "date": "06/28/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "37.06",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/29/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:39.26",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Apple Capital",
+          "date": "05/29/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free SCY",
+          "time": "27.83",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Free SCY",
+          "time": "2:14.75",
+          "source": "USA Swimming",
+          "meet": "2025 PN CSC Mystery Meet",
+          "date": "03/02/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:34.48",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "1:02.27",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "02/28/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:11.68",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Winter Invitational",
+          "date": "01/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "5:55.04",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 1",
+          "date": "02/27/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:18.80",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Winter Invitational",
+          "date": "01/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast SCY",
+          "time": "3:12.18",
+          "source": "USA Swimming",
+          "meet": "2026 PN KING Beast IMX/IMR Invitational",
+          "date": "01/31/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:40.56",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN KING Beast IMX/IMR Invitational",
+          "date": "01/31/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM SCY",
+          "time": "2:40.37",
+          "source": "USA Swimming",
+          "meet": "2025 PN CSC Mystery Meet",
+          "date": "03/01/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:25.67",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Winter Invitational",
+          "date": "01/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:14.42",
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/04/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:37.46",
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC  Summer Classic Invitational",
+          "date": "06/28/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "33.93",
+          "source": "USA Swimming",
+          "meet": "2024 OR THSC FALL INVITATIONAL",
+          "date": "10/20/2024",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "40.37",
+          "source": "USA Swimming",
+          "meet": "2025 PN SMAC Winter Invitational",
+          "date": "01/26/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back SCY",
+          "time": "37.45",
+          "source": "USA Swimming",
+          "meet": "2024 PN WAVE 11&O Short Course Finale",
+          "date": "04/07/2024",
+          "course": "SCY"
         }
       ],
       "importMode": "best-times-only",
@@ -10936,184 +12087,300 @@
       "usaSwimmingMemberId": "208B583FC24C4C",
       "bestTimes": [
         {
-          "event": "25 Back SCY",
-          "time": "21.64",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back SCY",
-          "time": "32.50",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "39.47r",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:14.70",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:22.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:35.03",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "2:59.85",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "25 Breast SCY",
-          "time": "25.73",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "39.27",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "47.26",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "28.63",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Breast SCY",
-          "time": "1:26.99",
-          "source": "USA Swimming"
+          "time": "1:24.17",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 Breast LCM",
-          "time": "1:43.28",
-          "source": "USA Swimming"
+          "event": "200 Free SCY",
+          "time": "2:17.38",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "37.96",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Breast SCY",
-          "time": "3:02.87",
-          "source": "USA Swimming"
+          "time": "2:57.03",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 Breast LCM",
-          "time": "3:38.65",
-          "source": "USA Swimming"
+          "event": "400 IM SCY",
+          "time": "5:22.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 3",
+          "date": "11/20/2026",
+          "course": "SCY"
         },
         {
-          "event": "25 Fly SCY",
-          "time": "19.06",
-          "source": "USA Swimming"
+          "event": "100 Fly SCY",
+          "time": "1:09.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN PAC The Q Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "2:40.57",
+          "source": "USA Swimming",
+          "meet": "2026 PN PAC The Q Meet",
+          "date": "11/15/2026",
+          "course": "SCY"
         },
         {
           "event": "50 Fly SCY",
           "time": "31.17",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 OR THSC FALL INVITATIONAL",
+          "date": "10/25/2026",
+          "course": "SCY"
         },
         {
-          "event": "50 Fly LCM",
-          "time": "35.14",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:10.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:20.97",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly SCY",
-          "time": "2:44.82",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly LCM",
-          "time": "3:15.78",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "25 Free SCY",
-          "time": "17.87",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "29.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "34.77",
-          "source": "USA Swimming"
+          "event": "50 Back SCY",
+          "time": "32.50",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Free SCY",
           "time": "1:03.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:15.19",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:18.89",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:38.80",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free LCM",
-          "time": "5:27.59",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "500 Free SCY",
-          "time": "6:11.12",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "800 Free LCM",
-          "time": "11:20.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "1500 Free LCM",
-          "time": "21:43.83",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 IM SCY",
-          "time": "1:12.31",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 OR THSC FALL INVITATIONAL",
+          "date": "10/25/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:32.73",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/11/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:35.03",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:12.31",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "6:11.12",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/16/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:14.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Fall Kick-Off Invitational",
+          "date": "10/11/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "39.47r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:20.97",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:38.80",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/25/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "35.14",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:22.06",
+          "source": "USA Swimming",
+          "meet": "2026 IE TCCC Tri-City Invitational",
+          "date": "05/29/2026",
+          "course": "LCM"
         },
         {
           "event": "200 IM LCM",
           "time": "2:58.93",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/24/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:27.59",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Summer Classic",
+          "date": "06/26/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly LCM",
+          "time": "3:15.78",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Championships",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "1500 Free LCM",
+          "time": "21:43.83",
+          "source": "USA Swimming",
+          "meet": "2026 PN 12&U Long Course Time Trials",
+          "date": "07/23/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:43.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN C Age Group Seattle Open",
+          "date": "07/11/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "34.77",
+          "source": "USA Swimming",
+          "meet": "2026 PN SMAC Summer Classic",
+          "date": "06/27/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "47.26",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/21/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "2:59.85",
+          "source": "USA Swimming",
+          "meet": "2026 PN IST Springtime Madness Long Course Challenge",
+          "date": "05/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:38.65",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/21/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:15.19",
+          "source": "USA Swimming",
+          "meet": "2026 IE TCCC Tri-City Invitational",
+          "date": "05/31/2026",
+          "course": "LCM"
         },
         {
           "event": "400 IM LCM",
           "time": "6:32.86",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/19/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "800 Free LCM",
+          "time": "11:20.46",
+          "source": "USA Swimming",
+          "meet": "2026 IE VS Starlight Open",
+          "date": "06/19/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "25 Free SCY",
+          "time": "17.87",
+          "source": "USA Swimming",
+          "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
+          "date": "03/02/2024",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Fly SCY",
+          "time": "19.06",
+          "source": "USA Swimming",
+          "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
+          "date": "03/02/2024",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Back SCY",
+          "time": "21.64",
+          "source": "USA Swimming",
+          "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
+          "date": "03/02/2024",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Breast SCY",
+          "time": "25.73",
+          "source": "USA Swimming",
+          "meet": "2024 PN PDST March Pentathlon and Last Chance Invitational",
+          "date": "03/02/2024",
+          "course": "SCY"
         }
       ],
       "importMode": "best-times-only",
@@ -15860,144 +17127,228 @@
       "usaSwimmingMemberId": "A4F2D7E2B82649",
       "bestTimes": [
         {
-          "event": "25 Back SCY",
-          "time": "24.80",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "25.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "50 Back SCY",
-          "time": "33.03",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "38.56",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:13.39",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:29.19",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:39.56",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "31.70",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "36.72",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast SCY",
-          "time": "1:10.18",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Breast LCM",
-          "time": "1:21.61",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast SCY",
-          "time": "2:37.68",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "2:58.95",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "31.42",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "45.03",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:15.49",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:49.18",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "26.35",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "30.19r",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "59.62",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:06.73",
-          "source": "USA Swimming"
+          "time": "32.35",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Free SCY",
           "time": "2:09.35",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Rocktober Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 Free LCM",
-          "time": "2:55.20",
-          "source": "USA Swimming"
+          "event": "50 Fly SCY",
+          "time": "30.59",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
-          "event": "500 Free SCY",
-          "time": "7:09.43",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 IM SCY",
-          "time": "1:09.72",
-          "source": "USA Swimming"
+          "event": "100 Free SCY",
+          "time": "57.10",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:23.48",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Rocktober Invitational",
+          "date": "10/04/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 IM LCM",
-          "time": "3:27.51",
-          "source": "USA Swimming"
+          "event": "50 Breast SCY",
+          "time": "31.70",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/22/2026",
+          "course": "SCY"
         },
         {
-          "event": "400 IM SCY",
-          "time": "5:16.01",
-          "source": "USA Swimming"
+          "event": "200 Breast SCY",
+          "time": "2:37.68",
+          "source": "USA Swimming",
+          "meet": "2026 PN SRST Summer Invitational",
+          "date": "06/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:13.39",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/17/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Breast SCY",
+          "time": "1:10.18",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:09.72",
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 2",
+          "date": "03/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "30.19r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:21.61",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "36.72",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:06.73",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "2:58.95",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Fly SCY",
+          "time": "1:15.49",
+          "source": "USA Swimming",
+          "meet": "2026 PN SRST Summer Invitational",
+          "date": "06/21/2026",
+          "course": "SCY"
         },
         {
           "event": "400 IM LCM",
           "time": "6:15.67",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/07/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:29.19",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/06/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "38.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 IM SCY",
+          "time": "5:16.01",
+          "source": "USA Swimming",
+          "meet": "2026 PN Northwest Region Age Group Championships",
+          "date": "03/20/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:39.56",
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Winter Invitational",
+          "date": "01/24/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:49.18",
+          "source": "USA Swimming",
+          "meet": "2025 PN C Age Group Seattle Open",
+          "date": "07/19/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:55.20",
+          "source": "USA Swimming",
+          "meet": "2025 PN C Age Group Seattle Open",
+          "date": "07/18/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "45.03",
+          "source": "USA Swimming",
+          "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
+          "date": "05/31/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "3:27.51",
+          "source": "USA Swimming",
+          "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
+          "date": "05/31/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "500 Free SCY",
+          "time": "7:09.43",
+          "source": "USA Swimming",
+          "meet": "2025 PN SSCD Winter Open",
+          "date": "02/09/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "25 Back SCY",
+          "time": "24.80",
+          "source": "USA Swimming",
+          "meet": "2022 PN WAVE Rocktober Invitational",
+          "date": "10/14/2022",
+          "course": "SCY"
         }
       ],
       "importMode": "best-times-only",
@@ -16070,154 +17421,244 @@
       "usaSwimmingMemberId": "6130D75A94D248",
       "bestTimes": [
         {
-          "event": "50 Back SCY",
-          "time": "31.64",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Back LCM",
-          "time": "36.54",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back SCY",
-          "time": "1:12.26",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Back LCM",
-          "time": "1:33.43",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back SCY",
-          "time": "2:41.75",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Back LCM",
-          "time": "3:16.01",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast SCY",
-          "time": "33.06",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Breast LCM",
-          "time": "38.46",
-          "source": "USA Swimming"
+          "event": "100 Fly SCY",
+          "time": "1:05.10",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
         },
         {
           "event": "100 Breast SCY",
           "time": "1:12.28",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN February Age Group Invitational, Division 2",
+          "date": "03/01/2026",
+          "course": "SCY"
         },
         {
-          "event": "100 Breast LCM",
-          "time": "1:23.36",
-          "source": "USA Swimming"
+          "event": "200 Free SCY",
+          "time": "2:04.41",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/22/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Breast SCY",
+          "time": "32.36",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Free SCY",
+          "time": "56.23",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/21/2026",
+          "course": "SCY"
         },
         {
           "event": "200 Breast SCY",
           "time": "2:34.77",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Breast LCM",
-          "time": "3:02.42",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly SCY",
-          "time": "29.12",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Fly LCM",
-          "time": "33.42",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly SCY",
-          "time": "1:07.40",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Fly LCM",
-          "time": "1:29.46",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Fly SCY",
-          "time": "2:54.32",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free SCY",
-          "time": "26.14",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "50 Free LCM",
-          "time": "29.01r",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free SCY",
-          "time": "56.91",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 Free LCM",
-          "time": "1:04.97",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free SCY",
-          "time": "2:04.44",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "200 Free LCM",
-          "time": "2:24.10",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "400 Free LCM",
-          "time": "5:04.28",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
           "event": "500 Free SCY",
-          "time": "5:38.71",
-          "source": "USA Swimming"
-        },
-        {
-          "event": "100 IM SCY",
-          "time": "1:06.63",
-          "source": "USA Swimming"
+          "time": "5:36.35",
+          "source": "USA Swimming",
+          "meet": "2026 PN November Age Group Invitational, Division 5",
+          "date": "11/20/2026",
+          "course": "SCY"
         },
         {
           "event": "200 IM SCY",
           "time": "2:19.53",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Fall Classic",
+          "date": "10/18/2026",
+          "course": "SCY"
         },
         {
-          "event": "200 IM LCM",
-          "time": "3:07.71",
-          "source": "USA Swimming"
+          "event": "50 Free SCY",
+          "time": "26.14",
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Rocktober Invitational",
+          "date": "10/03/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Fly SCY",
+          "time": "29.12",
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Rocktober Invitational",
+          "date": "10/04/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Back SCY",
+          "time": "31.64",
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Winter Invitational",
+          "date": "01/24/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "100 IM SCY",
+          "time": "1:06.63",
+          "source": "USA Swimming",
+          "meet": "2026 PN WAVE Summer Pentathlon Invitational",
+          "date": "08/01/2026",
+          "course": "SCY"
+        },
+        {
+          "event": "50 Free LCM",
+          "time": "29.01r",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Back LCM",
+          "time": "36.54",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Breast LCM",
+          "time": "1:23.36",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "400 Free LCM",
+          "time": "5:04.28",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/18/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Breast LCM",
+          "time": "38.46",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/02/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Free LCM",
+          "time": "1:04.97",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Time Trials",
+          "date": "07/17/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Breast LCM",
+          "time": "3:02.42",
+          "source": "USA Swimming",
+          "meet": "2026 PN 13&O Long Course Championships",
+          "date": "07/16/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Free LCM",
+          "time": "2:24.10",
+          "source": "USA Swimming",
+          "meet": "2026 PN VAST Summer Sprints",
+          "date": "06/07/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "50 Fly LCM",
+          "time": "33.42",
+          "source": "USA Swimming",
+          "meet": "2026 PN BC May Flowers Long Course Challenge",
+          "date": "05/03/2026",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back SCY",
+          "time": "1:12.26",
+          "source": "USA Swimming",
+          "meet": "2025 PN BISC Bob Miller Sprint/Distance Classic",
+          "date": "11/02/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "100 Fly LCM",
+          "time": "1:29.46",
+          "source": "USA Swimming",
+          "meet": "2025 PN VAST Summer Sprints and Distance Challenge",
+          "date": "05/31/2025",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Fly SCY",
+          "time": "2:54.32",
+          "source": "USA Swimming",
+          "meet": "Northwest Region Age Group Championships",
+          "date": "03/21/2025",
+          "course": "SCY"
         },
         {
           "event": "400 IM SCY",
           "time": "5:32.35",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2025 PN SRST Champs Qualifier",
+          "date": "02/21/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "200 Back SCY",
+          "time": "2:41.75",
+          "source": "USA Swimming",
+          "meet": "2025 PN WAVE Winter Invitational",
+          "date": "01/26/2025",
+          "course": "SCY"
+        },
+        {
+          "event": "200 IM LCM",
+          "time": "3:07.71",
+          "source": "USA Swimming",
+          "meet": "2024 PN 14&U Long Course Champs",
+          "date": "07/26/2024",
+          "course": "LCM"
         },
         {
           "event": "400 IM LCM",
           "time": "6:45.16",
-          "source": "USA Swimming"
+          "source": "USA Swimming",
+          "meet": "2024 PN C Age Group Seattle Open",
+          "date": "07/12/2024",
+          "course": "LCM"
+        },
+        {
+          "event": "200 Back LCM",
+          "time": "3:16.01",
+          "source": "USA Swimming",
+          "meet": "2024 PN BC May Flowers",
+          "date": "05/05/2024",
+          "course": "LCM"
+        },
+        {
+          "event": "100 Back LCM",
+          "time": "1:33.43",
+          "source": "USA Swimming",
+          "meet": "2024 PN BC May Flowers",
+          "date": "05/04/2024",
+          "course": "LCM"
         }
       ],
       "importMode": "best-times-only",
@@ -18161,7 +19602,7 @@
       "inclusion": "National motivational A or faster, current age"
     }
   ],
-  "verifiedAt": "2026-11-02T15:43:41.215Z",
+  "verifiedAt": "2026-11-25T05:10:28.969Z",
   "expansion": {
     "scope": "PN ages 10-14 with current-age national A-or-faster times",
     "complete": false

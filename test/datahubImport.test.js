@@ -22,6 +22,16 @@ test('A-only snapshot saves personal bests without manufacturing race history',a
     assert.equal(roster.swimmers[0].bestTimes[0].time,cuts.A);
     assert.equal(roster.swimmers[0].bestTimes[0].date,undefined);
     assert.equal(JSON.parse(await fs.readFile(path.join(directory,'datahub-history.json'),'utf8'))[id].length,1);
+    const status=JSON.parse(await fs.readFile(path.join(directory,'datahub-refresh-status.json'),'utf8')).swimmers[id];
+    assert.equal(status.mode,'best-times-only');
+    assert.ok(status.lastImportedAt);
+    await importSnapshot({...snapshot,meets:['Verified meet'],swimmers:{[id]:[[0,cuts.A,0,'11/22/2026']]}},directory);
+    const best=JSON.parse(await fs.readFile(path.join(directory,'swimmer-roster.json'),'utf8')).swimmers[0].bestTimes[0];
+    assert.equal(best.meet,'Verified meet');
+    assert.equal(best.date,'11/22/2026');
+    assert.equal(best.course,'SCY');
+    await importSnapshot({...snapshot,refreshExisting:true,swimmers:{[id]:[[0,'2:00.00']]}},directory);
+    await assert.rejects(importSnapshot({...snapshot,refreshExisting:true,swimmers:{UNKNOWN:[[0,'2:00.00']]}},directory),/known member ID/);
     await assert.rejects(importSnapshot({...snapshot,swimmers:{[id]:[[0,cuts.AA]]}},directory),/below AA/);
   }finally{await fs.rm(directory,{recursive:true,force:true});}
 });

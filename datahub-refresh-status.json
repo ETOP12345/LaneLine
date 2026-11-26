@@ -1,25 +1,24 @@
 {
   "status": "manual",
-  "checkedAt": "2026-11-11T20:27:06.888Z",
+  "checkedAt": "2026-11-25T05:54:33.130Z",
   "swimmers": {
     "9DCE8A4B52EF4A": {
       "status": "manual",
-      "checkedAt": "2026-11-11T20:27:06.888Z",
+      "checkedAt": "2026-11-25T04:26:28.032Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-11-11T20:27:06.888Z",
-      "savedRows": 288,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T04:26:28.032Z",
+      "savedRows": 331,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "529E741DB1114E": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:06:52.527Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:25:25.139Z",
-      "savedRows": 198,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:06:52.527Z",
+      "savedRows": 207,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C8B64773962AF0": {
       "status": "failed",
@@ -32,34 +31,31 @@
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "03A64F943FE144": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:09:26.839Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
+      "lastImportedAt": "2026-11-25T05:09:26.839Z",
       "savedRows": 376,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
     },
     "08104D29B8F2BE": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:06:22.962Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:23:53.729Z",
-      "savedRows": 288,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:06:22.962Z",
+      "savedRows": 301,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "7EFADA7A593345": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:09:43.044Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-28T22:38:32.996Z",
+      "lastImportedAt": "2026-11-25T05:09:43.044Z",
       "savedRows": 340,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
     },
     "1D0A99255F1747": {
       "status": "failed",
@@ -82,184 +78,166 @@
       "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
     },
     "9C37DAB7527E4C": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:07:31.159Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:38:00.748Z",
-      "savedRows": 283,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:07:31.159Z",
+      "savedRows": 289,
+      "newestSwim": "11/21/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E342A681F17C40": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:20:41.995Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 350,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:20:41.995Z",
+      "savedRows": 362,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "7778DC49F58340": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:29:15.609Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 483,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:29:15.609Z",
+      "savedRows": 499,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "50B74871BCBF63": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:18:41.243Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 259,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:18:41.243Z",
+      "savedRows": 277,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "7B37B279CA2D47": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:20:11.921Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 366,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:20:11.921Z",
+      "savedRows": 386,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "785C210D7BB64E": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:16:47.769Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 458,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:16:47.769Z",
+      "savedRows": 479,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "800953DB0A0C44": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:23:12.796Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 285,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:23:12.796Z",
+      "savedRows": 303,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "AABE53976B9242": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:18:11.577Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 300,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:18:11.577Z",
+      "savedRows": 318,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "5DE42DD031024B": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:19:11.561Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 207,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming denied access. Configure or renew USA_SWIMMING_AUTHORIZATION in GitHub Actions secrets."
+      "lastImportedAt": "2026-11-25T05:19:11.561Z",
+      "savedRows": 219,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "17A348CC298A4E": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:21:11.189Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
+      "lastImportedAt": "2026-11-25T05:21:11.189Z",
       "savedRows": 148,
       "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E096782D93DD42": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:17:41.081Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 313,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:17:41.081Z",
+      "savedRows": 326,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E0ADACF9E7C842": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:03:38.373Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 192,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:03:38.373Z",
+      "savedRows": 205,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "90E0F862112C40": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:30:44.617Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 375,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:30:44.617Z",
+      "savedRows": 394,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "5D51C879381F47": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:30:14.740Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 344,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:30:14.740Z",
+      "savedRows": 363,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C44F095812E04C": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:17:11.391Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 266,
-      "newestSwim": "10/17/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:17:11.391Z",
+      "savedRows": 283,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C553CD820E064C": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:23:44.874Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 279,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:23:44.874Z",
+      "savedRows": 289,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "F16B5756721B4C": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:19:41.135Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 188,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:19:41.135Z",
+      "savedRows": 201,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "1A694E4DBFEA5B": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:04:09.200Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 363,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:04:09.200Z",
+      "savedRows": 374,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "902003076CE742": {
       "status": "failed",
@@ -272,44 +250,40 @@
       "error": "USA Swimming history could not be retrieved. Saved history was preserved."
     },
     "2E856638974B43": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:05:42.548Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 397,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:05:42.548Z",
+      "savedRows": 410,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C8F738E36CF04A": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:04:42.715Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 317,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:04:42.715Z",
+      "savedRows": 343,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "6236092E58254D": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:21:41.885Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 308,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:21:41.885Z",
+      "savedRows": 327,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "2741ED402CFB42": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:22:11.981Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 184,
-      "newestSwim": "10/25/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:22:11.981Z",
+      "savedRows": 195,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "413D1D399AE444": {
       "status": "failed",
@@ -322,34 +296,31 @@
       "error": "USA Swimming history could not be retrieved. Saved history was preserved."
     },
     "0EEE07E508FD46": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:05:11.843Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 258,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:05:11.843Z",
+      "savedRows": 275,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "8EE6BF587B3D49": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:29:44.237Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 216,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:29:44.237Z",
+      "savedRows": 234,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "A0961C31BB724D": {
-      "status": "failed",
-      "checkedAt": "2026-10-31T18:44:27.167Z",
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:22:42.593Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T03:26:48.105Z",
-      "savedRows": 280,
-      "newestSwim": "10/18/2026",
-      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate.",
-      "error": "USA Swimming history could not be retrieved. Saved history was preserved."
+      "lastImportedAt": "2026-11-25T05:22:42.593Z",
+      "savedRows": 300,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "8BCF57B9FCA84B": {
       "status": "manual",
@@ -371,11 +342,11 @@
     },
     "13210C6AF15D46": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:07:14.768Z",
+      "checkedAt": "2026-11-25T05:31:17.035Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:07:14.768Z",
-      "savedRows": 370,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:31:17.035Z",
+      "savedRows": 383,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E95BDCC8C7A843": {
@@ -425,11 +396,11 @@
     },
     "71336307E26842": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:14:42.188Z",
+      "checkedAt": "2026-11-25T05:33:51.387Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:14:42.188Z",
-      "savedRows": 368,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:33:51.387Z",
+      "savedRows": 380,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "66C543F09B1F11": {
@@ -461,74 +432,74 @@
     },
     "92292F66666048": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:32:41.357Z",
+      "checkedAt": "2026-11-25T05:34:42.267Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:32:41.357Z",
-      "savedRows": 526,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:34:42.267Z",
+      "savedRows": 541,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "4DC9F1C8BFA349": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:33:54.748Z",
+      "checkedAt": "2026-11-25T05:35:12.284Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:33:54.748Z",
-      "savedRows": 570,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:35:12.284Z",
+      "savedRows": 586,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "668DF3E7B46A4B": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:34:56.416Z",
+      "checkedAt": "2026-11-25T05:35:42.044Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:34:56.416Z",
-      "savedRows": 545,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:35:42.044Z",
+      "savedRows": 562,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E28CCC4F63484B": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:36:01.729Z",
+      "checkedAt": "2026-11-25T05:36:33.772Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:36:01.729Z",
-      "savedRows": 778,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:36:33.772Z",
+      "savedRows": 792,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "3E553E9572C84E": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:37:14.990Z",
+      "checkedAt": "2026-11-25T05:37:03.296Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:37:14.990Z",
-      "savedRows": 492,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:37:03.296Z",
+      "savedRows": 502,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "7E805664208E4D": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:38:16.978Z",
+      "checkedAt": "2026-11-25T05:37:33.088Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:38:16.978Z",
-      "savedRows": 506,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:37:33.088Z",
+      "savedRows": 529,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "09F75D7D285443": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:39:18.906Z",
+      "checkedAt": "2026-11-25T05:38:02.618Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:39:18.906Z",
-      "savedRows": 426,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:38:02.618Z",
+      "savedRows": 439,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "D7B2DE627D4540": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:40:56.960Z",
+      "checkedAt": "2026-11-25T05:38:33.167Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:40:56.960Z",
-      "savedRows": 255,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:38:33.167Z",
+      "savedRows": 260,
+      "newestSwim": "11/13/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "86C714EEC7EC48": {
@@ -542,45 +513,45 @@
     },
     "50EABA45BA2D4E": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:43:07.154Z",
+      "checkedAt": "2026-11-25T05:39:05.980Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:43:07.154Z",
-      "savedRows": 463,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:39:05.980Z",
+      "savedRows": 475,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "EDC41E5D12CE4D": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:46:29.976Z",
+      "checkedAt": "2026-11-25T05:39:42.480Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:46:29.976Z",
-      "savedRows": 111,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:39:42.480Z",
+      "savedRows": 121,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "4A9BD8C5889242": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:47:44.082Z",
+      "checkedAt": "2026-11-25T05:40:14.166Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:47:44.082Z",
-      "savedRows": 293,
-      "newestSwim": "10/23/2026",
+      "lastImportedAt": "2026-11-25T05:40:14.166Z",
+      "savedRows": 304,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "A3F1474D52264C": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:48:46.249Z",
+      "checkedAt": "2026-11-25T05:40:43.390Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:48:46.249Z",
-      "savedRows": 121,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:40:43.390Z",
+      "savedRows": 127,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "9F2CFE5098DF4A": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:49:47.941Z",
+      "checkedAt": "2026-11-25T05:41:13.509Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:49:47.941Z",
+      "lastImportedAt": "2026-11-25T05:41:13.509Z",
       "savedRows": 114,
       "newestSwim": "10/18/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
@@ -605,11 +576,11 @@
     },
     "1877DE33FEE94C": {
       "status": "manual",
-      "checkedAt": "2026-10-29T05:53:35.596Z",
+      "checkedAt": "2026-11-25T05:41:43.705Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T05:53:35.596Z",
-      "savedRows": 211,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:41:43.705Z",
+      "savedRows": 220,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "77112101BB4349": {
@@ -677,47 +648,47 @@
     },
     "1923958E8F0949": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:27:12.727Z",
+      "checkedAt": "2026-11-25T05:42:15.091Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:27:12.727Z",
-      "savedRows": 309,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:42:15.091Z",
+      "savedRows": 322,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "94DA7C95C5D844": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:28:59.007Z",
+      "checkedAt": "2026-11-25T05:42:49.885Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:28:59.007Z",
-      "savedRows": 550,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:42:49.885Z",
+      "savedRows": 563,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "7B37700724A743": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:32:33.653Z",
+      "checkedAt": "2026-11-25T05:43:18.091Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:32:33.653Z",
-      "savedRows": 394,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:43:18.091Z",
+      "savedRows": 407,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "38A6F355CE7942": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:34:20.055Z",
+      "checkedAt": "2026-11-25T05:43:49.649Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:34:20.055Z",
-      "savedRows": 348,
-      "newestSwim": "10/17/2026",
+      "lastImportedAt": "2026-11-25T05:43:49.649Z",
+      "savedRows": 358,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "E3E4F1341FCF47": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:36:08.717Z",
+      "checkedAt": "2026-11-25T05:44:16.672Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:36:08.717Z",
-      "savedRows": 154,
-      "newestSwim": "10/17/2026",
+      "lastImportedAt": "2026-11-25T05:44:16.672Z",
+      "savedRows": 171,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "4BB245C38A1644": {
@@ -740,20 +711,20 @@
     },
     "4A8E4FA406BF45": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:43:16.285Z",
+      "checkedAt": "2026-11-25T05:44:50.156Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:43:16.285Z",
-      "savedRows": 218,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:44:50.156Z",
+      "savedRows": 242,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "EAFE49F392EED8": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:45:00.507Z",
+      "checkedAt": "2026-11-25T05:45:20.250Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:45:00.507Z",
-      "savedRows": 297,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:45:20.250Z",
+      "savedRows": 301,
+      "newestSwim": "11/21/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "CB0FC4E876F540": {
@@ -776,11 +747,11 @@
     },
     "C003D5A4C3C24A": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:50:23.359Z",
+      "checkedAt": "2026-11-25T05:45:51.772Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:50:23.359Z",
-      "savedRows": 444,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:45:51.772Z",
+      "savedRows": 457,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C7276F2BABC94E": {
@@ -794,11 +765,11 @@
     },
     "4AB3E1B3605E4D": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:53:58.618Z",
+      "checkedAt": "2026-11-25T05:46:18.061Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:53:58.618Z",
-      "savedRows": 278,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:46:18.061Z",
+      "savedRows": 295,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "01B8061DA2D04E": {
@@ -812,47 +783,47 @@
     },
     "141A7DC4174C4B": {
       "status": "manual",
-      "checkedAt": "2026-10-29T23:57:35.749Z",
+      "checkedAt": "2026-11-25T05:46:49.676Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-29T23:57:35.749Z",
-      "savedRows": 519,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:46:49.676Z",
+      "savedRows": 538,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "A37022C19B0146": {
       "status": "manual",
-      "checkedAt": "2026-10-30T00:01:12.770Z",
+      "checkedAt": "2026-11-25T05:47:37.304Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T00:01:12.770Z",
-      "savedRows": 312,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:47:37.304Z",
+      "savedRows": 327,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "B289882110604F": {
       "status": "manual",
-      "checkedAt": "2026-10-30T00:02:59.864Z",
+      "checkedAt": "2026-11-25T05:48:07.701Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T00:02:59.864Z",
-      "savedRows": 391,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:48:07.701Z",
+      "savedRows": 407,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "18387FEB9B184D": {
       "status": "manual",
-      "checkedAt": "2026-10-30T00:04:49.984Z",
+      "checkedAt": "2026-11-25T05:48:36.897Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T00:04:49.984Z",
-      "savedRows": 286,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:48:36.897Z",
+      "savedRows": 298,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "54C91C74F65240": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:46:14.504Z",
+      "checkedAt": "2026-11-25T05:49:07.387Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:46:14.504Z",
-      "savedRows": 377,
-      "newestSwim": "10/04/2026",
+      "lastImportedAt": "2026-11-25T05:49:07.387Z",
+      "savedRows": 404,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "C635D0FD9CBB4F": {
@@ -866,38 +837,38 @@
     },
     "4A984FFFB06724": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:49:32.355Z",
+      "checkedAt": "2026-11-25T05:49:37.108Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:49:32.355Z",
-      "savedRows": 305,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:49:37.108Z",
+      "savedRows": 319,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "21C459BCFD4540": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:51:30.587Z",
+      "checkedAt": "2026-11-25T05:50:12.057Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:51:30.587Z",
-      "savedRows": 662,
-      "newestSwim": "10/25/2026",
+      "lastImportedAt": "2026-11-25T05:50:12.057Z",
+      "savedRows": 674,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "866C11514EF943": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:53:18.610Z",
+      "checkedAt": "2026-11-25T05:50:50.081Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:53:18.610Z",
-      "savedRows": 455,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:50:50.081Z",
+      "savedRows": 468,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "81C4CB7EFA8F4D": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:55:08.669Z",
+      "checkedAt": "2026-11-25T05:51:20.624Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:55:08.669Z",
-      "savedRows": 525,
-      "newestSwim": "10/16/2026",
+      "lastImportedAt": "2026-11-25T05:51:20.624Z",
+      "savedRows": 536,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "14F140640DE943": {
@@ -911,20 +882,20 @@
     },
     "DD2C370151E64C": {
       "status": "manual",
-      "checkedAt": "2026-10-30T03:58:52.465Z",
+      "checkedAt": "2026-11-25T05:51:50.438Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T03:58:52.465Z",
-      "savedRows": 477,
-      "newestSwim": "10/16/2026",
+      "lastImportedAt": "2026-11-25T05:51:50.438Z",
+      "savedRows": 490,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "550C2D736E244C": {
       "status": "manual",
-      "checkedAt": "2026-10-30T04:00:52.619Z",
+      "checkedAt": "2026-11-25T05:52:24.620Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T04:00:52.619Z",
-      "savedRows": 273,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:52:24.620Z",
+      "savedRows": 282,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "77A23F35899044": {
@@ -1001,38 +972,38 @@
     },
     "A68EE16CE62D4B": {
       "status": "manual",
-      "checkedAt": "2026-10-30T04:17:10.712Z",
+      "checkedAt": "2026-11-25T05:52:55.284Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T04:17:10.712Z",
-      "savedRows": 403,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:52:55.284Z",
+      "savedRows": 412,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "B728AE3360424F": {
       "status": "manual",
-      "checkedAt": "2026-10-30T04:18:57.687Z",
+      "checkedAt": "2026-11-25T05:53:25.496Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T04:18:57.687Z",
-      "savedRows": 390,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:53:25.496Z",
+      "savedRows": 402,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "B532049E2D5F4E": {
       "status": "manual",
-      "checkedAt": "2026-10-30T04:20:51.704Z",
+      "checkedAt": "2026-11-25T05:54:00.637Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T04:20:51.704Z",
+      "lastImportedAt": "2026-11-25T05:54:00.637Z",
       "savedRows": 388,
       "newestSwim": "10/18/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "DE72F98FC47545": {
       "status": "manual",
-      "checkedAt": "2026-10-30T04:22:45.418Z",
+      "checkedAt": "2026-11-25T05:54:33.130Z",
       "lastSuccessAt": null,
-      "lastImportedAt": "2026-10-30T04:22:45.418Z",
-      "savedRows": 610,
-      "newestSwim": "10/18/2026",
+      "lastImportedAt": "2026-11-25T05:54:33.130Z",
+      "savedRows": 635,
+      "newestSwim": "11/22/2026",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
     },
     "4C1AB665821A4C": {
@@ -4085,6 +4056,105 @@
       "savedRows": 15,
       "newestSwim": "07/26/2025",
       "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "A4F2D7E2B82649": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:35:03.235Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:35:03.235Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "7EAC7C4279844C": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:35:05.187Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:35:05.187Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "374BAEA4EF144C": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:10:28.969Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T05:10:28.969Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "412ECB37606B4D": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:35:10.212Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:35:10.212Z",
+      "savedRows": 293,
+      "newestSwim": "11/22/2026",
+      "note": "Verified in the signed-in Data Hub. Unattended API access remains separate."
+    },
+    "208B583FC24C4C": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:35:58.150Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:35:58.150Z",
+      "savedRows": 2,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "85CE6F1B287141": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:59:19.537Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:59:19.537Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "8325A0CB3A6142": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T04:59:48.594Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T04:59:48.594Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "6130D75A94D248": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:00:18.798Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T05:00:18.798Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "4525C94AB4C74B": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:00:49.193Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T05:00:49.193Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "6C7F487E5ECE46": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:01:20.260Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T05:01:20.260Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
+    },
+    "BE64BE02DA3141": {
+      "status": "manual",
+      "checkedAt": "2026-11-25T05:02:56.569Z",
+      "lastSuccessAt": null,
+      "lastImportedAt": "2026-11-25T05:02:56.569Z",
+      "savedRows": 0,
+      "mode": "best-times-only",
+      "note": "Verified personal bests in the signed-in Data Hub; existing race history preserved."
     }
   }
 }

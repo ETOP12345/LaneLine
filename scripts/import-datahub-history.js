@@ -28,6 +28,7 @@ async function importSnapshot(snapshot, directory = root) {
   if (!Array.isArray(snapshot.meets) || !Array.isArray(snapshot.events) || !snapshot.swimmers) {
     throw new Error('Expected meets, events, and swimmers in the verified Data Hub snapshot.');
   }
+  if(snapshot.refreshExisting)for(const id of Object.keys(snapshot.swimmers))if(!Object.hasOwn(histories,id))throw new Error('Existing-swimmer refresh requires a known member ID.');
   if(pnsScope&&!snapshot.bestTimesOnly&&snapshot.profiles?.length===1){
     const profile=snapshot.profiles[0],id=profile.usaSwimmingMemberId,values=snapshot.swimmers[id];
     if(Array.isArray(values)&&Object.keys(snapshot.swimmers).length===1){
@@ -50,7 +51,7 @@ async function importSnapshot(snapshot, directory = root) {
         return {event:code.replace(/\b(FR|BK|BR|FL)\b/g,s=>strokeNames[s]),time};
       });
       const eligibility=checkEligibility({profile:profiles.get(id),bestTimes});
-      if(!eligibility.eligible||eligibility.hasAA)throw new Error('Best-times-only mode requires A eligibility below AA.');
+      if((!eligibility.eligible&&!snapshot.refreshExisting)||eligibility.hasAA)throw new Error('Best-times-only mode requires A eligibility below AA, or a known existing swimmer below AA.');
     }
   }
   for (const profile of snapshot.profiles || []) {
@@ -61,7 +62,7 @@ async function importSnapshot(snapshot, directory = root) {
         !Array.isArray(snapshot.swimmers[id]) || !snapshot.swimmers[id].length) {
       throw new Error('New profiles must have verified age, division, team, LSC, and race history for the selected scope.');
     }
-    if(pnsScope){
+    if(pnsScope&&!snapshot.refreshExisting){
       const qualifies=snapshot.swimmers[id].some(([eventIndex,time])=>{
         const code=snapshot.events[eventIndex]||'';
         const event=code.replace(/\b(FR|BK|BR|FL)\b/g,stroke=>strokeNames[stroke]);
@@ -75,9 +76,9 @@ async function importSnapshot(snapshot, directory = root) {
       team:profile.team,usaSwimmingMemberId:id,bestTimes:[]};
     if(snapshot.bestTimesOnly){
       clean.importMode='best-times-only';
-      clean.bestTimes=snapshot.swimmers[id].map(([eventIndex,time])=>({event:snapshot.events[eventIndex].replace(/\b(FR|BK|BR|FL)\b/g,stroke=>strokeNames[stroke]),time,source:'USA Swimming'}));
+      clean.bestTimes=snapshot.swimmers[id].map(([eventIndex,time,meetIndex,date])=>({event:snapshot.events[eventIndex].replace(/\b(FR|BK|BR|FL)\b/g,stroke=>strokeNames[stroke]),time,source:'USA Swimming',...(snapshot.meets[meetIndex]&&date?{meet:snapshot.meets[meetIndex],date,course:snapshot.events[eventIndex].split(' ').at(-1)}:{})}));
     }
-    if(pnsScope){clean.lsc='PN';clean.inclusion='National motivational A or faster, current age';}
+    if(pnsScope){clean.lsc='PN';clean.inclusion=snapshot.refreshExisting?(roster.swimmers.find(sw=>sw.usaSwimmingMemberId===id)?.inclusion||'Existing verified swimmer'):'National motivational A or faster, current age';}
     const index=roster.swimmers.findIndex(sw=>sw.usaSwimmingMemberId===id);
     if(index<0) roster.swimmers.push(clean);else roster.swimmers[index]={...roster.swimmers[index],...clean};
     histories[id] ||= [];
@@ -86,6 +87,7 @@ async function importSnapshot(snapshot, directory = root) {
     if (!Object.hasOwn(histories, memberId)) throw new Error('Unknown swimmer ID.');
     if(snapshot.bestTimesOnly){
       imported[memberId]={checkedRows:values.length,addedRows:0,mode:'best-times-only'};
+      status.swimmers[memberId]={status:'manual',checkedAt,lastSuccessAt:status.swimmers[memberId]?.lastSuccessAt||null,lastImportedAt:checkedAt,savedRows:histories[memberId].length,mode:'best-times-only',note:'Verified personal bests in the signed-in Data Hub; existing race history preserved.'};
       continue;
     }
     const rows = values.map(([eventIndex, time, meetIndex, date]) => {

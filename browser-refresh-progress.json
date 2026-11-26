@@ -1,0 +1,3245 @@
+{
+  "startedAt": "2026-11-25T04:30:45.800Z",
+  "scope": "Top 5, including ties, in any published event in saved PNS age-group rankings; AA alone does not qualify; incomplete ranking coverage",
+  "total": 171,
+  "checked": [
+    {
+      "memberId": "4AB3E1B3605E4D",
+      "name": "Jonathan Fort",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bainbridge Island Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 breast lcm"
+      ],
+      "checkedAt": "2026-11-25T05:46:18.061Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "550C2D736E244C",
+      "name": "Surya Jain",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bainbridge Island Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 400 free lcm",
+        "Saved PNS #3 1500 free lcm",
+        "Saved PNS #5 1650 free scy",
+        "Saved PNS #3 800 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:52:24.620Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "A68EE16CE62D4B",
+      "name": "William Browning",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bainbridge Island Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #4 200 back scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #1 200 fly scy",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #4 200 fly lcm",
+        "Saved PNS #4 100 fly lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #1 50 back lcm"
+      ],
+      "checkedAt": "2026-11-25T05:52:55.284Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "C003D5A4C3C24A",
+      "name": "Aiden Brown",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #3 200 back lcm",
+        "Saved PNS #3 100 back lcm",
+        "Saved PNS #1 200 back scy",
+        "Saved PNS #4 400 free scm",
+        "Saved PNS #5 400 im lcm"
+      ],
+      "checkedAt": "2026-11-25T05:45:51.772Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "1A694E4DBFEA5B",
+      "name": "Ashley Gao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:04:09.200Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "C8F738E36CF04A",
+      "name": "Ava McNair",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 free scm",
+        "Saved PNS #5 50 back scm",
+        "Saved PNS #3 50 breast scm",
+        "Saved PNS #5 50 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:04:42.715Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "E28CCC4F63484B",
+      "name": "Brooklyn Lang",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #5 200 back scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #2 200 breast scy",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #2 50 free scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #5 100 back lcm",
+        "Saved PNS #2 400 free lcm",
+        "Saved PNS #1 100 free lcm",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #3 400 im scy",
+        "Saved PNS #3 200 fly scy",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #2 200 free lcm",
+        "Saved PNS #1 400 free scm",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #1 50 fly scm",
+        "Saved PNS #1 50 back scm",
+        "Saved PNS #3 50 breast scm",
+        "Saved PNS #2 100 back scm",
+        "Saved PNS #1 200 free scm",
+        "Saved PNS #2 200 im scm",
+        "Saved PNS #2 100 free scm",
+        "Saved PNS #2 100 breast scm",
+        "Saved PNS #1 100 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:36:33.772Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "2E856638974B43",
+      "name": "Carly Johnson",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 free scm",
+        "Saved PNS #3 50 back scm",
+        "Saved PNS #4 50 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:05:42.548Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "785C210D7BB64E",
+      "name": "Caroline Cao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 free scy",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #5 50 breast lcm",
+        "Saved PNS #4 100 back lcm",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #5 100 breast scy",
+        "Saved PNS #5 200 back lcm",
+        "Saved PNS #3 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:16:47.769Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "668DF3E7B46A4B",
+      "name": "Claire Gao",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 breast scy",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #5 200 free lcm",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #5 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:35:42.044Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "B532049E2D5F4E",
+      "name": "Edward Li",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #5 100 fly scm",
+        "Saved PNS #2 400 free scm",
+        "Saved PNS #5 50 free scm",
+        "Saved PNS #5 50 fly scm",
+        "Saved PNS #3 50 back scm",
+        "Saved PNS #2 50 breast scm"
+      ],
+      "checkedAt": "2026-11-25T05:54:00.637Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "71336307E26842",
+      "name": "Eleanor McMichael",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:33:51.387Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "A3F1474D52264C",
+      "name": "Elliott Johnson",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #5 100 im scy",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #2 200 free lcm",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #3 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:40:43.390Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "38A6F355CE7942",
+      "name": "Ethan Fei",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #5 100 free scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #3 400 im scy",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #4 400 free lcm",
+        "Saved PNS #4 200 free lcm",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #1 50 back scm",
+        "Saved PNS #1 50 fly scm",
+        "Saved PNS #1 50 breast scm"
+      ],
+      "checkedAt": "2026-11-25T05:43:49.649Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "13210C6AF15D46",
+      "name": "Gracie Switaj",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 free scm",
+        "Saved PNS #1 50 back scm"
+      ],
+      "checkedAt": "2026-11-25T05:31:17.035Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "5DE42DD031024B",
+      "name": "Jacqueline Wu",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:19:11.561Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "7B37B279CA2D47",
+      "name": "Joy Huang",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #5 200 back scy",
+        "Saved PNS #2 200 breast scy",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #1 100 im scy",
+        "Saved PNS #1 200 fly scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #1 100 fly lcm",
+        "Saved PNS #2 400 im lcm",
+        "Saved PNS #3 100 breast lcm",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #1 200 fly lcm",
+        "Saved PNS #1 50 fly lcm",
+        "Saved PNS #1 50 back lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #2 400 im scy",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #4 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:20:11.921Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "92292F66666048",
+      "name": "Khloe Nguyen",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #4 400 free lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #5 400 im scy",
+        "Saved PNS #4 200 fly scy",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #3 200 free lcm",
+        "Saved PNS #4 1500 free lcm",
+        "Saved PNS #2 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:34:42.267Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "4DC9F1C8BFA349",
+      "name": "Natalie Chang",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #5 100 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:35:12.284Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "7B37700724A743",
+      "name": "Nikolai Ryndin",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 400 free scm",
+        "Saved PNS #5 50 back scm"
+      ],
+      "checkedAt": "2026-11-25T05:43:18.091Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "21C459BCFD4540",
+      "name": "Noah Arthiabah",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 back scy",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #1 200 back scy",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #3 200 fly scy",
+        "Saved PNS #3 400 im scy",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #2 50 free scy",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #1 200 fly lcm",
+        "Saved PNS #1 100 fly lcm",
+        "Saved PNS #1 200 back lcm",
+        "Saved PNS #1 100 free lcm",
+        "Saved PNS #5 400 im lcm",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #1 400 free lcm",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #1 100 free scm",
+        "Saved PNS #1 400 free scm",
+        "Saved PNS #3 50 free scm",
+        "Saved PNS #3 50 fly scm",
+        "Saved PNS #1 50 back scm",
+        "Saved PNS #1 50 breast scm",
+        "Saved PNS #5 100 breast scm",
+        "Saved PNS #1 200 im scm",
+        "Saved PNS #1 200 back scm",
+        "Saved PNS #1 200 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:50:12.057Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "800953DB0A0C44",
+      "name": "Penelope Nguyen",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 fly scy",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #4 50 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:23:12.796Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "529E741DB1114E",
+      "name": "Quinlan Tian",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 100 im scy",
+        "Saved PNS #2 100 breast scy",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #1 50 breast scy",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #2 200 breast scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #5 50 back scy",
+        "Saved PNS #2 50 free scy",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #2 50 breast lcm",
+        "Saved PNS #2 100 breast lcm",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #3 200 breast lcm",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #2 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:06:52.527Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "7778DC49F58340",
+      "name": "Vivian Miao",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 200 back scy",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #4 100 im scy",
+        "Saved PNS #4 200 fly scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #3 100 fly lcm",
+        "Saved PNS #4 400 im lcm",
+        "Saved PNS #3 200 fly lcm",
+        "Saved PNS #5 50 fly lcm",
+        "Saved PNS #4 400 im scy",
+        "Saved PNS #3 200 free lcm",
+        "Saved PNS #2 400 free lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #3 1500 free lcm",
+        "Saved PNS #1 400 free scm",
+        "Saved PNS #2 50 free scm",
+        "Saved PNS #2 50 back scm",
+        "Saved PNS #5 50 breast scm",
+        "Saved PNS #1 50 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:29:15.609Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "5D51C879381F47",
+      "name": "Yushi Chong",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 400 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:30:14.740Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "90E0F862112C40",
+      "name": "Zara Suri",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 breast scy",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #2 200 breast lcm",
+        "Saved PNS #3 50 breast lcm",
+        "Saved PNS #2 50 breast scy",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #4 50 back scm",
+        "Saved PNS #1 50 breast scm",
+        "Saved PNS #3 50 fly scm"
+      ],
+      "checkedAt": "2026-11-25T05:30:44.617Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "BE64BE02DA3141",
+      "name": "Benjamin Slesinger",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #5 100 back scm",
+        "Saved PNS #1 200 breast scm"
+      ],
+      "checkedAt": "2026-11-25T05:02:56.569Z",
+      "mode": "best-times-only"
+    },
+    {
+      "memberId": "4525C94AB4C74B",
+      "name": "Ava Mittler",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #3 100 breast scm"
+      ],
+      "checkedAt": "2026-11-25T05:00:49.193Z",
+      "mode": "best-times-only"
+    },
+    {
+      "memberId": "4A8E4FA406BF45",
+      "name": "Clay Harper",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #4 400 im scy",
+        "Saved PNS #1 200 back lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #5 200 im lcm",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #2 400 free lcm",
+        "Saved PNS #2 200 back scy",
+        "Saved PNS #5 200 fly scy",
+        "Saved PNS #3 200 free lcm",
+        "Saved PNS #1 1000 free scy",
+        "Saved PNS #1 1500 free lcm",
+        "Saved PNS #1 1650 free scy",
+        "Saved PNS #1 400 im lcm",
+        "Saved PNS #2 50 back scm",
+        "Saved PNS #2 50 fly scm",
+        "Saved PNS #1 800 free lcm",
+        "Saved PNS #1 100 free scm"
+      ],
+      "checkedAt": "2026-11-25T05:44:50.156Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "54C91C74F65240",
+      "name": "Drake Perry",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 free lcm",
+        "Saved PNS #3 1000 free scy",
+        "Saved PNS #4 1500 free lcm",
+        "Saved PNS #2 1650 free scy",
+        "Saved PNS #4 800 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:49:07.387Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "B728AE3360424F",
+      "name": "Nikita Orlov",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Issaquah Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #3 100 breast scy",
+        "Saved PNS #4 50 fly lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #2 50 breast lcm",
+        "Saved PNS #2 100 breast lcm",
+        "Saved PNS #2 50 breast scy"
+      ],
+      "checkedAt": "2026-11-25T05:53:25.496Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "9F2CFE5098DF4A",
+      "name": "Aleksandr Rybin",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #5 50 back scy",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #4 100 im scy",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #3 50 breast lcm",
+        "Saved PNS #4 100 back lcm",
+        "Saved PNS #4 100 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:41:13.509Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "DE72F98FC47545",
+      "name": "Gabriel Li",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #5 200 fly scy",
+        "Saved PNS #4 400 im scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #5 200 fly lcm",
+        "Saved PNS #5 200 im lcm",
+        "Saved PNS #3 1650 free scy",
+        "Saved PNS #4 800 free lcm",
+        "Saved PNS #4 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:54:33.130Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "866C11514EF943",
+      "name": "Jordan Resendez",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #2 1500 free lcm",
+        "Saved PNS #4 1650 free scy",
+        "Saved PNS #2 800 free lcm",
+        "Saved PNS #5 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:50:50.081Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "7E805664208E4D",
+      "name": "Prima Sanders",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #5 1650 free scy",
+        "Saved PNS #5 400 free lcm",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #1 100 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:37:33.088Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "141A7DC4174C4B",
+      "name": "Alfred Wang",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 back lcm",
+        "Saved PNS #5 100 back lcm"
+      ],
+      "checkedAt": "2026-11-25T05:46:49.676Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "D7B2DE627D4540",
+      "name": "Hayley Brett",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #3 100 breast lcm",
+        "Saved PNS #3 200 breast lcm"
+      ],
+      "checkedAt": "2026-11-25T05:38:33.167Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "94DA7C95C5D844",
+      "name": "Henry Linowski",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 im scy",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #3 50 breast scy",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #5 400 im scy",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #3 50 breast lcm",
+        "Saved PNS #2 200 back lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #5 100 breast lcm",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #1 50 back lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #1 400 free lcm",
+        "Saved PNS #4 200 back scy",
+        "Saved PNS #2 200 fly scy",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #2 200 free lcm",
+        "Saved PNS #3 400 im lcm",
+        "Saved PNS #2 200 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:42:49.885Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "4A9BD8C5889242",
+      "name": "Hugo Linowski",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #2 50 free scy",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #2 100 im scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #1 50 breast scy",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #4 50 fly lcm",
+        "Saved PNS #3 200 free lcm",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #3 100 back lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #4 100 breast scy",
+        "Saved PNS #3 400 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:40:14.166Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "6236092E58254D",
+      "name": "Megan Zhou",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Pacific Dragons Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 500 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:21:41.885Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "208B583FC24C4C",
+      "name": "Amy Ganoch",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #3 800 free lcm"
+      ],
+      "checkedAt": "2026-11-25T04:35:58.150Z",
+      "mode": "best-times-only"
+    },
+    {
+      "memberId": "EDC41E5D12CE4D",
+      "name": "Andy Tran",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #1 100 im scy",
+        "Saved PNS #5 500 free scy",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #1 50 back lcm",
+        "Saved PNS #1 50 fly lcm",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #5 100 back lcm",
+        "Saved PNS #3 100 breast scy",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #5 400 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:39:42.480Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "1923958E8F0949",
+      "name": "Anthony Kozhemiako",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 im scy",
+        "Saved PNS #3 100 breast scy",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #4 50 breast scy",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #3 200 breast scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #4 200 im lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #3 400 free lcm",
+        "Saved PNS #3 200 back scy",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #3 1500 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:42:15.091Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "B289882110604F",
+      "name": "Cristian Niculita",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 breast lcm",
+        "Saved PNS #2 1500 free lcm",
+        "Saved PNS #4 1650 free scy",
+        "Saved PNS #4 400 im lcm"
+      ],
+      "checkedAt": "2026-11-25T05:48:07.701Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "4A984FFFB06724",
+      "name": "Eric YU",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 breast scy",
+        "Saved PNS #5 50 breast scy",
+        "Saved PNS #4 200 breast scy",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #3 100 breast lcm",
+        "Saved PNS #2 200 breast lcm"
+      ],
+      "checkedAt": "2026-11-25T05:49:37.108Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "1877DE33FEE94C",
+      "name": "Jayden Liu",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 breast scy",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #4 200 im lcm"
+      ],
+      "checkedAt": "2026-11-25T05:41:43.705Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "3E553E9572C84E",
+      "name": "Nora Davis",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #4 1650 free scy",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #5 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:37:03.296Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "A37022C19B0146",
+      "name": "Oliver Wahlborg",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #5 1500 free lcm",
+        "Saved PNS #5 1650 free scy",
+        "Saved PNS #5 200 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:47:37.304Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "E3E4F1341FCF47",
+      "name": "Braxton Davis",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #2 1000 free scy",
+        "Saved PNS #3 1650 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:44:16.672Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "C44F095812E04C",
+      "name": "Clara Stevenson",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 1650 free scy",
+        "Saved PNS #4 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:17:11.391Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "9C37DAB7527E4C",
+      "name": "Dan Sun",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #5 200 back scy",
+        "Saved PNS #5 1000 free scy"
+      ],
+      "checkedAt": "2026-11-25T05:07:31.159Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "50EABA45BA2D4E",
+      "name": "Ellen Feng",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #1 50 back lcm",
+        "Saved PNS #4 100 fly lcm",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #2 200 fly scy",
+        "Saved PNS #1 50 fly lcm",
+        "Saved PNS #5 200 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:39:05.980Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "50B74871BCBF63",
+      "name": "Finley Wiegand",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 breast lcm",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #1 50 breast scy"
+      ],
+      "checkedAt": "2026-11-25T05:18:41.243Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "09F75D7D285443",
+      "name": "Irene Qu",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #3 100 breast scy",
+        "Saved PNS #3 200 back scy",
+        "Saved PNS #1 50 breast scy",
+        "Saved PNS #1 200 breast scy",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #2 50 back lcm",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #5 200 back lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #4 200 im lcm",
+        "Saved PNS #5 50 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:38:02.618Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "E342A681F17C40",
+      "name": "Lingyi Li",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #5 100 im scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #5 400 im scy",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #3 200 back lcm"
+      ],
+      "checkedAt": "2026-11-25T05:20:41.995Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "EAFE49F392EED8",
+      "name": "Owen Wilson",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast scy",
+        "Saved PNS #5 200 breast scy",
+        "Saved PNS #2 400 im scy",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #5 50 back lcm",
+        "Saved PNS #1 100 fly lcm",
+        "Saved PNS #3 200 fly scy",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #4 200 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:45:20.250Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "C553CD820E064C",
+      "name": "Vivian Hu",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 back scy"
+      ],
+      "checkedAt": "2026-11-25T05:23:44.874Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "DD2C370151E64C",
+      "name": "Kent Morrison",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #5 200 free lcm"
+      ],
+      "checkedAt": "2026-11-25T05:51:50.438Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "18387FEB9B184D",
+      "name": "Logan Villegas",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 fly lcm",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #5 50 fly lcm"
+      ],
+      "checkedAt": "2026-11-25T05:48:36.897Z",
+      "mode": "full-history"
+    },
+    {
+      "memberId": "81C4CB7EFA8F4D",
+      "name": "Michael Cuenca",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #5 200 back scy",
+        "Saved PNS #2 200 fly scy",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #2 200 fly lcm",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #1 50 fly lcm",
+        "Saved PNS #3 200 back lcm",
+        "Saved PNS #2 400 im lcm",
+        "Saved PNS #4 200 im lcm"
+      ],
+      "checkedAt": "2026-11-25T05:51:20.624Z",
+      "mode": "full-history"
+    }
+  ],
+  "pending": [
+    "E677362E90D842",
+    "5F80B8F0FBD445",
+    "761B6A693B1342",
+    "BE38587AE0134F",
+    "C788747AD2D54B",
+    "182A168B650B46",
+    "28C2B131A0C746",
+    "77493A17946444",
+    "F4A103EF1DEB45",
+    "BAFD10F009654E",
+    "5E13D20FFC694D",
+    "A27FA4E01F2947",
+    "D257F43286564B",
+    "0AC9F73B6C2040",
+    "539F87B5418248",
+    "9B7E35B3028042",
+    "019C411D8450DF",
+    "7344E3B6E60A46",
+    "75B7022B955841",
+    "BAD0AFA7FCD544",
+    "09E64D14DA924D",
+    "372F9253618440",
+    "C1DB9B76EAE044",
+    "D442FB71468447",
+    "9C23745028414E",
+    "DB896A0A7A2748",
+    "E062F9147AD548",
+    "CFFC169275924B",
+    "1ABE1BD965DD45",
+    "D24EA016199648",
+    "067E20906DC144",
+    "BAF34BD5706241",
+    "83BC43F5974C0E",
+    "96EA27F784D349",
+    "1C4AA228FBBC4D",
+    "1D5164E5F2404A",
+    "FE488AC3E45248",
+    "749E379ACF7F47",
+    "71E67DE0797748",
+    "495C3579EDC246",
+    "DE63055D0D9842",
+    "FE0E7D0C5EF54E",
+    "78599CE70AD043",
+    "B333027C65AD4D",
+    "647C3CB43E9843",
+    "11548897515544",
+    "93B68F30441644",
+    "84A1411E91F0B6",
+    "3BF95C46554B45",
+    "76EE5F02833F46",
+    "FD655A8C9FA14A",
+    "84C34ACFB29229",
+    "0B649A3BE34245",
+    "77D4191AEF4548",
+    "21CDB2B805B74F",
+    "49A1ADA64D6445",
+    "BBC8497EA52A42",
+    "46A15908E6564F",
+    "ADDD910E54F74A",
+    "2BEAC447FA1F4A",
+    "815E6F62977B4F",
+    "F41ABFED05544C",
+    "DD0489DE56AD4A",
+    "572DA024A38747",
+    "FBF288CC8EFE43",
+    "36DA6438D75B4A",
+    "D483C0136B094E",
+    "164FA2097DA04D",
+    "32DEE9CFF9D540",
+    "A49BF6D7E4AA44",
+    "96BFC9B45CE645",
+    "51CDF04326D745",
+    "E3ADF5E536CE49",
+    "EC1BE8F0943749",
+    "64332B6DF01940",
+    "A029F6DC11B546",
+    "6A497ED8E5DB4C",
+    "0CC08AC9137E4E",
+    "F78A498D6F1441",
+    "F11B33ECDC1C40",
+    "4E9CD79C1E084B",
+    "9450D2270D8F49",
+    "A53A27D6474F4D",
+    "F4D81CD8C2F042",
+    "BCF73602EB3A4C",
+    "34C269BDAD4A4F",
+    "97EC6DA0715F46",
+    "C569F863FBB14A",
+    "D3A8CC876C2647",
+    "BB62F9437DB64A",
+    "611866CC115841",
+    "13E9337E19E246",
+    "6AB5CD15E24944",
+    "622F0E145A174F",
+    "4C1AB665821A4C",
+    "CAE01ED112324B",
+    "6BFB8C43279C48",
+    "FADEDE23CBB54E",
+    "0A6F1B5844DF40",
+    "703BD32955B046",
+    "11EDAA470FE945",
+    "9DCE8A4B52EF4A",
+    "2D0B2BAD308049",
+    "A6A81D20DCF748",
+    "C3EAA8B5A08F4B",
+    "73F4B0A866FC42",
+    "A576423F843601",
+    "5D4445881ADF48",
+    "94EF7572B73344",
+    "642C491180E8FC",
+    "89D718E9275946"
+  ],
+  "status": "rate-limited",
+  "candidates": [
+    {
+      "memberId": "E677362E90D842",
+      "name": "Evan Mitchell",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Valley Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #2 400 free lcm",
+        "Saved PNS #3 200 free lcm"
+      ]
+    },
+    {
+      "memberId": "5F80B8F0FBD445",
+      "name": "Alric Lee",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #5 100 free scy",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #5 100 back lcm",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #2 100 free scm",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #1 50 fly scm",
+        "Saved PNS #1 100 back scm",
+        "Saved PNS #2 200 im scm",
+        "Saved PNS #1 800 free scm",
+        "Saved PNS #1 1500 free scm"
+      ]
+    },
+    {
+      "memberId": "761B6A693B1342",
+      "name": "Benjamin Jiang",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 breast scy",
+        "Saved PNS #5 50 breast scy"
+      ]
+    },
+    {
+      "memberId": "BE38587AE0134F",
+      "name": "Ben Rolfes",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Thunderbird Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 free scm",
+        "Saved PNS #2 100 fly scm",
+        "Saved PNS #2 50 free scm",
+        "Saved PNS #4 50 fly scm",
+        "Saved PNS #4 100 back scm",
+        "Saved PNS #3 200 im scm",
+        "Saved PNS #2 200 fly scm",
+        "Saved PNS #1 200 free scm",
+        "Saved PNS #2 1500 free scm",
+        "Saved PNS #1 400 im scm"
+      ]
+    },
+    {
+      "memberId": "C788747AD2D54B",
+      "name": "Andy Nguyen",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast lcm"
+      ]
+    },
+    {
+      "memberId": "182A168B650B46",
+      "name": "Jacob Yeung",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Samena Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 back scm",
+        "Saved PNS #3 50 breast scm",
+        "Saved PNS #2 100 breast scm",
+        "Saved PNS #5 200 free scm"
+      ]
+    },
+    {
+      "memberId": "28C2B131A0C746",
+      "name": "Matvii Onofriichuk",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 breast scy",
+        "Saved PNS #5 100 back lcm",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #5 200 breast lcm",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #3 50 breast scy"
+      ]
+    },
+    {
+      "memberId": "77493A17946444",
+      "name": "Elizabeth Tangyang",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 400 free scm"
+      ]
+    },
+    {
+      "memberId": "F4A103EF1DEB45",
+      "name": "Maddie Longenecker-Webel",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 back lcm",
+        "Saved PNS #4 100 back lcm",
+        "Saved PNS #5 50 back scm"
+      ]
+    },
+    {
+      "memberId": "BAFD10F009654E",
+      "name": "Tiya More",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 back scm",
+        "Saved PNS #5 200 free scm",
+        "Saved PNS #5 100 free scm"
+      ]
+    },
+    {
+      "memberId": "5E13D20FFC694D",
+      "name": "Fiona Livingston",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bainbridge Island Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #3 200 breast scy",
+        "Saved PNS #3 400 free lcm",
+        "Saved PNS #1 1650 free scy",
+        "Saved PNS #1 1500 free lcm",
+        "Saved PNS #4 400 im lcm",
+        "Saved PNS #1 800 free lcm",
+        "Saved PNS #1 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "A27FA4E01F2947",
+      "name": "Mila Alkhazov",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free lcm",
+        "Saved PNS #2 50 free scm",
+        "Saved PNS #4 50 fly scm",
+        "Saved PNS #2 50 back scm",
+        "Saved PNS #5 50 breast scm",
+        "Saved PNS #3 100 back scm",
+        "Saved PNS #2 200 free scm",
+        "Saved PNS #3 100 free scm",
+        "Saved PNS #1 200 back scm"
+      ]
+    },
+    {
+      "memberId": "D257F43286564B",
+      "name": "Dami Jung",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 breast scy",
+        "Saved PNS #2 50 breast lcm"
+      ]
+    },
+    {
+      "memberId": "0AC9F73B6C2040",
+      "name": "Priya Sanders",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 500 free scy",
+        "Saved PNS #2 1650 free scy",
+        "Saved PNS #4 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "539F87B5418248",
+      "name": "Stella Arthiabah",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast scy",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #3 100 fly lcm",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #4 200 fly lcm",
+        "Saved PNS #5 50 free scm",
+        "Saved PNS #3 50 fly scm",
+        "Saved PNS #1 50 breast scm",
+        "Saved PNS #1 200 im scm",
+        "Saved PNS #1 100 free scm",
+        "Saved PNS #1 100 breast scm",
+        "Saved PNS #1 200 fly scm"
+      ]
+    },
+    {
+      "memberId": "9B7E35B3028042",
+      "name": "Olivia Henaire",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 breast scy",
+        "Saved PNS #2 50 breast scy",
+        "Saved PNS #5 1500 free lcm",
+        "Saved PNS #4 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "019C411D8450DF",
+      "name": "Olivia Covey",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #1 100 im scy",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #2 50 breast scy",
+        "Saved PNS #1 50 back lcm",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #1 400 free lcm",
+        "Saved PNS #1 100 free lcm",
+        "Saved PNS #2 50 breast lcm",
+        "Saved PNS #1 100 fly lcm",
+        "Saved PNS #2 100 breast lcm",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #1 400 free scm"
+      ]
+    },
+    {
+      "memberId": "7344E3B6E60A46",
+      "name": "Lulu White",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 fly lcm"
+      ]
+    },
+    {
+      "memberId": "75B7022B955841",
+      "name": "Yuna Seavey",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 back scy",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #3 200 back lcm",
+        "Saved PNS #4 200 fly scy",
+        "Saved PNS #5 400 im lcm",
+        "Saved PNS #2 200 fly lcm"
+      ]
+    },
+    {
+      "memberId": "BAD0AFA7FCD544",
+      "name": "Sophia Liang",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "09E64D14DA924D",
+      "name": "Adi Schweikert",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 200 back scy",
+        "Saved PNS #3 200 breast scy",
+        "Saved PNS #3 100 im scy",
+        "Saved PNS #2 200 fly scy",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #3 400 im lcm",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #2 200 fly lcm",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #5 100 back lcm",
+        "Saved PNS #3 400 im scy",
+        "Saved PNS #2 200 free lcm",
+        "Saved PNS #3 400 free lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #4 200 back lcm",
+        "Saved PNS #2 1500 free lcm"
+      ]
+    },
+    {
+      "memberId": "372F9253618440",
+      "name": "Sarah Chiang",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 back scy",
+        "Saved PNS #1 200 breast scy",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #2 100 im scy",
+        "Saved PNS #3 200 fly scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #1 200 free scy",
+        "Saved PNS #4 100 fly lcm",
+        "Saved PNS #1 400 im lcm",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #4 200 fly lcm",
+        "Saved PNS #1 200 breast lcm",
+        "Saved PNS #3 100 back lcm",
+        "Saved PNS #1 400 im scy",
+        "Saved PNS #1 1650 free scy",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #1 400 free lcm",
+        "Saved PNS #4 50 breast scy",
+        "Saved PNS #2 100 breast scy",
+        "Saved PNS #1 200 back lcm",
+        "Saved PNS #1 1500 free lcm",
+        "Saved PNS #1 1000 free scy",
+        "Saved PNS #1 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "C1DB9B76EAE044",
+      "name": "Tassie Murray",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #2 1650 free scy",
+        "Saved PNS #5 200 free lcm",
+        "Saved PNS #5 1500 free lcm",
+        "Saved PNS #2 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "D442FB71468447",
+      "name": "Tiffany Wong",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 breast lcm",
+        "Saved PNS #4 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "9C23745028414E",
+      "name": "Val Millard",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #3 200 back scy",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #2 50 back lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #2 200 back lcm"
+      ]
+    },
+    {
+      "memberId": "DB896A0A7A2748",
+      "name": "Gabby Wojdak",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 free scm",
+        "Saved PNS #4 50 back scm"
+      ]
+    },
+    {
+      "memberId": "E062F9147AD548",
+      "name": "Poppy Anderson",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #3 50 back scy",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #2 50 free scy",
+        "Saved PNS #2 50 back lcm",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #1 50 fly lcm",
+        "Saved PNS #4 100 fly lcm",
+        "Saved PNS #4 100 back lcm"
+      ]
+    },
+    {
+      "memberId": "CFFC169275924B",
+      "name": "Maya Aktas",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 400 im lcm",
+        "Saved PNS #5 200 im lcm",
+        "Saved PNS #5 200 fly lcm"
+      ]
+    },
+    {
+      "memberId": "1ABE1BD965DD45",
+      "name": "Victoria Sun",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "D24EA016199648",
+      "name": "Maggie Russo",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #5 50 back lcm"
+      ]
+    },
+    {
+      "memberId": "067E20906DC144",
+      "name": "Alivia Lee",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 fly scy",
+        "Saved PNS #3 50 free scy",
+        "Saved PNS #5 500 free scy",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #4 50 fly lcm"
+      ]
+    },
+    {
+      "memberId": "BAF34BD5706241",
+      "name": "Sophie Wang",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #2 100 back scy",
+        "Saved PNS #2 100 im scy",
+        "Saved PNS #5 50 back scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #4 200 free scy",
+        "Saved PNS #3 500 free scy",
+        "Saved PNS #5 50 fly lcm",
+        "Saved PNS #5 400 free lcm",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #3 100 fly lcm",
+        "Saved PNS #5 200 free lcm",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #3 100 back lcm"
+      ]
+    },
+    {
+      "memberId": "83BC43F5974C0E",
+      "name": "Sadie Van Horn",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #5 100 im scy",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #5 50 back lcm",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #4 100 breast scy",
+        "Saved PNS #3 50 free lcm",
+        "Saved PNS #2 400 free lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #5 100 breast lcm",
+        "Saved PNS #2 200 free lcm",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #2 400 free scm"
+      ]
+    },
+    {
+      "memberId": "96EA27F784D349",
+      "name": "Anna Han",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #4 400 free lcm",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #5 100 back lcm"
+      ]
+    },
+    {
+      "memberId": "1C4AA228FBBC4D",
+      "name": "Kyahna Caoagdan",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Issaquah Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #5 50 breast scy",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #2 100 fly lcm",
+        "Saved PNS #5 200 im lcm"
+      ]
+    },
+    {
+      "memberId": "1D5164E5F2404A",
+      "name": "Mackenzie Bernier",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 im scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #3 400 free lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #3 200 free lcm",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #4 200 im lcm"
+      ]
+    },
+    {
+      "memberId": "FE488AC3E45248",
+      "name": "Julianne Ambrozic",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #4 200 free lcm"
+      ]
+    },
+    {
+      "memberId": "749E379ACF7F47",
+      "name": "Janaya Calugas",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 im scm"
+      ]
+    },
+    {
+      "memberId": "71E67DE0797748",
+      "name": "Claire Baker",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 breast scy",
+        "Saved PNS #2 100 breast scy",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #2 50 free scm",
+        "Saved PNS #2 100 free scm",
+        "Saved PNS #2 50 breast scm",
+        "Saved PNS #2 50 back scm"
+      ]
+    },
+    {
+      "memberId": "495C3579EDC246",
+      "name": "Natalie Fong",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 im lcm",
+        "Saved PNS #3 200 breast lcm",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #3 50 breast scy"
+      ]
+    },
+    {
+      "memberId": "DE63055D0D9842",
+      "name": "Kate Green",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "StingRay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 breast scy",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #4 200 breast lcm",
+        "Saved PNS #2 50 breast lcm",
+        "Saved PNS #5 50 breast scy",
+        "Saved PNS #3 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "FE0E7D0C5EF54E",
+      "name": "Ava Thompson",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Mighty Marlins Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #4 800 free lcm",
+        "Saved PNS #1 200 free scm",
+        "Saved PNS #1 800 free scm",
+        "Saved PNS #1 100 fly scm",
+        "Saved PNS #1 200 back scm",
+        "Saved PNS #1 200 breast scm",
+        "Saved PNS #1 400 im scm"
+      ]
+    },
+    {
+      "memberId": "78599CE70AD043",
+      "name": "Brooks Switaj",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #1 500 free scy",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #1 100 free lcm",
+        "Saved PNS #1 400 free scm",
+        "Saved PNS #1 400 free lcm"
+      ]
+    },
+    {
+      "memberId": "B333027C65AD4D",
+      "name": "Matthew Winn",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "StingRay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #4 500 free scy",
+        "Saved PNS #3 50 fly lcm",
+        "Saved PNS #1 100 fly lcm"
+      ]
+    },
+    {
+      "memberId": "647C3CB43E9843",
+      "name": "Thanh Tran",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 im scy",
+        "Saved PNS #3 50 breast scy",
+        "Saved PNS #2 50 breast lcm",
+        "Saved PNS #2 100 breast scy",
+        "Saved PNS #2 100 breast lcm"
+      ]
+    },
+    {
+      "memberId": "11548897515544",
+      "name": "Leo Gazzard",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 im scy",
+        "Saved PNS #4 200 free lcm",
+        "Saved PNS #5 100 free lcm",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #2 400 free scm",
+        "Saved PNS #2 400 free lcm"
+      ]
+    },
+    {
+      "memberId": "93B68F30441644",
+      "name": "Matvey Fadeev",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Issaquah Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 back scy",
+        "Saved PNS #5 100 free scy",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #3 100 im scy",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #2 50 back lcm",
+        "Saved PNS #5 50 fly lcm",
+        "Saved PNS #1 100 back lcm",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #3 100 fly lcm"
+      ]
+    },
+    {
+      "memberId": "84A1411E91F0B6",
+      "name": "Caleb Stone",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #5 100 back scy",
+        "Saved PNS #4 50 back lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #2 100 free scm",
+        "Saved PNS #1 100 im scm",
+        "Saved PNS #2 100 fly scm"
+      ]
+    },
+    {
+      "memberId": "3BF95C46554B45",
+      "name": "Qifan Gong",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 back lcm",
+        "Saved PNS #5 400 free scm"
+      ]
+    },
+    {
+      "memberId": "76EE5F02833F46",
+      "name": "Terence Wu",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 fly scy",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #4 400 free scm"
+      ]
+    },
+    {
+      "memberId": "FD655A8C9FA14A",
+      "name": "Jake McNair",
+      "ageGroup": "9",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 breast scy",
+        "Saved PNS #4 100 breast lcm"
+      ]
+    },
+    {
+      "memberId": "84C34ACFB29229",
+      "name": "Gabriel Zhang",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast lcm",
+        "Saved PNS #3 100 breast lcm"
+      ]
+    },
+    {
+      "memberId": "0B649A3BE34245",
+      "name": "Peter Hofman",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 breast lcm",
+        "Saved PNS #1 100 free scm",
+        "Saved PNS #1 100 fly scm",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #1 50 breast scm",
+        "Saved PNS #1 50 fly scm",
+        "Saved PNS #1 100 breast scm"
+      ]
+    },
+    {
+      "memberId": "77D4191AEF4548",
+      "name": "Luna Dong",
+      "ageGroup": "9",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 im scy",
+        "Saved PNS #5 100 free scy",
+        "Saved PNS #3 50 breast scy",
+        "Saved PNS #3 100 breast scy",
+        "Saved PNS #3 100 breast lcm",
+        "Saved PNS #3 400 free scm"
+      ]
+    },
+    {
+      "memberId": "21CDB2B805B74F",
+      "name": "Evelyn Lang",
+      "ageGroup": "9",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 400 free scm"
+      ]
+    },
+    {
+      "memberId": "49A1ADA64D6445",
+      "name": "Alyson Gao",
+      "ageGroup": "9",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast scy",
+        "Saved PNS #5 50 breast lcm",
+        "Saved PNS #4 100 breast lcm",
+        "Saved PNS #5 400 free scm"
+      ]
+    },
+    {
+      "memberId": "BBC8497EA52A42",
+      "name": "Myra Hulbert",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 im scm",
+        "Saved PNS #2 50 fly scm",
+        "Saved PNS #3 50 breast scm",
+        "Saved PNS #1 50 back scm"
+      ]
+    },
+    {
+      "memberId": "46A15908E6564F",
+      "name": "Alex Havril",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 breast lcm"
+      ]
+    },
+    {
+      "memberId": "ADDD910E54F74A",
+      "name": "Lily Vavrichek",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast scy"
+      ]
+    },
+    {
+      "memberId": "2BEAC447FA1F4A",
+      "name": "Andy Gaiovyi",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 fly lcm",
+        "Saved PNS #1 200 fly scy",
+        "Saved PNS #3 400 free scm",
+        "Saved PNS #1 200 fly lcm"
+      ]
+    },
+    {
+      "memberId": "815E6F62977B4F",
+      "name": "Ethan Zichen Pei",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Pacific Dragons Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 50 back lcm",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #4 50 free lcm",
+        "Saved PNS #5 400 free lcm",
+        "Saved PNS #4 50 fly lcm"
+      ]
+    },
+    {
+      "memberId": "F41ABFED05544C",
+      "name": "Emma Li",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 back scy",
+        "Saved PNS #1 200 back scy",
+        "Saved PNS #2 500 free scy",
+        "Saved PNS #1 100 back scy",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #3 100 free scy",
+        "Saved PNS #5 50 back lcm",
+        "Saved PNS #1 200 back lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #1 400 free lcm",
+        "Saved PNS #3 100 free lcm",
+        "Saved PNS #1 100 fly lcm",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #5 50 free lcm",
+        "Saved PNS #3 100 fly scy",
+        "Saved PNS #3 50 fly scy",
+        "Saved PNS #1 400 im scy",
+        "Saved PNS #1 200 fly scy",
+        "Saved PNS #3 200 free scy",
+        "Saved PNS #1 200 free lcm",
+        "Saved PNS #2 1500 free lcm",
+        "Saved PNS #1 400 im lcm",
+        "Saved PNS #3 800 free lcm",
+        "Saved PNS #1 200 fly lcm",
+        "Saved PNS #2 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "DD0489DE56AD4A",
+      "name": "Lyle Hansen",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "572DA024A38747",
+      "name": "Ali Walker",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 back scy"
+      ]
+    },
+    {
+      "memberId": "FBF288CC8EFE43",
+      "name": "Alice Shang Shang",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 50 breast lcm",
+        "Saved PNS #2 100 breast lcm"
+      ]
+    },
+    {
+      "memberId": "36DA6438D75B4A",
+      "name": "Anju Lee",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 200 back scy",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #2 200 back lcm",
+        "Saved PNS #3 100 back lcm",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #3 1650 free scy",
+        "Saved PNS #2 400 im scy",
+        "Saved PNS #2 400 im lcm",
+        "Saved PNS #3 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "D483C0136B094E",
+      "name": "Audrey Loudon",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 1650 free scy",
+        "Saved PNS #4 1500 free lcm",
+        "Saved PNS #3 1000 free scy",
+        "Saved PNS #2 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "164FA2097DA04D",
+      "name": "Bimu Beibit",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Samena Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 breast scy",
+        "Saved PNS #4 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "32DEE9CFF9D540",
+      "name": "Blakely Biege",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #3 50 breast scy",
+        "Saved PNS #4 200 breast scy",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #5 50 breast lcm",
+        "Saved PNS #5 100 breast lcm",
+        "Saved PNS #5 400 free lcm",
+        "Saved PNS #5 200 im lcm",
+        "Saved PNS #4 100 fly scy",
+        "Saved PNS #5 50 fly scy",
+        "Saved PNS #4 400 im scy",
+        "Saved PNS #4 50 fly lcm",
+        "Saved PNS #3 400 im lcm",
+        "Saved PNS #3 400 free scm",
+        "Saved PNS #3 50 free scm",
+        "Saved PNS #2 50 fly scm",
+        "Saved PNS #3 50 back scm",
+        "Saved PNS #2 50 breast scm",
+        "Saved PNS #1 100 back scm",
+        "Saved PNS #4 200 free scm",
+        "Saved PNS #3 200 im scm",
+        "Saved PNS #4 100 breast scm"
+      ]
+    },
+    {
+      "memberId": "A49BF6D7E4AA44",
+      "name": "Caden Baker",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 free scm",
+        "Saved PNS #4 100 fly scm",
+        "Saved PNS #4 50 breast scm",
+        "Saved PNS #1 100 breast scm",
+        "Saved PNS #4 200 im scm",
+        "Saved PNS #2 200 free scm"
+      ]
+    },
+    {
+      "memberId": "96BFC9B45CE645",
+      "name": "Chance Worcester",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 1500 free lcm"
+      ]
+    },
+    {
+      "memberId": "51CDF04326D745",
+      "name": "Charlotte Li",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "E3ADF5E536CE49",
+      "name": "Damjan Vukadinovic",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "South Snohomish Co. Dolphins",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 free scm",
+        "Saved PNS #4 50 free scm",
+        "Saved PNS #2 50 fly scm",
+        "Saved PNS #2 50 back scm",
+        "Saved PNS #5 50 breast scm",
+        "Saved PNS #3 100 back scm",
+        "Saved PNS #3 100 breast scm",
+        "Saved PNS #3 200 free scm"
+      ]
+    },
+    {
+      "memberId": "EC1BE8F0943749",
+      "name": "Deniz Cankaya",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Wave Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 back scy",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #2 400 im scy",
+        "Saved PNS #4 200 im scy",
+        "Saved PNS #2 200 back lcm",
+        "Saved PNS #3 400 im lcm",
+        "Saved PNS #5 1500 free lcm",
+        "Saved PNS #2 1650 free scy",
+        "Saved PNS #2 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "64332B6DF01940",
+      "name": "Dylan Bratman",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Excel Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "A029F6DC11B546",
+      "name": "Dylan Wang",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 200 fly lcm"
+      ]
+    },
+    {
+      "memberId": "6A497ED8E5DB4C",
+      "name": "Emmett Curry",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "0CC08AC9137E4E",
+      "name": "Hayes Feng",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 400 im scy",
+        "Saved PNS #1 200 im scy",
+        "Saved PNS #1 200 breast scy",
+        "Saved PNS #4 50 free scy",
+        "Saved PNS #4 100 free scy",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #5 500 free scy",
+        "Saved PNS #3 200 fly lcm",
+        "Saved PNS #5 100 fly lcm",
+        "Saved PNS #4 100 back lcm",
+        "Saved PNS #1 400 im lcm",
+        "Saved PNS #1 200 im lcm",
+        "Saved PNS #3 400 free lcm",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #1 200 breast lcm",
+        "Saved PNS #5 50 back lcm",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #1 50 breast scy",
+        "Saved PNS #1 1500 free lcm",
+        "Saved PNS #1 1650 free scy",
+        "Saved PNS #1 800 free lcm",
+        "Saved PNS #1 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "F78A498D6F1441",
+      "name": "Hengsheng Wang",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "F11B33ECDC1C40",
+      "name": "Henry Bresson",
+      "ageGroup": "10",
+      "division": "boys",
+      "team": "Chinook Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast scy",
+        "Saved PNS #5 200 free lcm",
+        "Saved PNS #4 100 free lcm",
+        "Saved PNS #5 100 breast lcm",
+        "Saved PNS #5 200 im lcm",
+        "Saved PNS #4 400 free lcm"
+      ]
+    },
+    {
+      "memberId": "4E9CD79C1E084B",
+      "name": "Irene Tanida",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "BAYCLUB Aquatic Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "9450D2270D8F49",
+      "name": "Joshua Buchanan",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Seattle Metropolitan Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 1000 free scy"
+      ]
+    },
+    {
+      "memberId": "A53A27D6474F4D",
+      "name": "Kai Takahashi",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 400 im scy",
+        "Saved PNS #2 200 breast scy",
+        "Saved PNS #4 100 breast scy",
+        "Saved PNS #5 200 back lcm",
+        "Saved PNS #4 400 im lcm",
+        "Saved PNS #3 200 im lcm",
+        "Saved PNS #3 50 breast lcm",
+        "Saved PNS #3 200 breast lcm",
+        "Saved PNS #3 100 breast lcm",
+        "Saved PNS #4 50 breast scy",
+        "Saved PNS #5 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "F4D81CD8C2F042",
+      "name": "Leo Xue",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Issaquah Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 breast lcm"
+      ]
+    },
+    {
+      "memberId": "BCF73602EB3A4C",
+      "name": "Liam Rolfes",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Thunderbird Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 100 fly scm",
+        "Saved PNS #2 100 back scm",
+        "Saved PNS #5 200 im scm",
+        "Saved PNS #2 200 back scm",
+        "Saved PNS #4 200 free scm",
+        "Saved PNS #3 1500 free scm"
+      ]
+    },
+    {
+      "memberId": "34C269BDAD4A4F",
+      "name": "Mason Cole",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Valley Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 back lcm",
+        "Saved PNS #5 200 breast lcm",
+        "Saved PNS #2 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "97EC6DA0715F46",
+      "name": "Michael Veltri",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Skagit Valley YMCA Tritons",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #3 100 fly scm"
+      ]
+    },
+    {
+      "memberId": "C569F863FBB14A",
+      "name": "Neil Deng",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "West Coast Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 400 free lcm",
+        "Saved PNS #4 200 free lcm"
+      ]
+    },
+    {
+      "memberId": "D3A8CC876C2647",
+      "name": "Roelan Conner",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Valley Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 back scy",
+        "Saved PNS #4 200 back lcm",
+        "Saved PNS #3 100 back lcm",
+        "Saved PNS #2 50 back lcm"
+      ]
+    },
+    {
+      "memberId": "BB62F9437DB64A",
+      "name": "Shauna Chen",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Samena Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 fly scm"
+      ]
+    },
+    {
+      "memberId": "611866CC115841",
+      "name": "Theodor Ryndin",
+      "ageGroup": "11",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 400 free scm"
+      ]
+    },
+    {
+      "memberId": "13E9337E19E246",
+      "name": "Viha Raval",
+      "ageGroup": "11",
+      "division": "girls",
+      "team": "King Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "6AB5CD15E24944",
+      "name": "Yibei Shi",
+      "ageGroup": "13",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 200 breast scy",
+        "Saved PNS #1 200 breast lcm"
+      ]
+    },
+    {
+      "memberId": "622F0E145A174F",
+      "name": "Yihan Lian",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 1650 free scy",
+        "Saved PNS #3 1500 free lcm",
+        "Saved PNS #2 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "4C1AB665821A4C",
+      "name": "Sky Chin",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "University Place Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 50 fly lcm"
+      ]
+    },
+    {
+      "memberId": "CAE01ED112324B",
+      "name": "Ace Chin",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "University Place Aquatic Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 100 im scy",
+        "Saved PNS #1 100 free scy",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #1 50 free scy",
+        "Saved PNS #2 50 fly scy",
+        "Saved PNS #4 100 back lcm",
+        "Saved PNS #3 50 back lcm",
+        "Saved PNS #1 100 free lcm",
+        "Saved PNS #1 50 free lcm",
+        "Saved PNS #1 100 fly scy",
+        "Saved PNS #1 50 fly lcm"
+      ]
+    },
+    {
+      "memberId": "6BFB8C43279C48",
+      "name": "Livie Yen Yen",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 50 breast scm"
+      ]
+    },
+    {
+      "memberId": "FADEDE23CBB54E",
+      "name": "Chengxi Wang",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Pacific Dragons Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 400 free lcm"
+      ]
+    },
+    {
+      "memberId": "0A6F1B5844DF40",
+      "name": "Mason Lee",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Olympic Cascade Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #1 50 back scy",
+        "Saved PNS #2 100 fly scy",
+        "Saved PNS #2 200 back scy",
+        "Saved PNS #3 100 back scy",
+        "Saved PNS #2 200 free scy",
+        "Saved PNS #4 200 fly scy",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #5 50 free scy",
+        "Saved PNS #1 50 fly scy",
+        "Saved PNS #2 100 free scy",
+        "Saved PNS #3 100 fly lcm",
+        "Saved PNS #2 50 fly lcm",
+        "Saved PNS #2 100 free lcm",
+        "Saved PNS #2 100 back lcm",
+        "Saved PNS #2 50 free lcm",
+        "Saved PNS #2 200 free lcm"
+      ]
+    },
+    {
+      "memberId": "703BD32955B046",
+      "name": "Minh Nguyen",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #2 100 breast scy"
+      ]
+    },
+    {
+      "memberId": "11EDAA470FE945",
+      "name": "Shiyin Wei",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Pacific Dragons Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #4 200 free lcm"
+      ]
+    },
+    {
+      "memberId": "9DCE8A4B52EF4A",
+      "name": "Ethan Wang",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "AA or faster",
+        "Saved PNS #5 100 im scy",
+        "Saved PNS #1 100 breast scy",
+        "Saved PNS #5 200 free scy",
+        "Saved PNS #2 50 breast scy",
+        "Saved PNS #2 200 im scy",
+        "Saved PNS #1 200 breast scy",
+        "Saved PNS #5 500 free scy",
+        "Saved PNS #1 400 im scy",
+        "Saved PNS #1 50 breast lcm",
+        "Saved PNS #1 100 breast lcm",
+        "Saved PNS #2 200 im lcm",
+        "Saved PNS #1 200 breast lcm",
+        "Saved PNS #4 200 fly scy",
+        "Saved PNS #1 400 free scm",
+        "Saved PNS #2 400 im lcm"
+      ]
+    },
+    {
+      "memberId": "2D0B2BAD308049",
+      "name": "Dale Wolfe",
+      "ageGroup": "12",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #4 1000 free scy",
+        "Saved PNS #3 800 free lcm"
+      ]
+    },
+    {
+      "memberId": "A6A81D20DCF748",
+      "name": "Elliot Lei",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #4 400 free scm"
+      ]
+    },
+    {
+      "memberId": "C3EAA8B5A08F4B",
+      "name": "Kiyomi Matsuno",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #2 50 breast scm",
+        "Saved PNS #2 50 fly scm"
+      ]
+    },
+    {
+      "memberId": "73F4B0A866FC42",
+      "name": "Ryan Forrest",
+      "ageGroup": "14",
+      "division": "boys",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #5 400 free scm"
+      ]
+    },
+    {
+      "memberId": "A576423F843601",
+      "name": "Thomas  Nguyen",
+      "ageGroup": "11",
+      "division": "boys",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #3 50 back scm",
+        "Saved PNS #3 50 fly scm",
+        "Saved PNS #2 50 breast scm",
+        "Saved PNS #2 100 free scm",
+        "Saved PNS #1 100 fly scm",
+        "Saved PNS #1 100 back scm",
+        "Saved PNS #1 100 breast scm",
+        "Saved PNS #1 100 im scm"
+      ]
+    },
+    {
+      "memberId": "5D4445881ADF48",
+      "name": "Ollie Werner",
+      "ageGroup": "13",
+      "division": "boys",
+      "team": "Storm Aquatics",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #4 100 breast scm"
+      ]
+    },
+    {
+      "memberId": "94EF7572B73344",
+      "name": "Michelle Morton",
+      "ageGroup": "14",
+      "division": "girls",
+      "team": "Bellevue Club Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #4 100 back scm",
+        "Saved PNS #3 200 free scm",
+        "Saved PNS #4 200 im scm",
+        "Saved PNS #4 100 free scm",
+        "Saved PNS #5 100 breast scm"
+      ]
+    },
+    {
+      "memberId": "642C491180E8FC",
+      "name": "Vera Youlin",
+      "ageGroup": "12",
+      "division": "girls",
+      "team": "Bellingham Bay Swim Team",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #4 50 breast scm",
+        "Saved PNS #1 100 im scm"
+      ]
+    },
+    {
+      "memberId": "89D718E9275946",
+      "name": "Sienna Reckhow",
+      "ageGroup": "10",
+      "division": "girls",
+      "team": "Cascade Swim Club",
+      "lsc": "PN",
+      "reasons": [
+        "Saved PNS #1 100 im scm",
+        "Saved PNS #1 50 free scm",
+        "Saved PNS #1 50 fly scm",
+        "Saved PNS #1 100 free scm",
+        "Saved PNS #1 100 breast scm",
+        "Saved PNS #1 50 breast scm"
+      ]
+    }
+  ],
+  "blocked": {
+    "memberId": "E677362E90D842",
+    "name": "Evan Mitchell",
+    "reason": "USA Swimming Data Hub displayed: Too many requests. Please try again later.",
+    "at": "2026-11-25T05:55:52.474Z"
+  }
+}
